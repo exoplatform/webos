@@ -1,0 +1,48 @@
+<project>
+  <parent>
+    <groupId>org.exoplatform.webos</groupId>
+    <artifactId>config</artifactId>
+    <version>trunk</version>
+  </parent> 
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>webos.web.portal</artifactId>
+  <packaging>war</packaging> 
+  <version>${org.exoplatform.webos.version}</version>
+  <name>eXo WebOS web module</name>
+
+  <build>    
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.0.2</version>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>${exo.projects.directory.src}/portal/branches/2.0/web/portal/src/main/webapp</directory>
+              <excludes>              	
+              	<exclude>index.jsp</exclude>
+              	<exclude>portal-warning.jsp</exclude>
+              	<exclude>portal-unavailable.jsp</exclude>
+                <exclude>WEB-INF/web.xml</exclude>                     
+                <exclude>WEB-INF/conf/</exclude>
+		        <exclude>WEB-INF/classes/locale/navigation/</exclude>				
+              </excludes>
+            </resource>
+            <resource>
+              <directory>${exo.projects.directory.src}/portal/branches/2.0/web/portal/target/exo.portal.web.portal-${org.exoplatform.portal.version}</directory>
+              <includes>
+                <include>WEB-INF/classes/locale/portal/</include>
+	    	    <include>WEB-INF/conf/uiconf/portal/webui/container/</include>
+	    	    <include>WEB-INF/conf/uiconf/portal/webui/workspace/</include>	  
+	    	    <include>WEB-INF/conf/uiconf/webui</include>	  	    	      	    
+		        <include>WEB-INF/conf/script/</include>
+              </includes>
+            </resource>    
+          </webResources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
