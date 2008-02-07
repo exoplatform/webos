@@ -58,7 +58,7 @@
 	        <value-param>
 	          <name>default.portal</name>
 	          <description>The default portal for checking db is empty or not</description>
-	          <value>classic</value>
+	          <value>webos</value>
 	        </value-param> 
 	        <object-param>
 	          <name>portal.configuration</name>
@@ -66,7 +66,6 @@
 	          <object type="org.exoplatform.portal.config.NewPortalConfig">
 	            <field  name="predefinedOwner">
 	              <collection type="java.util.HashSet">                
-	                <value><string>classic</string></value>
 	                <value><string>webos</string></value>
 	              </collection>
 	            </field>
@@ -81,8 +80,6 @@
 	            <field  name="predefinedOwner">
 	              <collection type="java.util.HashSet">            
 	              	<value><string>platform/administrators</string></value>    
-	              	<value><string>platform/users</string></value>
-	              	<value><string>platform/guests</string></value>
 	              	<value><string>organization/management/executive-board</string></value>	              
 	              </collection>
 	            </field>
