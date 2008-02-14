@@ -36,10 +36,10 @@
                 <include>WEB-INF/classes/locale/portal/</include>
 	    	    <include>WEB-INF/conf/uiconf/portal/webui/container/</include>
 	    	    <include>WEB-INF/conf/uiconf/portal/webui/workspace/</include>	  
-	    	    <include>WEB-INF/conf/uiconf/webui</include>	  	    	      	    
+	    	    <include>WEB-INF/conf/uiconf/webui/component/</include>	  	    	      	    
 		        <include>WEB-INF/conf/script/</include>
               </includes>
-            </resource>    
+            </resource>
           </webResources>
         </configuration>
       </plugin>
