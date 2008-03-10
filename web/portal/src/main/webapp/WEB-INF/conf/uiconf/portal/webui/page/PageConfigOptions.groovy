@@ -6,14 +6,6 @@ String config = null ;
 
 SelectItemCategory normalPageConfigs = new SelectItemCategory("normalPageConfigs") ;
 categories.add(normalPageConfigs);
-
-config = "<page>" +         
-         "  <owner-type></owner-type>" +
-         "  <owner-id></owner-id>" +
-         "  <name>UIPage</name>" +
-         "  <factory-id>Desktop</factory-id>" +
-         "</page>" ;
-
-normalPageConfigs.addSelectItemOption(new SelectItemOption("Desktop Layout", config, "DesktopImage"));
+normalPageConfigs.addSelectItemOption(new SelectItemOption("Desktop Layout", "desktop", "DesktopImage"));
 
 return categories;
