@@ -1,0 +1,17 @@
+<project>
+  <parent>
+    <groupId>org.exoplatform.webos</groupId>
+    <artifactId>config</artifactId>
+    <version>trunk</version>
+  </parent> 
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>exo.webos.web.webosResources</artifactId>
+  <packaging>war</packaging> 
+  <version>${org.exoplatform.webos.version}</version>
+  <name>eXo WebOS Resources</name>
+
+  <build>
+    <finalName>webosResources</finalName>
+  </build>
+</project>

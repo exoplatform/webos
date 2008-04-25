@@ -9,6 +9,7 @@
 
   <modules>
     <module>web/portal</module>
+	<module>web/webosResources</module>
   </modules>
 
   <build>
