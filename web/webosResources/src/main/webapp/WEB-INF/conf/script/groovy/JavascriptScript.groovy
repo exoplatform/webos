@@ -1,0 +1,1 @@
+//JavascriptService.addJavascript("eXo.desktop.UIDockbar", "/javascript/eXo/desktop/UIDockbar.js", ServletContext);

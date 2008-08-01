@@ -1,1 +1,1 @@
-SkinService.addPortalSkin("PortalSkin", "Default", "/webosResources/skin/Stylesheet.css", ServletContext);
+SkinService.addPortalSkin("WebOSSkin", "Default", "/webosResources/skin/Stylesheet.css", ServletContext);
