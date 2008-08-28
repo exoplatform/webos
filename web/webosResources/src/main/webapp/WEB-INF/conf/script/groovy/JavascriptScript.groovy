@@ -1,1 +1,2 @@
-//JavascriptService.addJavascript("eXo.desktop.UIDockbar", "/javascript/eXo/desktop/UIDockbar.js", ServletContext);
+JavascriptService.addJavascript("eXo.desktop.UIDesktop", "/javascript/eXo/desktop/UIDesktop.js", ServletContext);
+JavascriptService.addJavascript("eXo.desktop.UIDockbar", "/javascript/eXo/desktop/UIDockbar.js", ServletContext);
