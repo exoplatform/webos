@@ -87,8 +87,8 @@ UIDockbar.prototype.iconOutEvt = function() {
 UIDockbar.prototype.viewPortlets = function() {
 	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
   var children = eXo.core.DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIWindow") ; 
-	var srcMonitoringImage = "/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/Hide"+this.id+".png" ;
-  var srcPortletsViewerImage = "/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/Show"+this.id+".png" ;
+	var srcMonitoringImage = "/eXoResources/skin/sharedImages/Icon80x80/Hide"+this.id+".png" ;
+  var srcPortletsViewerImage = "/eXoResources/skin/sharedImages/Icon80x80/Show"+this.id+".png" ;
 	eXo.desktop.UIDockbar.showDesktop = false ;
 	for(var i = 0; i < children.length; i++) {
 		if (children[i].style.display == "block" ) {
@@ -268,7 +268,7 @@ UIDockbar.prototype.resetDesktopShowedStatus = function(uiPageDesktop, uiDockBar
   if(this.showDesktop) {
     var portletsViewer = eXo.core.DOMUtil.findDescendantById(uiDockBar, "PortletsViewer") ;
     var blankImage = portletsViewer.src ;
-    var srcMonitoringImage = "/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/HidePortletsViewer.png" ;
+    var srcMonitoringImage = "/eXoResources/skin/sharedImages/Icon80x80/HidePortletsViewer.png" ;
     if(eXo.core.Browser.isIE6()) {
       portletsViewer.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + srcMonitoringImage + "', sizingMethod='scale')" ;
       portletsViewer.src = blankImage ;
