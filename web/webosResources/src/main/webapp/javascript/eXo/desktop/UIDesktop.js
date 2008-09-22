@@ -73,19 +73,21 @@ UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement) {
   if(typeof(uiWindow) == "string") this.object = document.getElementById(uiWindow) ;
   else this.object = uiWindow ;
   this.object.maxIndex = eXo.desktop.UIDesktop.resetZIndex(this.object) ;
-  var numberOfFrame = 10 ;
+  var numberOfFrame = 10 ; 
   if(this.object.style.display == "block") {
     eXo.animation.ImplodeExplode.implode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
     eXo.desktop.UIWindow.saveWindowProperties(this.object, "HIDE");
     this.object.isShowed = false ;
+    
   } else {
-  		this.object.isShowed = true ;
+  	
     var uiDockBar = document.getElementById("UIDockBar") ;
-				var uiPageDesktop	= document.getElementById("UIPageDesktop") ;
+		var uiPageDesktop	= document.getElementById("UIPageDesktop") ;
     eXo.desktop.UIDockbar.resetDesktopShowedStatus(uiPageDesktop, uiDockBar) ;
     eXo.animation.ImplodeExplode.explode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
     eXo.desktop.UIWindow.saveWindowProperties(this.object, "SHOW");
-
+	//	document.getElementById(uiWindow).style.visibility = "visible";
+		this.object.isShowed = true ;  
   	//TODO MinhJS: fix bug for don't apply style css in IE6 in first time.
   	if(eXo.core.Browser.isIE6()) {
   		this.object.style.filter =  "" ;
