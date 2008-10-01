@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.exoplatform.webos</groupId>
     <artifactId>config</artifactId>
-    <version>trunk</version>
+    <version>1.5-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -13,6 +13,34 @@
 
   <build>
     <plugins>
+			<plugin>
+			   <groupId>org.apache.maven.plugins</groupId>
+			   <artifactId>maven-dependency-plugin</artifactId>
+			   <executions>
+			     <execution>
+			       <id>unpack</id>
+			       <phase>compile</phase>
+			       <goals>
+			         <goal>unpack</goal>
+			       </goals>
+			       <configuration>
+			         <artifactItems>
+			           <artifactItem>
+			             <groupId>org.exoplatform.portal</groupId>
+			             <artifactId>exo.portal.web.portal</artifactId>
+			             <version>${org.exoplatform.portal.version}</version>
+			             <type>war</type>
+			             <overWrite>false</overWrite>
+			             <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+			             <excludes>index.jsp,WEB-INF/web.xml,WEB-INF/conf/,WEB-INF/conf/,WEB-INF/classes/locale/navigation/,META-INF/</excludes>
+			           </artifactItem>
+			         </artifactItems>
+			       </configuration>
+			     </execution>
+			   </executions>
+			 </plugin>
+
+<!-- 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -25,22 +53,23 @@
               	<exclude>index.jsp</exclude>
                 <exclude>WEB-INF/web.xml</exclude>
                 <exclude>WEB-INF/conf/</exclude>
-		        <exclude>WEB-INF/classes/locale/navigation/</exclude>
+		        		<exclude>WEB-INF/classes/locale/navigation/</exclude>
               </excludes>
             </resource>
             <resource>
               <directory>${exo.projects.directory.src}/portal/trunk/web/portal/target/exo.portal.web.portal-${org.exoplatform.portal.version}</directory>
               <includes>
                 <include>WEB-INF/classes/locale/portal/</include>
-	    	    <include>WEB-INF/conf/uiconf/portal/webui/container/</include>
-	    	    <include>WEB-INF/conf/uiconf/portal/webui/workspace/</include>
-	    	    <include>WEB-INF/conf/uiconf/webui/component/</include>
-		        <include>WEB-INF/conf/script/</include>
+			    	    <include>WEB-INF/conf/uiconf/portal/webui/container/</include>
+			    	    <include>WEB-INF/conf/uiconf/portal/webui/workspace/</include>
+			    	    <include>WEB-INF/conf/uiconf/webui/component/</include>
+				        <include>WEB-INF/conf/script/</include>
               </includes>
             </resource>
           </webResources>
         </configuration>
       </plugin>
+-->
     </plugins>
   </build>
 </project>

@@ -29,7 +29,7 @@
     </application>     
     
     <application>
-      <instance-id>group#platform/administrators:/exoadmin/PortletRegistryPortlet/PortletRegistry</instance-id>
+      <instance-id>group#platform/administrators:/exoadmin/ApplicationRegistryPortlet/PortletRegistry</instance-id>
       <title>Application Registry</title>
       <show-info-bar>true</show-info-bar>
       <show-application-state>true</show-application-state>

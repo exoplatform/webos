@@ -10,7 +10,7 @@
   <groupId>org.exoplatform.webos</groupId>
   <artifactId>config</artifactId>
   <name>eXo WebOS Config</name>
-  <version>trunk</version>
+  <version>1.5-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -135,8 +135,8 @@
         <org.exoplatform.ws.version>trunk</org.exoplatform.ws.version>
         <org.exoplatform.jcr.version>trunk</org.exoplatform.jcr.version>
         <org.exoplatform.pc.version>trunk</org.exoplatform.pc.version>
-        <org.exoplatform.portal.version>trunk</org.exoplatform.portal.version>
-        <org.exoplatform.webos.version>trunk</org.exoplatform.webos.version>
+        <org.exoplatform.portal.version>2.5-SNAPSHOT</org.exoplatform.portal.version>
+        <org.exoplatform.webos.version>1.5-SNAPSHOT</org.exoplatform.webos.version>
         <test.classes>Test</test.classes>
         <test.skip>true</test.skip>
       </properties>
