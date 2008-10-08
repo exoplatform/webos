@@ -10,11 +10,6 @@
     <edit-permission>manager:/platform/administrators</edit-permission>
     <show-max-window>true</show-max-window>
     
-    <application location-x="100" location-y="150">
-      <instance-id>portal:/eXoWidgetWeb/WelcomeWidget/WelcomeWidget</instance-id>
-      <application-type>eXoWidget</application-type>
-    </application>
-    
     <application>
       <instance-id>group#platform/administrators:/exoadmin/AccountPortlet/Account</instance-id>
       <title>New Account</title>

@@ -9,12 +9,6 @@
 	  <access-permissions>*:/platform/guests</access-permissions>
 	  <edit-permission>manager:/platform/administrators</edit-permission>
     <show-max-window>true</show-max-window>
-    
-    <application>
-	    <instance-id>portal#webos:/eXoWidgetWeb/WelcomeWidget/WelcomeWidget</instance-id>
-	    <application-type>eXoWidget</application-type>
-	    <title>Welcome Widget</title>
-	  </application>
 	  	                 
     <application>
       <instance-id>portal#webos:/exoadmin/AccountPortlet/Account</instance-id>    
@@ -40,18 +34,6 @@
 	  <access-permissions>*:/platform/users</access-permissions>
 	  <edit-permission>*:/platform/administrators</edit-permission>
     <show-max-window>true</show-max-window>
-    
-    <application location-x="100" location-y="150">
-	    <instance-id>portal#webos:/eXoWidgetWeb/WelcomeWidget/WelcomeWidget</instance-id>
-	    <application-type>eXoWidget</application-type>
-	    <title>Welcome Widget</title>
-	  </application>
-	  
-	  <application location-x="300" location-y="150">
-	    <instance-id>portal#webos:/eXoWidgetWeb/CalendarWidget/CalendarWidget</instance-id>
-	    <application-type>eXoWidget</application-type>
-	    <title>Calendar Widget</title>
-	  </application>	      
 	      
     <application>
       <instance-id>portal#webos:/web/BrowserPortlet/Web Explorer</instance-id>    

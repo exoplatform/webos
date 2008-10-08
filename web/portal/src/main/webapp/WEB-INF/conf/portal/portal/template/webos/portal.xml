@@ -6,10 +6,6 @@
   <access-permissions>Everyone</access-permissions>
   <edit-permission>*:/platform/administrators</edit-permission>
   <creator>root</creator>
-  
-  <widget-layout>
-  </widget-layout>
-  
  	<portal-layout> 
     <page-body>    
 	  </page-body>    

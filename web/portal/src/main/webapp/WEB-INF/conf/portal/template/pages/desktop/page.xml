@@ -4,8 +4,4 @@
   <owner-id></owner-id>
   <name></name>
   <factory-id>Desktop</factory-id>
-	<application location-x="100" location-y="150">
-	  <instance-id>/eXoWidgetWeb/WelcomeWidget</instance-id>
-	  <application-type>eXoWidget</application-type>
-	</application>
 </page>
