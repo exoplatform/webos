@@ -25,7 +25,7 @@ UIDockbar.prototype.init = function() {
   }
   
   uiDockbar.originalDockbarHeight = uiDockbar.offsetHeight ;
-  setTimeout("eXo.desktop.UIDockbar.resizeDockBar()",0) ;
+	eXo.desktop.UIDockbar.resizeDockBar() ;
   
   var portletsViewer = document.getElementById("PortletsViewer") ;
   var widgetsViewer = document.getElementById("WidgetsViewer") ;
@@ -40,10 +40,10 @@ UIDockbar.prototype.waitOnLoad = function(images) {
     images[i].onmouseover = UIDockbar.iconOverEvt ;
     images[i].onmouseout = UIDockbar.iconOutEvt ;
   
-    if(eXo.core.Browser.isIE6() && (images[i].alt != "")) {
+    if(eXo.core.Browser.isIE6() && (images[i].getAttribute("altText") != "")) {
       images[i].runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+images[i].src+"', sizingMethod='scale')" ;
-      images[i].src = images[i].alt ;
-      images[i].alt = "" ;
+      images[i].src = images[i].getAttribute("altText") ;
+//      images[i].alt = "" ;
     }
   }
 };
@@ -243,7 +243,9 @@ UIDockbar.prototype.resizeDockBar = function() {
   var icons = eXo.core.DOMUtil.findChildrenByClass(iconContainer, "img", "Icon") ;
   var widthItemControl = 0 ;
   for(var i = 0; i < icons.length; i++) {
-    widthItemControl = (widthItemControl + icons[i].offsetWidth + 5) ;
+    var iconWidth = icons[i].offsetWidth ;
+    if(uiDockbar.defaultIconSize && (iconWidth < uiDockbar.defaultIconSize)) iconWidth = uiDockbar.defaultIconSize ; 
+    widthItemControl = (widthItemControl + iconWidth + 5) ;
   }
     
   var separators = eXo.core.DOMUtil.findChildrenByClass(iconContainer, "img", "Separator") ;
@@ -289,7 +291,7 @@ UIDockbar.prototype.createApplicationIcon = function(iconUrl, iconId) {
   if(eXo.core.Browser.isIE6()) {
     appIcon.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+iconUrl+"', sizingMethod='scale')" ;
     appIcon.src = "/eXoResources/skin/sharedImages/Blank.gif" ;
-    appIcon.alt = "" ;
+//    appIcon.alt = "" ;
   }
   
   appIcon.onmousemove = eXo.desktop.UIDockbar.animationEvt ;
