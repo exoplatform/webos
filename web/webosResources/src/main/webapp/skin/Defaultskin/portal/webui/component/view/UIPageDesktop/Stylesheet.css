@@ -54,6 +54,7 @@
 .UIPageDesktop .UIDockBar .Separator {
 	width: 1px; height: 35px; 
 	margin: 0px 5px ;
+	vertical-align: bottom;
 }
 
 .UIPageDesktop .UIDockBar .Tooltip {

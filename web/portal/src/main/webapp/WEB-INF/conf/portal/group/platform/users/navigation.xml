@@ -10,6 +10,7 @@
 	    <uri>mylink</uri>
 	    <name>mylink</name>
 	    <label>#{platform.users.mylink}</label>
+	    <page-reference>group::platform/users::mylink</page-reference>
 	 	    
 		  <node>
 		    <uri>mylink/blog</uri>
