@@ -211,6 +211,8 @@ UIDesktop.prototype.removeApp = function(uri) {
 	if(result == "OK") {
 		eXo.desktop.UIDesktop.removeWindow("UIWindow-" + appId) ;
 		eXo.desktop.UIDockbar.removeDockbarIcon("DockItem" + appId) ;
+	} else {
+		window.location.reload() ;
 	}
 };
 
