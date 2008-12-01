@@ -36,5 +36,12 @@
       <show-info-bar>true</show-info-bar>
       <show-application-state>true</show-application-state>
     </application>
+    
+    <application>
+      <instance-id>group#platform/administrators:/dashboard/DashboardPortlet/Dashboard</instance-id>
+      <title>Dashboard</title>
+      <show-info-bar>true</show-info-bar>
+      <show-application-state>true</show-application-state>
+    </application>
   </page>    
 </page-set>
