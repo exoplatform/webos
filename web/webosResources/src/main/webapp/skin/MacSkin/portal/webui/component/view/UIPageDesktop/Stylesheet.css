@@ -122,9 +122,11 @@
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .ClickCenterBottom {
-	background: url('background/PageDesktop.gif') no-repeat left -37px;
+	background: url('background/PageDesktop.gif') no-repeat left -37px; /* orientation=lt */
+	background: url('background/PageDesktop-rt.gif') no-repeat right -37px; /* orientation=rt */
 	width: 19px;  height: 13px;
-	margin: 0px 0px 0px 20px;
+	margin: 0px 0px 0px 20px; /* orientation=lt */
+	margin: 0px 20px 0px 0px; /* orientation=rt */
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer {

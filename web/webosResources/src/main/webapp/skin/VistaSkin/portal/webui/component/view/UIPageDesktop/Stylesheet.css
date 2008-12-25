@@ -79,13 +79,17 @@
 /*=============================Right Click DockBar Menu=========================*/
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopLeftRightClickPopupMenu {
-  background: url('background/PageDesktop.png') no-repeat left top;
-  padding-left: 7px;
+  background: url('background/PageDesktop.png') no-repeat left top; /* orientation=lt */
+  background: url('background/PageDesktop-rt.png') no-repeat right top; /* orientation=rt */
+  padding: 0px 0px 0px 7px; /* orientation=lt */
+  padding: 0px 7px 0px 0px; /* orientation=rt */
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopRightRightClickPopupMenu {
-  background: url('background/PageDesktop.png') no-repeat right -7px ;
-  padding-right: 10px;
+  background: url('background/PageDesktop.png') no-repeat right -7px; /* orientation=lt */
+  background: url('background/PageDesktop-rt.png') no-repeat left -7px; /* orientation=rt */
+  padding: 0px 10px 0px 0px; /* orientation=lt */
+  padding: 0px 0px 0px 10px; /* orientation=rt */
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopCenterRightClickPopupMenu {
@@ -94,24 +98,32 @@
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .MiddleLeftRightClickPopupMenu {
-  background: url('background/MiddleLeftDecktopVista7x1.png') repeat-y left ;
-  padding-left: 7px;
+  background: url('background/MiddleLeftDecktopVista7x1.png') repeat-y left; /* orientation=lt */
+  background: url('background/MiddleLeftDecktopVista7x1-rt.png') repeat-y right; /* orientation=rt */
+  padding: 0px 0px 0px 7px; /* orientation=lt */
+  padding: 0px 7px 0px 0px; /* orientation=rt */
 	height: 100%;
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .MiddleRightRightClickPopupMenu {
-  background: url('background/MiddleRightDecktop10x1.png') repeat-y right ;
-  padding-right: 10px;
+  background: url('background/MiddleRightDecktop10x1.png') repeat-y right; /* orientation=lt */
+  background: url('background/MiddleRightDecktop10x1-rt.png') repeat-y left; /* orientation=rt */
+  padding: 0px 10px 0px 0px; /* orientation=lt */
+  padding: 0px 0px 0px 10px; /* orientation=rt */
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .BottomLeftRightClickPopupMenu {
-  background: url('background/PageDesktop.png') no-repeat left -21px;
-  padding-left: 34px;
+  background: url('background/PageDesktop.png') no-repeat left -21px; /* orientation=lt */
+  background: url('background/PageDesktop-rt.png') no-repeat right -21px; /* orientation=rt */
+  padding: 0px 0px 0px 34px; /* orientation=lt */
+  padding: 0px 34px 0px 0px; /* orientation=rt */
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .BottomRightRightClickPopupMenu {
-  background: url('background/PageDesktop.png') no-repeat right -40px ;
-  padding-right: 10px;
+  background: url('background/PageDesktop.png') no-repeat right -40px ; /* orientation=lt */
+  background: url('background/PageDesktop-rt.png') no-repeat left -40px ; /* orientation=rt */
+  padding: 0px 10px 0px 0px; /* orientation=lt */
+  padding: 0px 0px 0px 10px; /* orientation=rt */
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .BottomCenterRightClickPopupMenu {
@@ -127,7 +139,8 @@
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .ClickCenterBottom {
 	width: 14px;  height: 10px;
-	margin: 0px 0px 0px 20px;
+	margin: 0px 0px 0px 20px; /* orientation=lt */
+	margin: 0px 20px 0px 0px; /* orientation=rt */
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer {
@@ -139,13 +152,19 @@
 	width: 230px;
 }
 
+.UIPageDesktop .UIRightClickPopupMenu .MenuItem {
+	display: block;
+}
+
 .UIDockBar .UIContextMenuContainer {
 	position: absolute; 
-	left: -25px; 
+	left: -25px; /* orientation=lt */
+	right: -200px; /* orientation=rt */ 
 	top: -7px;
 }
 
 .UIDockBar .UIRightClickPopupMenu .CloseDockBarIcon {
-	background: url('background/PageDesktop.png') no-repeat left bottom;
-	margin: 0px 0px 0px 5px;
+	background: url('background/PageDesktop.png') no-repeat left bottom; /* orientation=lt */
+	background: url('background/PageDesktop-rt.png') no-repeat right bottom; /* orientation=rt */
+	margin: 0px 0px 0px 5px; /* orientation=lt */
 }

@@ -17,7 +17,7 @@ UIWindow.prototype.init = function(popup, isShow, posX, posY) {
 	popup.onmousedown = this.mousedownOnPopup ;
 
 	var windowPortletInfo = DOMUtil.findFirstDescendantByClass(popup, "div", "WindowPortletInfo") ;
-	this.superClass.setPosition(popup, posX, posY) ;
+	this.superClass.setPosition(popup, posX, posY, eXo.core.I18n.isRT()) ;
 	try {
 		windowPortletInfo.onmousedown = this.initDND ;
 	} catch(err) {
@@ -89,7 +89,8 @@ UIWindow.prototype.maximizeWindowEvt = function(evt) {
   if(portletWindow.maximized) {
     portletWindow.maximized = false ;
     portletWindow.style.top = uiWindow.posY + "px" ;
-    portletWindow.style.left = uiWindow.posX + "px" ;
+    if(eXo.core.I18n.isLT()) portletWindow.style.left = uiWindow.posX + "px" ;
+    else portletWindow.style.right = uiWindow.posX + "px" ;
     portletWindow.style.width = uiWindow.originalWidth + "px" ;
 		for(var i = 0; i < uiResizableBlock.length; i++) {
   	 if (uiResizableBlock[i].originalHeight) {
@@ -103,7 +104,8 @@ UIWindow.prototype.maximizeWindowEvt = function(evt) {
   } else {
     uiWindow.backupObjectProperties(portletWindow, uiResizableBlock) ;
     portletWindow.style.top = "0px" ;
-    portletWindow.style.left = "0px" ;
+    if(eXo.core.I18n.isLT()) portletWindow.style.left = "0px" ;
+    else portletWindow.style.right = "0px" ;
     portletWindow.style.width = "100%" ;
 		portletWindow.style.height = "auto" ;
     var delta = eXo.core.Browser.getBrowserHeight() - portletWindow.clientHeight ;
@@ -287,7 +289,7 @@ UIWindow.prototype.saveWindowProperties = function(object, appStatus) {
 	if(!appStatus) {
 	  params = [
 	  	{name : "objectId", value : object.id.replace(/^UIWindow-/, "")},
-	  	{name : "posX", value : parseInt(object.style.left)},
+	  	{name : "posX", value : (eXo.core.I18n.isLT() ? parseInt(object.style.left) : parseInt(object.style.right)) },
 	  	{name : "posY", value : parseInt(object.style.top)},
 	  	{name : "zIndex", value : object.style.zIndex},
 	  	{name : "windowWidth", value : object.offsetWidth},

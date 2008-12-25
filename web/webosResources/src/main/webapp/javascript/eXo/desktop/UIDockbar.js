@@ -121,7 +121,7 @@ UIDockbar.prototype.viewPortlets = function() {
 
 UIDockbar.prototype.viewWidgets = function() {
 	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
-  var children = eXo.core.DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIWidget") ; 
+  var children = eXo.core.DOMUtil.findChildrenByClass(uiPageDesktop, "div", "UIGadget") ; 
 	for(var i = 0; i < children.length; i++) {
 		if (children[i].style.display != "none" ) {
 			children[i].style.display = "none" ;
@@ -161,7 +161,6 @@ UIDockbar.prototype.animationEvt = function(e) {
   var fixBugImageElement = document.getElementById("FixBug") ;
   
   var uiPageDesktop = document.getElementById("UIPageDesktop") ;
-  var fixIE7Position = uiPageDesktop.offsetLeft;
 
   var selectedIconX = eXo.desktop.UIDesktop.findPosXInDesktop(this) ;
   var middleIcon = selectedIconX + (this.offsetWidth / 2) ;
