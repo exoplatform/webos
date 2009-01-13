@@ -321,25 +321,42 @@ UIDockbar.prototype.showNavigation = function(event) {
   var uiDockbar = document.getElementById("UIDockBar") ;
 	var dockNavigation = document.getElementById("DockNavigation") ;
 	dockNavigation.style.display = "block" ;
-	dockNavigation.menuItemContainer = eXo.core.DOMUtil.findFirstDescendantByClass(dockNavigation, "div", "MenuItemContainer") ;
+	var menuItemContainer = eXo.core.DOMUtil.findFirstDescendantByClass(dockNavigation, "div", "MenuItemContainer") ;
+	dockNavigation.menuItemContainer = menuItemContainer ;
 	eXo.portal.UIExoStartMenu.createSlide(dockNavigation) ;
 	
 	eXo.core.Mouse.update(event) ;
 
 	var fixWidthForIE7 = 0 ;
-	var UIWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
+	var uiWorkingWS = document.getElementById("UIWorkingWorkspace") ;
 	if (eXo.core.Browser.isIE7() && document.getElementById("UIDockBar")) {
-		 fixWidthForIE7 = UIWorkingWorkspace.offsetLeft ;
+		if(eXo.core.I18n.isLT()) fixWidthForIE7 = uiWorkingWS.offsetLeft ;
+		else {fixWidthForIE7 = 16;}
 	}
-
-	var intTop = eXo.core.Mouse.mouseyInPage - (eXo.core.Browser.findPosY(dockNavigation) - dockNavigation.offsetTop) ;
-	var intLeft = eXo.core.Mouse.mousexInPage - (eXo.core.Browser.findPosX(dockNavigation) - dockNavigation.offsetLeft) + fixWidthForIE7 ;
-	dockNavigation.style.left = intLeft + "px" ;
 	
-	var browserHeight = eXo.core.Browser.getBrowserHeight() ;
-	if (dockNavigation.menuItemContainer.offsetHeight + 64 < browserHeight) {
-		dockNavigation.style.top = intTop + "px" ;
+	menuItemContainer.style.top = -(menuItemContainer.offsetHeight) + "px" ;
+	
+	var dockLeft = eXo.core.Browser.findPosX(dockNavigation) ;
+	var dockRight = dockLeft + dockNavigation.offsetWidth ;
+	var menuLeft = eXo.core.Browser.findPosX(menuItemContainer) ;
+	var menuRight = menuLeft + menuItemContainer.offsetWidth ;
+
+	if(eXo.core.I18n.isLT()) {
+		var intLeft = dockLeft - menuLeft ;
+		intLeft += eXo.core.Mouse.mousexInPage - eXo.core.Browser.findPosX(uiDockbar) + fixWidthForIE7 ;
+		dockNavigation.style.left = intLeft + "px" ;
+	} else {
+		var intRight = menuRight - dockRight ;
+		intRight += (eXo.core.Browser.findPosX(uiDockbar) + uiDockbar.offsetWidth - eXo.core.Mouse.mousexInPage) + fixWidthForIE7 ;
+		dockNavigation.style.right = intRight + "px" ;
 	}
+	
+	var intTop = eXo.core.Mouse.mouseyInPage - (eXo.core.Browser.findPosY(dockNavigation) - dockNavigation.offsetTop) ;
+	var browserHeight = eXo.core.Browser.getBrowserHeight() ;
+	if (eXo.core.Mouse.mouseyInPage - menuItemContainer.offsetHeight < 0) {
+		intTop = uiDockbar.offsetHeight - ((browserHeight - menuItemContainer.offsetHeight)/2) ;
+	}
+	dockNavigation.style.top = intTop + "px";
 	
 };
 
