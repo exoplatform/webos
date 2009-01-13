@@ -46,9 +46,7 @@
 
 .UIPageDesktop .UIDockBar .IconContainer {
   vertical-align: bottom ;
-  padding: 3px 35px 0px 0px; /* orientation=lt */
-  padding: 3px 0px 0px 35px; /* orientation=rt */
-	_padding: 3px 0px 0px 0px;
+	padding: 3px 0px 0px 0px;
   margin: auto ;
 }
 

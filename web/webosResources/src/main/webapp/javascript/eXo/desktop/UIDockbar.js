@@ -255,7 +255,22 @@ UIDockbar.prototype.resizeDockBar = function() {
   }
   
   iconContainer.style.width = (widthItemControl + totalWidthSeparators + 10) + "px" ;
-  uiDockbar.style.width = (iconContainer.offsetWidth + 10) + "px" ;
+  
+  if(!uiDockbar.totalPadding) {
+	  var pr = iconContainer.parentNode ;
+	  var totalPadding = 0 ;
+	  while(pr) {
+	  	var pad = parseInt(eXo.core.DOMUtil.getStyle(pr, "paddingRight")) ;
+	  	if(!isNaN(pad)) totalPadding += pad ;
+	  	pad = parseInt(eXo.core.DOMUtil.getStyle(pr, "paddingLeft")) ;
+	  	if(!isNaN(pad)) totalPadding += pad ;
+	  	if(pr.parentNode == uiDockbar) break;
+	  	pr = pr.parentNode ;
+	  }
+	  uiDockbar.totalPadding = totalPadding ;
+  }
+  
+  uiDockbar.style.width = (iconContainer.offsetWidth + uiDockbar.totalPadding) + "px" ;
   uiDockbar.style.left = ((uiPageDesktop.offsetWidth - uiDockbar.offsetWidth) / 2) + "px" ;
 } ;
 
@@ -329,12 +344,20 @@ UIDockbar.prototype.showNavigation = function(event) {
 
 	var fixWidthForIE7 = 0 ;
 	var uiWorkingWS = document.getElementById("UIWorkingWorkspace") ;
-	if (eXo.core.Browser.isIE7() && document.getElementById("UIDockBar")) {
-		if(eXo.core.I18n.isLT()) fixWidthForIE7 = uiWorkingWS.offsetLeft ;
-		else {fixWidthForIE7 = 16;}
-	}
+	if(eXo.core.I18n.isLT()) {
+		if (eXo.core.Browser.isIE7() && document.getElementById("UIDockBar")) {
+			fixWidthForIE7 = uiWorkingWS.offsetLeft ;
+		}
+	} else if(eXo.core.Browser.getBrowserType() == "ie") fixWidthForIE7 = 16;
 	
 	menuItemContainer.style.top = -(menuItemContainer.offsetHeight) + "px" ;
+	
+	//TODO: add transparent border in blockMenu to fix bug blockMenu out of menuItemContainer in Vista desktopPage 
+	if(eXo.core.Browser.isIE6()) {
+		var blockMenu = eXo.core.DOMUtil.findFirstDescendantByClass(menuItemContainer, "div", "BlockMenu") ;
+		blockMenu.style.borderBottom = "solid 1px white" ;
+		blockMenu.style.filter = "chroma(color=white)"; 
+	}
 	
 	var dockLeft = eXo.core.Browser.findPosX(dockNavigation) ;
 	var dockRight = dockLeft + dockNavigation.offsetWidth ;
