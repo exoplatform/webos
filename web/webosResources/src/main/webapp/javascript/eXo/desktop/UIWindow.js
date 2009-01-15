@@ -162,8 +162,13 @@ UIWindow.prototype.resizeWindowEvt = function(evt) {
 	if(!evt) evt = window.event ;
 	var uiWindow = eXo.desktop.UIWindow;
 	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
-	var deltaX = evt.clientX - uiWindow.initMouseX ;
-	var deltaY = evt.clientY - uiWindow.initMouseY ;
+	if(eXo.core.I18n.isLT()) {
+		var deltaX = evt.clientX - uiWindow.initMouseX ;
+		var deltaY = evt.clientY - uiWindow.initMouseY ;
+	} else {
+		var deltaX = uiWindow.initMouseX - evt.clientX ;
+		var deltaY = evt.clientY - uiWindow.initMouseY ;
+	}
 	var uiApplication = eXo.core.DOMUtil.findFirstDescendantByClass(uiWindow.portletWindow, "div", "UIApplication") ;
 	uiWindow.portletWindow.style.width = Math.max(10, (uiWindow.originalWidth + deltaX)) + "px" ;
 	for(var i = 0; i < uiWindow.resizableObject.length; i++) {
