@@ -25,9 +25,9 @@ UIWindow.prototype.init = function(popup, isShow, posX, posY) {
 	}
 	
 	var windowPortletControl = DOMUtil.findFirstDescendantByClass(popup, "div", "WindowPortletControl") ;
-	var minimizedIcon = DOMUtil.findFirstDescendantByClass(windowPortletControl, "div", "MinimizedIcon") ;
+	var minimizedIcon = DOMUtil.findFirstDescendantByClass(popup, "div", "MinimizedIcon") ;
 	minimizedIcon.onmouseup = this.minimizeWindowEvt ; 
-	var maximizedIcon = DOMUtil.findFirstDescendantByClass(windowPortletControl, "div", "MaximizedIcon") ;
+	var maximizedIcon = DOMUtil.findFirstDescendantByClass(popup, "div", "MaximizedIcon") ;
 	maximizedIcon.onmouseup = this.maximizeWindowEvt ;
 	var resizeArea = DOMUtil.findFirstDescendantByClass(popup, "div", "ResizeArea") ;
 	resizeArea.onmousedown = this.startResizeWindowEvt ;
@@ -170,7 +170,7 @@ UIWindow.prototype.resizeWindowEvt = function(evt) {
 		var deltaY = evt.clientY - uiWindow.initMouseY ;
 	}
 	var uiApplication = eXo.core.DOMUtil.findFirstDescendantByClass(uiWindow.portletWindow, "div", "UIApplication") ;
-	uiWindow.portletWindow.style.width = Math.max(10, (uiWindow.originalWidth + deltaX)) + "px" ;
+	uiWindow.portletWindow.style.width = Math.max(200, (uiWindow.originalWidth + deltaX)) + "px" ;
 	for(var i = 0; i < uiWindow.resizableObject.length; i++) {
 		uiWindow.resizableObject[i].style.height = Math.max(10,(uiWindow.resizableObject[i].originalHeight + deltaY)) + "px" ;
 	}
