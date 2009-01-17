@@ -25,7 +25,6 @@ UIDockbar.prototype.init = function() {
   }
   
   uiDockbar.originalDockbarHeight = uiDockbar.offsetHeight ;
-	eXo.desktop.UIDockbar.resizeDockBar() ;
   
   var portletsViewer = document.getElementById("PortletsViewer") ;
   var widgetsViewer = document.getElementById("WidgetsViewer") ;
