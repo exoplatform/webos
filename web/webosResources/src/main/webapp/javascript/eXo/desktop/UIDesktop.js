@@ -234,4 +234,17 @@ UIDesktop.prototype.removeWindow = function (idWindow) {
 	if(uiWindow) eXo.core.DOMUtil.removeElement(uiWindow);
 };
 
+UIDesktop.prototype.removeWindowContent = function (idWindow) {
+	var uiWindow = document.getElementById("UIWindow-" + idWindow) ;
+	if(uiWindow) {
+		if(uiWindow.style.display != "none") eXo.desktop.UIDesktop.showHideWindow(uiWindow, document.getElementById("DockItem"+idWindow)) ;
+		var portletFrag = eXo.core.DOMUtil.findFirstDescendantByClass(uiWindow, "div", "PORTLET-FRAGMENT") ;
+		for(var i = 0; i < portletFrag.childNodes.length; i++) {
+			portletFrag.removeChild(portletFrag.childNodes[i]) ;
+		}
+		portletFrag.innerHTML = "<span></span>" ;
+		
+	}
+};
+
 eXo.desktop.UIDesktop = new UIDesktop() ;
