@@ -145,5 +145,6 @@
 }
 
 .UIDockBar .UIRightClickPopupMenu .CloseDockBarIcon {
-	background: url('background/PageDesktop.gif') no-repeat left -50px;
+	background: url('background/PageDesktop.gif') no-repeat left -50px; /* orientation=lt */
+	background: url('background/PageDesktop-rt.gif') no-repeat right -50px; /* orientation=rt */
 }

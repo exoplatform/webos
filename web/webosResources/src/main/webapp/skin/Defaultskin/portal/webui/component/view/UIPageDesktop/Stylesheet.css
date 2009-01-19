@@ -21,7 +21,7 @@
 }
 
 .UIPageDesktop .UIDockBar .Icon {
-  width: 40px ; height: 40px ;
+  height: 40px ;
   vertical-align: bottom;
 }
 
@@ -73,25 +73,23 @@
 }
 
 .UIPageDesktop .UIWindow .UIFormInputSet {
-	width: 100%;
+	width: auto;
 }
 /*=============================Right Click DockBar Menu=========================*/
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopLeftRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') left no-repeat -4px;
+  background: url('background/PageDesktop.gif') no-repeat left -4px;
   padding-left: 3px;
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopRightRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') right no-repeat -4px;
+  background: url('background/PageDesktop.gif') no-repeat right -4px;
   padding-right: 3px;
 }
 
 .UIPageDesktop .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopCenterRightClickPopupMenu {
   background: url('background/PageDesktop.gif') repeat-x top left;
   height: 3px;
-	width: 222px;
-	_width: 224px;
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .MiddleLeftRightClickPopupMenu {
@@ -106,12 +104,12 @@
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .BottomLeftRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') left no-repeat -19px;
+  background: url('background/PageDesktop.gif') no-repeat left -19px;
   padding-left: 3px;
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .BottomRightRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') right no-repeat -19px ;
+  background: url('background/PageDesktop.gif') no-repeat right -19px ;
   padding-right: 3px;
 }
 
@@ -142,7 +140,8 @@
 }
 
 .UIDockBar .UIRightClickPopupMenu .CloseDockBarIcon {
-	background: url('background/PageDesktop.gif') no-repeat left -40px;
+	background: url('background/PageDesktop.gif') no-repeat left -40px; /* orientation=lt */
+	background: url('background/PageDesktop-rt.gif') no-repeat right -40px; /* orientation=rt */
 }
 
 .UIDockBar .UIContextMenuContainer {
