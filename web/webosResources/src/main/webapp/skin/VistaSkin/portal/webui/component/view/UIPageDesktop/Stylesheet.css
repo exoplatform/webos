@@ -20,7 +20,7 @@
 }
 
 .UIPageDesktop .UIDockBar .Icon {
-  width: 40px ;  height: 40px ;
+  height: 40px ;
   vertical-align: bottom;
 }
 
@@ -167,4 +167,12 @@
 	background: url('background/PageDesktop.png') no-repeat left -70px; /* orientation=lt */
 	background: url('background/PageDesktop-rt.png') no-repeat right -70px; /* orientation=rt */
 	margin: 0px 0px 0px 5px; /* orientation=lt */
+	margin: 0px 5px 0px 0px; /* orientation=rt */
+}
+
+.UIDockBar .UIRightClickPopupMenu .QuitDockBarIcon {
+	background: url('background/PageDesktop.png') no-repeat left -94px; /* orientation=lt */
+	background: url('background/PageDesktop-rt.png') no-repeat right -94px; /* orientation=rt */
+	margin: 0px 0px 0px 5px; /* orientation=lt */
+	margin: 0px 5px 0px 0px; /* orientation=rt */
 }

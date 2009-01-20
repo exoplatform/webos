@@ -21,7 +21,7 @@
 }
 
 .UIPageDesktop .UIDockBar .Icon {
-  width: 40px; height: 40px;
+  height: 40px;
   vertical-align: bottom;
 }
 
@@ -148,3 +148,9 @@
 	background: url('background/PageDesktop.gif') no-repeat left -50px; /* orientation=lt */
 	background: url('background/PageDesktop-rt.gif') no-repeat right -50px; /* orientation=rt */
 }
+
+.UIDockBar .UIRightClickPopupMenu .QuitDockBarIcon {
+	background: url('background/PageDesktop.gif') no-repeat left -74px; /* orientation=lt */
+	background: url('background/PageDesktop-rt.gif') no-repeat right -74px; /* orientation=rt */
+}
+

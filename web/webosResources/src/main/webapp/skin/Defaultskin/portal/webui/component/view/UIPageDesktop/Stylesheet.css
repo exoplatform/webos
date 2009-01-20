@@ -144,6 +144,11 @@
 	background: url('background/PageDesktop-rt.gif') no-repeat right -40px; /* orientation=rt */
 }
 
+.UIDockBar .UIRightClickPopupMenu .QuitDockBarIcon {
+	background: url('background/PageDesktop.gif') no-repeat left -64px; /* orientation=lt */
+	background: url('background/PageDesktop-rt.gif') no-repeat right -64px; /* orientation=rt */
+}
+
 .UIDockBar .UIContextMenuContainer {
 	position: absolute; 
 	left: -40px; 
