@@ -25,6 +25,10 @@
   vertical-align: bottom;
 }
 
+.UIPageDesktop .UIDockBar .ShowIcon {
+	background: url('background/Indicator.png') no-repeat center bottom;
+}
+
 .UIPageDesktop .UIDockBar .DockbarLeft {
   background: url('background/LeftDockbar2x47.png') no-repeat left bottom ;
   padding: 0px 0px 0px 2px ;
