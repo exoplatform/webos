@@ -70,31 +70,39 @@ UIDesktop.prototype.isMaxZIndex = function(object) {
 	return isMax ;
 };
 
-UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement) {
+UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement, mode) {
 	var DOMUtil = eXo.core.DOMUtil ;
   if(typeof(uiWindow) == "string") this.object = document.getElementById(uiWindow) ;
   else this.object = uiWindow ;
   
   var portletId = (this.object ? this.object.id : uiWindow).replace(/^UIWindow-/, "") ;
   var portletFrag = DOMUtil.findFirstDescendantByClass(this.object, "div", "PORTLET-FRAGMENT") ;
-  if(DOMUtil.getChildrenByTagName(portletFrag, "div").length < 1) {
-  	var uiPage = eXo.core.DOMUtil.findAncestorByClass(this.object, "UIPage") ;
-		var uiPageIdNode = eXo.core.DOMUtil.findFirstDescendantByClass(uiPage, "div", "id") ;
-		containerBlockId = uiPageIdNode.innerHTML ;
-		var params = [{name : "objectId", value: portletId}] ;
-		ajaxGet(eXo.env.server.createPortalURL(containerBlockId, "ShowPortlet", true, params)) ;
-  }
   
   var dockIcon = document.getElementById("DockItem"+portletId) ;
   this.object.maxIndex = eXo.desktop.UIDesktop.resetZIndex(this.object) ;
   var numberOfFrame = 10 ; 
+  if(mode == "QUIT") {
+  	if(this.object.style.display == "block") {
+	    eXo.animation.ImplodeExplode.implode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
+	    this.object.isShowed = false ;
+  	}
+    eXo.desktop.UIWindow.saveWindowProperties(this.object, "QUIT");
+  	if(dockIcon) DOMUtil.removeClass(dockIcon, "ShowIcon") ;
+  	return ;
+  }
   if(this.object.style.display == "block") {
     eXo.animation.ImplodeExplode.implode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
     eXo.desktop.UIWindow.saveWindowProperties(this.object, "HIDE");
     this.object.isShowed = false ;
-    if(dockIcon) DOMUtil.removeClass(dockIcon, "ShowIcon") ;
-    
+    if(dockIcon) DOMUtil.addClass(dockIcon, "ShowIcon") ;
   } else {
+	  if(DOMUtil.getChildrenByTagName(portletFrag, "div").length < 1) {
+	  	var uiPage = eXo.core.DOMUtil.findAncestorByClass(this.object, "UIPage") ;
+			var uiPageIdNode = eXo.core.DOMUtil.findFirstDescendantByClass(uiPage, "div", "id") ;
+			containerBlockId = uiPageIdNode.innerHTML ;
+			var params = [{name : "objectId", value: portletId}] ;
+			ajaxGet(eXo.env.server.createPortalURL(containerBlockId, "ShowPortlet", true, params)) ;
+	  }
   	
     var uiDockBar = document.getElementById("UIDockBar") ;
 		var uiPageDesktop	= document.getElementById("UIPageDesktop") ;
@@ -240,13 +248,12 @@ UIDesktop.prototype.removeWindow = function (idWindow) {
 UIDesktop.prototype.removeWindowContent = function (idWindow) {
 	var uiWindow = document.getElementById("UIWindow-" + idWindow) ;
 	if(uiWindow) {
-		if(uiWindow.style.display != "none") eXo.desktop.UIDesktop.showHideWindow(uiWindow, document.getElementById("DockItem"+idWindow)) ;
 		var portletFrag = eXo.core.DOMUtil.findFirstDescendantByClass(uiWindow, "div", "PORTLET-FRAGMENT") ;
 		for(var i = 0; i < portletFrag.childNodes.length; i++) {
 			portletFrag.removeChild(portletFrag.childNodes[i]) ;
 		}
 		portletFrag.innerHTML = "<span></span>" ;
-		
+		eXo.desktop.UIDesktop.showHideWindow(uiWindow, document.getElementById("DockItem"+idWindow), "QUIT") ;
 	}
 };
 
