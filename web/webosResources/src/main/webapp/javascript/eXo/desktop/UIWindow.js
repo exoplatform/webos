@@ -192,7 +192,12 @@ UIWindow.prototype.backupObjectProperties = function(windowPortlet, resizableCom
 		resizableComponents[i].originalHeight = resizableComponents[i].offsetHeight ;
 	}
   
-	UIWindow.posX = eXo.desktop.UIDesktop.findPosXInDesktop(windowPortlet) ;
+  var posX = eXo.desktop.UIDesktop.findPosXInDesktop(windowPortlet) ;
+	if(eXo.core.I18n.isLT()) UIWindow.posX = posX ;
+	else {
+		var offPr = windowPortlet.offsetParent ;
+		UIWindow.posX = eXo.desktop.UIDesktop.findPosXInDesktop(offPr) + offPr.offsetWidth - posX - windowPortlet.offsetWidth ;
+	}
 	UIWindow.posY = eXo.desktop.UIDesktop.findPosYInDesktop(windowPortlet) ;
 	UIWindow.originalWidth = windowPortlet.offsetWidth ;
 	UIWindow.originalHeight = windowPortlet.offsetHeight ;
