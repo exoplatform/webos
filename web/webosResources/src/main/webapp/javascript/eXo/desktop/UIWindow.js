@@ -192,7 +192,7 @@ UIWindow.prototype.backupObjectProperties = function(windowPortlet, resizableCom
 		resizableComponents[i].originalHeight = resizableComponents[i].offsetHeight ;
 	}
   
-  UIWindow.posX = eXo.desktop.UIDesktop.findPosXInDesktop(windowPortlet, eXo.core.I18n.isLT() ? false : true) ;
+  UIWindow.posX = eXo.desktop.UIDesktop.findPosXInDesktop(windowPortlet, eXo.core.I18n.isRT()) ;
 	UIWindow.posY = eXo.desktop.UIDesktop.findPosYInDesktop(windowPortlet) ;
 	UIWindow.originalWidth = windowPortlet.offsetWidth ;
 	UIWindow.originalHeight = windowPortlet.offsetHeight ;

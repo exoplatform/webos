@@ -136,7 +136,7 @@ UIDesktop.prototype.findPosYInDesktop = function(object) {
 } ;
 
 UIDesktop.prototype.backupWindowProperties = function(uiWindow) {
-  uiWindow.originalX = eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT() ? true : false) ;
+  uiWindow.originalX = eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT()) ;
   uiWindow.originalY = eXo.desktop.UIDesktop.findPosYInDesktop(uiWindow) ;
   uiWindow.originalW = uiWindow.offsetWidth ;
   uiWindow.originalH = uiWindow.offsetHeight ;

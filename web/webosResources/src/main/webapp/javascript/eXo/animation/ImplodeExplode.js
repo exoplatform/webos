@@ -8,7 +8,7 @@ ImplodeExplode.prototype.doInit = function(uiWindow, clickedElement, containerId
 	this.object = uiWindow ;
 	this.object.loop = numberOfFrame ;
 	this.object.iconY = eXo.core.Browser.findPosYInContainer(clickedElement, container) ;
-	this.object.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, container, eXo.core.I18n.isLT() ? false : true) ;
+	this.object.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, container, eXo.core.I18n.isRT()) ;
 	this.object.iconW = clickedElement.offsetWidth ;
 	this.object.iconH = clickedElement.offsetHeight ;
 
@@ -32,9 +32,8 @@ ImplodeExplode.prototype.doCenterInit = function(uiWindow, clickedElement, conta
 		this.object.iconY = this.object.originalY + this.object.originalH/2 ;
 		this.object.iconX = this.object.originalX + this.object.originalW/2 ;
 	} else {
-		var isRT = eXo.core.I18n.isRT() ? true : false ;
 		this.object.iconY = eXo.core.Browser.findPosYInContainer(this.object, container) + this.object.offsetHeight/2 ;
-		this.object.iconX = eXo.core.Browser.findPosXInContainer(this.object, container, isRT) + this.object.offsetWidth/2 ;
+		this.object.iconX = eXo.core.Browser.findPosXInContainer(this.object, container, eXo.core.I18n.isRT()) + this.object.offsetWidth/2 ;
 	}
 	this.object.iconW = 1 ;
 	this.object.iconH = 1 ;

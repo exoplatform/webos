@@ -161,9 +161,10 @@ UIDockbar.prototype.animationEvt = function(e) {
   
   var uiPageDesktop = document.getElementById("UIPageDesktop") ;
 
-  var selectedIconX = eXo.desktop.UIDesktop.findPosXInDesktop(this) ;
+  var selectedIconX = eXo.desktop.UIDesktop.findPosXInDesktop(this, eXo.core.I18n.isRT()) ;
   var middleIcon = selectedIconX + (this.offsetWidth / 2) ;
   var mouseX = eXo.core.Browser.findMouseRelativeX(uiPageDesktop, e) ;
+  if(eXo.core.I18n.isRT()) mouseX = uiPageDesktop.offsetWidth - mouseX ;
 
   var distanceWeight =  (middleIcon - mouseX)/(2*curve*(middleIcon - selectedIconX)) ;
   
