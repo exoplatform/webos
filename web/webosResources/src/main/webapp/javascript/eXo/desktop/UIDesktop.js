@@ -118,16 +118,14 @@ UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement, mode) {
   	}
 		//fix display scroll in first time.
 		var blockResize = eXo.core.DOMUtil.findFirstDescendantByClass(this.object, "div", "UIResizableBlock");
-		if (blockResize) blockResize.style.overflow = "hidden" ;
+//		if (blockResize) blockResize.style.overflow = "hidden" ;
   }
 //  eXo.desktop.UIDockbar.containerMouseOver() ;
 };
 
-UIDesktop.prototype.findPosXInDesktop = function(object) {
+UIDesktop.prototype.findPosXInDesktop = function(object, isRTL) {
   var uiPageDesktop = eXo.core.DOMUtil.findAncestorByClass(object, "UIPageDesktop") ;
-  var posXUIPageDesktop = eXo.core.Browser.findPosX(uiPageDesktop) ;
-  var posXObject = eXo.core.Browser.findPosX(object) ;
-  return (posXObject - posXUIPageDesktop) ;
+  return eXo.core.Browser.findPosXInContainer(object, uiPageDesktop, isRTL) ;
 } ;
 
 UIDesktop.prototype.findPosYInDesktop = function(object) {
@@ -138,8 +136,8 @@ UIDesktop.prototype.findPosYInDesktop = function(object) {
 } ;
 
 UIDesktop.prototype.backupWindowProperties = function(uiWindow) {
-  uiWindow.originalX = eXo.desktop.UIDesktop.findPosYInDesktop(uiWindow) ;
-  uiWindow.originalY = eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow) ;
+  uiWindow.originalX = eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT() ? true : false) ;
+  uiWindow.originalY = eXo.desktop.UIDesktop.findPosYInDesktop(uiWindow) ;
   uiWindow.originalW = uiWindow.offsetWidth ;
   uiWindow.originalH = uiWindow.offsetHeight ;
   uiWindow.style.visibility = "visible" ;
