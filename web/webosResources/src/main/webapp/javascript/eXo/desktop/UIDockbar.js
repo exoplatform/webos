@@ -39,10 +39,15 @@ UIDockbar.prototype.waitOnLoad = function(images) {
     images[i].onmouseover = UIDockbar.iconOverEvt ;
     images[i].onmouseout = UIDockbar.iconOutEvt ;
   
-    if(eXo.core.Browser.isIE6() && (images[i].getAttribute("altText") != "")) {
+    var altText = images[i].previousSibling;
+    while (altText.nodeType!=1)
+	  {
+	  altText=altText.previousSibling;
+	  }
+    if(eXo.core.Browser.isIE6() && (altText.innerHTML != "")) {
       images[i].runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+images[i].src+"', sizingMethod='scale')" ;
-      images[i].src = images[i].getAttribute("altText") ;
-//      images[i].alt = "" ;
+      images[i].src = altText.innerHTML ;
+
     }
   }
 };
