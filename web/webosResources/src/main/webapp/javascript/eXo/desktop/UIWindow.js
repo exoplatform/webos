@@ -31,12 +31,12 @@ UIWindow.prototype.init = function(popup, isShow, posX, posY) {
 	maximizedIcon.onmouseup = this.maximizeWindowEvt ;
 	var resizeArea = DOMUtil.findFirstDescendantByClass(popup, "div", "ResizeArea") ;
 	resizeArea.onmousedown = this.startResizeWindowEvt ;
- /*
-  * minh.js.exo
-  * check maximize portlet in first time;
-  * posX == posY == 0;
-  */
- if (posX == posY && posX == 0) {
+ 	/*
+	 * minh.js.exo
+	 * check maximize portlet in first time;
+	 * posX == posY == 0;
+	 */
+	if (posX == posY && posX == 0) {
  		popup.style.width = "100%";
  		popup.maximized = true;
  		this.posX = 15;
@@ -47,6 +47,7 @@ UIWindow.prototype.init = function(popup, isShow, posX, posY) {
  		maximizedIcon.title = maximizedIcon.getAttribute("modeTitle");
 		setTimeout(eXo.desktop.UIWindow.toForcus, 1000);
   }
+  popup.resizeCallback = new eXo.core.HashMap() ;
 } ;
 
 UIWindow.prototype.fixHeight = function(portletId) {
@@ -64,7 +65,7 @@ UIWindow.prototype.toForcus = function() {
 	//reset zIndex all widget when in case them over to maximize portlet.
 	var DOMUtil = eXo.core.DOMUtil ;
 	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
-	var uiWidgets =  DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIWidget");
+	var uiWidgets =  DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIGadget");
 	if (uiWidgets.length) {
 		for (var i = 0; i < uiWidgets.length; i ++ ) {
 			uiWidgets[i].style.zIndex = 1;
@@ -177,12 +178,18 @@ UIWindow.prototype.resizeWindowEvt = function(evt) {
 } ;
 
 UIWindow.prototype.endResizeWindowEvt = function(evt) {
+	var uiWindow = eXo.desktop.UIWindow.portletWindow ;
+	for(var name in uiWindow.resizeCallback.properties) {
+ 		var method = uiWindow.resizeCallback.get(name) ;
+		if (typeof(method) == "function") method(evt) ;
+	}
 	// Re initializes the scroll tabs managers on the page
 	eXo.portal.UIPortalControl.initAllManagers() ;
 	eXo.desktop.UIWindow.portletWindow = null ;
 	eXo.desktop.UIWindow.resizableObject = null ;
 	this.onmousemove = null ;
 	this.onmouseup = null ;
+	
 } ;  
 
 UIWindow.prototype.backupObjectProperties = function(windowPortlet, resizableComponents) {
