@@ -148,94 +148,12 @@ UIDesktop.prototype.backupWindowProperties = function(uiWindow) {
   uiWindow.isFirstTime = false ;
 } ;
 
-UIDesktop.prototype.addApplicationToDesktop = function(application, appId, appLocation) {
-  try {
-    eXo.require(application, appLocation);
-  } catch(err) {
-    alert("Can Not Load Application!");
-  }
-  eval(application).appLocation = appLocation ;
-  eval(application).initApplication(appId);
-} ;
-
-UIDesktop.prototype.addJSApplication = function(applicationNode) {
-  var appDescriptor = applicationNode.applicationDescriptor;
-  var DOMUtil = eXo.core.DOMUtil ;
-  var uiPageDesktop = document.getElementById("UIPageDesktop");
-  var iconContainer = document.getElementById("IconContainer");
-  var windowsInDesktop = DOMUtil.findChildrenByClass(uiPageDesktop, "div", "UIWindow");
-  var lastElement = null;
-  if(windowsInDesktop[windowsInDesktop.length - 1] != undefined) {
-     lastElement = DOMUtil.findNextElementByTagName(windowsInDesktop[windowsInDesktop.length - 1], "div");
-  }  
-  /*Insert ApplicationNode To UIPageDesktop*/
-  if(lastElement == null) {
-    uiPageDesktop.appendChild(applicationNode);
-  } else  {
-    uiPageDesktop.insertBefore(applicationNode, lastElement) ;
-  }
-  /*Get Application's Stylesheet*/
-  var styleId = appDescriptor.appId + "Stylesheet" ;
-  eXo.core.Skin.addSkin(styleId, appDescriptor.application.skin[eXo.env.client.skin]);
-  
-  /*Create Application Icon*/
-  var iconUrl = appDescriptor.application.appIcon ;
-  var iconId = appDescriptor.appId + "Icon" ;
-  var appIcon = eXo.desktop.UIDockbar.createApplicationIcon(iconUrl, iconId) ;
-  
-  /*Create Application Tooltip*/
-  var tooltip = appDescriptor.application.appName ;
-  var appTooltip = eXo.desktop.UIDockbar.createApplicationTooltip(tooltip) ;
-  
-  /*Init a UIWindow Application*/
-  var windowPosX = 20 ;
-  if(applicationNode.style.left != "") {
-  	windowPosX = (applicationNode.style.left).replace("px", "");
-  }
-  
-  var windowPosY = 20 ;
-  if(applicationNode.style.top != "") {
-  	windowPosY = (applicationNode.style.top).replace("px", "") ;
-  }
-  
-  eXo.desktop.UIWindow.init(applicationNode, true, windowPosX, windowPosY, appDescriptor.application.minWidth) ;
-  
-  eXo.desktop.UIDesktop.backupWindowProperties(applicationNode);
-  
-  appIcon.onclick = function() {
-    eXo.desktop.UIDesktop.showHideWindow(applicationNode, this) ;
-  }
-  
-  eXo.desktop.UIDockbar.resizeDockBar() ;
-} ;
-
-
-UIDesktop.prototype.removeJSApplication = function(applicationNode) {
-  var uiPageDesktop = document.getElementById("UIPageDesktop") ;
-  var iconContainer = document.getElementById("IconContainer") ;
-  var appIcon = document.getElementById(applicationNode.id + "Icon");
-  var appTooltip = eXo.core.DOMUtil.findNextElementByTagName(appIcon, "span") ;
-  
-  uiPageDesktop.removeChild(applicationNode) ;
-  iconContainer.removeChild(appIcon) ;
-  iconContainer.removeChild(appTooltip) ;
-
-  eXo.desktop.UIDockbar.resizeDockBar() ;
-  
-  var params = [
-    {name: "jsInstanceId", value : applicationNode.id}
-  ] ;
-  ajaxGet(eXo.env.server.createPortalURL("UIPortal", "RemoveJSApplicationToDesktop", true, params)) ;
-} ;
-
 UIDesktop.prototype.removeApp = function(uri) {
-	var appId = uri.substr(uri.lastIndexOf("=") + 1) ;
 	var result = ajaxAsyncGetRequest(uri, false) ;
 	if(result == "OK") {
+		var appId = uri.substr(uri.lastIndexOf("=") + 1) ;
 		eXo.desktop.UIDesktop.removeWindow("UIWindow-" + appId) ;
 		eXo.desktop.UIDockbar.removeDockbarIcon("DockItem" + appId) ;
-	} else {
-		window.location.reload() ;
 	}
 };
 

@@ -27,9 +27,9 @@ UIDockbar.prototype.init = function() {
   uiDockbar.originalDockbarHeight = uiDockbar.offsetHeight ;
   
   var portletsViewer = document.getElementById("PortletsViewer") ;
-  var widgetsViewer = document.getElementById("WidgetsViewer") ;
+  var gadgetsViewer = document.getElementById("GadgetsViewer") ;
   portletsViewer.onclick = this.viewPortlets ;
-  widgetsViewer.onclick = this.viewWidgets ;
+  gadgetsViewer.onclick = this.viewGadgets ;
 } ;
 
 UIDockbar.prototype.waitOnLoad = function(images) {
@@ -122,7 +122,7 @@ UIDockbar.prototype.viewPortlets = function() {
 } ;
 
 
-UIDockbar.prototype.viewWidgets = function() {
+UIDockbar.prototype.viewGadgets = function() {
 	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
   var children = eXo.core.DOMUtil.findChildrenByClass(uiPageDesktop, "div", "UIGadget") ; 
 	for(var i = 0; i < children.length; i++) {
@@ -133,28 +133,6 @@ UIDockbar.prototype.viewWidgets = function() {
 		}
 	}
 } ;
-
-//UIDockbar.prototype.showTooltip = function(e) {
-//	window.status = (new Date()).getTime() ;
-//  var UIDockbar = eXo.desktop.UIDockbar ;
-//  var object = this ;
-//  var uiDockbar = document.getElementById("UIDockBar") ;
-//  var objectXInDockbar = eXo.core.Browser.findPosXInContainer(object, uiDockbar) ;
-//  var iconContainer = document.getElementById("IconContainer") ;
-//  var tooltipObjects = eXo.core.DOMUtil.findChildrenByClass(iconContainer, "span", "Tooltip") ;
-//  var selectedIconIndex = UIDockbar.findIndex(object) ;
-//  
-//  if(UIDockbar.displayTooltip) {
-//		eXo.webui.UIRightClickPopupMenu.hideContextMenu("DockbarContextMenu") ;
-//    tooltipObjects[selectedIconIndex].style.display = "block" ;
-//    tooltipObjects[selectedIconIndex].style.top = (-tooltipObjects[selectedIconIndex].offsetHeight) + "px" ;
-//    tooltipObjects[selectedIconIndex].style.left = objectXInDockbar + "px" ;
-//    UIDockbar.displayTooltip = false ;
-//  } else {
-//    tooltipObjects[selectedIconIndex].style.display = "none" ;
-//    UIDockbar.displayTooltip = true ;
-//  }
-//} ;
 
 UIDockbar.prototype.animationEvt = function(e) {
 	 
@@ -209,11 +187,9 @@ UIDockbar.prototype.findIndex = function(object) {
   }
 } ;
 
-UIDockbar.prototype.removeDockbarIcon = function(idIcon) {
-	var icon = document.getElementById(idIcon);
+UIDockbar.prototype.removeDockbarIcon = function(iconId) {
+	var icon = document.getElementById(iconId);
 	if (icon) {
-		var portlet = document.getElementById("UIWindow-" + idIcon.replace(/[a-zA-Z]*/, ""));
-		if (portlet) portlet.style.display = "none";
 		var toolTip = eXo.core.DOMUtil.findNextElementByTagName(icon, "span");
 		eXo.core.DOMUtil.removeElement(icon);
 		eXo.core.DOMUtil.removeElement(toolTip);
@@ -298,35 +274,6 @@ UIDockbar.prototype.resetDesktopShowedStatus = function(uiPageDesktop, uiDockBar
     this.showDesktop = false ;
   }
 } ;
-
-UIDockbar.prototype.createApplicationIcon = function(iconUrl, iconId) {
-  var appIcon = document.createElement("img") ;
-  appIcon.className = "Icon" ;
-  appIcon.src = iconUrl ;
-  appIcon.id = iconId ;
-  appIcon.style.marginRight = "4px" ;
-  
-  if(eXo.core.Browser.isIE6()) {
-    appIcon.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+iconUrl+"', sizingMethod='scale')" ;
-    appIcon.src = "/eXoResources/skin/sharedImages/Blank.gif" ;
-//    appIcon.alt = "" ;
-  }
-  
-  appIcon.onmousemove = eXo.desktop.UIDockbar.animationEvt ;
-  appIcon.onmouseover = eXo.desktop.UIDockbar.showTooltip ;
-  appIcon.onmouseout = eXo.desktop.UIDockbar.showTooltip ;
-  
-  return appIcon ;
-} ;
-
-UIDockbar.prototype.createApplicationTooltip = function(tooltip) {
-  var appTooltip = document.createElement("span") ;
-  appTooltip.className = "Tooltip" ;
-  appTooltip.style.display = "none" ;
-  appTooltip.innerHTML = tooltip ;
-  
-  return appTooltip ;
-};
 
 UIDockbar.prototype.initNav = function() {
 	var nav = document.getElementById("DockNavigation") ;

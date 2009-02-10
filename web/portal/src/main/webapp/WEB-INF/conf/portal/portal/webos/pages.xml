@@ -36,7 +36,7 @@
     <show-max-window>true</show-max-window>
 	      
     <application>
-      <instance-id>portal#webos:/web/BrowserPortlet/Web Explorer</instance-id>    
+      <instance-id>portal#webos:/web/BrowserPortlet/WebExplorer</instance-id>    
       <title>Web Explorer</title>
     </application>
                 
