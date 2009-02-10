@@ -40,9 +40,8 @@ UIDockbar.prototype.waitOnLoad = function(images) {
     images[i].onmouseout = UIDockbar.iconOutEvt ;
   
     var altText = images[i].previousSibling;
-    while (altText.nodeType!=1)
-	  {
-	  altText=altText.previousSibling;
+    while (altText.nodeType!=1) {
+	  	altText=altText.previousSibling;
 	  }
     if(eXo.core.Browser.isIE6() && (altText.innerHTML != "")) {
       images[i].runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+images[i].src+"', sizingMethod='scale')" ;

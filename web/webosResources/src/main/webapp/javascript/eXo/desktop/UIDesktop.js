@@ -10,8 +10,8 @@ UIDesktop.prototype.init = function() {
 	  for(var i = 0; i < uiWindows.length; i++) {
 	  	if(uiWindows[i].isFirstTime == false)	continue ;
 			//fix display scroll in first time
-	  	var blockResizes = eXo.core.DOMUtil.findDescendantsByClass(uiWindows[i], "div", "UIResizableBlock");
-			if (blockResizes.length > 1) blockResizes[0].style.overflow = "hidden" ;
+//	  	var blockResizes = eXo.core.DOMUtil.findDescendantsByClass(uiWindows[i], "div", "UIResizableBlock");
+//			if (blockResizes.length > 1) blockResizes[0].style.overflow = "hidden" ;
 			eXo.desktop.UIDesktop.backupWindowProperties(uiWindows[i]);
 	  }
 	}
@@ -41,15 +41,15 @@ UIDesktop.prototype.resetZIndex = function(windowObject) {
 	    if(parseInt(maxZIndex) < parseInt(windowsInDesktop[i].style.zIndex)) {
 	      maxZIndex = windowsInDesktop[i].style.zIndex ;
 	    }
-	    
-	    if(parseInt(windowsInDesktop[i].style.zIndex) >= parseInt(windowObject.style.zIndex)) {
-	      windowsInDesktop[i].style.zIndex = parseInt(windowsInDesktop[i].style.zIndex) - 1 ;
-	      
-	    }
+	    //TODO: tan.pham: test for fix bug WEBOS-119: 2 portlets may have same zIndex when reload page
+//	    if(parseInt(windowsInDesktop[i].style.zIndex) >= parseInt(windowObject.style.zIndex)) {
+//	      windowsInDesktop[i].style.zIndex = parseInt(windowsInDesktop[i].style.zIndex) - 1 ;
+//	      
+//	    }
   	}
   	if (windowsInDesktop[i].style.zIndex < 0) windowsInDesktop[i].style.zIndex = 1 ;
   }
-  windowObject.style.zIndex = maxZIndex ;
+  windowObject.style.zIndex = parseInt(maxZIndex) + 1 ;
 };
 
 UIDesktop.prototype.isMaxZIndex = function(object) {
@@ -79,7 +79,8 @@ UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement, mode) {
   var portletFrag = DOMUtil.findFirstDescendantByClass(this.object, "div", "PORTLET-FRAGMENT") ;
   
   var dockIcon = document.getElementById("DockItem"+portletId) ;
-  this.object.maxIndex = eXo.desktop.UIDesktop.resetZIndex(this.object) ;
+  var isMaxZIndex = eXo.desktop.UIDesktop.isMaxZIndex(this.object) ;
+  if(!isMaxZIndex) eXo.desktop.UIDesktop.resetZIndex(this.object) ;
   var numberOfFrame = 10 ; 
   if(mode == "QUIT") {
   	if(this.object.style.display == "block") {
@@ -117,7 +118,7 @@ UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement, mode) {
   		this.object.style.filter =  "" ;
   	}
 		//fix display scroll in first time.
-		var blockResize = eXo.core.DOMUtil.findFirstDescendantByClass(this.object, "div", "UIResizableBlock");
+//		var blockResize = eXo.core.DOMUtil.findFirstDescendantByClass(this.object, "div", "UIResizableBlock");
 //		if (blockResize) blockResize.style.overflow = "hidden" ;
   }
 //  eXo.desktop.UIDockbar.containerMouseOver() ;
