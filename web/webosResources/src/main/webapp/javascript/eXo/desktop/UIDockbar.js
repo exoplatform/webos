@@ -39,13 +39,9 @@ UIDockbar.prototype.waitOnLoad = function(images) {
     images[i].onmouseover = UIDockbar.iconOverEvt ;
     images[i].onmouseout = UIDockbar.iconOutEvt ;
   
-    var altText = images[i].previousSibling;
-    while (altText.nodeType!=1) {
-	  	altText=altText.previousSibling;
-	  }
-    if(eXo.core.Browser.isIE6() && (altText.innerHTML != "")) {
+    if(eXo.core.Browser.isIE6()) {
       images[i].runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+images[i].src+"', sizingMethod='scale')" ;
-      images[i].src = altText.innerHTML ;
+      images[i].src = "/eXoResources/skin/sharedImages/Blank.gif" ;
 
     }
   }
@@ -191,6 +187,7 @@ UIDockbar.prototype.removeDockbarIcon = function(iconId) {
 	var icon = document.getElementById(iconId);
 	if (icon) {
 		var toolTip = eXo.core.DOMUtil.findNextElementByTagName(icon, "span");
+		if(icon.previousSibling.nodeType == 3) eXo.core.DOMUtil.removeElement(icon.previousSibling) ;
 		eXo.core.DOMUtil.removeElement(icon);
 		eXo.core.DOMUtil.removeElement(toolTip);
 	}
