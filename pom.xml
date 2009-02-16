@@ -135,7 +135,7 @@
         <org.exoplatform.ws.version>1.3.1</org.exoplatform.ws.version>
         <org.exoplatform.jcr.version>1.10.1</org.exoplatform.jcr.version>
         <org.exoplatform.pc.version>2.0.4</org.exoplatform.pc.version>
-        <org.exoplatform.portal.version>2.5.2-SNAPSHOT</org.exoplatform.portal.version>
+        <org.exoplatform.portal.version>2.5.3-SNAPSHOT</org.exoplatform.portal.version>
         <org.exoplatform.webos.version>1.5-SNAPSHOT</org.exoplatform.webos.version>
         <test.classes>Test</test.classes>
         <test.skip>true</test.skip>
