@@ -13,6 +13,17 @@
   <version>1.6-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <properties>
+     <exo.product.name>exo-webos</exo.product.name>
+     <exo.product.specification>1.6</exo.product.specification>
+  </properties>
+
+  <scm>
+    <connection>scm:svn:http://svn.exoplatform.org/projects/webos/trunk</connection>
+    <developerConnection>scm:svn:http://svn.exoplatform.org/projects/webos/trunk</developerConnection>
+    <url>http://fisheye.exoplatform.org/browse/projects/webos/trunk</url>
+  </scm> 
+
   <modules>
     <module>web/portal</module>
 	<module>web/webosResources</module>
