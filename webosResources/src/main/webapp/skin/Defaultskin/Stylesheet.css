@@ -1,0 +1,12 @@
+@import url(portal/webui/component/view/UIPageDesktop/Stylesheet.css);
+
+#UIPortalApplication .UIWorkingWorkspace {
+	background:none repeat scroll 0 0 #B5B6B6;
+	margin:auto;
+	width:auto;
+}
+
+.UIToolbarContainer {
+	position: relative;
+	z-index: 1000;
+}

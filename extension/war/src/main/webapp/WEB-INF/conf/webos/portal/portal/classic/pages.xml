@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<page-set>
+  <page>
+  	<owner-type>portal</owner-type>
+	<owner-id>classic</owner-id>
+    <name>classicWebosPage</name>		
+  	<title>WebOS Page</title>
+    <factory-id>org.exoplatform.webos.webui.page.UIDesktopPage</factory-id>
+	  <access-permissions>Everyone</access-permissions>
+	  <edit-permission>manager:/platform/administrators</edit-permission>
+    <show-max-window>true</show-max-window>
+  </page>  
+</page-set>
