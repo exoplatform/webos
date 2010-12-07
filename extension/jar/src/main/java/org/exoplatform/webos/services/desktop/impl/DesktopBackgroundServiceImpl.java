@@ -44,30 +44,26 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 
    private ChromatticLifeCycle chromatticLifecycle;
 
-   private DesktopBackgroundRegistry backgroundRegistry;
-
    public DesktopBackgroundServiceImpl(ChromatticManager manager, InitParams params) throws Exception
    {
       chromatticManager = manager;
       chromatticLifecycle = (WebOSChromatticLifecycle) manager.getLifeCycle("webos");
-
-      initBackgroundRegistry();
    }
    
-   public void initBackgroundRegistry()
+   public DesktopBackgroundRegistry initBackgroundRegistry()
    {
+      DesktopBackgroundRegistry backgroundRegistry;
+      Chromattic chromattic = chromatticLifecycle.getChromattic();
+      ChromatticSession session = chromattic.openSession();
+
+      backgroundRegistry = session.findByPath(DesktopBackgroundRegistry.class, "webos:desktopBackgroundRegistry");
       if (backgroundRegistry == null)
       {
-         Chromattic chromattic = chromatticLifecycle.getChromattic();
-         ChromatticSession session = chromattic.openSession();
-
-         backgroundRegistry = session.findByPath(DesktopBackgroundRegistry.class, "webos:desktopBackgroundRegistry");
-         if (backgroundRegistry == null)
-         {
-            backgroundRegistry = session.insert(DesktopBackgroundRegistry.class, "webos:desktopBackgroundRegistry");
-            session.save();
-         }
+         backgroundRegistry = session.insert(DesktopBackgroundRegistry.class, "webos:desktopBackgroundRegistry");
+         session.save();
       }
+      
+      return backgroundRegistry; 
    }
 
    public ChromatticLifeCycle getChromatticLifecycle()
@@ -78,7 +74,8 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    @Override
    public boolean removeBackgroundImage(String userName, String backgroundImageName)
    {
-      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName);
+      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
+      PersonalBackgroundSpace space = backgroundRegistry .getPersonalBackgroundSpace(userName);
       if (space == null)
       {
          //TODO: Throws an exception here
@@ -93,7 +90,8 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    public boolean uploadBackgroundImage(String userName, String backgroundImageName, String mimeType, String encoding,
          InputStream binaryStream)
    {
-      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
+      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
+      PersonalBackgroundSpace space = backgroundRegistry .getPersonalBackgroundSpace(userName, true);
       return space.uploadBackgroundImage(backgroundImageName, mimeType, encoding, binaryStream);
    }
 
@@ -105,6 +103,7 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 		  return null;
 	  }
 	  //TODO: Replace this method with a mixin in UIDesktopPage
+	  DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
       PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
       String selectedBackground = space.getCurrentBackground();
       
@@ -122,6 +121,7 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    
    public void setSelectedBackgroundImage(String userName, String imageName)
    {
+      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
 	   PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
 	   space.setCurrentBackground(imageName);
    }
@@ -129,6 +129,7 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    @Override
    public List<DesktopBackground> getUserDesktopBackgrounds(String userName)
    {
+      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
 	  PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
 	  
 	  NTFolder backgroundFolder = space.getBackgroundImageFolder();
