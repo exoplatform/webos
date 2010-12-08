@@ -262,7 +262,8 @@ UIWindow.prototype.initDND = function(e) {
 	    }
 	    
 	    if(dragObjectY > (browserHeight - 25)) {
-	      dragObject.style.top = (browserHeight - 25) + "px" ;
+			//WEBOS-362 dragObjectY is not the same with dragObject.style.top
+	      dragObject.style.top = (browserHeight - 25 - dragObjectY + parseInt(dragObject.style.top)) + "px" ;
 	      document.onmousemove = DragDrop.onDrop ; /*Fix Bug On IE6*/
 	    }
 	    
