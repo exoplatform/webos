@@ -36,6 +36,7 @@ import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.navigation.PageNavigationUtils;
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
+import org.exoplatform.portal.webui.page.UIPageForm;
 import org.exoplatform.portal.webui.page.UIPageLifecycle;
 import org.exoplatform.portal.webui.page.UIPageActionListener.DeleteGadgetActionListener;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
@@ -45,6 +46,7 @@ import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webos.services.dockbar.DockbarIcon;
 import org.exoplatform.webos.services.dockbar.DockbarService;
@@ -67,7 +69,8 @@ import org.exoplatform.webui.event.EventListener;
    @EventConfig(listeners = UIDesktopPage.SaveWindowPropertiesActionListener.class),
    @EventConfig(listeners = UIDesktopPage.ShowAddNewApplicationActionListener.class),
    @EventConfig(listeners = UIDesktopPage.ChangePageActionListener.class),
-   @EventConfig(listeners = UIDesktopPage.ShowPortletActionListener.class)})
+   @EventConfig(listeners = UIDesktopPage.ShowPortletActionListener.class),
+   @EventConfig(name = "EditCurrentPage", listeners = UIDesktopPage.EditCurrentPageActionListener.class)})
 public class UIDesktopPage extends UIPage
 {
 
@@ -309,6 +312,22 @@ public class UIDesktopPage extends UIPage
        pcontext.setResponseComplete(true);
        pcontext.getWriter().write(EventListener.RESULT_OK);
        
+  	 }
+   }
+   
+   public static class EditCurrentPageActionListener extends EventListener<UIDesktopPage>
+   {
+  	 @Override
+  	 public void execute(Event<UIDesktopPage> event) throws Exception {
+  		 UIPortalApplication portalApp = Util.getUIPortalApplication();
+  		 UIMaskWorkspace maskWorkspace = portalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID);
+  		 
+  		 UIPageForm pageForm = portalApp.createUIComponent(UIPageForm.class, null, null);
+  		 UIDesktopPage desktopPage = event.getSource();
+  		 pageForm.setValues(desktopPage);
+  		 
+  		 maskWorkspace.setUIComponent(pageForm);
+  		 event.getRequestContext().addUIComponentToUpdateByAjax(maskWorkspace);
   	 }
    }
    
