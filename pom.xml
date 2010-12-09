@@ -43,7 +43,7 @@
     <org.exoplatform.core.version>2.3.2-GA</org.exoplatform.core.version>
     <org.exoplatform.ws.version>2.1.2-GA</org.exoplatform.ws.version>
     <org.exoplatform.jcr.version>1.12.2-GA</org.exoplatform.jcr.version>
-    <org.exoplatform.portal.version>3.2.0-Beta02-webos-SNAPSHOT</org.exoplatform.portal.version>
+    <org.exoplatform.portal.version>3.1.x-WebOS-SNAPSHOT</org.exoplatform.portal.version>
     <exo.product.specification>1.5</exo.product.specification>
     <org.exoplatform.exopackage.version>1.1.0-Beta05</org.exoplatform.exopackage.version>
     <org.jibx.version>1.2.1</org.jibx.version>
