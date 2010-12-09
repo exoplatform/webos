@@ -28,6 +28,7 @@ import org.chromattic.api.ChromatticSession;
 import org.chromattic.ext.ntdef.NTFolder;
 import org.exoplatform.commons.chromattic.ChromatticLifeCycle;
 import org.exoplatform.commons.chromattic.ChromatticManager;
+import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
@@ -110,12 +111,12 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 		if (selectedBackground == null) {
 			return null;
 		} else {
-			return "/rest/private/jcr/"
+			
+			return "/" + PortalContainer.getCurrentPortalContainerName() + "/rest/jcr/"
 					+ chromatticLifecycle.getRepositoryName() + "/"
 					+ chromatticLifecycle.getWorkspaceName()
 					+ "/webos:desktopBackgroundRegistry/webos:" + userName
 					+ "/webos:personalBackgroundFolder/" + selectedBackground;
-
 		}
    }
    
@@ -130,16 +131,17 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    public List<DesktopBackground> getUserDesktopBackgrounds(String userName)
    {
       DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
-	  PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
+      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
 	  
-	  NTFolder backgroundFolder = space.getBackgroundImageFolder();
-	  Set<String> availableBackgrounds = backgroundFolder.getChildren().keySet();
+      NTFolder backgroundFolder = space.getBackgroundImageFolder();
+      Set<String> availableBackgrounds = backgroundFolder.getChildren().keySet();
       
       
+      String portalContainerName = PortalContainer.getCurrentPortalContainerName();
       List<DesktopBackground> backgroundList = new ArrayList<DesktopBackground>();
       for(String background : availableBackgrounds)
       {
-         backgroundList.add(new DesktopBackground("/rest/private/jcr/" + chromatticLifecycle.getRepositoryName() + "/" + chromatticLifecycle.getWorkspaceName()
+         backgroundList.add(new DesktopBackground("/" + portalContainerName + "/rest/jcr/" + chromatticLifecycle.getRepositoryName() + "/" + chromatticLifecycle.getWorkspaceName()
                  + "/webos:desktopBackgroundRegistry/webos:" + userName + "/webos:personalBackgroundFolder/" + background, background));
       }
       return backgroundList;
