@@ -99,6 +99,8 @@ UIDockbar.prototype.viewPortlets = function() {
   var srcPortletsViewerImage = "/eXoResources/skin/sharedImages/Icon80x80/Show"+this.id+".png" ;
 	eXo.desktop.UIDockbar.showDesktop = false ;
 	for(var i = 0; i < children.length; i++) {
+	    if(eXo.core.DOMUtil.hasDescendantClass(children[i], "UIGadgetPortlet"))
+	       continue;
 		if (children[i].style.display == "block" ) {
 			children[i].style.display = "none" ;
 			children[i].isShowed = true ;
@@ -129,12 +131,13 @@ UIDockbar.prototype.viewPortlets = function() {
 
 UIDockbar.prototype.viewGadgets = function() {
 	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
-  var children = eXo.core.DOMUtil.findChildrenByClass(uiPageDesktop, "div", "UIGadget") ; 
+  var children = eXo.core.DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIGadgetPortlet") ; 
 	for(var i = 0; i < children.length; i++) {
-		if (children[i].style.display != "none" ) {
-			children[i].style.display = "none" ;
+	    var gadgetWindow = eXo.core.DOMUtil.findAncestorByClass(children[i], "UIWindow");
+		if (gadgetWindow.style.display != "none" ) {
+			gadgetWindow.style.display = "none" ;
 		} else {
-			children[i].style.display = "block" ;
+			gadgetWindow.style.display = "block" ;
 		}
 	}
 } ;
