@@ -47,7 +47,7 @@ public class DockbarServiceImpl extends BaseDockbarService {
 	public boolean hasPermission(String remoteUser, DockbarIcon icon) {
 		if(remoteUser == null)
 		{
-			return "Everyone".equals(icon.getAccessPermission());
+			return UserACL.EVERYONE.equals(icon.getAccessPermission());
 		}
 		else
 		{

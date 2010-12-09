@@ -42,9 +42,6 @@
 						<field name="predefinedOwner">
 							<collection type="java.util.HashSet">
 								<value>
-									<string>webos</string>
-								</value>
-								<value>
 									<string>classic</string>
 								</value>
 							</collection>
