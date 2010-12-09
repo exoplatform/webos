@@ -39,33 +39,57 @@
     <url>http://builder.exoplatform.org/hudson/job/webos-GateInIntegrated-ci/</url>
   </ciManagement>
   <properties>
-    <org.exoplatform.kernel.version>2.2.2-GA</org.exoplatform.kernel.version>
-    <org.exoplatform.core.version>2.3.2-GA</org.exoplatform.core.version>
-    <org.exoplatform.ws.version>2.1.2-GA</org.exoplatform.ws.version>
-    <org.exoplatform.jcr.version>1.12.2-GA</org.exoplatform.jcr.version>
-    <org.exoplatform.portal.version>3.1.x-WebOS-SNAPSHOT</org.exoplatform.portal.version>
-    <exo.product.specification>1.5</exo.product.specification>
-    <org.exoplatform.exopackage.version>1.1.0-Beta05</org.exoplatform.exopackage.version>
-    <org.jibx.version>1.2.1</org.jibx.version>
-    <org.shindig.version>1.0-r790473-Patch02</org.shindig.version>
-    <org.gatein.common.version>2.0.3-GA</org.gatein.common.version>
-    <org.gatein.wci.version>2.0.2-GA</org.gatein.wci.version>
-    <org.gatein.pc.version>2.2.0-Beta03</org.gatein.pc.version>
-    <org.picketlink.idm>1.1.5.GA</org.picketlink.idm>
-    <org.gatein.wsrp.version>2.0.0-Alpha01</org.gatein.wsrp.version>
-    <org.gatein.mop.version>1.0.3-GA</org.gatein.mop.version>
-    <org.slf4j.version>1.5.6</org.slf4j.version>
-    <rhino.version>1.6R5</rhino.version>
-    <org.codehaus.groovy.version>1.6.5</org.codehaus.groovy.version>
-    <javax.servlet.version>2.5</javax.servlet.version>
-    <version.chromattic>1.0.3</version.chromattic>
-    <version.reflect>1.0.0</version.reflect>
-    <jcip.version>1.0</jcip.version>
-    <!-- ************** -->
-    <!-- Build settings -->
-    <!-- ************** -->
-    <!-- maven-enforcer-plugin -->
-    <jdk.min.version>1.6</jdk.min.version>
+      <org.exoplatform.kernel.version>2.2.6-GA-SNAPSHOT</org.exoplatform.kernel.version>
+      <org.exoplatform.core.version>2.3.6-GA-SNAPSHOT</org.exoplatform.core.version>
+      <org.exoplatform.ws.version>2.1.6-GA-SNAPSHOT</org.exoplatform.ws.version>
+      <org.exoplatform.jcr.version>1.12.6-GA-SNAPSHOT</org.exoplatform.jcr.version>
+      <org.exoplatform.portal.version>3.1.x-WebOS-SNAPSHOT</org.exoplatform.portal.version>
+      <org.exoplatform.exopackage.version>1.1.0-Beta05</org.exoplatform.exopackage.version>
+      <org.jibx.version>1.2.1</org.jibx.version>
+      <org.shindig.version>1.0-r790473-Patch04</org.shindig.version>
+      <nl.captcha.simplecaptcha.version>1.1.1-GA-Patch01</nl.captcha.simplecaptcha.version>
+      <org.gatein.common.version>2.0.2-GA</org.gatein.common.version>
+      <org.gatein.wci.version>2.0.1-GA</org.gatein.wci.version>
+      <org.gatein.pc.version>2.1.1-GA</org.gatein.pc.version>
+      <org.picketlink.idm>1.1.6.GA</org.picketlink.idm>
+      <org.gatein.wsrp.version>1.1.1-GA</org.gatein.wsrp.version>
+      <org.gatein.mop.version>1.0.4-GA</org.gatein.mop.version>
+      <org.slf4j.version>1.5.6</org.slf4j.version>
+      <commons-pool.version>1.2</commons-pool.version>
+      <rhino.version>1.6R5</rhino.version>
+      <org.codehaus.groovy.version>1.6.5</org.codehaus.groovy.version>
+      <javax.servlet.version>2.5</javax.servlet.version>
+      <version.chromattic>1.0.4</version.chromattic>
+      <version.reflect>1.0.0</version.reflect>
+      <jcip.version>1.0</jcip.version>
+
+      <!-- EXOGTN-106 : forced at packaging level -->
+      <antlr.version>2.7.6rc1</antlr.version>
+      <asm.version>1.5.3</asm.version>
+      <cglib.version>2.2</cglib.version>
+      <com.sun.xml.bind.version>2.1.7</com.sun.xml.bind.version>
+      <commons-digester.version>1.8.1</commons-digester.version>
+      <commons-dbcp.version>1.2.1</commons-dbcp.version>
+      <commons-httpclient.version>3.1</commons-httpclient.version>
+      <exo.tool.webunit.version>1.0.0</exo.tool.webunit.version>
+      <html-parser.version>1.6</html-parser.version>
+      <javassist.version>3.4.GA</javassist.version>
+      <jcr.version>1.0</jcr.version>
+      <org.jaxb2.version>0.1</org.jaxb2.version>
+      <stax.version>1.0</stax.version>
+
+      <!-- ************** -->
+      <!-- Build settings -->
+      <!-- ************** -->
+      <arguments>-Prelease -DskipTests</arguments>
+      <!-- maven-enforcer-plugin -->
+      <jdk.min.version>1.6</jdk.min.version>
+
+      <!-- ***************** -->
+      <!-- Repository Deployment URLs for eXo (EXOGTN-12) -->
+      <!-- ***************** -->
+      <exo.releases.repo.url>http://repository.exoplatform.org/service/local/staging/deploy/maven2/</exo.releases.repo.url>
+      <exo.snapshots.repo.url>http://repository.exoplatform.org/content/repositories/exo-snapshots/</exo.snapshots.repo.url>
   </properties>
   <build>
     <resources>
