@@ -20,7 +20,7 @@
 					<div class="LeftBar">
 						<div class="RightBar">
 							<div class="MiddleBar">
-								<span>Save</span>
+								<span><%=_ctx.appRes("UIBackgroundSelector.title")%></span>
 							</div>
 						</div>
 					</div>
@@ -45,11 +45,11 @@
 							<table class="ActionContainer">
 								<tr>
 									<td>
-											<div onclick="javascript:eXo.portal.UIPortal.changeLanguage('<%=uicomponent.url("Save");%>');" class="ActionButton LightBlueStyle">
+											<div onclick="<%=uicomponent.event("Upload");%>" class="ActionButton LightBlueStyle">
 											<div class="ButtonLeft">
 												<div class="ButtonRight">
 													<div class="ButtonMiddle">
-														<a href="#">Save</a>
+														<a href="#"><%=_ctx.appRes("UIBackgroundSelector.action.upload")%></a>
 													</div>
 												</div>
 											</div>
@@ -58,7 +58,7 @@
 											<div class="ButtonLeft">
 												<div class="ButtonRight">
 													<div class="ButtonMiddle">
-														<a href="javascript:void(0);">Close</a>
+														<a href="javascript:void(0);"><%=_ctx.appRes("UIBackgroundSelector.action.close")%></a>
 													</div>
 												</div>
 											</div>
