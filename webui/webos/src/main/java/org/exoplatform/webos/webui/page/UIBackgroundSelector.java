@@ -18,9 +18,7 @@
  */
 package org.exoplatform.webos.webui.page;
 
-import java.util.List;
-
-import org.exoplatform.container.PortalContainer;
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
@@ -30,6 +28,7 @@ import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
+import java.util.List;
 
 /**
  * @author <a href="mailto:hoang281283@gmail.com">Minh Hoang TO</a>
@@ -40,24 +39,45 @@ import org.exoplatform.webui.event.EventListener;
   id = "backgroundSelector",
   template = "system:/groovy/portal/webui/page/UIBackgroundSelector.gtmpl", 
   events ={
-   @EventConfig(listeners = UIBackgroundSelector.SaveActionListener.class),
+   @EventConfig(listeners = UIBackgroundSelector.UploadActionListener.class),
    @EventConfig(listeners = UIBackgroundSelector.CloseActionListener.class),
    @EventConfig(name = "SelectItem", listeners = UIBackgroundSelector.SelectItemActionListener.class)
   }
 )
 public class UIBackgroundSelector extends UIContainer
 {
+   private UIBackgroundUploadForm uploadForm;   
 
    public UIBackgroundSelector() throws Exception
    {
    }
 
-   public static class SaveActionListener extends EventListener<UIBackgroundSelector>
+   public UIBackgroundUploadForm getUploadForm()
+   {
+      return uploadForm;
+   }
+
+   public void setUploadForm(UIBackgroundUploadForm uploadForm)
+   {
+      uploadForm.setReferrer(this);
+      this.uploadForm = uploadForm;
+   }
+
+   public static class UploadActionListener extends EventListener<UIBackgroundSelector>
    {
       @Override
       public void execute(Event<UIBackgroundSelector> event) throws Exception
       {
-      
+         UIBackgroundSelector selector = event.getSource();         
+         if (selector.getUploadForm() == null)
+         {
+            UIBackgroundUploadForm uploadForm = selector.createUIComponent(UIBackgroundUploadForm.class, null, null);
+            selector.setUploadForm(uploadForm);
+         }
+
+         UIMaskWorkspace maskWorkspace = selector.getAncestorOfType(UIMaskWorkspace.class);
+         maskWorkspace.setUIComponent(selector.getUploadForm());
+         Util.getPortalRequestContext().addUIComponentToUpdateByAjax(maskWorkspace);
       }
    }
 
