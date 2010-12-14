@@ -83,7 +83,18 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
          return false;
       }
 
-      space.getBackgroundImageFolder().addChild(backgroundImageName, null);
+      if (backgroundImageName !=null)
+      {
+         if (backgroundImageName.equals(space.getCurrentBackground()))
+         {
+            space.setCurrentBackground(null);
+         }
+         if (space.getBackgroundImageFolder().getChild(backgroundImageName) == null)
+         {
+            throw new IllegalStateException("Image doesn't exists");
+         }
+      }
+      space.getBackgroundImageFolder().getChildren().remove(backgroundImageName);
       return true;
    }
 
@@ -97,7 +108,7 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    }
 
    @Override
-   public String getCurrentBackgroundImageURL(String userName)
+   public DesktopBackground getCurrentDesktopBackground(String userName)
    {
 	  if(userName == null)
 	  {
@@ -111,19 +122,19 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 		if (selectedBackground == null) {
 			return null;
 		} else {
-			
-			return "/" + PortalContainer.getCurrentPortalContainerName() + "/rest/jcr/"
-					+ chromatticLifecycle.getRepositoryName() + "/"
-					+ chromatticLifecycle.getWorkspaceName()
-					+ "/webos:desktopBackgroundRegistry/webos:" + userName
-					+ "/webos:personalBackgroundFolder/" + selectedBackground;
+			return new DesktopBackground(makeImageURL(userName, selectedBackground), selectedBackground);
 		}
    }
-   
+
    public void setSelectedBackgroundImage(String userName, String imageName)
    {
       DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
 	   PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
+      if (imageName !=null && space.getBackgroundImageFolder().getChild(imageName) == null)
+      {
+         space.setCurrentBackground(null);
+         throw new IllegalStateException("Image doesn't exists");
+      }
 	   space.setCurrentBackground(imageName);
    }
    
@@ -141,9 +152,19 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       List<DesktopBackground> backgroundList = new ArrayList<DesktopBackground>();
       for(String background : availableBackgrounds)
       {
-         backgroundList.add(new DesktopBackground("/" + portalContainerName + "/rest/jcr/" + chromatticLifecycle.getRepositoryName() + "/" + chromatticLifecycle.getWorkspaceName()
-                 + "/webos:desktopBackgroundRegistry/webos:" + userName + "/webos:personalBackgroundFolder/" + background, background));
+         backgroundList.add(new DesktopBackground(makeImageURL(userName, background), background));
       }
       return backgroundList;
+   }
+
+   private String makeImageURL(String userName, String imageLabel)
+   {
+      StringBuilder urlBuilder = new StringBuilder("/");
+      urlBuilder.append(PortalContainer.getCurrentPortalContainerName()).append("/rest/jcr/");
+      urlBuilder.append(chromatticLifecycle.getRepositoryName()).append("/");
+      urlBuilder.append(chromatticLifecycle.getWorkspaceName()).append("/webos:desktopBackgroundRegistry/webos:");
+      urlBuilder.append(userName).append("/webos:personalBackgroundFolder/").append(imageLabel);
+
+      return urlBuilder.toString();
    }
 }

@@ -47,6 +47,7 @@ import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
+import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webos.services.dockbar.DockbarIcon;
 import org.exoplatform.webos.services.dockbar.DockbarService;
@@ -255,9 +256,14 @@ public class UIDesktopPage extends UIPage
    
    public String getSelectedBackground(WebuiRequestContext context)
    {
-	   String userName = context.getRemoteUser();
-	   DesktopBackgroundService service = (DesktopBackgroundService)getApplicationComponent(DesktopBackgroundService.class);
-	   return service.getCurrentBackgroundImageURL(userName);
+      String userName = context.getRemoteUser();
+      DesktopBackgroundService service = getApplicationComponent(DesktopBackgroundService.class);
+      DesktopBackground currBackground = service.getCurrentDesktopBackground(userName);
+      if (currBackground != null)
+      {
+         return currBackground.getImageURL();
+      }
+      return null;
    }
    
    private String getApplicationIconImageLocation(UIPortlet window)

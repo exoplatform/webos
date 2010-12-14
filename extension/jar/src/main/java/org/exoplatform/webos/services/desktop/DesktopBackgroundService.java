@@ -30,12 +30,25 @@ public interface DesktopBackgroundService
 {
 
    public boolean uploadBackgroundImage(String userName, String backgroundImageName, String mimeType, String encoding, InputStream binaryStream);
-   
+
+   /**
+    * Remove user background image, If it is current background, user background will be reset
+    * @param userName - user that will remove this desktop background image
+    * @param backgroundImageName - the name of the image file
+    * @throws IllegalStateException if image doesn't exists
+    */
    public boolean removeBackgroundImage(String userName, String backgroundImageName); 
    
-   public String getCurrentBackgroundImageURL(String userName);
+   public DesktopBackground getCurrentDesktopBackground(String userName);
    
    public List<DesktopBackground> getUserDesktopBackgrounds(String userName);
-   
+
+   /**
+    * Set current user background image
+    * If image is null, or doesn't exists current background will be reset
+    * @param userName - user that will use this desktop background image
+    * @param imageName - the name of the image file
+    * @throws IllegalStateException if image doesn't exists
+    */
    public void setSelectedBackgroundImage(String userName, String imageName);
 }

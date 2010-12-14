@@ -18,14 +18,24 @@
  */
 package org.exoplatform.webos.webui.page;
 
+import org.exoplatform.commons.utils.LazyPageList;
+import org.exoplatform.commons.utils.ListAccess;
+import org.exoplatform.commons.utils.ListAccessImpl;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
+import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
+import org.exoplatform.services.security.ConversationState;
+import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIContainer;
+import org.exoplatform.webui.core.UIGrid;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 import java.util.List;
@@ -40,16 +50,47 @@ import java.util.List;
   template = "system:/groovy/portal/webui/page/UIBackgroundSelector.gtmpl", 
   events ={
    @EventConfig(listeners = UIBackgroundSelector.UploadActionListener.class),
-   @EventConfig(listeners = UIBackgroundSelector.CloseActionListener.class),
-   @EventConfig(name = "SelectItem", listeners = UIBackgroundSelector.SelectItemActionListener.class)
+   @EventConfig(listeners = UIMaskWorkspace.CloseActionListener.class),     
+   @EventConfig(listeners = UIBackgroundSelector.DeleteActionListener.class, confirm = "UIBackgroundSelector.confirm.deleteImage"),
+   @EventConfig(name = "View", listeners = UIBackgroundSelector.SelectItemActionListener.class)
   }
 )
 public class UIBackgroundSelector extends UIContainer
 {
-   private UIBackgroundUploadForm uploadForm;   
+   public static final String IMAGE_LABEL = "imageLabel";
+   public static final String[] BACKGROUND_BEAN_FIELD = {IMAGE_LABEL};
+   public static final String[] ACTIONS = {"View", "Delete"};
+   public static final int PAGE_SIZE = 5;
+
+   private UIBackgroundUploadForm uploadForm;
+   private UIGrid  imageList;
+   private static Log log = ExoLogger.getLogger("portal:UIBackgroundSelector");
 
    public UIBackgroundSelector() throws Exception
    {
+      imageList = createUIComponent(UIGrid.class, null, "UIBackgroundImageList");
+      imageList.configure(IMAGE_LABEL, BACKGROUND_BEAN_FIELD, ACTIONS);
+      imageList.getUIPageIterator().setId("UIListBackgroundsIterator");
+      imageList.getUIPageIterator().setParent(this);
+      addChild(imageList);
+   }
+
+   @Override
+   public void processRender(WebuiRequestContext context) throws Exception
+   {
+      int currPage = imageList.getUIPageIterator().getCurrentPage();
+
+      ListAccess<DesktopBackground> imgAccess = new ListAccessImpl<DesktopBackground>(DesktopBackground.class,
+         getDesktopBackgrounds(context));
+      imageList.getUIPageIterator().setPageList(new LazyPageList<DesktopBackground>(imgAccess, PAGE_SIZE));
+
+      int availPage = imageList.getUIPageIterator().getAvailablePage();
+      if (currPage > availPage)
+      {
+         currPage = availPage;
+      }
+      imageList.getUIPageIterator().setCurrentPage(currPage);
+      super.processRender(context);
    }
 
    public UIBackgroundUploadForm getUploadForm()
@@ -80,21 +121,6 @@ public class UIBackgroundSelector extends UIContainer
          Util.getPortalRequestContext().addUIComponentToUpdateByAjax(maskWorkspace);
       }
    }
-
-   public static class CloseActionListener extends EventListener<UIBackgroundSelector>
-   {
-      @Override
-      public void execute(Event<UIBackgroundSelector> event) throws Exception
-      {
-         // TODO Auto-generated method stub
-         UIBackgroundSelector selector = event.getSource();
-         UIMaskWorkspace maskWorkspace = selector.getAncestorOfType(UIMaskWorkspace.class);
-         
-         maskWorkspace.setUIComponent(null);
-         maskWorkspace.setWindowSize(-1, -1);
-         event.getRequestContext().addUIComponentToUpdateByAjax(maskWorkspace);
-      }
-   }
    
    public static class SelectItemActionListener extends EventListener<UIBackgroundSelector>
    {
@@ -104,13 +130,71 @@ public class UIBackgroundSelector extends UIContainer
          WebuiRequestContext context = event.getRequestContext();
          UIBackgroundSelector selector = event.getSource();
          String selectedItem = context.getRequestParameter(OBJECTID);
-         UIMaskWorkspace maskWorkspace = selector.getAncestorOfType(UIMaskWorkspace.class);
-         maskWorkspace.setUIComponent(null);
-         maskWorkspace.setWindowSize(-1, -1);
-         context.addUIComponentToUpdateByAjax(maskWorkspace);
-         
-         DesktopBackgroundService backgroundService = (DesktopBackgroundService)selector.getApplicationComponent(DesktopBackgroundService.class);
-         backgroundService.setSelectedBackgroundImage(context.getRemoteUser(), selectedItem);
+
+         DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
+         String userId = ConversationState.getCurrent().getIdentity().getUserId();
+
+         try
+         {
+            backgroundService.setSelectedBackgroundImage(userId, selectedItem);
+            UIMaskWorkspace maskWorkspace = selector.getAncestorOfType(UIMaskWorkspace.class);
+            maskWorkspace.createEvent("Close", Event.Phase.DECODE, context).broadcast();
+         }
+         catch (IllegalStateException e)
+         {
+            log.warn(e.getMessage());
+            Util.getUIPortalApplication().addMessage(new ApplicationMessage("UIBackgroundSelector.msg.notExists.image",
+               null, ApplicationMessage.WARNING));
+            context.addUIComponentToUpdateByAjax(selector);
+         }
+
+         //temporary use this, we will improve it: use javascript to update background image
+         UIPortalApplication uiPortalApplication = Util.getUIPortalApplication();
+         UIWorkingWorkspace uiWorkingWorkspace = uiPortalApplication.findComponentById(UIPortalApplication.UI_WORKING_WS_ID);
+         context.addUIComponentToUpdateByAjax(uiWorkingWorkspace);
+         Util.getPortalRequestContext().setFullRender(true);
+      }
+   }
+
+   public static class DeleteActionListener extends EventListener<UIBackgroundSelector>
+   {
+      @Override
+      public void execute(Event<UIBackgroundSelector> event) throws Exception
+      {
+         WebuiRequestContext context = event.getRequestContext();
+         UIBackgroundSelector selector = event.getSource();
+         String selectedItem = context.getRequestParameter(OBJECTID);
+
+         String userId = ConversationState.getCurrent().getIdentity().getUserId();
+         DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
+         boolean needRefresh = false;
+
+         DesktopBackground currBackGround = backgroundService.getCurrentDesktopBackground(userId);
+         try
+         {
+            backgroundService.removeBackgroundImage(userId, selectedItem);
+         }
+         catch (IllegalStateException e)
+         {
+            log.warn(e.getMessage());
+            needRefresh = true;
+         }
+
+         context.addUIComponentToUpdateByAjax(selector);
+
+         if (currBackGround != null &&
+               currBackGround.getImageLabel().equals(selectedItem))
+         {
+            needRefresh = true;
+         }
+         //temporary use this, we will improve it: use javascript to update background image
+         if (needRefresh)
+         {
+            UIPortalApplication uiPortalApplication = Util.getUIPortalApplication();
+            UIWorkingWorkspace uiWorkingWorkspace = uiPortalApplication.findComponentById(UIPortalApplication.UI_WORKING_WS_ID);
+            context.addUIComponentToUpdateByAjax(uiWorkingWorkspace);
+            Util.getPortalRequestContext().setFullRender(true);
+         }
       }
    }
       

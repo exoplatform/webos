@@ -11,7 +11,7 @@
     
     List<DesktopBackground> desktopBackgrounds = uicomponent.getDesktopBackgrounds(rcontext);	
 %>
-<div class="UIChangeLanguageForm">
+<div class="UIChangeLanguageForm" id="<%=uicomponent.getId()%>">
 	<div class="UIFormTabPane">
 		<div class="UITabPane">
 		
@@ -31,14 +31,7 @@
 				<div class="WorkingArea">	
 					<div class="HorizontalLayout">
 						<div class="UITabContentContainer">
-							<%
-								for(DesktopBackground background : desktopBackgrounds) {
-								  String link = uicomponent.url("SelectItem", background.getImageLabel());
-							%>
-							   <div><a href="${link}"><%= background.getImageLabel(); %></a></div>	 
-								  
-							<% }%>
-						
+							<%uicomponent.renderChildren()%>						
 						</div>
 						
 		 				<div class="UIAction"> 
