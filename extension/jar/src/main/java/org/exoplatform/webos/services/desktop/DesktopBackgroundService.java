@@ -29,7 +29,7 @@ import java.util.List;
 public interface DesktopBackgroundService
 {
 
-   public boolean uploadBackgroundImage(String userName, String backgroundImageName, String mimeType, String encoding, InputStream binaryStream);
+   public boolean uploadBackgroundImage(String userName, String backgroundImageName, String mimeType, String encoding, InputStream binaryStream) throws Exception;
 
    /**
     * Remove user background image, If it is current background, user background will be reset

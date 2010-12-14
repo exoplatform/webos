@@ -25,6 +25,7 @@ import org.exoplatform.upload.UploadResource;
 import org.exoplatform.upload.UploadService;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
+import org.exoplatform.webos.services.desktop.exception.ImageQuantityException;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
@@ -110,7 +111,18 @@ public class UIBackgroundUploadForm extends UIForm
                   invalidFiles.append(uploadResource.getFileName()).append(", ");                  
                   continue;
                }
-               saveToDB(uploadInput);
+               try
+               {
+                  saveToDB(uploadInput);
+               }
+               catch (ImageQuantityException e)
+               {
+                  ApplicationMessage msg = new ApplicationMessage("UIBackgroundUploadForm.msg.image.quantity.exceed",
+                     new String[] {String.valueOf(e.getQuantity())}, ApplicationMessage.ERROR);
+                  Util.getUIPortalApplication().addMessage(msg);
+                  event.getRequestContext().addUIComponentToUpdateByAjax(uploadForm);
+                  return;
+               }
                cleanUploadedFile(uploadInput);               
             }
          }
@@ -123,7 +135,7 @@ public class UIBackgroundUploadForm extends UIForm
 //               new String[] {invalidFiles.toString()}, ApplicationMessage.WARNING);
 //            msg.setArgsLocalized(false);
             ApplicationMessage msg = new ApplicationMessage("UIBackgroundUploadForm.msg.invalid.image",
-               null, ApplicationMessage.WARNING);
+               null, ApplicationMessage.ERROR);
             Util.getUIPortalApplication().addMessage(msg);
             event.getRequestContext().addUIComponentToUpdateByAjax(uploadForm);
             return;                        

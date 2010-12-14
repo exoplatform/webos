@@ -24,6 +24,13 @@
   <component>
      <key>org.exoplatform.webos.services.desktop.DesktopBackgroundService</key>
      <type>org.exoplatform.webos.services.desktop.impl.DesktopBackgroundServiceImpl</type>
+     <init-params>
+      <value-param>
+        <name>image.limit.quantity</name>
+        <description>Maximum number of the files each user can upload</description>
+        <value>10</value>
+      </value-param>
+    </init-params>
   </component>
   
   <external-component-plugins>

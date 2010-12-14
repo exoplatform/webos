@@ -30,8 +30,12 @@ import org.exoplatform.commons.chromattic.ChromatticLifeCycle;
 import org.exoplatform.commons.chromattic.ChromatticManager;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.xml.InitParams;
+import org.exoplatform.container.xml.ValueParam;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
+import org.exoplatform.webos.services.desktop.exception.ImageQuantityException;
 
 /**
  * @author <a href="mailto:hoang281283@gmail.com">Minh Hoang TO</a>
@@ -40,17 +44,30 @@ import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 
 public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 {
+   private static final Log log = ExoLogger.getExoLogger("portal:DesktopBackgroundServiceImpl");
 
    private ChromatticManager chromatticManager;
 
    private ChromatticLifeCycle chromatticLifecycle;
 
+   // 0 means unlimited
+   private int quantityLimit;
+
    public DesktopBackgroundServiceImpl(ChromatticManager manager, InitParams params) throws Exception
    {
       chromatticManager = manager;
-      chromatticLifecycle = (WebOSChromatticLifecycle) manager.getLifeCycle("webos");
+      chromatticLifecycle = manager.getLifeCycle("webos");
+
+      if (params != null)
+      {
+         ValueParam valueParam = params.getValueParam("image.limit.quantity");
+         if (valueParam != null)
+         {
+            quantityLimit = Integer.parseInt(valueParam.getValue());
+         }
+      }
    }
-   
+
    public DesktopBackgroundRegistry initBackgroundRegistry()
    {
       DesktopBackgroundRegistry backgroundRegistry;
@@ -100,10 +117,15 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 
    @Override
    public boolean uploadBackgroundImage(String userName, String backgroundImageName, String mimeType, String encoding,
-         InputStream binaryStream)
+         InputStream binaryStream) throws Exception
    {
       DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
       PersonalBackgroundSpace space = backgroundRegistry .getPersonalBackgroundSpace(userName, true);
+      if (quantityLimit != 0 && space.getBackgroundImageFolder().getChildren().size() == quantityLimit)
+      {
+         log.debug("Each user can only have" + quantityLimit + " background images");
+         throw new ImageQuantityException(quantityLimit);
+      }
       return space.uploadBackgroundImage(backgroundImageName, mimeType, encoding, binaryStream);
    }
 
