@@ -227,6 +227,7 @@ public class UIAddNewApplication extends UIContainer
          
          //Rebuild the uiPage
          page = dataService.getPage(page.getPageId());
+         page.setModifiable(true);
          uiPage.getChildren().clear();
          PortalDataMapper.toUIPage(uiPage, page);
       }
