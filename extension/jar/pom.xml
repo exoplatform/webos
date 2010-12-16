@@ -46,10 +46,37 @@
   	</dependency>
 	
 	<dependency>
+		<groupId>org.exoplatform.portal</groupId>
+		<artifactId>exo.portal.component.test.core</artifactId>
+		<version>${org.exoplatform.portal.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.exoplatform.portal</groupId>
+		<artifactId>exo.portal.component.test.jcr</artifactId>
+		<version>${org.exoplatform.portal.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.exoplatform.portal</groupId>
+		<artifactId>exo.portal.component.test.organization</artifactId>
+		<version>${org.exoplatform.portal.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
 	  <groupId>org.chromattic</groupId>
 	  <artifactId>chromattic.ext</artifactId>
 	  <version>${version.chromattic}</version>
 	</dependency>
-	
+	<dependency>
+	  <groupId>org.slf4j</groupId>
+	  <artifactId>slf4j-api</artifactId>
+	  <version>${org.slf4j.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.slf4j</groupId>
+	  <artifactId>slf4j-jdk14</artifactId>
+	  <version>${org.slf4j.version}</version>
+	</dependency>
   </dependencies>
 </project>
