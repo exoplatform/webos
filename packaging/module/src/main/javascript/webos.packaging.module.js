@@ -34,6 +34,6 @@ function getModule(params) {
 	module.server.tomcat = {}
 	module.server.tomcat.patch =
 	new Project("org.exoplatform.webos", "exo.webos.server.tomcat.patch", "jar", module.version);
-
+   module.portlet = new Project("org.exoplatform.webos", "exo.webos.portlet.webosadmin", "war", module.version);
   return module;
 }
