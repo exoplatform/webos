@@ -162,28 +162,17 @@ public class UIAddNewApplication extends UIContainer
     */
    private static void addApplicationToPage(Event<UIAddNewApplication> event, boolean atStartup) throws Exception
    {
-  	  //TODO: Refactor this bullshit
-      UIPortal uiPortal = Util.getUIPortal();
+      UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
+      UIPortal uiPortal = uiPortalApp.getShowedUIPortal();
 
-      UIPortalApplication uiPortalApp = uiPortal.getAncestorOfType(UIPortalApplication.class);
-      UIPage uiPage;
-      if (uiPortal.isRendered())
-      {
-         uiPage = uiPortal.findFirstComponentOfType(UIPage.class);
-      }
-      else
-      {
-         UIPortalToolPanel uiPortalToolPanel = uiPortalApp.findFirstComponentOfType(UIPortalToolPanel.class);
-         uiPage = uiPortalToolPanel.findFirstComponentOfType(UIPage.class);
-      }
+      UIDesktopPage uiDesktopPage = uiPortal.findFirstComponentOfType(UIDesktopPage.class);
 
       String applicationId = event.getRequestContext().getRequestParameter(UIComponent.OBJECTID);
 
       Application application = event.getSource().getApplication(applicationId);
       ApplicationType appType = application.getType();
       
-      UIPortlet uiPortlet = uiPage.createUIComponent(UIPortlet.class, null, null);
-
+      UIPortlet uiPortlet = uiDesktopPage.createUIComponent(UIPortlet.class, null, null);
       ApplicationState appState;
 
       // TODO: Check if there 's already a portlet window of this portlet. A CloneApplicationState
@@ -213,11 +202,11 @@ public class UIAddNewApplication extends UIContainer
       
 
       // Add portlet to page
-      uiPage.addChild(uiPortlet);
+      uiDesktopPage.addChild(uiPortlet);
 
-      if (uiPage.isModifiable())
+      if (uiDesktopPage.isModifiable())
       {
-         Page page = (Page)PortalDataMapper.buildModelObject(uiPage);
+         Page page = (Page)PortalDataMapper.buildModelObject(uiDesktopPage);
          if (page.getChildren() == null)
          {
             page.setChildren(new ArrayList<ModelObject>());
@@ -225,11 +214,11 @@ public class UIAddNewApplication extends UIContainer
          DataStorage dataService = uiPortalApp.getApplicationComponent(DataStorage.class);
          dataService.save(page);
          
-         //Rebuild the uiPage
+         //Rebuild the uiPage to synchronize (storageId, storageName) mapping
          page = dataService.getPage(page.getPageId());
          page.setModifiable(true);
-         uiPage.getChildren().clear();
-         PortalDataMapper.toUIPage(uiPage, page);
+         uiDesktopPage.getChildren().clear();
+         PortalDataMapper.toUIPage(uiDesktopPage, page);
       }
 
       PortalRequestContext pcontext = Util.getPortalRequestContext();
