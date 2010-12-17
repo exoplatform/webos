@@ -24,8 +24,8 @@
    <priority>3</priority>
    <page-nodes>
       <node>
-         <uri>webos</uri>
-         <name>webos</name>
+         <uri>classicWebosPage</uri>
+         <name>classicWebosPage</name>
          <label>WebOS Page</label>
          <visibility>SYSTEM</visibility>
          <page-reference>user::root::webos</page-reference>
