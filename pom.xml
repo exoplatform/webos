@@ -199,5 +199,40 @@
     <module>extension</module>
     <module>server</module>
     <module>packaging</module>
+     <module>portlet</module>
   </modules>
+
+
+   <dependencyManagement>
+      <dependencies>
+         <!-- GateIn dependencies -->
+         <dependency>
+            <groupId>org.exoplatform.portal</groupId>
+            <artifactId>exo.portal.webui.core</artifactId>
+            <version>${org.exoplatform.portal.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.exoplatform.portal</groupId>
+            <artifactId>exo.portal.webui.portal</artifactId>
+            <version>${org.exoplatform.portal.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.exoplatform.portal</groupId>
+            <artifactId>exo.portal.webui.eXo</artifactId>
+            <version>${org.exoplatform.portal.version}</version>
+         </dependency>
+
+         <!-- WebOS dependencies -->
+         <dependency>
+            <groupId>org.exoplatform.webos</groupId>
+            <artifactId>exo.webos.web.extension.jar</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+         </dependency>
+         <dependency>
+            <groupId>org.exoplatform.webos</groupId>
+            <artifactId>exo.webos.web.extension.jar</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
 </project>
