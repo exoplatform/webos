@@ -27,4 +27,5 @@
 	<import>war:/conf/webos/common/desktop-background-service-configuration.xml</import>
 	<import>war:/conf/webos/common/desktop-dockbar-service-configuration.xml</import>
 	<import>war:/conf/webos/common/common-configuration.xml</import>
+   <import>war:/conf/webos/web/web-inf-extension-configuration.xml</import>
 </configuration>
