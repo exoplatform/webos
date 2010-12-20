@@ -51,4 +51,6 @@ public interface DesktopBackgroundService
     * @throws IllegalStateException if image doesn't exists
     */
    public void setSelectedBackgroundImage(String userName, String imageName);
+
+   public int getSizeLimit();
 }

@@ -30,6 +30,11 @@
         <description>Maximum number of the files each user can upload</description>
         <value>10</value>
       </value-param>
+      <value-param>
+        <name>image.limit.size</name>
+        <description>Maximum size of the image that user can upload</description>
+        <value>2</value>
+      </value-param> 
     </init-params>
   </component>
   

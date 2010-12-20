@@ -36,6 +36,7 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webos.services.desktop.exception.ImageQuantityException;
+import org.exoplatform.webos.services.desktop.exception.ImageSizeException;
 
 /**
  * @author <a href="mailto:hoang281283@gmail.com">Minh Hoang TO</a>
@@ -53,6 +54,10 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    // 0 means unlimited
    private int quantityLimit;
 
+   // 0 means unlimited
+   //This is applied for each image
+   private int sizeLimit;
+
    public DesktopBackgroundServiceImpl(ChromatticManager manager, InitParams params) throws Exception
    {
       chromatticManager = manager;
@@ -60,10 +65,15 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 
       if (params != null)
       {
-         ValueParam valueParam = params.getValueParam("image.limit.quantity");
-         if (valueParam != null)
+         ValueParam quantityParam = params.getValueParam("image.limit.quantity");
+         if (quantityParam != null)
          {
-            quantityLimit = Integer.parseInt(valueParam.getValue());
+            quantityLimit = Integer.parseInt(quantityParam.getValue());
+         }
+         ValueParam sizeParam = params.getValueParam("image.limit.size");
+         if (sizeParam != null)
+         {
+            sizeLimit = Integer.parseInt(sizeParam.getValue());
          }
       }
    }
@@ -87,6 +97,12 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    public ChromatticLifeCycle getChromatticLifecycle()
    {
       return this.chromatticLifecycle;
+   }
+
+   @Override
+   public int getSizeLimit()
+   {
+      return sizeLimit;
    }
 
    @Override
@@ -125,6 +141,11 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       {
          log.debug("Each user can only have" + quantityLimit + " background images");
          throw new ImageQuantityException(quantityLimit);
+      }
+      if (sizeLimit != 0 && sizeLimit < binaryStream.available()/1024.0/1024)
+      {
+         log.debug("Can't upload, naximum image size is :" + sizeLimit);
+         throw new ImageSizeException(sizeLimit, backgroundImageName);
       }
       return space.uploadBackgroundImage(backgroundImageName, mimeType, encoding, binaryStream);
    }
