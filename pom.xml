@@ -198,8 +198,8 @@
     <module>webui/webos</module>
     <module>extension</module>
     <module>server</module>
-    <module>packaging</module>
      <module>portlet</module>
+    <module>packaging</module>
   </modules>
 
 
