@@ -39,6 +39,14 @@ public interface DesktopBackgroundService
     */
    public boolean removeBackgroundImage(String userName, String backgroundImageName); 
    
+   /**
+    * Remove all background of an user
+    * 
+    * @param userName
+    * @return
+    */
+   public void removeUserBackground(String userName);
+   
    public DesktopBackground getCurrentDesktopBackground(String userName);
    
    public List<DesktopBackground> getUserDesktopBackgrounds(String userName);

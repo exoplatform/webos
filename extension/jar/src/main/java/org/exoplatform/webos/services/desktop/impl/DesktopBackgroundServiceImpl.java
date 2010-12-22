@@ -109,7 +109,7 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    public boolean removeBackgroundImage(String userName, String backgroundImageName)
    {
       DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
-      PersonalBackgroundSpace space = backgroundRegistry .getPersonalBackgroundSpace(userName);
+      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName);
       if (space == null)
       {
          //TODO: Throws an exception here
@@ -209,5 +209,12 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       urlBuilder.append(userName).append("/webos:personalBackgroundFolder/").append(imageLabel);
 
       return urlBuilder.toString();
+   }
+
+   @Override
+   public void removeUserBackground(String userName)
+   {
+      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
+      backgroundRegistry.removePersonalBackgroundSpace(userName);
    }
 }
