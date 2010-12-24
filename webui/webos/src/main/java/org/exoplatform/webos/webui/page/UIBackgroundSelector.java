@@ -23,8 +23,6 @@ import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.commons.utils.ListAccessImpl;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
-import org.exoplatform.portal.webui.workspace.UIPortalApplication;
-import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.security.ConversationState;
@@ -50,8 +48,9 @@ import java.util.List;
   template = "system:/groovy/portal/webui/page/UIBackgroundSelector.gtmpl", 
   events ={
    @EventConfig(listeners = UIBackgroundSelector.UploadActionListener.class),
-   @EventConfig(listeners = UIMaskWorkspace.CloseActionListener.class),     
+   @EventConfig(listeners = UIBackgroundSelector.CloseActionListener.class),
    @EventConfig(listeners = UIBackgroundSelector.DeleteActionListener.class, confirm = "UIBackgroundSelector.confirm.deleteImage"),
+   @EventConfig(listeners = UIBackgroundSelector.PreviewActionListener.class),    
    @EventConfig(name = "View", listeners = UIBackgroundSelector.SelectItemActionListener.class)
   }
 )
@@ -59,11 +58,12 @@ public class UIBackgroundSelector extends UIContainer
 {
    public static final String IMAGE_LABEL = "imageLabel";
    public static final String[] BACKGROUND_BEAN_FIELD = {IMAGE_LABEL};
-   public static final String[] ACTIONS = {"View", "Delete"};
+   public static final String[] ACTIONS = {"View", "Preview", "Delete"};
    public static final int PAGE_SIZE = 5;
 
    private UIBackgroundUploadForm uploadForm;
    private UIGrid  imageList;
+   private String previewImage;
    private static Log log = ExoLogger.getLogger("portal:UIBackgroundSelector");
 
    public UIBackgroundSelector() throws Exception
@@ -90,6 +90,17 @@ public class UIBackgroundSelector extends UIContainer
          currPage = availPage;
       }
       imageList.getUIPageIterator().setCurrentPage(currPage);
+
+      DesktopBackgroundService service = getApplicationComponent(DesktopBackgroundService.class);
+      String userId = ConversationState.getCurrent().getIdentity().getUserId();
+      DesktopBackground previewBackground = service.getUserDesktopBackground(userId, getPreviewImage()); 
+      if (previewBackground == null)
+      {
+         setPreviewImage(null);
+         previewBackground = service.getCurrentDesktopBackground(userId);
+      }
+      refreshDesktopBackground(previewBackground);
+
       super.processRender(context);
    }
 
@@ -102,6 +113,25 @@ public class UIBackgroundSelector extends UIContainer
    {
       uploadForm.setReferrer(this);
       this.uploadForm = uploadForm;
+   }
+
+   public void setPreviewImage(String previewImage)
+   {
+      this.previewImage = previewImage;
+   }
+
+   public String getPreviewImage()
+   {
+      return previewImage;
+   }
+
+   private void refreshDesktopBackground(DesktopBackground desktopBackground)
+   {
+      UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
+      if (uiDesktopPage != null)
+      {
+         uiDesktopPage.showDesktopBackground(desktopBackground);
+      }
    }
 
    public static class UploadActionListener extends EventListener<UIBackgroundSelector>
@@ -121,7 +151,25 @@ public class UIBackgroundSelector extends UIContainer
          Util.getPortalRequestContext().addUIComponentToUpdateByAjax(maskWorkspace);
       }
    }
-   
+
+   public static class CloseActionListener extends EventListener<UIBackgroundSelector>
+   {
+      @Override
+      public void execute(Event<UIBackgroundSelector> event) throws Exception
+      {
+         WebuiRequestContext context = event.getRequestContext();
+         UIBackgroundSelector selector = event.getSource();
+         selector.setPreviewImage(null);
+
+         UIMaskWorkspace maskWorkspace = selector.getAncestorOfType(UIMaskWorkspace.class);
+         maskWorkspace.createEvent("Close", Event.Phase.DECODE, context).broadcast();
+
+         DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
+         String userId = ConversationState.getCurrent().getIdentity().getUserId();
+         selector.refreshDesktopBackground(backgroundService.getCurrentDesktopBackground(userId));
+      }
+   }
+
    public static class SelectItemActionListener extends EventListener<UIBackgroundSelector>
    {
       @Override
@@ -129,6 +177,7 @@ public class UIBackgroundSelector extends UIContainer
       {
          WebuiRequestContext context = event.getRequestContext();
          UIBackgroundSelector selector = event.getSource();
+         selector.setPreviewImage(null);
          String selectedItem = context.getRequestParameter(OBJECTID);
 
          DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
@@ -148,11 +197,34 @@ public class UIBackgroundSelector extends UIContainer
             context.addUIComponentToUpdateByAjax(selector);
          }
 
-         UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
-         if (uiDesktopPage != null)
+         selector.refreshDesktopBackground(backgroundService.getCurrentDesktopBackground(userId));
+      }
+   }
+
+   public static class PreviewActionListener extends EventListener<UIBackgroundSelector>
+   {
+      @Override
+      public void execute(Event<UIBackgroundSelector> event) throws Exception
+      {
+         WebuiRequestContext context = event.getRequestContext();
+         UIBackgroundSelector selector = event.getSource();
+         selector.setPreviewImage(context.getRequestParameter(OBJECTID));
+
+         DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
+         String userId = ConversationState.getCurrent().getIdentity().getUserId();
+
+         DesktopBackground previewBackground = backgroundService.getUserDesktopBackground(userId, selector.getPreviewImage());
+         if (previewBackground == null)
          {
-            uiDesktopPage.showDesktopBackground(backgroundService.getCurrentDesktopBackground(userId));
+            log.warn("Can't found image :" + selector.getPreviewImage());
+            Util.getUIPortalApplication().addMessage(new ApplicationMessage("UIBackgroundSelector.msg.notExists.image",
+               null, ApplicationMessage.WARNING));
+            selector.setPreviewImage(null);
+            context.addUIComponentToUpdateByAjax(selector);
+            return;
          }
+
+         selector.refreshDesktopBackground(previewBackground);
       }
    }
 
@@ -178,12 +250,6 @@ public class UIBackgroundSelector extends UIContainer
          }
 
          context.addUIComponentToUpdateByAjax(selector);
-
-         UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
-         if (uiDesktopPage != null)
-         {
-            uiDesktopPage.showDesktopBackground(backgroundService.getCurrentDesktopBackground(userId));
-         }
       }
    }
       

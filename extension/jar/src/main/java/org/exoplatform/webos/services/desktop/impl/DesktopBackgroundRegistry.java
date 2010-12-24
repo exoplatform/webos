@@ -49,6 +49,10 @@ public abstract class DesktopBackgroundRegistry
    
    public PersonalBackgroundSpace getPersonalBackgroundSpace(String title, boolean autoCreated)
    {
+      if (title == null)
+      {
+         return null;
+      }
 	   PersonalBackgroundSpace space = getPersonalBackgroundSpaces().get(title);
 	   if(space == null && autoCreated)
 	   {

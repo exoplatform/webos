@@ -52,6 +52,13 @@ public interface DesktopBackgroundService
    public List<DesktopBackground> getUserDesktopBackgrounds(String userName);
 
    /**
+    * if image doen't exists or imageName is null, return null
+    * @param userName - user that will use this desktop background image
+    * @param imageName - the name of the image file
+    */
+   public DesktopBackground getUserDesktopBackground(String userName, String imageName);
+
+   /**
     * Set current user background image
     * If image is null, or doesn't exists current background will be reset
     * @param userName - user that will use this desktop background image

@@ -189,15 +189,35 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 	  
       NTFolder backgroundFolder = space.getBackgroundImageFolder();
       Set<String> availableBackgrounds = backgroundFolder.getChildren().keySet();
-      
-      
-      String portalContainerName = PortalContainer.getCurrentPortalContainerName();
+
       List<DesktopBackground> backgroundList = new ArrayList<DesktopBackground>();
       for(String background : availableBackgrounds)
       {
          backgroundList.add(new DesktopBackground(makeImageURL(userName, background), background));
       }
       return backgroundList;
+   }
+
+   @Override
+   public DesktopBackground getUserDesktopBackground(String userName, String imageName)
+   {
+      if (imageName == null)
+      {
+         return null;
+      }
+      
+      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
+      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
+      if (space == null)
+      {
+         throw new IllegalStateException("Can't found PersonalBackgroundSpace for :" + userName);
+      }
+      NTFolder backgroundFolder = space.getBackgroundImageFolder();
+      if (backgroundFolder.getChildren().containsKey(imageName))
+      {
+         return new DesktopBackground(makeImageURL(userName, imageName), imageName);
+      }
+      return null;      
    }
 
    private String makeImageURL(String userName, String imageLabel)
