@@ -164,4 +164,14 @@ UIDesktop.prototype.removeWindowContent = function (idWindow) {
 	}
 };
 
+UIDesktop.prototype.setDesktopBackground = function (imageURL) {
+	var pageDesktop = document.getElementById("UIPageDesktop") ;
+	if (!pageDesktop) return;
+
+	if (imageURL) {
+		imageURL = "url('" + imageURL + "') no-repeat center center";
+	}
+	pageDesktop.style["background"] = imageURL;
+};
+
 eXo.desktop.UIDesktop = new UIDesktop() ;

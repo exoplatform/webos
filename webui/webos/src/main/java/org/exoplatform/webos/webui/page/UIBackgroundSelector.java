@@ -148,11 +148,11 @@ public class UIBackgroundSelector extends UIContainer
             context.addUIComponentToUpdateByAjax(selector);
          }
 
-         //temporary use this, we will improve it: use javascript to update background image
-         UIPortalApplication uiPortalApplication = Util.getUIPortalApplication();
-         UIWorkingWorkspace uiWorkingWorkspace = uiPortalApplication.findComponentById(UIPortalApplication.UI_WORKING_WS_ID);
-         context.addUIComponentToUpdateByAjax(uiWorkingWorkspace);
-         Util.getPortalRequestContext().setFullRender(true);
+         UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
+         if (uiDesktopPage != null)
+         {
+            uiDesktopPage.showDesktopBackground(backgroundService.getCurrentDesktopBackground(userId));
+         }
       }
    }
 
@@ -167,9 +167,7 @@ public class UIBackgroundSelector extends UIContainer
 
          String userId = ConversationState.getCurrent().getIdentity().getUserId();
          DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
-         boolean needRefresh = false;
 
-         DesktopBackground currBackGround = backgroundService.getCurrentDesktopBackground(userId);
          try
          {
             backgroundService.removeBackgroundImage(userId, selectedItem);
@@ -177,23 +175,14 @@ public class UIBackgroundSelector extends UIContainer
          catch (IllegalStateException e)
          {
             log.warn(e.getMessage());
-            needRefresh = true;
          }
 
          context.addUIComponentToUpdateByAjax(selector);
 
-         if (currBackGround != null &&
-               currBackGround.getImageLabel().equals(selectedItem))
+         UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
+         if (uiDesktopPage != null)
          {
-            needRefresh = true;
-         }
-         //temporary use this, we will improve it: use javascript to update background image
-         if (needRefresh)
-         {
-            UIPortalApplication uiPortalApplication = Util.getUIPortalApplication();
-            UIWorkingWorkspace uiWorkingWorkspace = uiPortalApplication.findComponentById(UIPortalApplication.UI_WORKING_WS_ID);
-            context.addUIComponentToUpdateByAjax(uiWorkingWorkspace);
-            Util.getPortalRequestContext().setFullRender(true);
+            uiDesktopPage.showDesktopBackground(backgroundService.getCurrentDesktopBackground(userId));
          }
       }
    }

@@ -47,6 +47,7 @@ import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
+import org.exoplatform.web.application.JavascriptManager;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webos.services.dockbar.DockbarIcon;
@@ -253,10 +254,21 @@ public class UIDesktopPage extends UIPage
       
       pContext.addUIComponentToUpdateByAjax(maskWorkspace);
    }
-   
-   public String getSelectedBackground(WebuiRequestContext context)
+
+   public void showDesktopBackground(DesktopBackground desktopBackground)
    {
-      String userName = context.getRemoteUser();
+      String backgroundURL = null;
+      if (desktopBackground != null)
+      {
+         backgroundURL = "'" + desktopBackground.getImageURL() + "'";
+      }
+      JavascriptManager jsManager =WebuiRequestContext.getCurrentInstance().getJavascriptManager();
+      jsManager.addOnLoadJavascript("eXo.desktop.UIDesktop.setDesktopBackground(" + backgroundURL + ")");
+   }
+   
+   public String getSelectedBackground()
+   {
+      String userName = WebuiRequestContext.getCurrentInstance().getRemoteUser();
       DesktopBackgroundService service = getApplicationComponent(DesktopBackgroundService.class);
       DesktopBackground currBackground = service.getCurrentDesktopBackground(userName);
       if (currBackground != null)

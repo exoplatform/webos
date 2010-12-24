@@ -18,7 +18,7 @@
 	jsmanager.addCustomizedOnLoadScript("eXo.gadget.UIGadget.Debug='" + _ctx.appRes("UIDashboardContainer.label.Debug") + "';");
 	jsmanager.addCustomizedOnLoadScript('eXo.desktop.UIDockbar.initNav();');
 	
-	String currentSelectedBackground = uicomponent.getSelectedBackground(rcontext);
+	String currentSelectedBackground = uicomponent.getSelectedBackground();
 	String docBase =	rcontext.getRequestContextPath();
 	String comId = uicomponent.getId();
 	boolean modifiable = uicomponent.isModifiable();
@@ -173,7 +173,7 @@
 		   <% if(currentSelectedBackground == null) { %>
 		    <div class="UIPageDesktop" id="UIPageDesktop" >
 		   <% }else{ %> 
-			<div class="UIPageDesktop" id="UIPageDesktop" style="background:url('${currentSelectedBackground}') no-repeat left bottom ;">
+			<div class="UIPageDesktop" id="UIPageDesktop" style="background:url('${currentSelectedBackground}') no-repeat center center ;">
 			<% } %>
 			
 				<%int x = 15; y = 15 %>
