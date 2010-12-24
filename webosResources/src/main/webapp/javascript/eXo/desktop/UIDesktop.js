@@ -170,8 +170,17 @@ UIDesktop.prototype.setDesktopBackground = function (imageURL) {
 
 	if (imageURL) {
 		imageURL = "url('" + imageURL + "') no-repeat center center";
+	} else if (navigator.userAgent.indexOf("MSIE") >= 0) {
+		pageDesktop.style.backgroundAttachment = "";
+		pageDesktop.style.backgroundImage = "";
+		pageDesktop.style.backgroundRepeat = "";
+		pageDesktop.style.backgroundPositionX = "";
+		pageDesktop.style.backgroundPositionY = "";
+		pageDesktop.style.backgroundColor = "";
+		return;
 	}
-	pageDesktop.style["background"] = imageURL;
+
+	pageDesktop.style.background = imageURL;
 };
 
 eXo.desktop.UIDesktop = new UIDesktop() ;
