@@ -24,8 +24,25 @@
   <component>
      <key>org.exoplatform.webos.services.desktop.DesktopBackgroundService</key>
      <type>org.exoplatform.webos.services.desktop.impl.DesktopBackgroundServiceImpl</type>
+     <init-params>
+      <value-param>
+        <name>image.limit.quantity</name>
+        <description>Maximum number of the files each user can upload</description>
+        <value>9</value>
+      </value-param>
+      <value-param>
+        <name>image.limit.size</name>
+        <description>Maximum size of the image that user can upload</description>
+        <value>2</value>
+      </value-param>
+    </init-params>
   </component>
-  
+
+  <component>
+    <key>org.exoplatform.commons.chromattic.ChromatticManager</key>
+    <type>org.exoplatform.commons.chromattic.ChromatticManager</type>
+  </component>
+
   <external-component-plugins>
     <target-component>org.exoplatform.commons.chromattic.ChromatticManager</target-component>
     <component-plugin>
@@ -39,7 +56,7 @@
         </value-param>
         <value-param>
           <name>workspace-name</name>
-          <value>webos-system</value>
+          <value>webos-test</value>
         </value-param>
         <values-param>
           <name>entities</name>

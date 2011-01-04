@@ -165,6 +165,22 @@
               <name>java.naming.factory.initial</name>
               <value>org.exoplatform.services.naming.SimpleContextFactory</value>
             </property>
+            <property>
+              <name>gatein.test.datasource.driver</name>
+              <value>org.hsqldb.jdbcDriver</value>
+            </property>
+            <property>
+               <name>gatein.test.datasource.url</name>
+               <value>jdbc:hsqldb:mem:gateindb</value>
+            </property>
+            <property>
+               <name>gatein.test.datasource.username</name>
+               <value>sa</value>
+            </property>
+            <property>
+               <name>gatein.test.datasource.password</name>
+               <value />
+            </property>
           </systemProperties>
         </configuration>
       </plugin>
