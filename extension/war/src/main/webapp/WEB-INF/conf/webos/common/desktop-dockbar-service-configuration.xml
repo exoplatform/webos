@@ -25,22 +25,6 @@
     <key>org.exoplatform.webos.services.dockbar.DockbarService</key>
     <type>org.exoplatform.webos.services.dockbar.impl.DockbarServiceImpl</type>
   	<init-params>
-  		<object-param>
-  		    <name>addApplication</name>
-  		    <description>Add Application Icon</description>
-  			<object type="org.exoplatform.webos.services.dockbar.DockbarIcon">
-  				<field name="iconName">
-  				    <string>addApplication</string>
-  				</field>
-  				<field name="accessPermission">
-  					<string>*:/platform/administrators</string>
-  				</field>
-  				<field name="i18nLabel">
-  					<string>UIPageDesktop.title.AddApplication</string>
-  				</field>
-  			</object>
-  		</object-param>
-  		
   		<object-param>		
   		    <name>portletViewer</name>
   		    <description>Portlet Viewer Icon</description>

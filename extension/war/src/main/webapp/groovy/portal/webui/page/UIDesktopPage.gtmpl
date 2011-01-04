@@ -281,11 +281,9 @@
 									<img id="GadgetsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/HideWidgetsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowWidgetDesktop")%></span>
 									
 									<img class="Separator" alt="" src="/webosResources/skin/Defaultskin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png" />
-									
-									<% if(uicomponent.checkAccessPermission(remoteUser, "addApplication")){ %>
+
 									<img class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/AddPortlet.png" alt="" title="" id="UIAddApplicationIcon"
 									 onclick="<%=uicomponent.event("ShowAddNewApplication")%>"/><span class="Tooltip" style="display: none"><%=_ctx.appRes("UIPageDesktop.title.AddApplication")%></span>
-									<% } %>
 								</div>
 							</div>
 						</div>
