@@ -115,7 +115,7 @@
   </build>
   <profiles>
     <profile>
-      <id>pkg-tomcat</id>
+      <id>pkg-tomcat-legacy</id>
       <build>
         <finalName>GateIn-${project.version}</finalName>
         <plugins>

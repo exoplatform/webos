@@ -27,9 +27,24 @@
   <artifactId>exo.webos.packaging</artifactId>
   <packaging>pom</packaging>
   <name>eXo WEBOS Packaging</name>
-  <modules>
-    <module>module</module>
-    <module>product</module>
-    <module>pkg</module>
-  </modules>
+
+   <profiles>
+      <profile>
+         <id>default</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <modules>
+            <module>module</module>
+            <module>pkg</module>
+            <module>product</module>
+         </modules>
+      </profile>
+      <profile>
+         <id>pkg-tomcat</id>
+         <modules>
+            <module>tomcat</module>
+         </modules>
+      </profile>
+   </profiles>
 </project>
