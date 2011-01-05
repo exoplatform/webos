@@ -36,7 +36,6 @@ import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.navigation.PageNavigationUtils;
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
-import org.exoplatform.portal.webui.page.UIPageForm;
 import org.exoplatform.portal.webui.page.UIPageLifecycle;
 import org.exoplatform.portal.webui.page.UIPageActionListener.DeleteGadgetActionListener;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
@@ -340,7 +339,7 @@ public class UIDesktopPage extends UIPage
   		 UIPortalApplication portalApp = Util.getUIPortalApplication();
   		 UIMaskWorkspace maskWorkspace = portalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID);
   		 
-  		 UIPageForm pageForm = portalApp.createUIComponent(UIPageForm.class, null, null);
+  		 UIDesktopPageForm pageForm = portalApp.createUIComponent(UIDesktopPageForm.class, null, null);
   		 UIDesktopPage desktopPage = event.getSource();
   		 pageForm.setValues(desktopPage);
   		 
