@@ -37,6 +37,7 @@ function getProduct(version) {
   product.addDependencies(portal.starter);
   product.addDependencies(webos.web.extension.war);
   product.addDependencies(webos.portlet);
+  product.addDependencies(webos.component.web);  
 
   product.addDependencies(portal.ibm.jdk.support);
 	

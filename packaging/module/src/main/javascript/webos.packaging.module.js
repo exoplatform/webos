@@ -21,9 +21,11 @@ function getModule(params) {
   module.web.extension = {};
   module.web.extension.war =
     new Project("org.exoplatform.webos", "exo.webos.web.extension.war", "war", module.version).
-    addDependency(new Project("org.exoplatform.webos", "exo.webos.web.extension.jar", "jar", module.version)).
     addDependency(new Project("org.exoplatform.webos", "exo.webos.web.extension.config", "jar", module.version));
   module.web.extension.war.deployName = "webos-ext";
+
+  module.component = {};
+  module.component.web = new Project("org.exoplatform.webos", "exo.webos.component.web", "jar", module.version);
 
   module.webui = {};
   module.webui.webos =

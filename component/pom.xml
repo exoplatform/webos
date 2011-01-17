@@ -26,12 +26,13 @@
     <artifactId>webos-parent</artifactId>
     <version>2.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>exo.webos.web.extension</artifactId>
+  <artifactId>exo.webos.component</artifactId>
   <packaging>pom</packaging>
-  <name>GateIn WebOS Extension</name>
-  <description>GateIn WebOS Extension Root Pom</description>
+  <name>WebOS Component</name>
+  <description>GateIn WebOS Extension Java Classes</description>
+  <url>http://www.exoplatform.org</url>
+
   <modules>
-    <module>config</module>
-    <module>war</module>
+    <module>web</module>
   </modules>
 </project>
