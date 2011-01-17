@@ -26,7 +26,7 @@
     <artifactId>exo.webos.web.extension</artifactId>
     <version>2.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>exo.webos.web.extension.war</artifactId>
+  <artifactId>exo.webos.extension.war</artifactId>
   <packaging>war</packaging>
   <name>GateIn WebOS Extension War</name>
   <description>GateIn WebOS Extension War</description>

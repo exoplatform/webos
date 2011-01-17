@@ -756,7 +756,7 @@
       <!--WebOS-->
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.web.extension.config</artifactId>
+         <artifactId>exo.webos.extension.config</artifactId>
       </dependency>
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
@@ -829,7 +829,7 @@
       <dependency>
          <?rename webos-ext.war?>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.web.extension.war</artifactId>
+         <artifactId>exo.webos.extension.war</artifactId>
          <type>war</type>
       </dependency>
       <dependency>
