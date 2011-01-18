@@ -18,7 +18,7 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion><dependencies><dependency><groupId>commons-chain</groupId><artifactId>commons-chain</artifactId><version>1.0</version></dependency></dependencies>
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.exoplatform</groupId>
     <artifactId>exo.parent</artifactId>
@@ -364,6 +364,11 @@
          <dependency>
             <groupId>org.exoplatform.core</groupId>
             <artifactId>exo.core.component.document</artifactId>
+            <version>${org.exoplatform.core.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.exoplatform.core</groupId>
+            <artifactId>exo.core.component.ldap</artifactId>
             <version>${org.exoplatform.core.version}</version>
          </dependency>
          <dependency>
