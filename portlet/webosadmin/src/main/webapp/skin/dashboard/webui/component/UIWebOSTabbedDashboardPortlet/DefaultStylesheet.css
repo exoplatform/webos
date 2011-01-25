@@ -1,0 +1,152 @@
+/**
+ * Copyright (C) 2009 eXo Platform SAS.
+ * 
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
+.UIWebOSTabPaneDashboard {
+	padding: 0 9px;
+}
+
+.UIWebOSTabPaneDashboard .LtTabDashboard {
+	background: #ffcf01 url('background/NavUser.gif') no-repeat left top;
+	padding-left: 3px;
+	_height: 32px;
+}
+
+.UIWebOSTabPaneDashboard .RtTabDashboard {
+	background: #ffcf01 url('background/NavUser.gif') no-repeat right top;
+	padding-right: 3px;
+	_height: 32px;
+}
+
+.UIWebOSTabPaneDashboard .CtTabDashboard {
+	background: #ffcf01 url('background/NavUser.gif') repeat-x center -32px;
+	padding: 0px 6px; 
+	_height: 32px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs {
+	padding: 1px 0px 4px 0px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .TabsContainer {
+	height: auto;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle {
+	margin: 3px 2px 0 0;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .NormalTab .MiddleTab,
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .HighlightNavigationTab .MiddleTab,
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .MiddleTab {
+	padding: 0px 5px;
+	_padding: 4px 5px;
+	white-space:nowrap;
+	font-weight: normal;
+	line-height: 24px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .UITab .CloseIcon {
+	background: url('background/IconClose.gif') no-repeat center;
+	width: 16px; height: 16px;
+	cursor: pointer;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .AddDashboard {
+	background: url('background/AddDashboard.gif') no-repeat bottom;
+	width: 34px; height: 24px;
+	float: left; /* orientation=lt */
+	float: right; /* orientation=rt */
+	cursor: pointer;
+	margin-top: 3px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .NormalTab .LeftTab {
+	background: url(background/TabDashboard.gif) no-repeat left -48px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .NormalTab .RightTab {
+	background: url(background/TabDashboard.gif) no-repeat right -48px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .NormalTab .MiddleTab {
+	background: url(background/TabDashboard.gif) repeat-x left -72px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .HighlightNavigationTab .LeftTab {
+	background: url(background/TabDashboard.gif) no-repeat left -48px;
+	padding-left: 4px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .HighlightNavigationTab .RightTab {
+	background: url(background/TabDashboard.gif) no-repeat right -48px;
+	padding-right: 4px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .HighlightNavigationTab .MiddleTab {
+	background: url(background/TabDashboard.gif) repeat-x left -72px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .LeftTab {
+	background: url(background/TabDashboard.gif) no-repeat left top;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .RightTab {
+	background: url(background/TabDashboard.gif) no-repeat right top;
+	padding-right: 4px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .MiddleTab {
+	background: url(background/TabDashboard.gif) repeat-x left -24px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .EditnewTab .LeftTab {
+	background: url(background/TabDashboard.gif) no-repeat left top;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .EditnewTab .RightTab {
+	background: url(background/TabDashboard.gif) no-repeat right top;
+	padding-right: 4px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .EditnewTab .MiddleTab {
+	background: url(background/TabDashboard.gif) repeat-x left -24px;
+	line-height: 22px;
+	vertical-align: middle;
+	padding-top: 0;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .EditTab {
+	_padding: 2px 5px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .MiddleTab span {
+	margin-top: 1px;
+}
+
+.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle input {
+	font-size: 11px;
+	background: white;
+	padding: 0 !important;
+	text-align: left !important;
+	font-family: Tahoma !important;
+	margin: 0;
+	!height: 16px;
+	!line-height: 14px;
+	vertical-align: middle;
+}

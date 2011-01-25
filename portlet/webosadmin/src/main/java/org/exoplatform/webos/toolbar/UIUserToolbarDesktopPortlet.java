@@ -85,7 +85,7 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
       String pageRef = pageNode.getPageReference();
       DataStorage ds = getApplicationComponent(DataStorage.class);
       Page page = ds.getPage(pageRef);
-      return UIDesktopPage.DESKTOP_FACTORY_ID.equals(page.getFactoryId());
+      return page != null && UIDesktopPage.DESKTOP_FACTORY_ID.equals(page.getFactoryId());
    }
 
    private PageNode getFirstNonWebOSNode(ArrayList<PageNode> nodes) throws Exception

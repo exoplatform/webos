@@ -51,4 +51,27 @@
          <role-link>admin</role-link>
       </security-role-ref>
    </portlet>
+
+   <portlet>
+      <description xml:lang="EN">WebOS Tabbed Dashboard Portlet</description>
+      <portlet-name>WebOSTabbedDashboardPortlet</portlet-name>
+      <display-name xml:lang="EN">WebOS Tabbed Dashboard</display-name>
+      <portlet-class>org.exoplatform.webui.application.portlet.PortletApplicationController</portlet-class>
+
+      <init-param>
+        <name>webui.configuration</name>
+        <value>/WEB-INF/conf/portlet/dashboard/WebOSTabbedDashboardPortlet/webui/configuration.xml</value>
+      </init-param>
+      <supports>
+        <mime-type>text/html</mime-type>
+        <portlet-mode>help</portlet-mode>
+      </supports>
+      <supported-locale>en</supported-locale>
+      <resource-bundle>locale.portlet.dashboard.WebOSTabbedDashboardPortlet</resource-bundle>
+      <portlet-info>
+        <title>WebOS Tabbed Dashboard Portlet</title>
+        <short-title>WebOS Tabbed Dashboard</short-title>
+        <keywords>System</keywords>
+      </portlet-info>
+  </portlet>
 </portlet-app>
