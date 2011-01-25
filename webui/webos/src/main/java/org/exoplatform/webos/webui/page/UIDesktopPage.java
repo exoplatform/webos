@@ -20,6 +20,7 @@
 package org.exoplatform.webos.webui.page;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -74,6 +75,16 @@ import org.exoplatform.webui.event.EventListener;
    @EventConfig(name = "EditCurrentPage", listeners = UIDesktopPage.EditCurrentPageActionListener.class)})
 public class UIDesktopPage extends UIPage
 {
+
+   public static String DESKTOP_FACTORY_ID = "Desktop";
+
+   static
+   {
+      if (getRealClass(DESKTOP_FACTORY_ID) == null)
+      {
+         realClass.put(DESKTOP_FACTORY_ID, UIDesktopPage.class);
+      }
+   }
 
    public UIDesktopPage()
    {

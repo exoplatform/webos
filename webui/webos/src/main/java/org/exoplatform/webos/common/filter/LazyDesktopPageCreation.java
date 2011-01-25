@@ -32,6 +32,7 @@ import org.exoplatform.portal.mop.Visibility;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.web.filter.Filter;
+import org.exoplatform.webos.webui.page.UIDesktopPage;
 
 import java.io.IOException;
 
@@ -66,6 +67,15 @@ public class LazyDesktopPageCreation implements Filter
          
          if (userName != null)
          {
+            try
+            {
+               //Need this code to add Class obj to realClass of UIPage
+               Class.forName(UIDesktopPage.class.getName());
+            }
+            catch (ClassNotFoundException e)
+            {
+               throw new ServletException(e);
+            }
             createPortalConfig(container, userName);
             createUserPage(container, userName);
          }
@@ -103,7 +113,7 @@ public class LazyDesktopPageCreation implements Filter
          page = new Page();
          page.setName(PAGE_ID);
          page.setTitle(PAGE_TITLE);
-         page.setFactoryId("org.exoplatform.webos.webui.page.UIDesktopPage");
+         page.setFactoryId(UIDesktopPage.DESKTOP_FACTORY_ID);
          page.setShowMaxWindow(true);
          page.setOwnerType(PortalConfig.USER_TYPE);
          page.setOwnerId(userName);

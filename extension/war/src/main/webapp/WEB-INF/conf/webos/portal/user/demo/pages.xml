@@ -28,7 +28,7 @@
       <owner-id>demo</owner-id>
       <name>webos</name>
       <title>WebOS Page</title>
-      <factory-id>org.exoplatform.webos.webui.page.UIDesktopPage</factory-id>
+      <factory-id>Desktop</factory-id>
       <show-max-window>true</show-max-window>
    </page>
 </page-set>
