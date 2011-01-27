@@ -242,7 +242,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
 
          String fullName = (parentNode != null) ? parentNode.getUri() + "/" + uniqueNodeName : uniqueNodeName;
 
-         page.setName(uniqueNodeName);
+         page.setName(uniqueNodeName + "_" + page.hashCode());
          pageNode.setName(uniqueNodeName);
          pageNode.setUri(fullName);
          pageNode.setPageReference(page.getPageId());
