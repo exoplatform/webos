@@ -47,16 +47,11 @@
    	     <supertype>mix:referenceable</supertype>
    	  </supertypes>
  	  <propertyDefinitions>
-         <propertyDefinition name="webos:currentBackground" requiredType="String" autoCreated="false" mandatory="false"
-                             onParentVersion="COPY" protected="false" multiple="false">
-            <valueConstraints/>
-         </propertyDefinition>
-         
          <propertyDefinition name="webos:title" requiredType="String" autoCreated="false" mandatory="false"
                              onParentVersion="COPY" protected="false" multiple="false">
             <valueConstraints/>
          </propertyDefinition>
-      </propertyDefinitions> 
+    </propertyDefinitions>
       
       <childNodeDefinitions>
          <childNodeDefinition name="webos:personalBackgroundFolder" defaultPrimaryType="" autoCreated="false" mandatory="false"
@@ -67,5 +62,18 @@
          </childNodeDefinition>
       </childNodeDefinitions> 	  
    </nodeType>
-   
+
+   <nodeType name="webos:desktopPageMetadata" isMixin="true" hasOrderableChildNodes="false">
+      <supertypes>
+        <supertype>nt:base</supertype>
+        <supertype>mix:referenceable</supertype>
+      </supertypes>
+      <propertyDefinitions>
+        <propertyDefinition name="webos:backgroundImage" requiredType="String" autoCreated="false" mandatory="false"
+                               onParentVersion="COPY" protected="false" multiple="false">
+              <valueConstraints/>
+        </propertyDefinition>
+      </propertyDefinitions>
+      <childNodeDefinitions/>
+  </nodeType>
 </nodeTypes>

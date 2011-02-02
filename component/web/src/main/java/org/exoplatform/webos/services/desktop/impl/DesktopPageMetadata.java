@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 eXo Platform SAS.
+ * Copyright (C) 2011 eXo Platform SAS.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -16,37 +16,20 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.exoplatform.webos.services.desktop;
+package org.exoplatform.webos.services.desktop.impl;
 
-/**
- * @author <a href="mailto:hoang281283@gmail.com">Minh Hoang TO</a>
- * Oct 1, 2010
- */
+import org.chromattic.api.annotations.FormattedBy;
+import org.chromattic.api.annotations.MixinType;
+import org.chromattic.api.annotations.Property;
 
-public class DesktopBackground
+@MixinType(name = "webos:desktopPageMetadata")
+@FormattedBy(WebOSChromatticFormatter.class)
+public abstract class DesktopPageMetadata
 {
 
-   private String imageURL;
-   
-   private String imageLabel;
+   @Property(name = "webos:backgroundImage")
+   public abstract String getBackgroundImage();
 
-   public DesktopBackground()
-   {
-   }
+   public abstract void setBackgroundImage(String backgroundImage);
 
-   public DesktopBackground(String _imageURL, String _imageLabel)
-   {
-      this.imageURL = _imageURL;
-      this.imageLabel = _imageLabel;
-   }
-   
-   public String getImageURL()
-   {
-      return imageURL;
-   }
-   
-   public String getImageLabel()
-   {
-      return imageLabel;
-   }
 }

@@ -31,6 +31,8 @@ import org.exoplatform.commons.chromattic.ChromatticManager;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.container.xml.ValueParam;
+import org.exoplatform.portal.config.DataStorage;
+import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
@@ -51,6 +53,8 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 
    private ChromatticLifeCycle chromatticLifecycle;
 
+   private DataStorage dataStorage;
+
    // 0 means unlimited
    private int quantityLimit;
 
@@ -58,10 +62,12 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    //This is applied for each image
    private int sizeLimit;
 
-   public DesktopBackgroundServiceImpl(ChromatticManager manager, InitParams params) throws Exception
+   public DesktopBackgroundServiceImpl(ChromatticManager manager, DataStorage dataStorage,  InitParams params) throws Exception
    {
       chromatticManager = manager;
       chromatticLifecycle = manager.getLifeCycle("webos");
+
+      this.dataStorage = dataStorage;
 
       if (params != null)
       {
@@ -118,10 +124,6 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 
       if (backgroundImageName !=null)
       {
-         if (backgroundImageName.equals(space.getCurrentBackground()))
-         {
-            space.setCurrentBackground(null);
-         }
          if (space.getBackgroundImageFolder().getChild(backgroundImageName) == null)
          {
             throw new IllegalStateException("Image doesn't exists");
@@ -151,36 +153,64 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    }
 
    @Override
-   public DesktopBackground getCurrentDesktopBackground(String userName)
+   public DesktopBackground getCurrentDesktopBackground(String pageID) throws Exception
    {
-	  if(userName == null)
-	  {
-		  return null;
-	  }
-	  //TODO: Replace this method with a mixin in UIDesktopPage
-	  DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
-      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
-      String selectedBackground = space.getCurrentBackground();
+      if(pageID == null)
+      {
+         return null;
+      }
+
+      Page desktopPage = dataStorage.getPage(pageID);
+      if (desktopPage == null)
+      {
+         throw new IllegalStateException("page : " + pageID + " doen't exists");
+      }
+      DesktopPageMetadata pageMetadata = dataStorage.adapt(desktopPage, DesktopPageMetadata.class);
+      String selectedBackground = pageMetadata.getBackgroundImage();
       
-		if (selectedBackground == null) {
-			return null;
-		} else {
-			return new DesktopBackground(makeImageURL(userName, selectedBackground), selectedBackground);
-		}
+      if (selectedBackground != null)
+      {
+         return new DesktopBackground(makeImageURL(parsePageID(pageID), selectedBackground), selectedBackground);
+      }
+      return null;
    }
 
-   public void setSelectedBackgroundImage(String userName, String imageName)
+   public void setSelectedBackgroundImage(String pageID, String imageName) throws Exception
    {
+      Page desktopPage = dataStorage.getPage(pageID);
+      if (desktopPage == null)
+      {
+         throw new IllegalStateException("page : " + pageID + " doen't exists");
+      }
+      DesktopPageMetadata pageMetadata = dataStorage.adapt(desktopPage, DesktopPageMetadata.class);
+
       DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
-	   PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
+      String userName = parsePageID(pageID);
+      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
+      boolean imgDeleted = false;
       if (imageName !=null && space.getBackgroundImageFolder().getChild(imageName) == null)
       {
-         space.setCurrentBackground(null);
+         imageName = null;
+         imgDeleted = true;
+      }
+      pageMetadata.setBackgroundImage(imageName);
+      dataStorage.save(desktopPage);
+      if (imgDeleted)
+      {
          throw new IllegalStateException("Image doesn't exists");
       }
-	   space.setCurrentBackground(imageName);
    }
-   
+
+   private String parsePageID(String pageID)
+   {
+      String[] idFrags = pageID.split("::");
+      if (idFrags.length < 3)
+      {
+         throw new IllegalArgumentException("Can't parse pageID :" + pageID);
+      }
+      return idFrags[1];
+   }
+
    @Override
    public List<DesktopBackground> getUserDesktopBackgrounds(String userName)
    {

@@ -21,11 +21,11 @@ package org.exoplatform.webos.services.desktop.test;
 
 import org.chromattic.api.Chromattic;
 import org.exoplatform.commons.chromattic.ChromatticManager;
-import org.exoplatform.component.test.AbstractKernelTest;
-import org.exoplatform.component.test.ConfigurationUnit;
-import org.exoplatform.component.test.ConfiguredBy;
-import org.exoplatform.component.test.ContainerScope;
 import org.exoplatform.container.PortalContainer;
+import org.exoplatform.portal.config.DataStorage;
+import org.exoplatform.portal.config.UserPortalConfigService;
+import org.exoplatform.portal.config.model.Page;
+import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webos.services.desktop.exception.ImageQuantityException;
@@ -36,12 +36,7 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
-@ConfiguredBy({
-	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-desktop-service-configuration.xml"),
-	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-jcr-configuration.xml"),
-	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.test.jcr-configuration.xml")
-})
-public class TestDesktopBackgroundService extends AbstractKernelTest
+public class TestDesktopBackgroundService extends AbstractWebOSTest
 {
    private ChromatticManager chromatticManager;
    private DesktopBackgroundService desktopBackgroundService;
@@ -49,6 +44,7 @@ public class TestDesktopBackgroundService extends AbstractKernelTest
    private String imageName;
    private String mimeType;
    private String encoding;
+   private String pageID;
    private InputStream imgStream;
 
    @Override
@@ -56,6 +52,7 @@ public class TestDesktopBackgroundService extends AbstractKernelTest
    {
       userName = "testUserName";
       imageName = "testImageName";
+      pageID = "user::"  + userName + "::webos";
       mimeType = "image/jpeg";
       encoding = "UTF-8";
       imgStream = new ByteArrayInputStream(new byte[] {0, 1});
@@ -64,6 +61,8 @@ public class TestDesktopBackgroundService extends AbstractKernelTest
       chromatticManager = (ChromatticManager)portalContainer.getComponentInstanceOfType(ChromatticManager.class);
       desktopBackgroundService = (DesktopBackgroundService)portalContainer.getComponentInstanceOfType(DesktopBackgroundService.class);
       begin();
+
+      createPage(portalContainer);
    }
 
    @Override
@@ -143,12 +142,46 @@ public class TestDesktopBackgroundService extends AbstractKernelTest
 
    public void testCurrentDesktopBackground() throws Exception
    {
+      try
+      {
+         desktopBackgroundService.getCurrentDesktopBackground(pageID + hashCode());
+         fail("Should show exception here : page doesn't exist");
+      }
+      catch (IllegalStateException ex) {}
+      
       uploadImage();
 
-      desktopBackgroundService.setSelectedBackgroundImage(userName, imageName);
-      DesktopBackground currBackground = desktopBackgroundService.getCurrentDesktopBackground(userName);
+      DesktopBackground currBackground = desktopBackgroundService.getCurrentDesktopBackground(pageID);
+      assertNull(currBackground);
+
+      desktopBackgroundService.setSelectedBackgroundImage(pageID, imageName);
+      currBackground = desktopBackgroundService.getCurrentDesktopBackground(pageID);
       assertNotNull(currBackground);
       assertEquals(imageName, currBackground.getImageLabel());
+
+      desktopBackgroundService.setSelectedBackgroundImage(pageID, null);
+      assertNull(desktopBackgroundService.getCurrentDesktopBackground(pageID));
+   }
+
+   public void testSetSelectedBackground() throws Exception
+   {
+      try
+      {
+         desktopBackgroundService.setSelectedBackgroundImage(pageID + hashCode(), imageName);
+         fail("Should show exception here : page doesn't exist");
+      }
+      catch (IllegalStateException ex) {}
+
+      try
+      {
+         desktopBackgroundService.setSelectedBackgroundImage(pageID, imageName);
+         fail("Should show exception here: Image doesn't exits");
+      }
+      catch (IllegalStateException ex) {}
+
+      uploadImage();
+      desktopBackgroundService.setSelectedBackgroundImage(pageID, imageName);
+      assertNotNull(desktopBackgroundService.getCurrentDesktopBackground(pageID));
    }
 
    public void testRemoveBackgroundImage() throws Exception
@@ -173,16 +206,6 @@ public class TestDesktopBackgroundService extends AbstractKernelTest
       catch (IllegalStateException ex)
       {
       }
-
-      //Remove curent selected background image
-      uploadImage();
-      desktopBackgroundService.setSelectedBackgroundImage(userName, imageName);
-      DesktopBackground currBackground = desktopBackgroundService.getCurrentDesktopBackground(userName);
-      assertEquals(imageName, currBackground.getImageLabel());
-
-      desktopBackgroundService.removeBackgroundImage(userName, imageName);
-      currBackground = desktopBackgroundService.getCurrentDesktopBackground(userName);
-      assertNull(currBackground);
    }
 
    public void testRemoveUserBackground()
@@ -209,5 +232,22 @@ public class TestDesktopBackgroundService extends AbstractKernelTest
       assertTrue(desktopBackgroundService.uploadBackgroundImage(userName, imageName, mimeType, encoding, imgStream));
       DesktopBackground background = desktopBackgroundService.getUserDesktopBackground(userName, imageName);
       assertNotNull(background);
+   }
+
+   private void createPage(PortalContainer portalContainer) throws Exception
+   {
+      DataStorage dataStorage = (DataStorage)portalContainer.getComponentInstanceOfType(DataStorage.class);
+
+      UserPortalConfigService configService = (UserPortalConfigService)PortalContainer.getComponent(UserPortalConfigService.class);
+      configService.createUserSite(userName);
+
+      Page page = new Page();
+      page.setName("webos");
+      page.setTitle("WebOS Page");
+      page.setFactoryId("Desktop");
+      page.setShowMaxWindow(true);
+      page.setOwnerType(PortalConfig.USER_TYPE);
+      page.setOwnerId(userName);
+      dataStorage.create(page);
    }
 }

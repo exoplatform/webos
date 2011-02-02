@@ -18,7 +18,7 @@
 	jsmanager.addCustomizedOnLoadScript("eXo.gadget.UIGadget.Debug='" + _ctx.appRes("UIDashboardContainer.label.Debug") + "';");
 	jsmanager.addCustomizedOnLoadScript('eXo.desktop.UIDockbar.initNav();');
 	
-	String currentSelectedBackground = uicomponent.getSelectedBackground();
+	String currentSelectedBackground = uicomponent.getCurrBackgroundURL();
 	String docBase =	rcontext.getRequestContextPath();
 	String comId = uicomponent.getId();
 	boolean modifiable = uicomponent.isModifiable();

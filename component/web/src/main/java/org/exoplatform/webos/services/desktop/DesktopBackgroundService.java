@@ -47,7 +47,7 @@ public interface DesktopBackgroundService
     */
    public void removeUserBackground(String userName);
    
-   public DesktopBackground getCurrentDesktopBackground(String userName);
+   public DesktopBackground getCurrentDesktopBackground(String pageID) throws Exception;
    
    public List<DesktopBackground> getUserDesktopBackgrounds(String userName);
 
@@ -61,11 +61,11 @@ public interface DesktopBackgroundService
    /**
     * Set current user background image
     * If image is null, or doesn't exists current background will be reset
-    * @param userName - user that will use this desktop background image
+    * @param pageID
     * @param imageName - the name of the image file
     * @throws IllegalStateException if image doesn't exists
     */
-   public void setSelectedBackgroundImage(String userName, String imageName);
+   public void setSelectedBackgroundImage(String pageID, String imageName) throws Exception;
 
    public int getSizeLimit();
 }

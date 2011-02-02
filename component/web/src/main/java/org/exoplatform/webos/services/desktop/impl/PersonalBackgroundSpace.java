@@ -53,11 +53,6 @@ public abstract class PersonalBackgroundSpace
    
    public abstract void setTitle(String title);
    
-   @Property(name = "webos:currentBackground")
-   public abstract String getCurrentBackground();
-   
-   public abstract void setCurrentBackground(String currentBackground);
-   
    @Create
    public abstract NTFolder createBackgroundImageFolder();
    

@@ -77,6 +77,7 @@ public class UIDesktopPage extends UIPage
 {
 
    public static String DESKTOP_FACTORY_ID = "Desktop";
+   private DesktopBackground currBackground;
 
    static
    {
@@ -265,6 +266,12 @@ public class UIDesktopPage extends UIPage
       pContext.addUIComponentToUpdateByAjax(maskWorkspace);
    }
 
+   public void setDesktopBackground(DesktopBackground desktopBackground)
+   {
+      this.currBackground = desktopBackground;
+      showDesktopBackground(currBackground);
+   }
+
    public void showDesktopBackground(DesktopBackground desktopBackground)
    {
       String backgroundURL = null;
@@ -275,17 +282,30 @@ public class UIDesktopPage extends UIPage
       JavascriptManager jsManager =WebuiRequestContext.getCurrentInstance().getJavascriptManager();
       jsManager.addOnLoadJavascript("eXo.desktop.UIDesktop.setDesktopBackground(" + backgroundURL + ")");
    }
-   
-   public String getSelectedBackground()
+
+   public String getCurrBackgroundLabel() throws Exception
    {
-      String userName = WebuiRequestContext.getCurrentInstance().getRemoteUser();
-      DesktopBackgroundService service = getApplicationComponent(DesktopBackgroundService.class);
-      DesktopBackground currBackground = service.getCurrentDesktopBackground(userName);
-      if (currBackground != null)
+      initBackground();
+      return currBackground.getImageLabel();
+   }
+
+   public String getCurrBackgroundURL() throws Exception
+   {
+      initBackground();
+      return currBackground.getImageURL();
+   }
+
+   private void initBackground() throws Exception
+   {
+      if (currBackground == null)
       {
-         return currBackground.getImageURL();
+         DesktopBackgroundService service = getApplicationComponent(DesktopBackgroundService.class);
+         currBackground = service.getCurrentDesktopBackground(getPageId());
+         if (currBackground == null)
+         {
+            currBackground = new DesktopBackground();
+         }
       }
-      return null;
    }
    
    private String getApplicationIconImageLocation(UIPortlet window)

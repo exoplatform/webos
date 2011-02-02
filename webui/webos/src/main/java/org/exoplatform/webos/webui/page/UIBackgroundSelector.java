@@ -97,9 +97,10 @@ public class UIBackgroundSelector extends UIContainer
       if (previewBackground == null)
       {
          setPreviewImage(null);
-         previewBackground = service.getCurrentDesktopBackground(userId);
+         UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
+         previewBackground = service.getCurrentDesktopBackground(uiDesktopPage.getPageId());
       }
-      refreshDesktopBackground(previewBackground);
+      refreshDesktopBackground(previewBackground, false);
 
       super.processRender(context);
    }
@@ -125,12 +126,19 @@ public class UIBackgroundSelector extends UIContainer
       return previewImage;
    }
 
-   private void refreshDesktopBackground(DesktopBackground desktopBackground)
+   private void refreshDesktopBackground(DesktopBackground desktopBackground, boolean save)
    {
       UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
       if (uiDesktopPage != null)
       {
-         uiDesktopPage.showDesktopBackground(desktopBackground);
+         if (save)
+         {
+            uiDesktopPage.setDesktopBackground(desktopBackground);
+         }
+         else
+         {
+            uiDesktopPage.showDesktopBackground(desktopBackground);  
+         }
       }
    }
 
@@ -165,8 +173,8 @@ public class UIBackgroundSelector extends UIContainer
          maskWorkspace.createEvent("Close", Event.Phase.DECODE, context).broadcast();
 
          DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
-         String userId = ConversationState.getCurrent().getIdentity().getUserId();
-         selector.refreshDesktopBackground(backgroundService.getCurrentDesktopBackground(userId));
+         UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
+         selector.refreshDesktopBackground(backgroundService.getCurrentDesktopBackground(uiDesktopPage.getPageId()), true);
       }
    }
 
@@ -181,11 +189,11 @@ public class UIBackgroundSelector extends UIContainer
          String selectedItem = context.getRequestParameter(OBJECTID);
 
          DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
-         String userId = ConversationState.getCurrent().getIdentity().getUserId();
 
          try
          {
-            backgroundService.setSelectedBackgroundImage(userId, selectedItem);
+            UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
+            backgroundService.setSelectedBackgroundImage(uiDesktopPage.getPageId(), selectedItem);
             UIMaskWorkspace maskWorkspace = selector.getAncestorOfType(UIMaskWorkspace.class);
             maskWorkspace.createEvent("Close", Event.Phase.DECODE, context).broadcast();
          }
@@ -197,7 +205,8 @@ public class UIBackgroundSelector extends UIContainer
             context.addUIComponentToUpdateByAjax(selector);
          }
 
-         selector.refreshDesktopBackground(backgroundService.getCurrentDesktopBackground(userId));
+         UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
+         selector.refreshDesktopBackground(backgroundService.getCurrentDesktopBackground(uiDesktopPage.getPageId()), true);
       }
    }
 
@@ -224,7 +233,7 @@ public class UIBackgroundSelector extends UIContainer
             return;
          }
 
-         selector.refreshDesktopBackground(previewBackground);
+         selector.refreshDesktopBackground(previewBackground, false);
       }
    }
 
@@ -248,7 +257,12 @@ public class UIBackgroundSelector extends UIContainer
          {
             log.warn(e.getMessage());
          }
-
+         UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
+         if (selectedItem != null && selectedItem.equals(uiDesktopPage.getCurrBackgroundLabel()))
+         {
+            backgroundService.setSelectedBackgroundImage(uiDesktopPage.getPageId(), null);
+            uiDesktopPage.setDesktopBackground(null);
+         }
          context.addUIComponentToUpdateByAjax(selector);
       }
    }
