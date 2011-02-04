@@ -3,7 +3,7 @@
  */
 package org.exoplatform.webos.services.dockbar;
 
-import java.util.List;
+import org.exoplatform.portal.config.model.Page;
 
 /**
  * @author Minh Hoang TO - hoang281283@gmail.com
@@ -12,13 +12,5 @@ import java.util.List;
  */
 public interface DockbarService {
 
-	public List<DockbarIcon> getCommonIcons();
-	
-	public List<DockbarIcon> getUserIcons();
-	
-	public List<DockbarIcon> getUtilIcons();
-	
-	public DockbarIcon getIcon(String iconName);
-	
-	public boolean hasPermission(String remoteUser, DockbarIcon icon);
+	public void injectDockbarApps(Page page) throws Exception;
 }

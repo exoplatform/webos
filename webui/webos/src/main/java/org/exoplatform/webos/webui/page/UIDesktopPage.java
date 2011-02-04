@@ -20,7 +20,6 @@
 package org.exoplatform.webos.webui.page;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -46,11 +45,9 @@ import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
-import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
 import org.exoplatform.web.application.JavascriptManager;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
-import org.exoplatform.webos.services.dockbar.DockbarIcon;
 import org.exoplatform.webos.services.dockbar.DockbarService;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
@@ -324,22 +321,6 @@ public class UIDesktopPage extends UIPage
 			//Currently hardcode
 			return "";
 		}
-   }
-   
-   private boolean checkAccessPermission(String remoteUser, String iconName)
-   {
-  	 DockbarService dockbarService = getApplicationComponent(DockbarService.class);
-  	 
-  	 DockbarIcon icon = dockbarService.getIcon(iconName);
-  	 
-  	 if(icon == null)
-  	 {
-  		 return false;
-  	 }
-  	 else
-  	 {
-  		 return dockbarService.hasPermission(remoteUser, icon);
-  	 }
    }
    
    static public class RemovePortletActionListener extends EventListener<UIDesktopPage>

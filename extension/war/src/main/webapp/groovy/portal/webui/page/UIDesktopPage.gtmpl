@@ -270,13 +270,11 @@
 													 onerror="this.src='/eXoResources/skin/sharedImages/Icon80x80/DefaultPortlet.png'" onclick="eXo.desktop.UIDesktop.showHideWindow('UIWindow-${uiChild.id}', this);" /><span class="Tooltip" style="display: none"><%=uiChild.getTitle();%></span>
 									<%}}%>
 			
-			                        <% if(uicomponent.getChildren().size() > 0){ %>
+			            <% if(uicomponent.getChildren().size() > 0){ %>
 									<img class="Separator" alt="" src="/webosResources/skin/Defaultskin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png" />
 									<% } %>
-									
-									<% if(uicomponent.checkAccessPermission(remoteUser, "portletViewer")){ %>
+
 									<img id="PortletsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/ShowPortletsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowPortletDesktop")%></span>
-									<% } %>
 									
 									<img id="GadgetsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/HideWidgetsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowWidgetDesktop")%></span>
 									

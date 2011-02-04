@@ -32,7 +32,7 @@
             <init-params>
                <value-param>
                   <name>dockbarConfigLocation</name>
-                  <value>war:/conf/webos/common/dockbar.xml</value>
+                  <value>jar:/conf/dockbar.xml</value>
                </value-param>
             </init-params>
          </component-plugin>

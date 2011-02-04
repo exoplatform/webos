@@ -19,39 +19,72 @@
 
 package org.exoplatform.webos.services.dockbar.impl;
 
-import java.util.List;
-
-import org.exoplatform.container.xml.InitParams;
+import org.exoplatform.container.component.ComponentPlugin;
+import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserACL;
-import org.exoplatform.webos.services.dockbar.BaseDockbarService;
-import org.exoplatform.webos.services.dockbar.DockbarIcon;
+import org.exoplatform.portal.config.model.Application;
+import org.exoplatform.portal.config.model.Page;
+import org.exoplatform.portal.config.model.TransientApplicationState;
+import org.exoplatform.portal.config.serialize.PortletApplication;
+import org.exoplatform.webos.services.dockbar.DockbarPlugin;
+import org.exoplatform.webos.services.dockbar.DockbarService;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Minh Hoang TO - hoang281283@gmail.com
  *
  * Nov 11, 2010
  */
-public class DockbarServiceImpl extends BaseDockbarService {
+public class DockbarServiceImpl implements DockbarService
+{
 
 	private UserACL userACL;
-	
-	public DockbarServiceImpl(UserACL _userACL, InitParams params) throws Exception{
-		super();
-		
-		userACL = _userACL;
-		List<DockbarIcon> configuredDockbarIcons = params.getObjectParamValues(DockbarIcon.class);
-		this.utilIcons.addAll(configuredDockbarIcons);
+	private DataStorage dataStorage;
+   private Map<String, Application> dockbarApps;
+   
+	public DockbarServiceImpl(UserACL _userACL, DataStorage dataStorage) throws Exception
+   {
+		this.userACL = _userACL;
+      this.dataStorage = dataStorage;
+      dockbarApps = new HashMap<String, Application>();
 	}
-	
-	@Override
-	public boolean hasPermission(String remoteUser, DockbarIcon icon) {
-		if(remoteUser == null)
-		{
-			return UserACL.EVERYONE.equals(icon.getAccessPermission());
-		}
-		else
-		{
-			return userACL.hasPermission(icon.getAccessPermission());
-		}
-	}
+
+   @Override
+   public void injectDockbarApps(Page page) throws Exception
+   {
+      if (page == null)
+      {
+         throw new IllegalArgumentException("Can't inject apps to a null page");
+      }
+
+      int lastChildSize = page.getChildren().size();
+      for (Application app : dockbarApps.values())
+      {
+         for (String permission : app.getAccessPermissions())
+         {
+            if (userACL.hasPermission(permission))
+            {
+               page.getChildren().add(app);
+               break;
+            }
+         }
+      }
+
+      if (lastChildSize != page.getChildren().size())
+      {
+         dataStorage.save(page);
+      }
+   }
+   
+   public void addDockbarConfig(ComponentPlugin plugin)
+   {
+      if (plugin instanceof DockbarPlugin)
+      {
+         for(Application app :  ((DockbarPlugin)plugin).getApplications())
+         {                                                                       
+            dockbarApps.put(((TransientApplicationState)app.getState()).getContentId(), app);  
+         }
+      }
+   }
 }
