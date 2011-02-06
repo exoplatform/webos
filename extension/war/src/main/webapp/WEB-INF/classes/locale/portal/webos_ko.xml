@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle>
+   <WebOSPortal>
+      <label>WebOS 포탈</label>
+   </WebOSPortal>
+   <Desktop>
+      <label>데스크탑 레이아웃</label>
+   </Desktop>
+   <UIPageBrowser>
+      <msg>
+         <Invalid-Preview>데스크탑 유형의 페이지는  미리보기 하실 수 없습니다.</Invalid-Preview>
+      </msg>
+   </UIPageBrowser>
+   <UIWizardPageSelectLayoutForm>
+      <label>
+         <normalPage>
+            <DesktopImage>데스크탑 레이아웃</DesktopImage>
+         </normalPage>
+      </label>
+   </UIWizardPageSelectLayoutForm>
+
+   <UIPageDesktop>
+      <Default>
+         <img>
+            <location>/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80</location>
+         </img>
+      </Default>
+      <Mac>
+         <img>
+            <location>/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80</location>
+         </img>
+      </Mac>
+      <Vista>
+         <img>
+            <location>/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80</location>
+         </img>
+      </Vista>
+      <label>
+         <pagebody>포탈 페이지 몸체</pagebody>
+         <PageContent>페이지 내용</PageContent>
+         <View>보기</View>
+         <Edit>편집</Edit>
+         <Done>완료</Done>
+      </label>
+      <title>
+         <PortalPage>포탈 페이지</PortalPage>
+         <SaveToDatabase>데이터베이스로 저장</SaveToDatabase>
+         <AddApplication>애플리케이션 추가</AddApplication>
+         <PageNavigation>페이지 내비게이션</PageNavigation>
+         <eXoBrowser>브라우저</eXoBrowser>
+         <ShowPortletDesktop>포틀릿 보이기/감추기</ShowPortletDesktop>
+         <ShowWidgetDesktop>가젯 보이기/감추기</ShowWidgetDesktop>
+         <SignIn>로그인</SignIn>
+         <SignOut>로그아웃</SignOut>
+         <pageNavigation>페이지 내비게이션</pageNavigation>
+      </title>
+      <msg>
+         <hasNotPermission>이 페이지를 수정할 수 있는 권한이 없습니다.</hasNotPermission>
+      </msg>
+      <action>
+         <Close>작업 표시줄에서 이 애플리케이션 삭제</Close>
+         <Quit>끝내기</Quit>
+         <action>
+            <Open>열기</Open>
+         </action>
+      </action>
+   </UIPageDesktop>
+
+</bundle>

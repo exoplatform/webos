@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2010 eXo Platform SAS.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
+
+-->
+<bundle>
+   <WebOSPortal>
+		<label> نظام التشغيل ويب بوابة </label>
+	</WebOSPortal>
+   <Desktop>
+			<label> تخطيط سطح المكتب</label>
+   </Desktop>
+   <UIPageBrowser>
+		<msg>
+			<Invalid-Preview>هذه هي صفحة سطح المكتب. يمكنك معاينة صفحات ليست من
+				هذا النوع. </Invalid-Preview>
+		</msg>
+	</UIPageBrowser>
+   <UIWizardPageSelectLayoutForm>
+		<label>
+			<normalPage>
+				<DesktopImage>تخطيط سطح المكتب </DesktopImage>
+			</normalPage>
+		</label>
+	</UIWizardPageSelectLayoutForm>
+
+   <UIPageDesktop>
+		<Default>
+			<img>
+				<location>/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80
+				</location>
+			</img>
+		</Default>
+		<Mac>
+			<img>
+				<location>
+					/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80
+				</location>
+			</img>
+		</Mac>
+		<Vista>
+			<img>
+				<location>/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80
+				</location>
+			</img>
+		</Vista>
+		<label>
+			<pagebody> الهيئة صفحة من البوابة</pagebody>
+			<PageContent> محتويات الصفحة</PageContent>
+			<View>منظر </View>
+			<Edit> عدل</Edit>
+			<Done> عمله</Done>
+		</label>
+		<title>
+			<PortalPage>صفحة البوابة </PortalPage>
+			<SaveToDatabase>حفظ إلى قاعدة البيانات </SaveToDatabase>
+			<AddApplication>إضافة تطبيقات </AddApplication>
+			<PageNavigation> الصفحة الملاحة</PageNavigation>
+			<eXoBrowser> متصفح</eXoBrowser>
+			<ShowPortletDesktop> إظهار / إخفاء المداخل</ShowPortletDesktop>
+			<ShowWidgetDesktop>إظهار / إخفاء الأدوات </ShowWidgetDesktop>
+			<SignIn> تسجيل الدخول</SignIn>
+			<SignOut> تسجيل الخروج</SignOut>
+			<pageNavigation>الصفحة تنقلات </pageNavigation>
+		</title>
+		<msg>
+			<hasNotPermission> لديك إذن لا عدل في هذه الصفحة.</hasNotPermission>
+		</msg>
+		<action>
+			<Close>إزالة التطبيق من شريط العرض  </Close>
+			<Quit> ترك</Quit>
+			<action>
+				<Open>فتح</Open>
+			</action>
+		</action>
+	</UIPageDesktop>
+   
+</bundle>
