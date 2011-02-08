@@ -53,6 +53,31 @@
    </portlet>
 
    <portlet>
+      <description xml:lang="EN">WebOS Administration Toolbar Portlet</description>
+      <portlet-name>WebOSAdminToolbarPortlet</portlet-name>
+      <display-name xml:lang="EN">WebOS Administration Toolbar Portlet</display-name>
+      <portlet-class>org.exoplatform.webui.application.portlet.PortletApplicationController</portlet-class>
+
+      <init-param>
+         <name>webui.configuration</name>
+         <value>/WEB-INF/conf/portlet/exoadmin/WebOSAdminToolbarPortlet/webui/configuration.xml</value>
+      </init-param>
+
+      <expiration-cache>0</expiration-cache>
+      <supports>
+         <mime-type>text/html</mime-type>
+         <portlet-mode>help</portlet-mode>
+      </supports>
+      <supported-locale>en</supported-locale>
+      <resource-bundle>locale.portlet.webosadmin.WebOSAdminToolbarPortlet</resource-bundle>
+      <portlet-info>
+         <title>WebOS Administration Toolbar Portlet</title>
+         <short-title>WebOS Administration Toolbar</short-title>
+         <keywords>gatein_internal</keywords>
+      </portlet-info>
+   </portlet>
+
+   <portlet>
       <description xml:lang="EN">WebOS Tabbed Dashboard Portlet</description>
       <portlet-name>WebOSTabbedDashboardPortlet</portlet-name>
       <display-name xml:lang="EN">WebOS Tabbed Dashboard</display-name>
