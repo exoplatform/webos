@@ -10,7 +10,6 @@ import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
-import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
@@ -57,35 +56,30 @@ public class UIDesktopPageForm extends UIFormTabPane {
 	   Page page = (Page) PortalDataMapper.buildModelObject(uiDesktopPage_);
 	   invokeGetBindingBean(page);
 	   page.setShowMaxWindow(true);
-       getUIStringInput("title").setValue(uiPage.getTitle());
 	}
     
 	static public class SaveActionListener extends EventListener<UIDesktopPageForm>
     {
        public void execute(Event<UIDesktopPageForm> event) throws Exception
        {
-    	  UIDesktopPageForm uiDesktopPageForm = event.getSource();
-    	  PortalRequestContext pcontext = Util.getPortalRequestContext();
+          UIDesktopPageForm uiDesktopPageForm = event.getSource();
+          PortalRequestContext pcontext = Util.getPortalRequestContext();
 
-    	  //Hide pop up
+    	    //Hide pop up
           UIMaskWorkspace uiMaskWorkspace = uiDesktopPageForm.getAncestorOfType(UIMaskWorkspace.class);
           uiMaskWorkspace.setUIComponent(null);
-          uiMaskWorkspace.setShow(false);
           pcontext.addUIComponentToUpdateByAjax(uiMaskWorkspace);
           
           UIPage uiPage = uiDesktopPageForm.getUIDesktopPage();
           if (uiPage == null)
              return;
-          
-    	  Page page = new Page();
-          page.setPageId(uiPage.getPageId());
+
+          Page page = (Page)PortalDataMapper.buildModelObject(uiPage);
           uiDesktopPageForm.invokeSetBindingBean(page);
-          page.setOwnerType(uiPage.getOwnerType());
-          page.setFactoryId(uiPage.getFactoryId());
           
           DataStorage dataService = uiDesktopPageForm.getApplicationComponent(DataStorage.class);
           dataService.save(page);       
-          
+
           //Update page
           uiPage.setTitle(page.getTitle());
           pcontext.setFullRender(true);

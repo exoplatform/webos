@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.WindowState;
+import javax.servlet.http.HttpServletResponse;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.DataStorage;
@@ -343,21 +344,44 @@ public class UIDesktopPage extends UIPage
        
   	 }
    }
+
+   @Override
+   public void switchToEditMode() throws Exception
+   {
+      showPageForm(this);
+   }
+
+   @Override
+   public void switchToEditMode(Page page) throws Exception
+   {
+      if (page == null)
+      {
+         return;
+      }
+      UIDesktopPage desktopPage = createUIComponent(UIDesktopPage.class, null, null);
+      PortalDataMapper.toUIPage(desktopPage, page);
+      showPageForm(desktopPage);
+   }
+
+   private void showPageForm(UIDesktopPage uiDesktopPage) throws Exception
+   {
+      UIPortalApplication portalApp = Util.getUIPortalApplication();
+
+      UIDesktopPageForm pageForm = portalApp.createUIComponent(UIDesktopPageForm.class, null, null);
+      pageForm.setValues(uiDesktopPage);
+
+      UIMaskWorkspace maskWorkspace = portalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID);
+      maskWorkspace.setUIComponent(pageForm);
+      Util.getPortalRequestContext().addUIComponentToUpdateByAjax(maskWorkspace);
+   }
    
    public static class EditCurrentPageActionListener extends EventListener<UIDesktopPage>
    {
-  	 @Override
-  	 public void execute(Event<UIDesktopPage> event) throws Exception {
-  		 UIPortalApplication portalApp = Util.getUIPortalApplication();
-  		 UIMaskWorkspace maskWorkspace = portalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID);
-  		 
-  		 UIDesktopPageForm pageForm = portalApp.createUIComponent(UIDesktopPageForm.class, null, null);
-  		 UIDesktopPage desktopPage = event.getSource();
-  		 pageForm.setValues(desktopPage);
-  		 
-  		 maskWorkspace.setUIComponent(pageForm);
-  		 event.getRequestContext().addUIComponentToUpdateByAjax(maskWorkspace);
-  	 }
+      @Override
+      public void execute(Event<UIDesktopPage> event) throws Exception
+      {
+         event.getSource().switchToEditMode();
+      }
    }
    
 }

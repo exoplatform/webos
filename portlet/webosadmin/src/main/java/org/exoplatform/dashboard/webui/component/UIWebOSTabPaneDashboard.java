@@ -123,6 +123,10 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          return false;
       }
       String pageRef = pageNode.getPageReference();
+      if (pageRef == null)
+      {
+         return false;
+      }
       DataStorage ds = getApplicationComponent(DataStorage.class);
       Page page = ds.getPage(pageRef);
       return page != null && UIDesktopPage.DESKTOP_FACTORY_ID.equals(page.getFactoryId());
