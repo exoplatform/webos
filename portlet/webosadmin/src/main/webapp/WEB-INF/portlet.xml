@@ -50,6 +50,10 @@
          <role-name>admin</role-name>
          <role-link>admin</role-link>
       </security-role-ref>
+
+      <supported-processing-event>
+         <name>UserPageNodeDeleted</name>
+      </supported-processing-event>
    </portlet>
 
    <portlet>
@@ -99,4 +103,7 @@
         <keywords>System</keywords>
       </portlet-info>
   </portlet>
+   <event-definition>
+      <name>UserPageNodeDeleted</name>
+   </event-definition>
 </portlet-app>

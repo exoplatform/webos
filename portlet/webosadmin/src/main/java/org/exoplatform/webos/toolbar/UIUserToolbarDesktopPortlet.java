@@ -38,6 +38,7 @@ import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.portlet.EventRequest;
 
 /**
  * 
@@ -45,7 +46,8 @@ import java.util.List;
  */
 
 @ComponentConfig(lifecycle = UIApplicationLifecycle.class, template = "app:/groovy/webui/component/UIUserToolBarDesktopPortlet.gtmpl",
-   events = {@EventConfig(name = "AddDefaultDashboard", listeners = UIUserToolbarDesktopPortlet.AddDashboardActionListener.class)})
+   events = {@EventConfig(name = "AddDefaultDashboard", listeners = UIUserToolbarDesktopPortlet.AddDashboardActionListener.class),
+      @EventConfig(listeners = UIUserToolbarDesktopPortlet.UserPageNodeDeletedActionListener.class)})
 public class UIUserToolbarDesktopPortlet extends UIPortletApplication
 {
    public static String DEFAULT_TAB_NAME = "Tab_0";
@@ -102,6 +104,17 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
          }
       }
       return null;
+   }
+
+   static public class UserPageNodeDeletedActionListener extends EventListener<UIUserToolbarDesktopPortlet>
+   {
+      private Log log = ExoLogger.getExoLogger(UserPageNodeDeletedActionListener.class);
+
+      @Override
+      public void execute(Event<UIUserToolbarDesktopPortlet> event) throws Exception
+      {
+         log.debug("PageNode : " + ((EventRequest)event.getRequestContext().getRequest()).getEvent().getValue() + " is deleted");            
+      }
    }
 
    static public class AddDashboardActionListener extends EventListener<UIUserToolbarDesktopPortlet>
