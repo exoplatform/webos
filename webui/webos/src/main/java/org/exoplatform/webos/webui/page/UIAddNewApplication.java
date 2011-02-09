@@ -20,37 +20,31 @@
 package org.exoplatform.webos.webui.page;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import org.exoplatform.application.registry.Application;
 import org.exoplatform.application.registry.ApplicationCategory;
 import org.exoplatform.application.registry.ApplicationRegistryService;
-import org.exoplatform.container.ExoContainer;
-import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.DataStorage;
+import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.config.model.ApplicationState;
 import org.exoplatform.portal.config.model.ApplicationType;
-import org.exoplatform.portal.config.model.CloneApplicationState;
 import org.exoplatform.portal.config.model.ModelObject;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.TransientApplicationState;
-import org.exoplatform.portal.pom.spi.gadget.Gadget;
-import org.exoplatform.portal.pom.spi.portlet.Portlet;
-import org.exoplatform.portal.pom.spi.wsrp.WSRPState;
 import org.exoplatform.portal.webui.application.PortletState;
-import org.exoplatform.portal.webui.application.UIApplication;
-import org.exoplatform.portal.webui.application.UIGadget;
 import org.exoplatform.portal.webui.application.UIPortlet;
-import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
-import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
+import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIComponent;
@@ -66,52 +60,85 @@ import org.exoplatform.webui.event.EventListener;
 public class UIAddNewApplication extends UIContainer
 {
 
-   private List<ApplicationCategory> listAppCategories;
+   private List<ApplicationCategory> listAppCategories = new ArrayList<ApplicationCategory>();
 
    private UIComponent uiComponentParent;
 
    private boolean isInPage;
+   private UserACL userACL;
+
+   public UIAddNewApplication() throws Exception
+   {
+      userACL = getApplicationComponent(UserACL.class);
+      initApplicationCategories();
+   }
 
    public List<ApplicationCategory> getApplicationCategories() throws Exception
    {
       return listAppCategories;
    }
 
-   public List<ApplicationCategory> getApplicationCategories(String remoteUser,
-                                                             ApplicationType[] applicationType) throws Exception
+   private void initApplicationCategories() throws Exception
    {
-      ExoContainer container = ExoContainerContext.getCurrentContainer();
-      ApplicationRegistryService prService = (ApplicationRegistryService)container.getComponentInstanceOfType(ApplicationRegistryService.class);
+      ApplicationRegistryService prService = getApplicationComponent(ApplicationRegistryService.class);
+      String remoteUser = WebuiRequestContext.getCurrentInstance().getRemoteUser();
+      if (remoteUser == null || remoteUser.equals(""))
+         return;
 
-      if (applicationType == null)
-      {
-         applicationType = new ApplicationType[0];
-      }
+      List<ApplicationCategory> appCategories = prService.getApplicationCategories(new ApplicationCategoryComparator());
 
-      List<ApplicationCategory> appCategories = prService.getApplicationCategories(remoteUser,
-         applicationType);
+      Iterator<ApplicationCategory> cateItr = appCategories.iterator();
+      while (cateItr.hasNext())
+      {
+         ApplicationCategory cate = cateItr.next();
 
-      if (appCategories == null)
-      {
-         appCategories = new ArrayList();
-      }
-      else
-      {
-         Iterator<ApplicationCategory> cateItr = appCategories.iterator();
-         while (cateItr.hasNext())
+         if (!hasPermission(cate.getAccessPermissions()) || filterApps(cate).size() < 1)
          {
-            ApplicationCategory cate = cateItr.next();
-            List<Application> applications = cate.getApplications();
-            if (applications.size() < 1)
-            {
-               cateItr.remove();
-            }
+            cateItr.remove();
+         }
+         else
+         {
+            Collections.sort(cate.getApplications(), new ApplicationComparator());
          }
       }
+
       listAppCategories = appCategories;
+   }
 
-      return listAppCategories;
+   private List<Application> filterApps(ApplicationCategory applicationCategory)
+   {
+      List<Application> applications = new ArrayList<Application>();
 
+      if (applicationCategory.getApplications() == null)
+      {
+         return applications;
+      }
+      for (Application app : applicationCategory.getApplications())
+      {
+         if (hasPermission(app.getAccessPermissions()))
+         {
+            applications.add(app);
+         }
+      }
+      applicationCategory.setApplications(applications);
+      return applications;
+   }
+
+   private boolean hasPermission(List<String> accessPermissions)
+   {
+      if (accessPermissions == null || accessPermissions.size() == 0)
+      {
+         return false;
+      }
+
+      for (String permission : accessPermissions)
+      {
+         if (userACL.hasPermission(permission))
+         {
+            return true;
+         }
+      }
+      return false;
    }
 
    public UIComponent getUiComponentParent()
@@ -225,6 +252,22 @@ public class UIAddNewApplication extends UIContainer
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       pcontext.setFullRender(true);
       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
+   }
+
+   static class ApplicationCategoryComparator implements Comparator<ApplicationCategory>
+   {
+      public int compare(ApplicationCategory cat1, ApplicationCategory cat2)
+      {
+         return cat1.getDisplayName().compareToIgnoreCase(cat2.getDisplayName());
+      }
+   }
+
+   static class ApplicationComparator implements Comparator<Application>
+   {
+      public int compare(Application p1, Application p2)
+      {
+         return p1.getDisplayName().compareToIgnoreCase(p2.getDisplayName());
+      }
    }
 
    static public class AddApplicationActionListener extends EventListener<UIAddNewApplication>

@@ -210,7 +210,6 @@ public class UIDesktopPage extends UIPage
          UIAddNewApplication uiAddApplication = uiPage.createUIComponent(UIAddNewApplication.class, null, null);
          uiAddApplication.setInPage(true);
          uiAddApplication.setUiComponentParent(uiPage);
-         uiAddApplication.getApplicationCategories(event.getRequestContext().getRemoteUser(), null);
 
          uiMaskWorkspace.setWindowSize(700, 375);
          uiMaskWorkspace.setUIComponent(uiAddApplication);
