@@ -191,8 +191,17 @@ public class UIAddNewApplication extends UIContainer
    {
       UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
       UIPortal uiPortal = uiPortalApp.getShowedUIPortal();
+      PortalRequestContext pcontext = Util.getPortalRequestContext();
 
       UIDesktopPage uiDesktopPage = uiPortal.findFirstComponentOfType(UIDesktopPage.class);
+      if (uiDesktopPage == null)
+      {
+         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID));
+         UIMaskWorkspace maskWorkspace = uiPortalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID);
+         maskWorkspace.createEvent("Close", Event.Phase.DECODE, event.getRequestContext()).broadcast();
+         pcontext.setFullRender(true);
+         return;
+      }
 
       String applicationId = event.getRequestContext().getRequestParameter(UIComponent.OBJECTID);
 
@@ -248,7 +257,6 @@ public class UIAddNewApplication extends UIContainer
          PortalDataMapper.toUIPage(uiDesktopPage, page);
       }
 
-      PortalRequestContext pcontext = Util.getPortalRequestContext();
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       pcontext.setFullRender(true);
       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);

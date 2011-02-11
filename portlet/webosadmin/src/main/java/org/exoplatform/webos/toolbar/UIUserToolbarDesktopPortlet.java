@@ -25,10 +25,14 @@ import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.webui.page.UIPage;
+import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.webos.webui.page.UIDesktopPage;
+import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIComponent;
@@ -47,6 +51,7 @@ import javax.portlet.EventRequest;
 
 @ComponentConfig(lifecycle = UIApplicationLifecycle.class, template = "app:/groovy/webui/component/UIUserToolBarDesktopPortlet.gtmpl",
    events = {@EventConfig(name = "AddDefaultDashboard", listeners = UIUserToolbarDesktopPortlet.AddDashboardActionListener.class),
+      @EventConfig(listeners = UIUserToolbarDesktopPortlet.CreateWebOSActionListener.class),
       @EventConfig(listeners = UIUserToolbarDesktopPortlet.UserPageNodeDeletedActionListener.class)})
 public class UIUserToolbarDesktopPortlet extends UIPortletApplication
 {
@@ -91,7 +96,15 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
       }
       DataStorage ds = getApplicationComponent(DataStorage.class);
       Page page = ds.getPage(pageRef);
-      return page != null && UIDesktopPage.DESKTOP_FACTORY_ID.equals(page.getFactoryId());
+      return page == null || UIDesktopPage.DESKTOP_FACTORY_ID.equals(page.getFactoryId());
+   }
+
+   private boolean isWebOSCreated() throws Exception
+   {
+      WebuiRequestContext context = WebuiRequestContext.getCurrentInstance();
+      DataStorage storage = getApplicationComponent(DataStorage.class);
+      Page page = storage.getPage(PortalConfig.USER_TYPE + "::" + context.getRemoteUser() + "::" + UIDesktopPage.PAGE_ID);
+      return page != null;
    }
 
    private PageNode getFirstNonWebOSNode(ArrayList<PageNode> nodes) throws Exception
@@ -189,4 +202,95 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
          }
       }
    }
+
+   static public class CreateWebOSActionListener extends EventListener<UIUserToolbarDesktopPortlet>
+   {
+      @Override
+      public void execute(Event<UIUserToolbarDesktopPortlet> event) throws Exception
+      {
+         WebuiRequestContext context = event.getRequestContext();
+         String userName = context.getRemoteUser();
+
+         if (userName != null)
+         {
+            DataStorage storage = event.getSource().getApplicationComponent(DataStorage.class);
+
+            Page page = createPage(userName, storage);
+            updateNavigation(userName, page.getPageId(), storage);
+         }
+      }
+
+      private void updateNavigation(String userName, String pageId, DataStorage storage) throws Exception
+      {
+         PageNavigation pageNavigation = storage.getPageNavigation(PortalConfig.USER_TYPE, userName);
+         PageNode pageNode = null;
+         if (pageNavigation == null)
+         {
+            pageNavigation = new PageNavigation();
+            pageNavigation.setOwnerType(PortalConfig.USER_TYPE);
+            pageNavigation.setOwnerId(userName);
+            storage.create(pageNavigation);
+         }
+         else
+         {
+            pageNode = pageNavigation.getNode(UIDesktopPage.NODE_NAME);
+         }
+
+         if (pageNode == null)
+         {
+            pageNode = new PageNode();
+            pageNode.setName(UIDesktopPage.NODE_NAME);
+            pageNode.setUri(UIDesktopPage.NODE_NAME);
+            pageNode.setLabel(UIDesktopPage.NODE_LABEL);
+            pageNode.setPageReference(pageId);
+
+            pageNavigation.addNode(pageNode);
+            storage.save(pageNavigation);
+         }
+         updateUI(pageNavigation);
+      }
+
+      private void updateUI(PageNavigation pageNavigation) throws Exception
+      {
+         UIPortalApplication uiApp = Util.getUIPortalApplication();
+         List<PageNavigation> all_navigations = uiApp.getNavigations();
+
+         for (PageNavigation nav : all_navigations)
+         {
+            if (nav.getOwnerType().equals(PortalConfig.USER_TYPE) &&
+               nav.getNode(UIDesktopPage.NODE_NAME) == null)
+            {
+               nav.addNode(pageNavigation.getNode(UIDesktopPage.NODE_NAME));
+               break;
+            }
+         }
+         
+         UIPortal uiPortal = Util.getUIPortal();
+         if (uiPortal != null && uiPortal.findFirstComponentOfType(UIDesktopPage.class) == null)
+         {
+            uiPortal.refreshUIPage();
+         }
+
+         PortalRequestContext prContext = Util.getPortalRequestContext();
+         prContext.getResponse().sendRedirect(prContext.getPortalURI() + UIDesktopPage.NODE_NAME);
+      }
+
+      private Page createPage(String userName, DataStorage storage) throws Exception
+      {
+         Page page = storage.getPage(PortalConfig.USER_TYPE + "::" + userName + "::" + UIDesktopPage.PAGE_ID);
+         if (page == null)
+         {
+            page = new Page();
+            page.setName(UIDesktopPage.PAGE_ID);
+            page.setTitle(UIDesktopPage.PAGE_TITLE);
+            page.setFactoryId(UIDesktopPage.DESKTOP_FACTORY_ID);
+            page.setShowMaxWindow(true);
+            page.setOwnerType(PortalConfig.USER_TYPE);
+            page.setOwnerId(userName);
+            storage.create(page);
+         }
+         return page;
+      }
+   }
+
 }

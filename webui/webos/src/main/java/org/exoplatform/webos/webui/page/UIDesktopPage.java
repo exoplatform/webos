@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletResponse;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.DataStorage;
@@ -49,7 +48,6 @@ import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.web.application.JavascriptManager;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
-import org.exoplatform.webos.services.dockbar.DockbarService;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
@@ -75,6 +73,11 @@ public class UIDesktopPage extends UIPage
 {
 
    public static String DESKTOP_FACTORY_ID = "Desktop";
+   public static final String PAGE_ID = "webos";
+   public static final String PAGE_TITLE = "WebOS Page";
+   public static final String NODE_NAME = "classicWebosPage";
+   public static final String NODE_LABEL = "WebOS Page";
+   
    private DesktopBackground currBackground;
 
    static

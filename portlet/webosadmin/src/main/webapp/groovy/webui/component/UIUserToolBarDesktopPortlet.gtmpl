@@ -5,6 +5,7 @@
 	import org.exoplatform.portal.webui.util.Util ;
 	import org.exoplatform.webui.organization.OrganizationUtils;
 	import org.exoplatform.portal.mop.Visibility;
+	import org.exoplatform.webos.webui.page.UIDesktopPage;
 
 	def rcontext = _ctx.getRequestContext() ;
 	JavascriptManager jsmanager = rcontext.getJavascriptManager();
@@ -106,7 +107,11 @@
 			<div class="TabsContainer">
 				 <div class="UITab NormalToolbarTab">
 						<div>
-							 <a class="DashboardIcon TBIcon" href="<%= portalURI + "classicWebosPage" %>">Desktop</a>
+							<% if (uicomponent.isWebOSCreated()) { %>
+								<a class="DashboardIcon TBIcon" href="<%= portalURI + UIDesktopPage.NODE_NAME %>">Desktop</a>
+							<% } else { %>
+								<a class="DashboardIcon TBIcon" href="<%= uicomponent.url("CreateWebOS") %>">Desktop</a>								
+							<% } %>
 						</div>
 				 </div>
 		  </div>
