@@ -64,6 +64,9 @@
 	<listener>
 		<listener-class>org.exoplatform.container.web.PortalContainerConfigOwner</listener-class>
 	</listener>
+   <listener>
+		<listener-class>org.exoplatform.webos.filter.DesktopClassInitListener</listener-class>
+	</listener>
 	<!-- ================================================================== -->
 	<!--           SERVLET                                                  -->
 	<!-- ================================================================== -->
