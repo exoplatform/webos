@@ -29,16 +29,6 @@
 		<skin-name>Default</skin-name>
 		<css-path>/skin/Defaultskin/Stylesheet.css</css-path>
 	</portal-skin>
-	<portal-skin>
-		<skin-module>WebOSSkin</skin-module>
-		<skin-name>Mac</skin-name>
-		<css-path>/skin/MacSkin/Stylesheet.css</css-path>
-	</portal-skin>
-	<portal-skin>
-		<skin-module>WebOSSkin</skin-module>
-		<skin-name>Vista</skin-name>
-		<css-path>/skin/VistaSkin/Stylesheet.css</css-path>
-	</portal-skin>
     
 	<javascript>
 		<param>
