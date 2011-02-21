@@ -36,6 +36,8 @@ import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.core.UIGrid;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -270,8 +272,24 @@ public class UIBackgroundSelector extends UIContainer
    private List<DesktopBackground> getDesktopBackgrounds(WebuiRequestContext context)
    {
       DesktopBackgroundService backgroundService = getApplicationComponent(DesktopBackgroundService.class);
-	   
-      return backgroundService.getUserDesktopBackgrounds(context.getRemoteUser());
+
+      List<DesktopBackground> backgrounds = backgroundService.getUserDesktopBackgrounds(context.getRemoteUser());
+      Collections.sort(backgrounds, new Comparator<DesktopBackground>() {
+         @Override
+         public int compare(DesktopBackground o1, DesktopBackground o2)
+         {
+            if (o1.getImageLabel() == null)
+            {
+               return 1;
+            }
+            if (o2.getImageLabel() == null)
+            {
+               return -1;
+            }
+            return o1.getImageLabel().compareTo(o2.getImageLabel());
+         }
+      });
+      return backgrounds;
    }
    
 }

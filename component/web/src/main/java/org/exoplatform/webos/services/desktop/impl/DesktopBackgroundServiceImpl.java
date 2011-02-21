@@ -137,6 +137,11 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    public boolean uploadBackgroundImage(String userName, String backgroundImageName, String mimeType, String encoding,
          InputStream binaryStream) throws Exception
    {
+      if (userName == null || backgroundImageName == null || mimeType == null || encoding == null || binaryStream == null)
+      {
+         throw new IllegalArgumentException("One of the arguments is null");
+      }
+      
       DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
       PersonalBackgroundSpace space = backgroundRegistry .getPersonalBackgroundSpace(userName, true);
       if (quantityLimit != 0 && space.getBackgroundImageFolder().getChildren().size() == quantityLimit)
@@ -149,7 +154,27 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
          log.debug("Can't upload, naximum image size is :" + sizeLimit);
          throw new ImageSizeException(sizeLimit, backgroundImageName);
       }
+
+      backgroundImageName = processDuplicatedName(space, backgroundImageName);
       return space.uploadBackgroundImage(backgroundImageName, mimeType, encoding, binaryStream);
+   }
+
+   private String processDuplicatedName(PersonalBackgroundSpace space, String imgName)
+   {
+      int dotIndex = imgName.lastIndexOf(".");
+      if (dotIndex == -1)
+      {
+         dotIndex = imgName.length();
+      }
+      StringBuilder nameBuilder = new StringBuilder(imgName).insert(dotIndex, "(0)");
+
+      int idx = 0;
+      while (space.getBackgroundImageFolder().getChild(imgName) != null)
+      {
+         nameBuilder.replace(dotIndex + 1, nameBuilder.indexOf(")", dotIndex), String.valueOf(idx++));
+         imgName = nameBuilder.toString();
+      }
+      return imgName;
    }
 
    @Override

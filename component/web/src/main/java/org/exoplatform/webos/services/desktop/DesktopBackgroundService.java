@@ -29,6 +29,11 @@ import java.util.List;
 public interface DesktopBackgroundService
 {
 
+   /**
+    * Upload image to user's folder in jcr, if imageName is duplicated, name's postfix will be add automatically
+    * @throws org.exoplatform.webos.services.desktop.exception.ImageQuantityException by default user can have 10 images
+    * @throws org.exoplatform.webos.services.desktop.exception.ImageSizeException by default image's size limit is 2mb  
+    */
    public boolean uploadBackgroundImage(String userName, String backgroundImageName, String mimeType, String encoding, InputStream binaryStream) throws Exception;
 
    /**

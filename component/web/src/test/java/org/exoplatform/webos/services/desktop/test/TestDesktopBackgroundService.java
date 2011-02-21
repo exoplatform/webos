@@ -122,6 +122,21 @@ public class TestDesktopBackgroundService extends AbstractWebOSTest
       }
    }
 
+   public void testDuplicateImageName() throws Exception
+   {
+      List<DesktopBackground> desktopBackgrounds = desktopBackgroundService.getUserDesktopBackgrounds(userName);
+      assertNotNull(desktopBackgrounds);
+      assertTrue(desktopBackgrounds.size() > 0);
+
+      imageName = desktopBackgrounds.get(0).getImageLabel();
+      assertNull(desktopBackgroundService.getUserDesktopBackground(userName, imageName + "(0)"));
+      
+      //Now upload image with the same name
+      //It must be completed succesfully and uploaded image's name is added postfix automatically
+      assertTrue(desktopBackgroundService.uploadBackgroundImage(userName, imageName, mimeType, encoding, imgStream));
+      assertNotNull(desktopBackgroundService.getUserDesktopBackground(userName, imageName + "(0)"));
+   }
+
    public void testGetUserDesktopBackground() throws Exception
    {
       desktopBackgroundService.uploadBackgroundImage(userName, imageName, mimeType, encoding, imgStream);
