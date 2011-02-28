@@ -1,8 +1,7 @@
 @import url(portal/webui/component/view/UIPageDesktop/Stylesheet.css);
 
-#UIPortalApplication .UIWorkingWorkspace {
+div.UIWebOSWorkingWorkspace {
 	background:none repeat scroll 0 0 #B5B6B6;
-	margin:auto;
 	width:auto;
 }
 
