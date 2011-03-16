@@ -29,6 +29,13 @@
 		<skin-name>Default</skin-name>
 		<css-path>/skin/Defaultskin/Stylesheet.css</css-path>
 	</portal-skin>
+
+   <!-- Temporary use this until we have simple skin design -->
+   <portal-skin>
+		<skin-module>WebOSSkin</skin-module>
+		<skin-name>SimpleSkin</skin-name>
+		<css-path>/skin/Defaultskin/Stylesheet.css</css-path>
+	</portal-skin>
     
 	<javascript>
 		<param>
