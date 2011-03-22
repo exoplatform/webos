@@ -30,9 +30,9 @@
   <packaging>pom</packaging>
   <name>eXo WebOS</name>
   <scm>
-    <connection>scm:svn:http://svn.exoplatform.org/projects/webos/branches/GateInIntegrated</connection>
-    <developerConnection>scm:svn:http://svn.exoplatform.org/projects/webos/branches/GateInIntegrated</developerConnection>
-    <url>http://fisheye.exoplatform.org/browse/projects/webos/branches/GateInIntegrated</url>
+    <connection>scm:git:git://github.com/exoportal/webos.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/exoportal/webos.git</developerConnection>
+    <url>https://github.com/exoportal/exogtn</url>
   </scm>
   <ciManagement>
     <system>hudson</system>
