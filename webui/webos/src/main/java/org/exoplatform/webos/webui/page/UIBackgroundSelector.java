@@ -21,6 +21,7 @@ package org.exoplatform.webos.webui.page;
 import org.exoplatform.commons.utils.LazyPageList;
 import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.commons.utils.ListAccessImpl;
+import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.services.log.ExoLogger;
@@ -33,7 +34,8 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIContainer;
-import org.exoplatform.webui.core.UIGrid;
+import org.exoplatform.webui.core.UIRepeater;
+import org.exoplatform.webui.core.UIVirtualList;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 import java.util.Collections;
@@ -64,42 +66,44 @@ public class UIBackgroundSelector extends UIContainer
    public static final int PAGE_SIZE = 5;
 
    private UIBackgroundUploadForm uploadForm;
-   private UIGrid  imageList;
+   private UIVirtualList imageList;
    private String previewImage;
    private static Log log = ExoLogger.getLogger("portal:UIBackgroundSelector");
 
    public UIBackgroundSelector() throws Exception
    {
-      imageList = createUIComponent(UIGrid.class, null, "UIBackgroundImageList");
-      imageList.configure(IMAGE_LABEL, BACKGROUND_BEAN_FIELD, ACTIONS);
-      imageList.getUIPageIterator().setId("UIListBackgroundsIterator");
-      imageList.getUIPageIterator().setParent(this);
-      addChild(imageList);
+      UIRepeater uiRepeater = createUIComponent(UIRepeater.class, null, null);
+      uiRepeater.configure(IMAGE_LABEL, BACKGROUND_BEAN_FIELD, ACTIONS);
+
+      imageList = addChild(UIVirtualList.class, null, "UIBackgroundImageList");
+      imageList.setPageSize(PAGE_SIZE);
+      imageList.setUIComponent(uiRepeater);
    }
 
    @Override
    public void processRender(WebuiRequestContext context) throws Exception
    {
-      int currPage = imageList.getUIPageIterator().getCurrentPage();
+      UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
+      if (uiDesktopPage == null)
+      {
+         //Make sure this selector is run with UIDesktopPage
+         UIMaskWorkspace maskWorkspace = getAncestorOfType(UIMaskWorkspace.class);
+         maskWorkspace.createEvent("Close", Event.Phase.DECODE, context).broadcast();
+         PortalRequestContext prcontext = Util.getPortalRequestContext();
+         prcontext.sendRedirect(prcontext.getRequestURI());
+         return;
+      }
 
       ListAccess<DesktopBackground> imgAccess = new ListAccessImpl<DesktopBackground>(DesktopBackground.class,
          getDesktopBackgrounds(context));
-      imageList.getUIPageIterator().setPageList(new LazyPageList<DesktopBackground>(imgAccess, PAGE_SIZE));
-
-      int availPage = imageList.getUIPageIterator().getAvailablePage();
-      if (currPage > availPage)
-      {
-         currPage = availPage;
-      }
-      imageList.getUIPageIterator().setCurrentPage(currPage);
-
+      imageList.dataBind(new LazyPageList<DesktopBackground>(imgAccess, PAGE_SIZE));
+                                                  
       DesktopBackgroundService service = getApplicationComponent(DesktopBackgroundService.class);
       String userId = ConversationState.getCurrent().getIdentity().getUserId();
       DesktopBackground previewBackground = service.getUserDesktopBackground(userId, getPreviewImage()); 
       if (previewBackground == null)
       {
          setPreviewImage(null);
-         UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
          previewBackground = service.getCurrentDesktopBackground(uiDesktopPage.getPageId());
       }
       refreshDesktopBackground(previewBackground, false);
@@ -139,7 +143,7 @@ public class UIBackgroundSelector extends UIContainer
          }
          else
          {
-            uiDesktopPage.showDesktopBackground(desktopBackground);  
+            uiDesktopPage.showDesktopBackground(desktopBackground);
          }
       }
    }
