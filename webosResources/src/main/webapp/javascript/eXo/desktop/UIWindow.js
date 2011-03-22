@@ -112,7 +112,7 @@ UIWindow.prototype.maximizeWindowEvt = function(evt) {
     else portletWindow.style.right = "0px" ;
     portletWindow.style.width = "100%" ;
 		portletWindow.style.height = "auto" ;
-    var delta = eXo.core.Browser.getBrowserHeight() - portletWindow.clientHeight ;
+    var delta = desktopHeight - portletWindow.clientHeight ;
     for(var i = 0; i < uiResizableBlock.length; i++) {
 			uiResizableBlock[i].style.height =  (parseInt(uiResizableBlock[i].clientHeight) + delta) + "px" ;
     }
