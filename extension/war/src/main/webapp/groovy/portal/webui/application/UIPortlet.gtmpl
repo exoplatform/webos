@@ -100,6 +100,7 @@
 													String restore = _ctx.appRes("UIPortlet.tooltip.MinimizeRestore");
 													String miniTooltip = _ctx.appRes("UIPortlet.tooltip.Minimize");
 													String maxiTooltip = _ctx.appRes("UIPortlet.tooltip.Maximize");
+													String closeTooltip = _ctx.appRes("UIPortlet.tooltip.Close");
 													String renderMaxi = maxiTooltip;
 													String renderMini = miniTooltip;
 													if(windowState == WindowState.MAXIMIZED) {
@@ -108,6 +109,8 @@
 														renderMini = restore;
 													}
 													if(isDesktop) {%>
+														<div class="ControlIcon CloseIcon" title="$closeTooltip" onclick="eXo.desktop.UIDesktop.removeWindowContent('$uicomponent.id')">
+														</div>
 														<div class="ControlIcon MaximizedIcon" title="$renderMaxi" onmouseover="$onControlOver" onmouseout="$onControlOut"><span></span>
 																<div style="display:none">{"normalTitle":"$maxiTooltip","modeTitle":"$restoreDown"}</div>
 														</div> 
