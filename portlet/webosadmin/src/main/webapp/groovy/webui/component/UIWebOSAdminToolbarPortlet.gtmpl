@@ -31,10 +31,20 @@
 	boolean userCouldEditNavigation = uicomponent.hasEditPermissionOnNavigation();
 	boolean userCouldEditPage = uicomponent.hasEditPermissionOnPage();
 	boolean userCouldEditPortal = uicomponent.hasEditPermissionOnPortal();
-	
+
+	UIPortal uiPortal = Util.getUIPortalApplication().getShowedUIPortal();
+	boolean isDesktop = false;
+	if(uiPortal != null && uiPortal.findFirstComponentOfType(UIDesktopPage.class) != null) {
+		isDesktop = true;
+	}
+
 	PageNavigation selectedNav = uicomponent.getSelectedNavigation();
 	if (selectedNav != null) {
-		editorLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action." + selectedNav.getOwnerType() + ".Editor");
+	  if (isDesktop) {
+			editorLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action.user.desktop.Editor");	  	
+		} else {
+			editorLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action." + selectedNav.getOwnerType() + ".Editor");
+		}
 	}
 	String accountSetting = "javascript:if(document.getElementById('UIMaskWorkspace')) ajaxGet(eXo.env.server.createPortalURL('UIPortal', 'AccountSettings', true));"
 %>
@@ -66,10 +76,7 @@
 						
 						<% if(userCouldEditPortal){ %>
 							<% 
-							 
-							 UIPortal uiPortal = Util.getUIPortalApplication().getShowedUIPortal();
-							 
-							 if(uiPortal.findFirstComponentOfType(UIDesktopPage.class) != null) {
+							 if(isDesktop) {
 							%>
 								<div class="MenuItem">	
 									<a href="javascript:ajaxGet(eXo.env.server.createPortalURL('UIWorkingWorkspace', 'EditBackground', true))" title="" class="ItemIcon EditSiteIcon">$editBackground</a>
