@@ -85,6 +85,17 @@
   </dependencies>
    
    <build>
+     <testResources>
+      <testResource>
+        <directory>src/test/java</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+          <include>**/*.jstmpl</include>
+          <include>**/*.jpg</include>
+        </includes>
+      </testResource>
+    </testResources>
     <plugins>
       <plugin>
         <groupId>org.jibx</groupId>

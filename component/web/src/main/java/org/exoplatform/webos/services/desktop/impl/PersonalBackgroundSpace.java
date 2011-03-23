@@ -97,7 +97,8 @@ public abstract class PersonalBackgroundSpace
       {
          if(defaultImage.endsWith(".jpg"))
          {
-            String displayName = defaultImage.substring("/backgrounds/".length());
+            int indexOfLastSlash = defaultImage.lastIndexOf('/');
+            String displayName = defaultImage.substring(indexOfLastSlash + 1, defaultImage.length() - ".jpg".length());
 
             try{
                uploadBackgroundImage(displayName, "image/jpeg", "UTF-8", mergedContext.getResourceAsStream(defaultImage));

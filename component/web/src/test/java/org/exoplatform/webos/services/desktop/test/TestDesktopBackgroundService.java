@@ -34,10 +34,27 @@ import org.exoplatform.webos.services.desktop.impl.PersonalBackgroundSpace;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TestDesktopBackgroundService extends AbstractWebOSTest
 {
+   private final static ImageLoader imageLoader;
+
+   /* Hack to create a mock servlet context */
+   static
+   {
+      Set<String> pathToImages = new HashSet<String>();
+      for(int i = 0; i < 8; i++)
+      {
+         pathToImages.add("backgrounds/background_" + i + ".jpg");
+      }
+
+      imageLoader = new ImageLoader("ImageLoader", pathToImages, Thread.currentThread().getContextClassLoader());
+   }
+
+
    private ChromatticManager chromatticManager;
    private DesktopBackgroundService desktopBackgroundService;
    private String userName;
@@ -58,6 +75,7 @@ public class TestDesktopBackgroundService extends AbstractWebOSTest
       imgStream = new ByteArrayInputStream(new byte[] {0, 1});
 
       PortalContainer portalContainer = getContainer();
+      portalContainer.registerContext(imageLoader);
       chromatticManager = (ChromatticManager)portalContainer.getComponentInstanceOfType(ChromatticManager.class);
       desktopBackgroundService = (DesktopBackgroundService)portalContainer.getComponentInstanceOfType(DesktopBackgroundService.class);
       begin();
@@ -129,6 +147,7 @@ public class TestDesktopBackgroundService extends AbstractWebOSTest
       assertTrue(desktopBackgrounds.size() > 0);
 
       imageName = desktopBackgrounds.get(0).getImageLabel();
+      System.out.println("Current image name: " + imageName);
       assertNull(desktopBackgroundService.getUserDesktopBackground(userName, imageName + "(0)"));
       
       //Now upload image with the same name
