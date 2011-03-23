@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Set;
 
 import org.chromattic.api.annotations.Create;
 import org.chromattic.api.annotations.FormattedBy;
@@ -34,6 +35,8 @@ import org.chromattic.api.annotations.Property;
 import org.chromattic.common.IO;
 import org.chromattic.ext.ntdef.NTFolder;
 import org.chromattic.ext.ntdef.Resource;
+import org.exoplatform.container.PortalContainer;
+import javax.servlet.ServletContext;
 
 /**
  * @author <a href="mailto:hoang281283@gmail.com">Minh Hoang TO</a>
@@ -80,15 +83,30 @@ public abstract class PersonalBackgroundSpace
       
    protected void uploadDefaultBackgroundImage()
    {
-		for (int i = 0; i < 8; i++) {
-			try {
-				uploadBackgroundImage("background_" + i, "image/jpeg", "UTF-8",
-						Thread.currentThread().getContextClassLoader()
-								.getResourceAsStream(
-										"backgrounds/" + i + ".jpg"));
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
+      PortalContainer pcontainer = PortalContainer.getInstance();
+      ServletContext mergedContext = pcontainer.getPortalContext();
+
+      Set<String> defaultImages = mergedContext.getResourcePaths("/backgrounds/");
+
+      if(defaultImages == null)
+      {
+         return;
+      }
+
+      for(String defaultImage : defaultImages)
+      {
+         if(defaultImage.endsWith(".jpg"))
+         {
+            String displayName = defaultImage.substring("/backgrounds/".length());
+
+            try{
+               uploadBackgroundImage(displayName, "image/jpeg", "UTF-8", mergedContext.getResourceAsStream(defaultImage));
+            }
+            catch(Exception ex)
+            {
+               //ex.printStackTrace();
+            }
+         }
+      }
    }
 }
