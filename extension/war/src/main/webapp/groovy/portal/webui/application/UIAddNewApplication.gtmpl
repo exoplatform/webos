@@ -71,7 +71,7 @@
 													 for(application in listApplication) {
 													 		 //String srcBG = application.getApplicationGroup() + "/skin/DefaultSkin/portletIcons/" + application.getApplicationName()+ ".png";
 															 String srcNormalBG = "/eXoResources/skin/sharedImages/Icon80x80/DefaultPortlet.png";
-															 String srcBG = srcNormalBG;
+															 String srcBG = application.getIconURL();
 															 //Create add Application Ajax request URL
 															 String callingAction = "AddApplication";
 															 String addApplicationURL = uicomponent.event(callingAction, application.getId());
@@ -80,7 +80,7 @@
 												<div class="Application">
 													<div class="ApplicationDescription">
 														<div onclick="$addApplicationURL" title="<%= application.getDisplayName() %>" class="PortletIcon">
-																<span><img src="/$srcBG" alt="" onError="src='$srcNormalBG'" /></span>
+																<span><img src="$srcBG" alt="" onError="src='$srcNormalBG'" /></span>
 														</div>
 														<div class="ApplicationContent">
 															<div class="TitleBarApplication">
