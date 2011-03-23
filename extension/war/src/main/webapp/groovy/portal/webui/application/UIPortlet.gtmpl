@@ -75,8 +75,8 @@
 					if("SHOW".equals(appStatus)) {
 						appDisplay = "block";
 						appZIndex = uicomponent.getProperties().get("zIndex");
-						windowWidth = (String)uicomponent.getProperties().getIntValue("windowWidth") + "px";
-						windowHeight = (String)uicomponent.getProperties().getIntValue("windowHeight") + "px";
+						windowWidth = "" + uicomponent.getWidth() + "px";
+						windowHeight = "" + uicomponent.getHeight() + "px";
 					}
 					/*###################################################################*/
 				}

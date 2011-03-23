@@ -161,16 +161,13 @@ public class UIDesktopPage extends UIPage
          /*########################## Save Position ##########################*/
          String posX = event.getRequestContext().getRequestParameter("posX");
          String posY = event.getRequestContext().getRequestParameter("posY");
-
          if (posX != null)
             uiApp.getProperties().put(UIApplication.locationX, posX);
          if (posY != null)
             uiApp.getProperties().put(UIApplication.locationY, posY);
 
-         //System.out.println("\n\n\n\n\n\n\n\n\n\n\n SAVE POSX: "+posX+"\n SAVE POSY: "+posY+"\n\n\n\n\n\n\n\n\n");
          /*########################## Save ZIndex ##########################*/
          String zIndex = event.getRequestContext().getRequestParameter(UIApplication.zIndex);
-
          if (zIndex != null)
             uiApp.getProperties().put(UIApplication.zIndex, zIndex);
 
@@ -179,26 +176,15 @@ public class UIDesktopPage extends UIPage
          String windowHeight = event.getRequestContext().getRequestParameter("windowHeight");
 
          if (windowWidth != null)
-            uiApp.getProperties().put("windowWidth", windowWidth);
+            uiApp.setWidth(windowWidth);
          if (windowHeight != null)
-            uiApp.getProperties().put("windowHeight", windowHeight);
-
-         //      if(appWidth != null) uiComponent.getProperties().put(UIApplication.appWidth, appWidth);
-         //      if(appHeight != null) uiComponent.getProperties().put(UIApplication.appHeight, appHeight);
-
-         //      String applicationHeight = event.getRequestContext().getRequestParameter("applicationHeight");
-         //      if(applicationHeight != null) uiComponent.getProperties().put("applicationHeight", applicationHeight);
+            uiApp.setHeight(windowHeight);
 
          /*########################## Save Window status (SHOW / HIDE) ##########################*/
          String appStatus = event.getRequestContext().getRequestParameter(UIApplication.appStatus);
          if (appStatus != null)
             uiApp.getProperties().put(UIApplication.appStatus, appStatus);
 
-         //      if(!uiPage.isModifiable()) return;
-         //      Page page = PortalDataMapper.toPageModel(uiPage);
-         //      UserPortalConfigService configService = uiPage.getApplicationComponent(UserPortalConfigService.class);
-         //      if(page.getChildren() == null) page.setChildren(new ArrayList<Object>());
-         //      configService.update(page);
       }
    }
 

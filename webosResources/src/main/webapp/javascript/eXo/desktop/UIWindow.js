@@ -186,6 +186,7 @@ UIWindow.prototype.endResizeWindowEvt = function(evt) {
  		var method = uiWindow.resizeCallback.get(name) ;
 		if (typeof(method) == "function") method(evt) ;
 	}
+  eXo.desktop.UIWindow.saveWindowProperties(uiWindow);
 	// Re initializes the scroll tabs managers on the page
 	eXo.portal.UIPortalControl.initAllManagers() ;
 	eXo.desktop.UIWindow.portletWindow = null ;
