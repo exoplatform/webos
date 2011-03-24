@@ -1,8 +1,6 @@
 <%	
 	import org.exoplatform.portal.webui.application.UIPortlet;
 	import org.exoplatform.web.application.JavascriptManager;
-	import org.exoplatform.portal.config.model.PageNavigation;
-	import org.exoplatform.portal.config.model.PageNode;
 	import org.exoplatform.webui.core.UIRightClickPopupMenu ;
 	
 	def rcontext = _ctx.getRequestContext();
@@ -18,7 +16,6 @@
 	jsmanager.addCustomizedOnLoadScript("eXo.gadget.UIGadget.CancelTitle='" + _ctx.appRes("UIDashboardContainer.label.CancelTitle") + "';");
 	jsmanager.addCustomizedOnLoadScript("eXo.gadget.UIGadget.Cache='" + _ctx.appRes("UIDashboardContainer.label.Cache") + "';");
 	jsmanager.addCustomizedOnLoadScript("eXo.gadget.UIGadget.Debug='" + _ctx.appRes("UIDashboardContainer.label.Debug") + "';");
-	jsmanager.addCustomizedOnLoadScript('eXo.desktop.UIDockbar.initNav();');
 
 	def desktopID = "UIPage-" + uicomponent.id;
 	jsmanager.addJavascript("eXo.webui.UIRightClickPopupMenu.disableContextMenu('" + desktopID + "') ;");
@@ -28,152 +25,9 @@
 	String currentSelectedBackground = uicomponent.getCurrBackgroundURL();
 	String docBase =	rcontext.getRequestContextPath();
 	String comId = uicomponent.getId();
-	boolean modifiable = uicomponent.isModifiable();
-	
-		void renderSinglePageNode(PageNavigation nav, PageNode node) {
-		String	href = uicomponent.event("ChangePage",	nav.getId() + "::" + node.getUri());
-		String icon = node.getIcon();
-		if(icon == null) icon = "DefaultPageIcon";
-		print """
-			<div class="MenuItem">
-				<div class="LabelItem">
-					<div class="Icon $icon"	style="padding-left: 18px">
-						<div class="LabelText"><a href="#" onclick="$href">$node.resolvedLabel</a></div>
-					</div>
-				</div>
-			</div>
-		""";
-	}
-	
-	void renderPageNode(PageNavigation nav, PageNode node) {
-		 String	href = uicomponent.event("ChangePage",	 nav.getId() + "::" +	node.getUri());
-		 String icon = node.getIcon();
-		 String scrollUpTitle = _ctx.appRes("UIExoStart.tooltip.scrollUp");
-		 String scrollDownTitle = _ctx.appRes("UIExoStart.tooltip.scrollDown");
-		 if(icon == null) icon = "DefaultPageIcon";
-		 print """
-			<div class="MenuItem">
-				<div class="LabelItem">
-					<div class="Icon $icon" style="padding-left: 18px"> 
-						<div class="BlackArrowIcon">
-							<div class="LabelText "><a href="#" onclick="$href">$node.resolvedLabel</a></div>
-						</div>
-					</div>
-				</div>
-				<div class="MenuItemContainer">
-					<div class="StartMenuDecorator">
-						<div class="StartMenuTL">
-							<div class="StartMenuTR">
-								<div class="StartMenuTC"><span></span></div>
-							</div>
-						</div>
-						<div class="StartMenuML">
-							<div class="StartMenuMR">
-								<div class="StartMenuBG" style="padding-bottom: 6px">
-									<div class="TopNavigator" style="display: none;" title="$scrollUpTitle">
-											<div class="UpNavigatorIcon"><span></span></div>
-									</div>
-									<div class="BlockMenu">
-									<div class="MenuContainer">					
-									""";
-									for(child in node.getChildren()) {
-										if(child.getChildren() != null && child.getChildren().size() > 0) renderPageNode(nav, child);
-										else renderSinglePageNode(nav, child);
-									}
-									print """
-									</div>
-									</div>
-									<div class="BottomNavigator" style="display: none;" title="$scrollDownTitle">
-											<div class="DownNavigatorIcon"><span></span></div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="StartMenuBL">
-							<div class="StartMenuBR">
-							<div class="StartMenuBC"><span></span></div>
-							</div>
-						</div>						 
-					</div>	
-				</div>
-			</div>
-		""";
-	}
-	
-	void renderPageNavigation(PageNavigation navigation) {
-		nodes = navigation.getNodes();
-		if(nodes.size() < 1) return;
-		String navTitle = _ctx.appRes("UIPageNavigation.label.titleBar");
-		navTitle = navTitle.replace("{0}", navigation.ownerId);
-		print """
-			<div class="PageNavigationBlock">
-				<div class="DecoratorBlock">
-					<div class="PageOwnerContainer">
-						<div class="TitleBar">$navTitle </div>
-						""";
-						for(node in nodes) {
-							if(node.getChildren() != null && node.getChildren().size() > 0) {
-								renderPageNode(navigation, node);
-							}
-							else renderSinglePageNode(navigation, node);
-						}
-						print """
-					</div>
-				</div>
-			</div>
-		""";		
-	}
-	
-	void renderNavigations() {
-		String label = _ctx.appRes(uicomponent.getId() + ".item.PageNavigation");
-		String scrollUpTitle = _ctx.appRes("UIExoStart.tooltip.scrollUp");
-		String scrollDownTitle = _ctx.appRes("UIExoStart.tooltip.scrollDown");
-		navigations = uicomponent.getNavigations();
-	 	//if (navigations != null && navigations.size() > 0 && navigations.get(0).getNodes().size() > 0) {
-	 	if (navigations != null && navigations.size() > 0) {
-			 	print """ 
-				<div class="MenuItemContainer NavigationContainer" style="position: absolute; top: -450px;">
-					<div class="StartMenuDecorator">
-						<div class="StartMenuTL">
-							<div class="StartMenuTR">
-								<div class="StartMenuTC"><span></span></div>
-							</div>
-						</div>
-						<div class="StartMenuML">
-							<div class="StartMenuMR">
-								<div class="StartMenuBG" style="padding: 5px 0px;">
-									<div class="TopNavigator" style="display: none;" title="$scrollUpTitle">
-										<div class="UpNavigatorIcon"><span></span></div>
-									</div>
-									<div class="BlockMenu">
-									<div class="MenuContainer"> 
-									""";
-									for(navigation in navigations) {
-										renderPageNavigation(navigation);
-									}
-									print """
-									</div>
-									</div>
-									<div class="BottomNavigator" style="display: none;" title="$scrollDownTitle">
-										<div class="DownNavigatorIcon"><span></span></div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="StartMenuBL">
-							<div class="StartMenuBR">
-							<div class="StartMenuBC"><span></span></div>
-							</div>
-						</div>
-					</div>	
-				</div>
-				""";
-		}
-	}
+	boolean modifiable = uicomponent.isModifiable();			
 	
 %>
-
-
 <div class="UIPage" id="$desktopID">
 	<div class="VIEW-PAGE">
 		<div id="UIPage">
@@ -214,11 +68,7 @@
 
 				<%//String containerMouseOver = "eXo.desktop.UIDockbar.containerMouseOver();";%>
 				<div class="UIDockBar" id="UIDockBar" onmouseover="eXo.desktop.UIDockbar.startDockBarEvt(event);">
-					<div id="DockNavigation" class="UIExoStart" style="position: absolute; display: none; width: 0px;">
-						<div class="StartMenuContainer">
-								<% renderNavigations(); %>
-						</div>
-					</div>	
+
 			<div class="UIRightClickPopupMenu" id="DockbarContextMenu" onmousedown="event.cancelBubble = true;">
 				<div class="UIContextMenuContainer" >
 					<div class="TopLeftRightClickPopupMenu">

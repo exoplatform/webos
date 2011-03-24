@@ -119,18 +119,6 @@ public class UIDesktopPage extends UIPage
       return true;
    }
 
-   public List<PageNavigation> getNavigations() throws Exception
-   {
-      List<PageNavigation> allNav = Util.getUIPortal().getNavigations();
-      String removeUser = Util.getPortalRequestContext().getRemoteUser();
-      List<PageNavigation> result = new ArrayList<PageNavigation>();
-      for (PageNavigation nav : allNav)
-      {
-         result.add(PageNavigationUtils.filter(nav, removeUser));
-      }
-      return result;
-   }
-
    static public class SaveGadgetPropertiesActionListener extends EventListener<UIPage>
    {
       public void execute(Event<UIPage> event) throws Exception

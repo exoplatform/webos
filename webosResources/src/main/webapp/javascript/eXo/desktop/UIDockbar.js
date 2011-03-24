@@ -67,7 +67,6 @@ UIDockbar.prototype.endDockBarEvt = function() {
 	this.onmouseover = null ;
 	document.oncontextmenu = document.body.oncontextmenu = function() {return true} ;
 	eXo.webui.UIRightClickPopupMenu.hideContextMenu("DockbarContextMenu") ;
-	eXo.desktop.UIDockbar.hideNavigation() ;
 	eXo.desktop.UIDockbar.reset() ;
 } ;
 
@@ -78,7 +77,6 @@ UIDockbar.prototype.iconOverEvt = function() {
   var tooltip = this.nextSibling ;
   
 	eXo.webui.UIRightClickPopupMenu.hideContextMenu("DockbarContextMenu") ;
-	eXo.desktop.UIDockbar.hideNavigation() ;
   tooltip.style.display = "block" ;
   tooltip.style.top = (-tooltip.offsetHeight) + "px" ;
   tooltip.style.left = objectXInDockbar + "px" ;
@@ -284,34 +282,6 @@ UIDockbar.prototype.resetDesktopShowedStatus = function(uiPageDesktop, uiDockBar
   }
 } ;
 
-UIDockbar.prototype.initNav = function() {
-	var nav = document.getElementById("DockNavigation") ;
-	this.buildMenu(nav);
-};
-
-UIDockbar.prototype.buildMenu = function(popupMenu) {
-	if(typeof(popupMenu) == "string") popupMenu = document.getElementById(popupMenu) ;
-	
-  var blockMenuItems = eXo.core.DOMUtil.findDescendantsByClass(popupMenu, "div", this.containerStyleClass) ;
-  for (var i = 0; i < blockMenuItems.length; i++) {
-    if (!blockMenuItems[i].id) blockMenuItems[i].id = Math.random().toString() ;
-		blockMenuItems[i].resized = false ;
-  }
-	
-  var menuItems = eXo.core.DOMUtil.findDescendantsByClass(popupMenu, "div", this.itemStyleClass) ;
-  for(var i = 0; i < menuItems.length; i++) {
-		var menuItemContainer = eXo.core.DOMUtil.findFirstChildByClass(menuItems[i], "div", this.containerStyleClass) ;
-		if (menuItemContainer) menuItems[i].menuItemContainer = menuItemContainer ;
-		
-		menuItems[i].onmouseover = this.onMenuItemOver ; 
-		menuItems[i].onmouseout = this.onMenuItemOut ;
-
-    var labelItem = eXo.core.DOMUtil.findFirstDescendantByClass(menuItems[i], "div", "LabelItem") ;
-    var link = eXo.core.DOMUtil.findDescendantsByTagName(labelItem, "a")[0] ;
-    eXo.webui.UIPopupMenu.createLink(menuItems[i], link) ;
-  }
-};
-
 UIDockbar.prototype.onMenuItemOver = function(event) {
 	this.className = eXo.desktop.UIDockbar.itemOverStyleClass ;
 	if (this.menuItemContainer) {
@@ -359,65 +329,6 @@ UIDockbar.prototype.onMenuItemOut = function(event) {
     eXo.desktop.UIDockbar.superClass.popVisibleContainer() ;
     eXo.desktop.UIDockbar.superClass.setCloseTimeout() ;
 	}
-};
-
-UIDockbar.prototype.showNavigation = function(event) {
-	event = event || window.event ;
-  event.cancelBubble = true ;
-
-  var uiDockbar = document.getElementById("UIDockBar") ;
-	var dockNavigation = document.getElementById("DockNavigation") ;
-	dockNavigation.style.display = "block" ;
-	var menuItemContainer = eXo.core.DOMUtil.findFirstDescendantByClass(dockNavigation, "div", "MenuItemContainer") ;
-	dockNavigation.menuItemContainer = menuItemContainer ;
-	eXo.desktop.UIDockbar.createSlide(dockNavigation) ;
-	
-	eXo.core.Mouse.update(event) ;
-
-	var fixWidthForIE7 = 0 ;
-	var uiWorkingWS = document.getElementById("UIWorkingWorkspace") ;
-	if(eXo.core.I18n.isLT()) {
-		if (eXo.core.Browser.isIE7() && document.getElementById("UIDockBar")) {
-			fixWidthForIE7 = uiWorkingWS.offsetLeft ;
-		}
-	} else if(eXo.core.Browser.getBrowserType() == "ie") fixWidthForIE7 = 16;
-	
-	menuItemContainer.style.top = -(menuItemContainer.offsetHeight) + "px" ;
-	
-	//TODO: add transparent border in blockMenu to fix bug blockMenu out of menuItemContainer in Vista desktopPage 
-	if(eXo.core.Browser.isIE6()) {
-		var blockMenu = eXo.core.DOMUtil.findFirstDescendantByClass(menuItemContainer, "div", "BlockMenu") ;
-		blockMenu.style.borderBottom = "solid 1px white" ;
-		blockMenu.style.filter = "chroma(color=white)"; 
-	}
-	
-	var dockLeft = eXo.core.Browser.findPosX(dockNavigation) ;
-	var dockRight = dockLeft + dockNavigation.offsetWidth ;
-	var menuLeft = eXo.core.Browser.findPosX(menuItemContainer) ;
-	var menuRight = menuLeft + menuItemContainer.offsetWidth ;
-
-	if(eXo.core.I18n.isLT()) {
-		var intLeft = dockLeft - menuLeft ;
-		intLeft += eXo.core.Mouse.mousexInPage - eXo.core.Browser.findPosX(uiDockbar) + fixWidthForIE7 ;
-		dockNavigation.style.left = intLeft + "px" ;
-	} else {
-		var intRight = menuRight - dockRight ;
-		intRight += (eXo.core.Browser.findPosX(uiDockbar) + uiDockbar.offsetWidth - eXo.core.Mouse.mousexInPage) + fixWidthForIE7 ;
-		dockNavigation.style.right = intRight + "px" ;
-	}
-	
-	var intTop = eXo.core.Mouse.mouseyInPage - (eXo.core.Browser.findPosY(dockNavigation) - dockNavigation.offsetTop) ;
-	var browserHeight = eXo.core.Browser.getBrowserHeight() ;
-	if (eXo.core.Mouse.mouseyInPage - menuItemContainer.offsetHeight < 0) {
-		intTop = uiDockbar.offsetHeight - ((browserHeight - menuItemContainer.offsetHeight)/2) ;
-	}
-	dockNavigation.style.top = intTop + "px";
-	
-};
-
-UIDockbar.prototype.hideNavigation = function(event) {
-	var nav = document.getElementById("DockNavigation") ;
-	nav.style.display = "none" ;
 };
 
 UIDockbar.prototype.createSlide = function(menuItem) {
