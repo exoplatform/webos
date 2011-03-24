@@ -11,7 +11,7 @@
     
     List<DesktopBackground> desktopBackgrounds = uicomponent.getDesktopBackgrounds(rcontext);	
 %>
-<div class="UIChangeLanguageForm" id="<%=uicomponent.getId()%>">
+<div class="UIBackgroundImageList" id="<%=uicomponent.getId()%>">
 	<div class="UIFormTabPane">
 		<div class="UITabPane">
 		

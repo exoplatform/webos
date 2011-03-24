@@ -1,0 +1,188 @@
+.UIPageDesktop .DefaultTheme .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 18px; height: 18px;
+	cursor: nw-resize;
+	background: url('background/ResizeArea18x18.gif') no-repeat left top; /* orientation=lt */
+	background: url('background/ResizeArea18x18-rt.gif') no-repeat right top; /* orientation=rt */
+}
+
+.UIPageDesktop .MacTheme .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 15px;
+	cursor: nw-resize;
+	background: url('background/ResizeArea17x15.png') no-repeat right top; /* orientation=lt */
+	background: url('background/ResizeArea17x15-rt.png') no-repeat left top; /* orientation=rt */
+}
+
+.UIPageDesktop .MacGray .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 15px;
+	cursor: nw-resize;
+	background: url('background/ResizeArea17x15.png') no-repeat;
+}
+
+.UIPageDesktop .MacBlack .ResizeArea {
+	float: left; /* orientation=rt */
+	float: right; /* orientation=lt */
+	width: 17px; height: 15px;
+	cursor: nw-resize;
+	background: url('background/ResizeArea17x15.png') no-repeat;
+}
+
+.UIPageDesktop .MacGreenSteel .ResizeArea {
+	float: left; /* orientation=rt */
+	float: right; /* orientation=lt */
+	width: 17px; height: 15px;
+	cursor: nw-resize;
+	background: url('background/ResizeArea17x15.png') no-repeat;
+}
+
+.UIPageDesktop .VistaTheme .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 9px; height: 12px;
+	cursor: nw-resize;
+	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/ResizeBG.gif') no-repeat bottom right; /* orientation=lt */
+	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/ResizeBG-rt.gif') no-repeat bottom left; /* orientation=rt */
+}
+
+.UIPageDesktop .VistaBlue .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 9px; height: 12px;
+	cursor: nw-resize;
+	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/ResizeBG.gif') no-repeat bottom right;
+}
+
+.UIPageDesktop .RoundConerBlue .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .RoundConerViolet .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .RoundConerOrange .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .RoundConerPink .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .RoundConerGreen .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .ShadowBlue .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .ShadowViolet .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .ShadowOrange .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .ShadowPink .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .ShadowGreen .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .SimpleBlue .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .SimpleViolet .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .SimpleOrange .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .SimplePink .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .SimpleGreen .ResizeArea {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 17px; height: 19px;
+	cursor: nw-resize;
+	background: url('background/Resize17x19.png') no-repeat;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBarCenter .CloseIcon{
+	background: url('background/CloseIcon.gif') no-repeat;
+
+}
+
+.UIPageDesktop .DefaultTheme .WindowBarCenter .OverCloseIcon{
+	background: url('background/CloseIconHover.gif') no-repeat;
+
+}

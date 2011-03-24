@@ -1,0 +1,7 @@
+.UIPageDesktop .UIIFramePortlet {
+	min-height: 0;
+}
+
+*html .UIPageDesktop .UIIFramePortlet {
+	height: auto;
+}

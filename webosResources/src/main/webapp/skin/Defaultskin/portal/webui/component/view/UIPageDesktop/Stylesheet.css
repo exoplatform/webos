@@ -1,7 +1,7 @@
 .UIPageDesktop {
 	position: relative ;
-  overflow: hidden ;
-  background: url('background/eXoDesktopBG.jpg') no-repeat left bottom ;
+	overflow: hidden ;
+	background:#256192 url('background/eXoDesktopBG.png') no-repeat right top;
 }
 
 .UIPageDesktop .UIWindow {
@@ -10,6 +10,10 @@
 	
 .UIPageDesktop .UIWindow .UIApplication {
 	height: 350px ;
+}
+
+.UIPageDesktop #UIDesktopContextMenu .UIRightClickPopupMenu .MenuItem .ItemIcon {
+	height: 16px;
 }
 
 .UIPageDesktop .UIDockBar {
@@ -35,12 +39,12 @@
 
 .UIPageDesktop .UIDockBar .DockbarLeft {
   background: url('background/LeftDockbar.png') no-repeat left bottom;
-  padding: 0px 0px 0px 24px ;
+  padding: 0px 0px 0px 48px ;
 }
 
 .UIPageDesktop .UIDockBar .DockbarRight {
   background: url('background/RightDockbar.png') no-repeat right bottom;
-  padding: 0px 24px 0px 0px ;
+  padding: 0px 48px 0px 0px ;
 }
 
 .UIPageDesktop .UIDockBar .DockbarCenter {
@@ -55,18 +59,24 @@
 }
 
 .UIPageDesktop .UIDockBar .Separator {
-	width: 1px; height: 35px; 
+	width: 3px; 
+	height: 35px; 
 	margin: 0px 5px ;
 	vertical-align: bottom;
 }
 
 .UIPageDesktop .UIDockBar .Tooltip {
-	background: white ;
+	background: #204157 ;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-box-border-radius: 5px;
+	border-radius: 5px;
 	line-height: 20px ;
 	white-space: nowrap ;
 	position: absolute ;
-	padding: 0px 5px ;
-	border: solid 1px black ;
+	padding: 2px 5px ;
+	color: #fff;
+	border: solid 1px #8fb1c7 ;
 }
 
 .UIPageDesktop .MoveResizeArea {
@@ -79,62 +89,24 @@
 .UIPageDesktop .UIWindow .UIFormInputSet {
 	width: auto;
 }
-/*=============================Right Click DockBar Menu=========================*/
-
-.UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopLeftRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') no-repeat left -4px;
-  padding-left: 3px;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopRightRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') no-repeat right -4px;
-  padding-right: 3px;
-}
-
-.UIPageDesktop .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopCenterRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') repeat-x top left;
-  height: 3px;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .MiddleLeftRightClickPopupMenu {
-  background: url('background/PageDesktopRepeat.gif') repeat-y left ;
-  padding-left: 3px;
-  height: 100%;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .MiddleRightRightClickPopupMenu {
-  background: url('background/PageDesktopRepeat.gif') repeat-y right ;
-  padding-right: 3px;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .BottomLeftRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') no-repeat left -19px;
-  padding-left: 3px;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .BottomRightRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') no-repeat right -19px ;
-  padding-right: 3px;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .BottomCenterRightClickPopupMenu {
-  background: url('background/PageDesktop.gif') repeat-x center -8px ;
-  line-height: 10px; 
-}
 
 .UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer {
-	background:#DFEAF6 none repeat scroll 0% 50%;
+	background:#ededed none repeat scroll 0% 50%;
 	margin:0px;
 	padding: 0px;
-	border: 1px solid #9ba9bf;
+	border: 1px solid #bbbbbb;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-box-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .ClickCenterBottom {
-	background: url('background/PageDesktop.gif') no-repeat left -30px; /* orientation=lt */
-	background: url('background/PageDesktop-rt.gif') no-repeat right -30px; /* orientation=rt */
-	width: 14px;  height: 10px;
-	margin: 0px 0px 0px 35px; /* orientation=lt */
-	margin: 0px 35px 0px 0px; /* orientation=rt */
+	background: url('background/PageDesktop.png') no-repeat left top; /* orientation=lt */
+	background: url('background/PageDesktop-rt.png') no-repeat right top; /* orientation=rt */
+	width: 13px;  height: 12px;
+	margin: -1px 0px 0px 35px; /* orientation=lt */
+	margin: -1px 35px 0px 0px; /* orientation=rt */
 }
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer {
@@ -143,22 +115,13 @@
 	_width: 230px;
 }
 
-.UIDockBar .UIRightClickPopupMenu .CloseDockBarIcon {
-	background: url('background/PageDesktop.gif') no-repeat left -40px; /* orientation=lt */
-	background: url('background/PageDesktop-rt.gif') no-repeat right -40px; /* orientation=rt */
-}
-
-.UIDockBar .UIRightClickPopupMenu .QuitDockBarIcon {
-	background: url('background/PageDesktop.gif') no-repeat left -64px; /* orientation=lt */
-	background: url('background/PageDesktop-rt.gif') no-repeat right -64px; /* orientation=rt */
-}
-
 .UIDockBar .UIContextMenuContainer {
 	position: absolute; 
 	left: -40px; 
 	top: -10px;
 }
-/*--------------------------------------------------  UIExoStartMenu  ----------------------------------*/
+
+/*--------------------------------------------------  UIExoStartMenu  ----------------------------------*/
 .UIExoStart {
 }
 	
@@ -492,4 +455,54 @@
 .UIExoStart .StartMenuDecorator .StartMenuBC {
 	height: 3px;
 	background: url('background/Exostart.gif') repeat-x center -42px;
+}
+
+.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem a{
+	color: #3b3557;
+}
+
+.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem a:hover{
+	color: #ffa500;
+}
+
+.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem{
+	cursor: pointer;
+	display: block;
+	margin: 0 5px;
+	padding: 0px 5px 5px 5px;
+	white-space: nowrap;
+	width: auto;
+}
+
+.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem a.CloseDockBarIcon{
+	background: url('background/LineBottom.png') repeat-x left bottom;
+	line-height: 30px;
+}
+
+.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem .QuitDockBarIcon{
+	margin-bottom: 3px;
+}
+
+.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem .ItemIcon{
+	background:none;
+	line-height: 16px;
+	padding: 0px;
+	white-space: nowrap;
+}
+
+.UIBackgroundImageList .UITabContentContainer {
+	padding: 10px;
+	background: none;
+	border: none;
+}
+
+.UIBackgroundImageList .UITabPane .TabPaneContent {
+	padding: 0;
+	border: 1px solid #d4d4d4;
+	border-top: none;
+}
+
+.UIBackgroundImageList .UITabPane .HorizontalLayout {
+	border: 1px solid #FFF;
+	border-top: none;
 }
