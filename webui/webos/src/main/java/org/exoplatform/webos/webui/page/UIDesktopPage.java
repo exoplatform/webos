@@ -50,8 +50,10 @@ import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
+import org.exoplatform.webui.config.annotation.ComponentConfigs;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIComponent;
+import org.exoplatform.webui.core.UIRightClickPopupMenu;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 
@@ -59,6 +61,7 @@ import org.exoplatform.webui.event.EventListener;
  * May 19, 2006
  */
 
+@ComponentConfigs({
 @ComponentConfig(lifecycle = UIPageLifecycle.class, template = "system:/groovy/portal/webui/page/UIDesktopPage.gtmpl", events = {
    @EventConfig(listeners = ShowLoginFormActionListener.class),
    @EventConfig(listeners = DeleteGadgetActionListener.class),
@@ -68,7 +71,13 @@ import org.exoplatform.webui.event.EventListener;
    @EventConfig(listeners = UIDesktopPage.ShowAddNewApplicationActionListener.class),
    @EventConfig(listeners = UIDesktopPage.ChangePageActionListener.class),
    @EventConfig(listeners = UIDesktopPage.ShowPortletActionListener.class),
-   @EventConfig(name = "EditCurrentPage", listeners = UIDesktopPage.EditCurrentPageActionListener.class)})
+   @EventConfig(name = "EditCurrentPage", listeners = UIDesktopPage.EditCurrentPageActionListener.class)}),
+   @ComponentConfig(id = "UIDesktopContextMenu", type = UIRightClickPopupMenu.class, template = "system:/groovy/portal/webui/page/UIDesktopContextMenu.gtmpl", events = {
+      @EventConfig(listeners = UIDesktopPage.ShowAddNewApplicationActionListener.class),
+      @EventConfig(listeners = UIDesktopPage.RefreshPageActionListener.class),
+      @EventConfig(listeners = UIDesktopPage.EditCurrentPageActionListener.class),
+      @EventConfig(listeners = UIDesktopPage.ChangeBackgroundActionListener.class)})
+})
 public class UIDesktopPage extends UIPage
 {
 
@@ -88,9 +97,21 @@ public class UIDesktopPage extends UIPage
       }
    }
 
-   public UIDesktopPage()
+   public UIDesktopPage() throws Exception
    {
-      setChildren((List<UIComponent>)new CopyOnWriteArrayList<UIComponent>());
+      setChildren((List<UIComponent>)new CopyOnWriteArrayList<UIComponent>());      
+   }
+
+   @Override
+   public void processRender(WebuiRequestContext context) throws Exception
+   {
+      UIRightClickPopupMenu rightClickPopup = getChild(UIRightClickPopupMenu.class);
+      if (rightClickPopup == null)
+      {
+         addChild(UIRightClickPopupMenu.class, "UIDesktopContextMenu", null);
+      }
+      
+      super.processRender(context);
    }
 
    public boolean isShowMaxWindow()
@@ -188,11 +209,30 @@ public class UIDesktopPage extends UIPage
       }
    }
 
-   static public class ShowAddNewApplicationActionListener extends EventListener<UIPage>
+   static public abstract class BaseDesktopActionListener extends EventListener<UIComponent>
    {
-      public void execute(Event<UIPage> event) throws Exception
+      public void execute(Event<UIComponent> event) throws Exception
       {
-         UIPage uiPage = event.getSource();
+         UIComponent source = event.getSource();
+         UIPage uiPage;
+         if (source instanceof UIPage)
+         {
+            uiPage = (UIPage)source;
+         }
+         else
+         {
+            uiPage = source.getAncestorOfType(UIPage.class);
+         }
+         doAction(event, uiPage);
+      }
+
+      protected abstract void doAction(Event<UIComponent> event, UIPage uiPage) throws Exception;
+   }
+
+   static public class ShowAddNewApplicationActionListener extends BaseDesktopActionListener
+   {
+      protected void doAction(Event<UIComponent> event, UIPage uiPage) throws Exception
+      {
          UIPortalApplication uiPortalApp = uiPage.getAncestorOfType(UIPortalApplication.class);
          UIMaskWorkspace uiMaskWorkspace = uiPortalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID);
 
@@ -363,13 +403,33 @@ public class UIDesktopPage extends UIPage
       Util.getPortalRequestContext().addUIComponentToUpdateByAjax(maskWorkspace);
    }
    
-   public static class EditCurrentPageActionListener extends EventListener<UIDesktopPage>
+   public static class EditCurrentPageActionListener extends BaseDesktopActionListener
    {
       @Override
-      public void execute(Event<UIDesktopPage> event) throws Exception
+      protected void doAction(Event<UIComponent> event, UIPage uiPage) throws Exception
       {
-         event.getSource().switchToEditMode();
+         uiPage.switchToEditMode();
       }
    }
-   
+
+   public static class RefreshPageActionListener extends EventListener<UIRightClickPopupMenu>
+   {
+      @Override
+      public void execute(Event<UIRightClickPopupMenu> event) throws Exception
+      {
+         PortalRequestContext context = Util.getPortalRequestContext();
+         UIPortalApplication uiApp = Util.getUIPortalApplication();
+         context.addUIComponentToUpdateByAjax(uiApp.<UIComponent>getChildById(UIPortalApplication.UI_WORKING_WS_ID));
+         context.setFullRender(true);
+      }
+   }
+
+   public static class ChangeBackgroundActionListener extends BaseDesktopActionListener
+   {
+      @Override
+      protected void doAction(Event<UIComponent> event, UIPage uiPage) throws Exception
+      {
+         ((UIDesktopPage)uiPage).showEditBackgroundPopup(event.getRequestContext());
+      }
+   }
 }

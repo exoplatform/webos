@@ -11,6 +11,35 @@ UIDesktop.prototype.init = function() {
 	  	if(uiWindows[i].isFirstTime == false)	continue ;
 			eXo.desktop.UIDesktop.backupWindowProperties(uiWindows[i]);
 	  }
+
+	  pageDesktop.onmousedown = eXo.desktop.UIDesktop.showContextMenu;
+	}
+};
+
+UIDesktop.prototype.showContextMenu = function(evt) {
+	if (!evt) evt = window.event;
+	var targetID = (evt.target || evt.srcElement).id;
+
+  if ("UIPageDesktop" !== targetID)
+		return;
+	eXo.webui.UIRightClickPopupMenu.clickRightMouse(evt, this, "UIDesktopContextMenu", "", null, 5);
+};
+
+UIDesktop.prototype.closeAll= function() {
+	var pageDesktop = document.getElementById("UIPageDesktop") ;
+  var windowList = eXo.core.DOMUtil.findDescendantsByClass(pageDesktop, "DIV", "UIWindow");
+	var blockList = [];
+	for (var i = 0; i < windowList.length; i++) {
+		if (eXo.core.DOMUtil.getStyle(windowList[i], "display") == "block") {
+			eXo.desktop.UIDesktop.removeWindowContent(windowList[i].id.replace("UIWindow-", ""));
+			blockList.push(windowList[i]);
+		}
+	}
+	//ImplodeExplode.js can only run with 1 window each time
+	for (i = 1; i < blockList.length; i++) {
+		if (eXo.core.DOMUtil.getStyle(blockList[i], "display") == "block") {
+			blockList[i].style.display = "none";
+		}
 	}
 };
 

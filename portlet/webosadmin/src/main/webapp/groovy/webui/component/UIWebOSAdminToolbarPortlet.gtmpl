@@ -1,17 +1,10 @@
 <%	
-	import org.exoplatform.webos.toolbar.UIWebOSAdminToolbarPortlet;
 	import org.exoplatform.web.application.JavascriptManager;
 	import org.exoplatform.portal.config.model.PageNavigation;
-	import org.exoplatform.portal.config.model.PageNode;
-	import org.exoplatform.services.organization.User;
-	import org.exoplatform.services.security.ConversationState;
-	import org.exoplatform.web.CacheUserProfileFilter;
 	import org.exoplatform.webui.application.portlet.PortletRequestContext;	
 	import org.exoplatform.portal.webui.util.Util;
 	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 	import org.exoplatform.portal.webui.page.UIPage;
-	import org.exoplatform.portal.webui.portal.UIPortal;
-	import org.exoplatform.webos.webui.page.UIDesktopPage;
 	
 	def rcontext = (PortletRequestContext)_ctx.getRequestContext();
 	 
@@ -22,29 +15,16 @@
 	
 	String addPageLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action.AddPage");
 	String editPageLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action.EditPage");
-	String editPortalLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action.EditPortal");
-	String editPageAndNaviLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action.EditPageAndNavigation");
 	String editSiteLayout = _ctx.appRes("UIWebOSAdminToolbarPortlet.action.EditSiteLayout");
-	String editBackground = _ctx.appRes("UIWebOSAdminToolbarPortlet.action.EditBackground");
 	String editorLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action.Editor");
 	
 	boolean userCouldEditNavigation = uicomponent.hasEditPermissionOnNavigation();
 	boolean userCouldEditPage = uicomponent.hasEditPermissionOnPage();
 	boolean userCouldEditPortal = uicomponent.hasEditPermissionOnPortal();
 
-	UIPortal uiPortal = Util.getUIPortalApplication().getShowedUIPortal();
-	boolean isDesktop = false;
-	if(uiPortal != null && uiPortal.findFirstComponentOfType(UIDesktopPage.class) != null) {
-		isDesktop = true;
-	}
-
 	PageNavigation selectedNav = uicomponent.getSelectedNavigation();
 	if (selectedNav != null) {
-	  if (isDesktop) {
-			editorLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action.user.desktop.Editor");	  	
-		} else {
 			editorLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action." + selectedNav.getOwnerType() + ".Editor");
-		}
 	}
 	String accountSetting = "javascript:if(document.getElementById('UIMaskWorkspace')) ajaxGet(eXo.env.server.createPortalURL('UIPortal', 'AccountSettings', true));"
 %>
@@ -75,17 +55,9 @@
 						<% } %>
 						
 						<% if(userCouldEditPortal){ %>
-							<% 
-							 if(isDesktop) {
-							%>
-								<div class="MenuItem">	
-									<a href="javascript:ajaxGet(eXo.env.server.createPortalURL('UIWorkingWorkspace', 'EditBackground', true))" title="" class="ItemIcon EditSiteIcon">$editBackground</a>
-								</div>
-							<% } else { %>
-								<div class="MenuItem">	
+							<div class="MenuItem">
 									<a href="javascript:ajaxGet(eXo.env.server.createPortalURL('UIWorkingWorkspace', 'EditInline', true))" title="" class="ItemIcon EditSiteIcon">$editSiteLayout</a>
 								</div>
-							<% } %>
 						<% } %>
 					</div>
 				</div>

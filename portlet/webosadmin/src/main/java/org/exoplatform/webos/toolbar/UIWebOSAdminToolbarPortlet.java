@@ -54,13 +54,19 @@ public class UIWebOSAdminToolbarPortlet extends UIPortletApplication
    @Override
    public void processRender(WebuiApplication app, WebuiRequestContext context) throws Exception
    {
-      // A user could view the toolbar portlet iff he/she has edit permission
-      // either on
-      // 'active' page, 'active' portal or 'active' navigation
-      if (hasEditPermissionOnNavigation() || hasEditPermissionOnPage() || hasEditPermissionOnPortal())
+      if (!isOnDesktop() && (hasEditPermissionOnNavigation() || hasEditPermissionOnPage() || hasEditPermissionOnPortal()))
       {
          super.processRender(app, context);
       }
+   }
+
+   private boolean isOnDesktop()
+   {
+      UIPortalApplication portalApp = Util.getUIPortalApplication();
+      UIWorkingWorkspace uiWorkingWS = portalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+      UIPageBody pageBody = uiWorkingWS.findFirstComponentOfType(UIPageBody.class);
+      UIPage uiPage = (UIPage)pageBody.getUIComponent();
+      return uiPage != null && UIDesktopPage.DESKTOP_FACTORY_ID.equals(uiPage.getFactoryId());
    }
 
    private boolean hasEditPermissionOnNavigation() throws Exception

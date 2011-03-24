@@ -3,6 +3,8 @@
 	import org.exoplatform.web.application.JavascriptManager;
 	import org.exoplatform.portal.config.model.PageNavigation;
 	import org.exoplatform.portal.config.model.PageNode;
+	import org.exoplatform.webui.core.UIRightClickPopupMenu ;
+	
 	def rcontext = _ctx.getRequestContext();
 	def remoteUser = rcontext.getRemoteUser();
 	
@@ -17,6 +19,11 @@
 	jsmanager.addCustomizedOnLoadScript("eXo.gadget.UIGadget.Cache='" + _ctx.appRes("UIDashboardContainer.label.Cache") + "';");
 	jsmanager.addCustomizedOnLoadScript("eXo.gadget.UIGadget.Debug='" + _ctx.appRes("UIDashboardContainer.label.Debug") + "';");
 	jsmanager.addCustomizedOnLoadScript('eXo.desktop.UIDockbar.initNav();');
+
+	def desktopID = "UIPage-" + uicomponent.id;
+	jsmanager.addJavascript("eXo.webui.UIRightClickPopupMenu.disableContextMenu('" + desktopID + "') ;");
+	UIRightClickPopupMenu uiPopupMenu = uicomponent.getChild(UIRightClickPopupMenu.class);
+	uicomponent.renderUIComponent(uiPopupMenu) ;
 	
 	String currentSelectedBackground = uicomponent.getCurrBackgroundURL();
 	String docBase =	rcontext.getRequestContextPath();
@@ -167,7 +174,7 @@
 %>
 
 
-<div class="UIPage" id="UIPage-${uicomponent.id}">
+<div class="UIPage" id="$desktopID">
 	<div class="VIEW-PAGE">
 		<div id="UIPage">
 		   <% if(currentSelectedBackground == null) { %>
@@ -242,7 +249,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 					<div class="DockbarLeft">
 						<div class="DockbarRight">
 							<div class="DockbarCenter" id="DockbarCenter">
