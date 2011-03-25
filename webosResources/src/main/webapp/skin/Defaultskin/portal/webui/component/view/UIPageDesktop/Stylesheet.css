@@ -506,3 +506,11 @@
 	border: 1px solid #FFF;
 	border-top: none;
 }
+
+.UIBackgroundUploadForm .UIFormUploadInput {
+	width: 320px;
+}
+
+.UIBackgroundUploadForm .HorizontalLayout .MultiValueContainer .AddNewNodeIcon {
+	margin: 4px 0 0;
+}
