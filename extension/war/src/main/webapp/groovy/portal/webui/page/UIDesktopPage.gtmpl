@@ -64,7 +64,7 @@
 				<%}%>
 
 				<%//String containerMouseOver = "eXo.desktop.UIDockbar.containerMouseOver();";%>
-				<div class="UIDockBar" id="UIDockBar" onmouseover="eXo.desktop.UIDockbar.startDockBarEvt(event);">
+				<div class="UIDockBar" id="UIDockBar" onmouseover="eXo.desktop.UIDockbar.startDockBarEvt(event);" style="visibility: hidden">
 
 			<div class="UIRightClickPopupMenu" id="DockbarContextMenu" onmousedown="event.cancelBubble = true;">
 				<div class="UIContextMenuContainer" >

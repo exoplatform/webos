@@ -34,6 +34,7 @@ UIDockbar.prototype.init = function() {
   }
   
   uiDockbar.originalDockbarHeight = uiDockbar.offsetHeight ;
+  window.setTimeout(function() {uiDockbar.style.visibility = "visible"}, 50);
   
   var portletsViewer = document.getElementById("PortletsViewer") ;
   var gadgetsViewer = document.getElementById("GadgetsViewer") ;
