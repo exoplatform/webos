@@ -36,7 +36,6 @@ import org.exoplatform.component.test.ContainerScope;
 @ConfiguredBy({
    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-dockbar-service-configuration.xml"),
 	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-desktop-service-configuration.xml"),
-	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-jcr-configuration.xml"),
 	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-portal-configuration.xml"),
 	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.test.jcr-configuration.xml"),
   @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.test.organization-configuration.xml")	

@@ -18,21 +18,19 @@
  */
 package org.exoplatform.webos.services.desktop.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Set;
 
 import org.chromattic.api.annotations.Create;
 import org.chromattic.api.annotations.FormattedBy;
 import org.chromattic.api.annotations.MappedBy;
-import org.chromattic.api.annotations.Name;
+import org.chromattic.api.annotations.MixinType;
+import org.chromattic.api.annotations.NamingPrefix;
 import org.chromattic.api.annotations.OneToOne;
 import org.chromattic.api.annotations.Owner;
-import org.chromattic.api.annotations.PrimaryType;
 import org.chromattic.api.annotations.Property;
 import org.chromattic.common.IO;
+import org.chromattic.ext.format.BaseEncodingObjectFormatter;
 import org.chromattic.ext.ntdef.NTFolder;
 import org.chromattic.ext.ntdef.Resource;
 import org.exoplatform.container.PortalContainer;
@@ -43,21 +41,19 @@ import javax.servlet.ServletContext;
  * Sep 14, 2010
  */
 
-@PrimaryType(name = "webos:personalBackgroundSpace")
-@FormattedBy(WebOSChromatticFormatter.class)
+@MixinType(name = "webos:personalBackgroundSpace")
+@FormattedBy(BaseEncodingObjectFormatter.class)
+@NamingPrefix("webos")
 public abstract class PersonalBackgroundSpace
 {
 
-   @Name
-   public abstract String getName();
-   
    @Property(name = "webos:title")
    public abstract String getTitle();
    
    public abstract void setTitle(String title);
-   
+
    @Create
-   public abstract NTFolder createBackgroundImageFolder();
+   public abstract NTFolder createFolder();
    
    @OneToOne
    @Owner

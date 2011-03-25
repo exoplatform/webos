@@ -116,6 +116,7 @@
  		      <name>namespaces</name>
           <property name="gtn" value="http://www.gatein.org/jcr/gatein/1.0/"/>
           <property name="mop" value="http://www.gatein.org/jcr/mop/1.0/"/>
+          <property name="webos" value="http://www.gatein.org/jcr/webos/2.0/" />
  		      </properties-param>
  		  </init-params>
  		</component-plugin>
@@ -130,6 +131,7 @@
            <value>jar:/conf/gatein-nodetypes.xml</value>
            <value>jar:/conf/mop-nodetypes.xml</value>
            <value>jar:/conf/content-nodetypes.xml</value>
+           <value>jar:/conf/webos-nodetypes.xml</value>
  		    </values-param>
  		  </init-params>
  		</component-plugin>
@@ -190,6 +192,10 @@
           <value>org.exoplatform.portal.mop.Described</value>
           <value>org.exoplatform.portal.mop.Visible</value>
           <value>org.exoplatform.webos.services.desktop.impl.DesktopPageMetadata</value>
+          <value>org.exoplatform.webos.services.desktop.impl.PersonalBackgroundSpace</value>
+          <value>org.chromattic.ext.ntdef.NTFile</value>
+          <value>org.chromattic.ext.ntdef.NTFolder</value>
+          <value>org.chromattic.ext.ntdef.NTResource</value>
         </values-param>
         <properties-param>
           <name>options</name>

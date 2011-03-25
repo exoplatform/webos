@@ -31,6 +31,8 @@ import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webos.services.desktop.exception.ImageQuantityException;
 import org.exoplatform.webos.services.desktop.exception.ImageSizeException;
 import org.exoplatform.webos.services.desktop.impl.PersonalBackgroundSpace;
+import org.gatein.mop.api.workspace.Site;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Date;
@@ -90,7 +92,7 @@ public class TestDesktopBackgroundService extends AbstractWebOSTest
       end();
    }
 
-   public void testGetUserDesktopBackgrounds()
+   public void testGetUserDesktopBackgrounds() throws Exception
    {
       List<DesktopBackground> bgs = desktopBackgroundService.getUserDesktopBackgrounds(userName);
       assertEquals(8, bgs.size());
@@ -242,23 +244,27 @@ public class TestDesktopBackgroundService extends AbstractWebOSTest
       }
    }
 
-   public void testRemoveUserBackground()
+   public void testRemoveUserBackground() throws Exception
    {
       //Test remove PersonalBackgroundSpace
 
       //Create default personal desktop backgrounds
       desktopBackgroundService.getUserDesktopBackgrounds(userName);
 
-      Chromattic chromattic = chromatticManager.getLifeCycle("webos").getChromattic();
-      PersonalBackgroundSpace space = chromattic.openSession().findByPath(PersonalBackgroundSpace.class,
-         "/webos:desktopBackgroundRegistry/webos:" + userName, true);
+      Chromattic chromattic = chromatticManager.getLifeCycle("mop").getChromattic();
+      Site site = chromattic.openSession().findByPath(Site.class, "mop:workspace/mop:usersites/mop:" + userName);
+      site.isAdapted(PersonalBackgroundSpace.class);
+      PersonalBackgroundSpace space = site.adapt(PersonalBackgroundSpace.class);
       assertNotNull(space);
 
       desktopBackgroundService.removeUserBackground(userName);
 
+      // Cannot test that for now
+/*
       space = chromattic.openSession().findByPath(PersonalBackgroundSpace.class,
          "/webos:desktopBackgroundRegistry/webos:" + userName, true);
       assertNull(space);
+*/
    }
 
    private void uploadImage() throws Exception

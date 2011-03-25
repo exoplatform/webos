@@ -42,7 +42,7 @@ public interface DesktopBackgroundService
     * @param backgroundImageName - the name of the image file
     * @throws IllegalStateException if image doesn't exists
     */
-   public boolean removeBackgroundImage(String userName, String backgroundImageName); 
+   public boolean removeBackgroundImage(String userName, String backgroundImageName) throws Exception;
    
    /**
     * Remove all background of an user
@@ -54,14 +54,14 @@ public interface DesktopBackgroundService
    
    public DesktopBackground getCurrentDesktopBackground(String pageID) throws Exception;
    
-   public List<DesktopBackground> getUserDesktopBackgrounds(String userName);
+   public List<DesktopBackground> getUserDesktopBackgrounds(String userName) throws Exception;
 
    /**
     * if image doen't exists or imageName is null, return null
     * @param userName - user that will use this desktop background image
     * @param imageName - the name of the image file
     */
-   public DesktopBackground getUserDesktopBackground(String userName, String imageName);
+   public DesktopBackground getUserDesktopBackground(String userName, String imageName) throws Exception;
 
    /**
     * Set current user background image

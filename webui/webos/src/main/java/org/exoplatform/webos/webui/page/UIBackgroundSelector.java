@@ -273,7 +273,7 @@ public class UIBackgroundSelector extends UIContainer
       }
    }
       
-   private List<DesktopBackground> getDesktopBackgrounds(WebuiRequestContext context)
+   private List<DesktopBackground> getDesktopBackgrounds(WebuiRequestContext context) throws Exception
    {
       DesktopBackgroundService backgroundService = getApplicationComponent(DesktopBackgroundService.class);
 

@@ -20,10 +20,13 @@ package org.exoplatform.webos.services.desktop.impl;
 
 import org.chromattic.api.annotations.FormattedBy;
 import org.chromattic.api.annotations.MixinType;
+import org.chromattic.api.annotations.NamingPrefix;
 import org.chromattic.api.annotations.Property;
+import org.chromattic.ext.format.BaseEncodingObjectFormatter;
 
 @MixinType(name = "webos:desktopPageMetadata")
-@FormattedBy(WebOSChromatticFormatter.class)
+@FormattedBy(BaseEncodingObjectFormatter.class)
+@NamingPrefix("webos")
 public abstract class DesktopPageMetadata
 {
 

@@ -20,12 +20,15 @@ package org.exoplatform.webos.services.desktop.impl;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.chromattic.api.Chromattic;
 import org.chromattic.api.ChromatticSession;
 import org.chromattic.ext.ntdef.NTFolder;
+import org.chromattic.ext.ntdef.NTHierarchyNode;
 import org.exoplatform.commons.chromattic.ChromatticLifeCycle;
 import org.exoplatform.commons.chromattic.ChromatticManager;
 import org.exoplatform.container.PortalContainer;
@@ -33,6 +36,7 @@ import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.container.xml.ValueParam;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.model.Page;
+import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
@@ -65,7 +69,7 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
    public DesktopBackgroundServiceImpl(ChromatticManager manager, DataStorage dataStorage,  InitParams params) throws Exception
    {
       chromatticManager = manager;
-      chromatticLifecycle = manager.getLifeCycle("webos");
+      chromatticLifecycle = manager.getLifeCycle("mop");
 
       this.dataStorage = dataStorage;
 
@@ -84,6 +88,7 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       }
    }
 
+/*
    public DesktopBackgroundRegistry initBackgroundRegistry()
    {
       DesktopBackgroundRegistry backgroundRegistry;
@@ -99,23 +104,23 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       
       return backgroundRegistry; 
    }
+*/
 
+/*
    public ChromatticLifeCycle getChromatticLifecycle()
    {
       return this.chromatticLifecycle;
    }
+*/
 
-   @Override
    public int getSizeLimit()
    {
       return sizeLimit;
    }
 
-   @Override
-   public boolean removeBackgroundImage(String userName, String backgroundImageName)
+   public boolean removeBackgroundImage(String userName, String backgroundImageName) throws Exception
    {
-      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
-      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName);
+      PersonalBackgroundSpace space = getSpace(userName, false);
       if (space == null)
       {
          //TODO: Throws an exception here
@@ -133,30 +138,51 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       return true;
    }
 
-   @Override
+   private PersonalBackgroundSpace getSpace(String userName, boolean create) throws Exception
+   {
+      if (userName == null)
+      {
+         return null;
+      }
+      PortalConfig cfg = dataStorage.getPortalConfig("user", userName);
+      PersonalBackgroundSpace space = dataStorage.adapt(cfg, PersonalBackgroundSpace.class, create);
+      if (space != null)
+      {
+         NTFolder folder = space.getBackgroundImageFolder();
+         if (folder == null && create) {
+            folder = space.createFolder();
+            space.setBackgroundImageFolder(folder);
+            space.uploadDefaultBackgroundImage();
+         }
+      }
+      return space;
+   }
+
    public boolean uploadBackgroundImage(String userName, String backgroundImageName, String mimeType, String encoding,
          InputStream binaryStream) throws Exception
    {
-      if (userName == null || backgroundImageName == null || mimeType == null || encoding == null || binaryStream == null)
-      {
-         throw new IllegalArgumentException("One of the arguments is null");
-      }
-      
-      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
-      PersonalBackgroundSpace space = backgroundRegistry .getPersonalBackgroundSpace(userName, true);
-      if (quantityLimit != 0 && space.getBackgroundImageFolder().getChildren().size() == quantityLimit)
-      {
-         log.debug("Each user can only have" + quantityLimit + " background images");
-         throw new ImageQuantityException(quantityLimit);
-      }
-      if (sizeLimit != 0 && sizeLimit < binaryStream.available()/1024.0/1024)
-      {
-         log.debug("Can't upload, naximum image size is :" + sizeLimit);
-         throw new ImageSizeException(sizeLimit, backgroundImageName);
-      }
+     if (userName == null || backgroundImageName == null || mimeType == null || encoding == null || binaryStream == null)
+     {
+        throw new IllegalArgumentException("One of the arguments is null");
+     }
 
-      backgroundImageName = processDuplicatedName(space, backgroundImageName);
-      return space.uploadBackgroundImage(backgroundImageName, mimeType, encoding, binaryStream);
+     //
+     PersonalBackgroundSpace space = getSpace(userName, true);
+     NTFolder folder = space.getBackgroundImageFolder();
+     Map<String,NTHierarchyNode> children = folder.getChildren();
+     if (quantityLimit != 0 && children.size() == quantityLimit)
+     {
+        log.debug("Each user can only have" + quantityLimit + " background images");
+        throw new ImageQuantityException(quantityLimit);
+     }
+     if (sizeLimit != 0 && sizeLimit < binaryStream.available()/1024.0/1024)
+     {
+        log.debug("Can't upload, naximum image size is :" + sizeLimit);
+        throw new ImageSizeException(sizeLimit, backgroundImageName);
+     }
+
+     backgroundImageName = processDuplicatedName(space, backgroundImageName);
+     return space.uploadBackgroundImage(backgroundImageName, mimeType, encoding, binaryStream);
    }
 
    private String processDuplicatedName(PersonalBackgroundSpace space, String imgName)
@@ -177,7 +203,6 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       return imgName;
    }
 
-   @Override
    public DesktopBackground getCurrentDesktopBackground(String pageID) throws Exception
    {
       if(pageID == null)
@@ -209,9 +234,8 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       }
       DesktopPageMetadata pageMetadata = dataStorage.adapt(desktopPage, DesktopPageMetadata.class);
 
-      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
       String userName = parsePageID(pageID);
-      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
+      PersonalBackgroundSpace space = getSpace(userName, true);
       boolean imgDeleted = false;
       if (imageName !=null && space.getBackgroundImageFolder().getChild(imageName) == null)
       {
@@ -236,33 +260,35 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       return idFrags[1];
    }
 
-   @Override
-   public List<DesktopBackground> getUserDesktopBackgrounds(String userName)
+   public List<DesktopBackground> getUserDesktopBackgrounds(String userName) throws Exception
    {
-      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
-      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
-	  
-      NTFolder backgroundFolder = space.getBackgroundImageFolder();
-      Set<String> availableBackgrounds = backgroundFolder.getChildren().keySet();
-
+      PersonalBackgroundSpace space = getSpace(userName, true);
       List<DesktopBackground> backgroundList = new ArrayList<DesktopBackground>();
-      for(String background : availableBackgrounds)
+      if (space != null)
       {
-         backgroundList.add(new DesktopBackground(makeImageURL(userName, background), background));
+         NTFolder backgroundFolder = space.getBackgroundImageFolder();
+         if (backgroundFolder != null)
+         {
+            Set<String> availableBackgrounds = backgroundFolder.getChildren().keySet();
+            for(String background : availableBackgrounds)
+            {
+               backgroundList.add(new DesktopBackground(makeImageURL(userName, background), background));
+            }
+         }
       }
+
+      //
       return backgroundList;
    }
 
-   @Override
-   public DesktopBackground getUserDesktopBackground(String userName, String imageName)
+   public DesktopBackground getUserDesktopBackground(String userName, String imageName) throws Exception
    {
       if (imageName == null)
       {
          return null;
       }
       
-      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
-      PersonalBackgroundSpace space = backgroundRegistry.getPersonalBackgroundSpace(userName, true);
+      PersonalBackgroundSpace space = getSpace(userName, true);
       if (space == null)
       {
          throw new IllegalStateException("Can't found PersonalBackgroundSpace for :" + userName);
@@ -286,10 +312,8 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       return urlBuilder.toString();
    }
 
-   @Override
    public void removeUserBackground(String userName)
    {
-      DesktopBackgroundRegistry backgroundRegistry = initBackgroundRegistry();
-      backgroundRegistry.removePersonalBackgroundSpace(userName);
+      // Need a mixin removal on data storage to make this work
    }
 }

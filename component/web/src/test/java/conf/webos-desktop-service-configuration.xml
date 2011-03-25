@@ -37,31 +37,4 @@
       </value-param>
     </init-params>
   </component>
-
-  <external-component-plugins>
-    <target-component>org.exoplatform.commons.chromattic.ChromatticManager</target-component>
-    <component-plugin>
-      <name>chromattic</name>
-      <set-method>addLifeCycle</set-method>
-      <type>org.exoplatform.webos.services.desktop.impl.WebOSChromatticLifecycle</type>
-      <init-params>
-        <value-param>
-          <name>domain-name</name>
-          <value>webos</value>
-        </value-param>
-        <value-param>
-          <name>workspace-name</name>
-          <value>webos-test</value>
-        </value-param>
-        <values-param>
-          <name>entities</name>
-          <value>org.exoplatform.webos.services.desktop.impl.PersonalBackgroundSpace</value>
-          <value>org.exoplatform.webos.services.desktop.impl.DesktopBackgroundRegistry</value>
-          <value>org.chromattic.ext.ntdef.NTFile</value>
-          <value>org.chromattic.ext.ntdef.NTFolder</value>
-          <value>org.chromattic.ext.ntdef.NTResource</value>
-        </values-param>
-      </init-params>
-    </component-plugin>
-  </external-component-plugins>
 </configuration>
