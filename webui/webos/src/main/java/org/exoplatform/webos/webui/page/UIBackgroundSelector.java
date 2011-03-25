@@ -55,14 +55,14 @@ import java.util.List;
    @EventConfig(listeners = UIBackgroundSelector.CloseActionListener.class),
    @EventConfig(listeners = UIBackgroundSelector.DeleteActionListener.class, confirm = "UIBackgroundSelector.confirm.deleteImage"),
    @EventConfig(listeners = UIBackgroundSelector.PreviewActionListener.class),    
-   @EventConfig(name = "View", listeners = UIBackgroundSelector.SelectItemActionListener.class)
+   @EventConfig(name = "Choose", listeners = UIBackgroundSelector.SelectItemActionListener.class)
   }
 )
 public class UIBackgroundSelector extends UIContainer
 {
    public static final String IMAGE_LABEL = "imageLabel";
    public static final String[] BACKGROUND_BEAN_FIELD = {IMAGE_LABEL};
-   public static final String[] ACTIONS = {"View", "Preview", "Delete"};
+   public static final String[] ACTIONS = {"Choose", "Preview", "Delete"};
    public static final int PAGE_SIZE = 5;
 
    private UIBackgroundUploadForm uploadForm;

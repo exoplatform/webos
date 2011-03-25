@@ -507,6 +507,16 @@
 	border-top: none;
 }
 
+.UIBackgroundImageList .ChooseIcon {
+	width: 16px; height: 16px;
+	background: url('icons/16x16/ChooseIcon.png');
+}
+
+.UIBackgroundImageList .PreviewIcon {
+	width: 16px; height: 16px;
+	background: url('icons/16x16/PreviewIcon.png');
+}
+
 .UIBackgroundUploadForm .UIFormUploadInput {
 	width: 320px;
 }
