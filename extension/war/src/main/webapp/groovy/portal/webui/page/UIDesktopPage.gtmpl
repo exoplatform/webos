@@ -1,7 +1,6 @@
 <%	
 	import org.exoplatform.portal.webui.application.UIPortlet;
 	import org.exoplatform.web.application.JavascriptManager;
-	import org.exoplatform.webui.core.UIRightClickPopupMenu ;
 	
 	def rcontext = _ctx.getRequestContext();
 	def remoteUser = rcontext.getRemoteUser();
@@ -19,8 +18,6 @@
 
 	def desktopID = "UIPage-" + uicomponent.id;
 	jsmanager.addJavascript("eXo.webui.UIRightClickPopupMenu.disableContextMenu('" + desktopID + "') ;");
-	UIRightClickPopupMenu uiPopupMenu = uicomponent.getChild(UIRightClickPopupMenu.class);
-	uicomponent.renderUIComponent(uiPopupMenu) ;
 	
 	String currentSelectedBackground = uicomponent.getCurrBackgroundURL();
 	String docBase =	rcontext.getRequestContextPath();
