@@ -19,7 +19,7 @@ ImplodeExplode.prototype.doInit = function(uiWindow, clickedElement, containerId
 		this.object.animation.style.background = "#ffffff" ;
 		this.object.animation.style.position = "absolute" ;	
 		eXo.core.Browser.setOpacity(this.object.animation, 50) ;
-		this.object.animation.style.zIndex = this.object.maxIndex ;
+		this.object.animation.style.zIndex = this.object.style.zIndex ;
 	}
 } ;
 
@@ -44,7 +44,7 @@ ImplodeExplode.prototype.doCenterInit = function(uiWindow, clickedElement, conta
 		this.object.animation.style.background = "white" ;
 		this.object.animation.style.position = "absolute" ;
 		eXo.core.Browser.setOpacity(this.object.animation, 40) ;
-		this.object.animation.style.zIndex = this.object.maxIndex ;
+		this.object.animation.style.zIndex = this.object.style.zIndex ;
 	}
 	uiWindow = this.object;
 } ;
