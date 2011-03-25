@@ -53,46 +53,46 @@ UIDesktop.prototype.fixDesktop = function() {
 
 //TODO DungHM
 UIDesktop.prototype.resetZIndex = function(windowObject) {
-  var windowsInDesktop = eXo.core.DOMUtil.getChildrenByTagName(windowObject.parentNode, "div") ;
-  var maxZIndex = windowObject.style.zIndex ;
+   var uiPageDesktop = document.getElementById("UIPageDesktop");
+   var windowsInDesktop = eXo.core.DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIWindow");
+   var maxZIndex = windowObject.style.zIndex ;
  
-  var uiPopupWindow = eXo.core.DOMUtil.findDescendantsByClass(windowObject.parentNode,'div','UIPopupWindow') ;
-  for (var i = 0; i < uiPopupWindow.length; i ++) {
+   var uiPopupWindow = eXo.core.DOMUtil.findDescendantsByClass(windowObject.parentNode,'div','UIPopupWindow') ;
+   for (var i = 0; i < uiPopupWindow.length; i ++) {
  		if (uiPopupWindow[i].style.display == "block") return ;
-  }
+   }
   
-  for(var i = 0; i < windowsInDesktop.length; i++) {
-  	if((windowsInDesktop[i].className.indexOf("UIWindow") >= 0) || (windowsInDesktop[i].className.indexOf("UIWidget") >= 0)) {
-  		
-	    if(parseInt(maxZIndex) < parseInt(windowsInDesktop[i].style.zIndex)) {
-	      maxZIndex = windowsInDesktop[i].style.zIndex ;
-	    }
-	    //TODO: tan.pham: test for fix bug WEBOS-119: 2 portlets may have same zIndex when reload page
-//	    if(parseInt(windowsInDesktop[i].style.zIndex) >= parseInt(windowObject.style.zIndex)) {
-//	      windowsInDesktop[i].style.zIndex = parseInt(windowsInDesktop[i].style.zIndex) - 1 ;
-//	      
-//	    }
-  	}
-  	if (windowsInDesktop[i].style.zIndex < 0) windowsInDesktop[i].style.zIndex = 1 ;
-  }
-  windowObject.style.zIndex = parseInt(maxZIndex) + 1 ;
+   for(var i = 0; i < windowsInDesktop.length; i++) {
+      if (windowsInDesktop[i].style.zIndex < 0) windowsInDesktop[i].style.zIndex = 1;
+
+      if(parseInt(maxZIndex) < parseInt(windowsInDesktop[i].style.zIndex)) {
+         maxZIndex = windowsInDesktop[i].style.zIndex ;
+      }
+      //TODO: tan.pham: test for fix bug WEBOS-119: 2 portlets may have same zIndex when reload page
+      //	    if(parseInt(windowsInDesktop[i].style.zIndex) >= parseInt(windowObject.style.zIndex)) {
+      //	      windowsInDesktop[i].style.zIndex = parseInt(windowsInDesktop[i].style.zIndex) - 1 ;
+      //
+      //}
+   }
+   eXo.desktop.UIWindow.maxIndex = parseInt(maxZIndex) + 1;
+   windowObject.style.zIndex = eXo.desktop.UIWindow.maxIndex;
 };
 
 UIDesktop.prototype.isMaxZIndex = function(object) {
-	var isMax = false ;
 	var DOMUtil = eXo.core.DOMUtil ;
-	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
-	var desktopApps = DOMUtil.getChildrenByTagName(uiPageDesktop, "div") ;
-	
-	var maxZIndex = parseInt(object.style.zIndex) ;
-	for(var i = 0; i < desktopApps.length; i++) {
-		if((desktopApps[i].className.indexOf("UIWindow") >= 0) || (desktopApps[i].className.indexOf("UIWidget") >= 0)) {
-			if(parseInt(desktopApps[i].style.zIndex) > maxZIndex) maxZIndex = desktopApps[i].style.zIndex ;
-		}
-	}
-	
-	if(object.style.zIndex == maxZIndex) isMax = true ;
-	return isMax ;
+	var uiPageDesktop = document.getElementById("UIPageDesktop");
+	var desktopApps = DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIWindow") ;
+
+   var maxZIndex = parseInt(object.style.zIndex) ;
+   for (var i = 0; i < desktopApps.length; i++) {
+      if(desktopApps[i] != object && desktopApps[i].style.display == "block") {
+         if (maxZIndex <= parseInt(desktopApps[i].style.zIndex)) {
+            return false;
+         }
+      }
+   }
+
+   return true;
 };
 
 UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement, mode) {

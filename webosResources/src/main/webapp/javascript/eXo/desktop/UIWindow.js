@@ -220,12 +220,8 @@ UIWindow.prototype.initDND = function(e) {
 	//fix zIndex for refesh
 	var dragObjects = DOMUtil.findDescendantsByClass(uiPageDeskTop, "div", "UIDragObject") ;
 	if (dragObjects.length > 0) {
-		for (var i = 0; i < dragObjects.length; i ++) {
-			var zIndex = dragObjects[i].style.zIndex || 1 ;
-			if (maxIndex < zIndex) 	maxIndex = parseInt(zIndex);
-		}
-		maxIndex += 1 ;
-		dragBlock.style.zIndex = maxIndex ;
+      var isMaxZIndex = eXo.desktop.UIDesktop.isMaxZIndex(this) ;
+	   if(!isMaxZIndex)	eXo.desktop.UIDesktop.resetZIndex(this) ;
 	}
 
 	
