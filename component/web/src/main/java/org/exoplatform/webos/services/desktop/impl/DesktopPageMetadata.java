@@ -24,13 +24,13 @@ import org.chromattic.api.annotations.NamingPrefix;
 import org.chromattic.api.annotations.Property;
 import org.chromattic.ext.format.BaseEncodingObjectFormatter;
 
-@MixinType(name = "webos:desktopPageMetadata")
+@MixinType(name = "webos:page")
 @FormattedBy(BaseEncodingObjectFormatter.class)
 @NamingPrefix("webos")
 public abstract class DesktopPageMetadata
 {
 
-   @Property(name = "webos:backgroundImage")
+   @Property(name = "webos:background")
    public abstract String getBackgroundImage();
 
    public abstract void setBackgroundImage(String backgroundImage);

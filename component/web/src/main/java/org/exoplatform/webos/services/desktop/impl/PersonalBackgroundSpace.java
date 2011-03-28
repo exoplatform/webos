@@ -28,7 +28,6 @@ import org.chromattic.api.annotations.MixinType;
 import org.chromattic.api.annotations.NamingPrefix;
 import org.chromattic.api.annotations.OneToOne;
 import org.chromattic.api.annotations.Owner;
-import org.chromattic.api.annotations.Property;
 import org.chromattic.common.IO;
 import org.chromattic.ext.format.BaseEncodingObjectFormatter;
 import org.chromattic.ext.ntdef.NTFolder;
@@ -41,23 +40,18 @@ import javax.servlet.ServletContext;
  * Sep 14, 2010
  */
 
-@MixinType(name = "webos:personalBackgroundSpace")
+@MixinType(name = "webos:site")
 @FormattedBy(BaseEncodingObjectFormatter.class)
 @NamingPrefix("webos")
 public abstract class PersonalBackgroundSpace
 {
-
-   @Property(name = "webos:title")
-   public abstract String getTitle();
-   
-   public abstract void setTitle(String title);
 
    @Create
    public abstract NTFolder createFolder();
    
    @OneToOne
    @Owner
-   @MappedBy("webos:personalBackgroundFolder")
+   @MappedBy("webos:files")
    public abstract NTFolder getBackgroundImageFolder();
    
    public abstract void setBackgroundImageFolder(NTFolder backgroundImageFolder);
