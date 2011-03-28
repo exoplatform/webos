@@ -18,6 +18,9 @@
  */
 package org.exoplatform.webos.services.desktop;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -65,4 +68,7 @@ public interface DesktopBackgroundService
    public void setSelectedBackgroundImage(String pageID, String imageName) throws Exception;
 
    public int getSizeLimit();
+
+   public void renderImage(HttpServletRequest req, HttpServletResponse resp, String userName, String imageName) throws IOException;
+
 }

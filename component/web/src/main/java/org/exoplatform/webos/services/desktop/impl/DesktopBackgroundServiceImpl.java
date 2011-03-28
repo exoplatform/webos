@@ -18,7 +18,9 @@
  */
 package org.exoplatform.webos.services.desktop.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +29,10 @@ import java.util.Set;
 import org.chromattic.ext.ntdef.NTFile;
 import org.chromattic.ext.ntdef.NTFolder;
 import org.chromattic.ext.ntdef.NTHierarchyNode;
+import org.chromattic.ext.ntdef.Resource;
 import org.exoplatform.commons.chromattic.ChromatticLifeCycle;
 import org.exoplatform.commons.chromattic.ChromatticManager;
+import org.exoplatform.commons.utils.Safe;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.container.xml.ValueParam;
@@ -41,6 +45,11 @@ import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webos.services.desktop.exception.ImageQuantityException;
 import org.exoplatform.webos.services.desktop.exception.ImageSizeException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author <a href="mailto:hoang281283@gmail.com">Minh Hoang TO</a>
@@ -316,12 +325,67 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 
    private String makeImageURL(String userName, NTFile file)
    {
-      StringBuilder urlBuilder = new StringBuilder("/");
-      urlBuilder.append(PortalContainer.getCurrentPortalContainerName()).append("/rest/jcr/");
-      urlBuilder.append(chromatticLifecycle.getRepositoryName()).append("/");
-      urlBuilder.append(chromatticLifecycle.getWorkspaceName()).append("/production/mop:workspace/mop:usersites/mop:");
-      urlBuilder.append(userName).append("/webos:personalBackgroundFolder/webos:").append(file.getName());
+      ServletContext sc = (ServletContext)PortalContainer.getInstance().getComponentInstance(ServletContext.class);
 
-      return urlBuilder.toString();
+      // We do that because the org.exoplatform.test.mocks.servlet.MockServletContext
+      // does not implement getContextPath which raise a java.lang.AbstractMethodError during unit tests
+      // until this is fixed
+      String contextPath = sc.getClass().getSimpleName().equals("MockServletContext") ? "/mock" : sc.getContextPath();
+
+      //
+      return contextPath + "/webos/user/" + userName + "/" + file.getName();
+   }
+
+   public void renderImage(HttpServletRequest req, HttpServletResponse resp, String userName, String imageName) throws IOException
+   {
+      try
+      {
+         PersonalBackgroundSpace space = getSpace(userName, true);
+
+         //
+         Resource res = null;
+         if (space != null)
+         {
+            NTFolder folder = space.getBackgroundImageFolder();
+            if (folder != null)
+            {
+               NTHierarchyNode child = folder.getChild(imageName);
+               if (child instanceof NTFile)
+               {
+                  NTFile file = (NTFile)child;
+                  res = file.getContentResource();
+               }
+            }
+         }
+
+         //
+         if (res != null)
+         {
+            String mediaType = res.getMimeType();
+            byte[] data = res.getData();
+
+            // Send data
+            resp.setContentType(mediaType);
+            resp.setContentLength(data.length);
+            OutputStream out = resp.getOutputStream();
+            try
+            {
+               out.write(data);
+            }
+            finally
+            {
+               Safe.close(out);
+            }
+         }
+         else
+         {
+            resp.sendError(404, "Could not find image for background (" + userName + "," + imageName + ")");
+         }
+      }
+      catch (Exception e)
+      {
+         log.error("Could not render image for background (" + userName + "," + imageName + ")", e);
+         resp.sendError(500, e.getMessage());
+      }
    }
 }
