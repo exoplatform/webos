@@ -20,13 +20,10 @@ package org.exoplatform.webos.services.desktop.impl;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.chromattic.api.Chromattic;
-import org.chromattic.api.ChromatticSession;
 import org.chromattic.ext.ntdef.NTFolder;
 import org.chromattic.ext.ntdef.NTHierarchyNode;
 import org.exoplatform.commons.chromattic.ChromatticLifeCycle;
@@ -306,14 +303,9 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
       StringBuilder urlBuilder = new StringBuilder("/");
       urlBuilder.append(PortalContainer.getCurrentPortalContainerName()).append("/rest/jcr/");
       urlBuilder.append(chromatticLifecycle.getRepositoryName()).append("/");
-      urlBuilder.append(chromatticLifecycle.getWorkspaceName()).append("/webos:desktopBackgroundRegistry/webos:");
+      urlBuilder.append(chromatticLifecycle.getWorkspaceName()).append("/production/mop:workspace/mop:usersites/mop:");
       urlBuilder.append(userName).append("/webos:personalBackgroundFolder/").append(imageLabel);
 
       return urlBuilder.toString();
-   }
-
-   public void removeUserBackground(String userName)
-   {
-      // Need a mixin removal on data storage to make this work
    }
 }

@@ -26,22 +26,7 @@
 <nodeTypes xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0"
            xmlns:jcr="http://www.jcp.org/jcr/1.0">
    
-   <nodeType name="webos:desktopBackgroundRegistry" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
-      <supertypes>
-         <supertype>nt:base</supertype>
-         <supertype>mix:referenceable</supertype>
-      </supertypes>
-      <childNodeDefinitions>
-         <childNodeDefinition name="*" defaultPrimaryType="" autoCreated="false" mandatory="false"
-                              onParentVersion="COPY" protected="false" sameNameSiblings="false">
-            <requiredPrimaryTypes>
-            	<requiredPrimaryType>webos:personalBackgroundSpace</requiredPrimaryType>
-            </requiredPrimaryTypes>
-         </childNodeDefinition>
-      </childNodeDefinitions>
-   </nodeType>
-   
-   <nodeType name="webos:personalBackgroundSpace" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+   <nodeType name="webos:personalBackgroundSpace" isMixin="true" hasOrderableChildNodes="true" primaryItemName="">
    	  <supertypes>
    	     <supertype>nt:base</supertype>
    	     <supertype>mix:referenceable</supertype>
@@ -51,10 +36,10 @@
                              onParentVersion="COPY" protected="false" multiple="false">
             <valueConstraints/>
          </propertyDefinition>
-      </propertyDefinitions> 
+    </propertyDefinitions>
       
       <childNodeDefinitions>
-         <childNodeDefinition name="webos:personalBackgroundFolder" defaultPrimaryType="" autoCreated="false" mandatory="false"
+         <childNodeDefinition name="webos:personalBackgroundFolder" defaultPrimaryType="nt:folder" autoCreated="false" mandatory="false"
                               onParentVersion="COPY" protected="false" sameNameSiblings="false">
             <requiredPrimaryTypes>
             	<requiredPrimaryType>nt:folder</requiredPrimaryType>

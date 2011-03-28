@@ -19,7 +19,13 @@
 
 package org.exoplatform.webos.services.desktop.test;
 
-import org.chromattic.api.Chromattic;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.exoplatform.commons.chromattic.ChromatticManager;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.portal.config.DataStorage;
@@ -30,15 +36,6 @@ import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webos.services.desktop.exception.ImageQuantityException;
 import org.exoplatform.webos.services.desktop.exception.ImageSizeException;
-import org.exoplatform.webos.services.desktop.impl.PersonalBackgroundSpace;
-import org.gatein.mop.api.workspace.Site;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class TestDesktopBackgroundService extends AbstractWebOSTest
 {
@@ -242,29 +239,6 @@ public class TestDesktopBackgroundService extends AbstractWebOSTest
       catch (IllegalStateException ex)
       {
       }
-   }
-
-   public void testRemoveUserBackground() throws Exception
-   {
-      //Test remove PersonalBackgroundSpace
-
-      //Create default personal desktop backgrounds
-      desktopBackgroundService.getUserDesktopBackgrounds(userName);
-
-      Chromattic chromattic = chromatticManager.getLifeCycle("mop").getChromattic();
-      Site site = chromattic.openSession().findByPath(Site.class, "mop:workspace/mop:usersites/mop:" + userName);
-      site.isAdapted(PersonalBackgroundSpace.class);
-      PersonalBackgroundSpace space = site.adapt(PersonalBackgroundSpace.class);
-      assertNotNull(space);
-
-      desktopBackgroundService.removeUserBackground(userName);
-
-      // Cannot test that for now
-/*
-      space = chromattic.openSession().findByPath(PersonalBackgroundSpace.class,
-         "/webos:desktopBackgroundRegistry/webos:" + userName, true);
-      assertNull(space);
-*/
    }
 
    private void uploadImage() throws Exception

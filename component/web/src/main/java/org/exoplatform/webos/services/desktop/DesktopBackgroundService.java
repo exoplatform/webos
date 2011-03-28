@@ -44,14 +44,6 @@ public interface DesktopBackgroundService
     */
    public boolean removeBackgroundImage(String userName, String backgroundImageName) throws Exception;
    
-   /**
-    * Remove all background of an user
-    * 
-    * @param userName
-    * @return
-    */
-   public void removeUserBackground(String userName);
-   
    public DesktopBackground getCurrentDesktopBackground(String pageID) throws Exception;
    
    public List<DesktopBackground> getUserDesktopBackgrounds(String userName) throws Exception;

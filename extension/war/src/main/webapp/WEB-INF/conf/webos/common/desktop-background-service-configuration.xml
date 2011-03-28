@@ -38,15 +38,6 @@
     </init-params>
   </component>
   
-   <external-component-plugins>
-      <target-component>org.exoplatform.services.organization.OrganizationService</target-component>
-      <component-plugin>
-         <name>user.portal.config.listener</name>
-         <set-method>addListenerPlugin</set-method>
-         <type>org.exoplatform.webos.services.desktop.impl.UserBackgroundListener</type>
-      </component-plugin>
-   </external-component-plugins>
-  
   <external-component-plugins>
     <target-component>org.exoplatform.commons.chromattic.ChromatticManager</target-component>
     <component-plugin>

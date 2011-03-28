@@ -23,23 +23,7 @@
 <configuration
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
-   xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
-
-  <external-component-plugins>
- 		<target-component>org.exoplatform.services.jcr.config.RepositoryServiceConfiguration</target-component>
- 		<component-plugin>
- 		  <name>add.configWebOS</name>
- 		  <set-method>addConfig</set-method>
- 		  <type>org.exoplatform.services.jcr.impl.config.RepositoryServiceConfigurationPlugin</type>
- 		  <init-params>
- 		    <value-param>
- 		      <name>conf-path</name>
-              <value>war:/conf/webos/jcr/repository-configuration.xml</value>
-            </value-param>
- 		  </init-params>
- 		</component-plugin>
-  </external-component-plugins>
-  
+   xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"> 
   	
   <external-component-plugins>
  		<target-component>org.exoplatform.services.jcr.RepositoryService</target-component>
