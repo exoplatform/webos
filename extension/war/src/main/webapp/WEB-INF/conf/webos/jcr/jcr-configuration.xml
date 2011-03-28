@@ -46,7 +46,7 @@
  		    <values-param>
  		      <name>autoCreatedInNewRepository</name>
  		      <description>Node types configuration file</description>
-          <value>war:/conf/webos/jcr/webos-nodetypes.xml</value>
+          <value>jar:/conf/webos-nodetypes.xml</value>
  		    </values-param>
  		  </init-params>
  		</component-plugin>
