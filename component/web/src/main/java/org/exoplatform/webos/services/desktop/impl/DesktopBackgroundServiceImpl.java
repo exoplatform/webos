@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.chromattic.ext.ntdef.NTFile;
 import org.chromattic.ext.ntdef.NTFolder;
 import org.chromattic.ext.ntdef.NTHierarchyNode;
 import org.exoplatform.commons.chromattic.ChromatticLifeCycle;
@@ -213,11 +214,10 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
          throw new IllegalStateException("page : " + pageID + " doen't exists");
       }
       DesktopPageMetadata pageMetadata = dataStorage.adapt(desktopPage, DesktopPageMetadata.class);
-      String selectedBackground = pageMetadata.getBackgroundImage();
-      
+      NTFile selectedBackground = pageMetadata.getBackgroundImage();
       if (selectedBackground != null)
       {
-         return new DesktopBackground(makeImageURL(parsePageID(pageID), selectedBackground), selectedBackground);
+         return new DesktopBackground(makeImageURL(parsePageID(pageID), selectedBackground), selectedBackground.getName());
       }
       return null;
    }
@@ -230,20 +230,30 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
          throw new IllegalStateException("page : " + pageID + " doen't exists");
       }
       DesktopPageMetadata pageMetadata = dataStorage.adapt(desktopPage, DesktopPageMetadata.class);
-
-      String userName = parsePageID(pageID);
-      PersonalBackgroundSpace space = getSpace(userName, true);
-      boolean imgDeleted = false;
-      if (imageName !=null && space.getBackgroundImageFolder().getChild(imageName) == null)
+      if (imageName != null)
       {
-         imageName = null;
-         imgDeleted = true;
+         String userName = parsePageID(pageID);
+         PersonalBackgroundSpace space = getSpace(userName, true);
+         NTHierarchyNode child = space.getBackgroundImageFolder().getChild(imageName);
+         if (child == null)
+         {
+            throw new IllegalStateException("Image doesn't exists");
+         }
+         if (child instanceof NTFile)
+         {
+            NTFile image = (NTFile)child;
+            pageMetadata.setBackgroundImage(image);
+            dataStorage.save(desktopPage);
+         }
+         else
+         {
+            throw new IllegalStateException("Image doesn't exists");
+         }
       }
-      pageMetadata.setBackgroundImage(imageName);
-      dataStorage.save(desktopPage);
-      if (imgDeleted)
+      else
       {
-         throw new IllegalStateException("Image doesn't exists");
+         pageMetadata.setBackgroundImage(null);
+         dataStorage.save(desktopPage);
       }
    }
 
@@ -267,9 +277,13 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
          if (backgroundFolder != null)
          {
             Set<String> availableBackgrounds = backgroundFolder.getChildren().keySet();
-            for(String background : availableBackgrounds)
+            for(NTHierarchyNode child : backgroundFolder.getChildren().values())
             {
-               backgroundList.add(new DesktopBackground(makeImageURL(userName, background), background));
+               if (child instanceof NTFile)
+               {
+                  NTFile file = (NTFile)child;
+                  backgroundList.add(new DesktopBackground(makeImageURL(userName, file), file.getName()));
+               }
             }
          }
       }
@@ -291,20 +305,22 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
          throw new IllegalStateException("Can't found PersonalBackgroundSpace for :" + userName);
       }
       NTFolder backgroundFolder = space.getBackgroundImageFolder();
-      if (backgroundFolder.getChildren().containsKey(imageName))
+      NTHierarchyNode child = backgroundFolder.getChildren().get(imageName);
+      if (child instanceof NTFile)
       {
-         return new DesktopBackground(makeImageURL(userName, imageName), imageName);
+         NTFile file = (NTFile)child;
+         return new DesktopBackground(makeImageURL(userName, file), file.getName());
       }
       return null;      
    }
 
-   private String makeImageURL(String userName, String imageLabel)
+   private String makeImageURL(String userName, NTFile file)
    {
       StringBuilder urlBuilder = new StringBuilder("/");
       urlBuilder.append(PortalContainer.getCurrentPortalContainerName()).append("/rest/jcr/");
       urlBuilder.append(chromatticLifecycle.getRepositoryName()).append("/");
       urlBuilder.append(chromatticLifecycle.getWorkspaceName()).append("/production/mop:workspace/mop:usersites/mop:");
-      urlBuilder.append(userName).append("/webos:personalBackgroundFolder/").append(imageLabel);
+      urlBuilder.append(userName).append("/webos:personalBackgroundFolder/webos:").append(file.getName());
 
       return urlBuilder.toString();
    }

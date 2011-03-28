@@ -18,11 +18,14 @@
  */
 package org.exoplatform.webos.services.desktop.impl;
 
+import org.chromattic.api.RelationshipType;
 import org.chromattic.api.annotations.FormattedBy;
+import org.chromattic.api.annotations.ManyToOne;
+import org.chromattic.api.annotations.MappedBy;
 import org.chromattic.api.annotations.MixinType;
 import org.chromattic.api.annotations.NamingPrefix;
-import org.chromattic.api.annotations.Property;
 import org.chromattic.ext.format.BaseEncodingObjectFormatter;
+import org.chromattic.ext.ntdef.NTFile;
 
 @MixinType(name = "webos:page")
 @FormattedBy(BaseEncodingObjectFormatter.class)
@@ -30,9 +33,10 @@ import org.chromattic.ext.format.BaseEncodingObjectFormatter;
 public abstract class DesktopPageMetadata
 {
 
-   @Property(name = "webos:background")
-   public abstract String getBackgroundImage();
+   @ManyToOne(type = RelationshipType.PATH)
+   @MappedBy("webos:background")
+   public abstract NTFile getBackgroundImage();
 
-   public abstract void setBackgroundImage(String backgroundImage);
+   public abstract void setBackgroundImage(NTFile backgroundImage);
 
 }

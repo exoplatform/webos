@@ -47,7 +47,7 @@
          <supertype>mix:referenceable</supertype>
       </supertypes>
       <propertyDefinitions>
-         <propertyDefinition name="webos:background" requiredType="String" autoCreated="false" mandatory="false"
+         <propertyDefinition name="webos:background" requiredType="Path" autoCreated="false" mandatory="false"
             onParentVersion="COPY" protected="false" multiple="false">
             <valueConstraints/>
         </propertyDefinition>
