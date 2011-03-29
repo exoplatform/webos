@@ -57,8 +57,9 @@ public class UIBackgroundUploadForm extends UIForm
    {
       DesktopBackgroundService backgroundService = getApplicationComponent(DesktopBackgroundService.class);
       int sizeLimit = backgroundService.getSizeLimit();
-      Class[] paramTypes = new Class[]{String.class, String.class, int.class};
-      addUIFormInput(makeMultiValueInputSet(MULTI_IMAGE, UIFormUploadInput.class, paramTypes, sizeLimit));
+      Class[] paramTypes = new Class[]{String.class, String.class, int.class, boolean.class};
+      Object[] paramValues = new Object[]{MULTI_IMAGE, null, sizeLimit, true};
+      addUIFormInput(makeMultiValueInputSet(MULTI_IMAGE, UIFormUploadInput.class, paramTypes, paramValues));
 
       setActions(ACTIONS);
    }
@@ -73,12 +74,13 @@ public class UIBackgroundUploadForm extends UIForm
       this.referrer = referrer;
    }
 
-   private UIFormInput makeMultiValueInputSet(String name, Class<? extends UIFormInputBase> type, Class[] parameterTypes, int sizeLimit) throws Exception
+   private UIFormInput makeMultiValueInputSet(String name, Class<? extends UIFormInputBase> type, 
+		   										Class[] paramTypes, Object[] paramValues)throws Exception
    {
       UIFormMultiValueInputSet multiInput = new UIFormMultiValueInputSet(name, null);
       multiInput.setType(type);
-      multiInput.setConstructorParameterTypes(parameterTypes);
-      multiInput.setConstructorParameterValues(new Object[] {name, null, sizeLimit});
+      multiInput.setConstructorParameterTypes(paramTypes);
+      multiInput.setConstructorParameterValues(paramValues);
       return multiInput;
    }
 
