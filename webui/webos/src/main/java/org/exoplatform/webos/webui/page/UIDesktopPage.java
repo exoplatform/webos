@@ -19,25 +19,17 @@
 
 package org.exoplatform.webos.webui.page;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import javax.portlet.WindowState;
-
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.model.ModelObject;
 import org.exoplatform.portal.config.model.Page;
-import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.webui.application.UIApplication;
 import org.exoplatform.portal.webui.application.UIGadget;
 import org.exoplatform.portal.webui.application.UIPortlet;
-import org.exoplatform.portal.webui.navigation.PageNavigationUtils;
 import org.exoplatform.portal.webui.page.UIPage;
+import org.exoplatform.portal.webui.page.UIPageActionListener.DeleteGadgetActionListener;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.page.UIPageLifecycle;
-import org.exoplatform.portal.webui.page.UIPageActionListener.DeleteGadgetActionListener;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.ShowLoginFormActionListener;
@@ -56,6 +48,12 @@ import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIRightClickPopupMenu;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.portlet.WindowState;
 
 /**
  * May 19, 2006
@@ -78,7 +76,7 @@ import org.exoplatform.webui.event.EventListener;
       @EventConfig(listeners = UIDesktopPage.EditCurrentPageActionListener.class),
       @EventConfig(listeners = UIDesktopPage.ChangeBackgroundActionListener.class)})
 })
-public class UIDesktopPage extends UIPage
+public final class UIDesktopPage extends UIPage
 {
 
    public static String DESKTOP_FACTORY_ID = "Desktop";
@@ -88,14 +86,6 @@ public class UIDesktopPage extends UIPage
    public static final String NODE_LABEL = "WebOS Page";
    
    private DesktopBackground currBackground;
-
-   static
-   {
-      if (getRealClass(DESKTOP_FACTORY_ID) == null)
-      {
-         realClass.put(DESKTOP_FACTORY_ID, UIDesktopPage.class);
-      }
-   }
 
    public UIDesktopPage() throws Exception
    {
@@ -322,6 +312,13 @@ public class UIDesktopPage extends UIPage
       }
    }
    
+   /**
+    * Return the path to a Dock icon corresponding to the portlet.
+    * <p>
+    * This is used only in template
+    * @param window
+    * @return
+    */
    private String getApplicationIconImageLocation(UIPortlet window)
    {
   	String applicationId = window.getApplicationId();
