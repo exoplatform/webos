@@ -1,6 +1,7 @@
 <%	
 	import org.exoplatform.portal.webui.application.UIPortlet;
 	import org.exoplatform.web.application.JavascriptManager;
+	import org.exoplatform.webui.core.UIRightClickPopupMenu;
 	
 	def rcontext = _ctx.getRequestContext();
 	def remoteUser = rcontext.getRemoteUser();
@@ -27,16 +28,19 @@
 %>
 <div class="UIPage" id="$desktopID">
 	<div class="VIEW-PAGE">
-		<div id="UIPage">
-		   <% if(currentSelectedBackground == null) { %>
-		    <div class="UIPageDesktop" id="UIPageDesktop" >
+		<div id="UIPage">	
+		   <%
+		    uicomponent.renderChild(UIRightClickPopupMenu.class);		   
+		    if(currentSelectedBackground == null) { %>
+		    <div class="UIPageDesktop" id="UIPageDesktop" style="z-index: 0">
 		   <% }else{ %> 
-			<div class="UIPageDesktop" id="UIPageDesktop" style="background:url('${currentSelectedBackground}') no-repeat center center ;">
+			<div class="UIPageDesktop" id="UIPageDesktop" style="z-index: 0; background:url('${currentSelectedBackground}') no-repeat center center ;">
 			<% } %>
 			
 				<%int x = 15; y = 15 %>
 				<%for(uiChild in uicomponent.getChildren()) {
-						if((uiChild instanceof org.exoplatform.portal.webui.portal.UIPortalComponent) && !uiChild.hasPermission()) continue;
+						if((uiChild instanceof org.exoplatform.portal.webui.portal.UIPortalComponent 
+						         && !uiChild.hasPermission()) || uiChild instanceof UIRightClickPopupMenu) continue;
 						if(!(uiChild instanceof UIPortlet)) {
 							uicomponent.renderUIComponent(uiChild);
 							continue;
