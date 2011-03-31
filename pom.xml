@@ -39,14 +39,14 @@
     <url>http://builder.exoplatform.org/hudson/job/webos-GateInIntegrated-ci/</url>
   </ciManagement>
   <properties>
-      <org.exoplatform.kernel.version>2.2.7-GA</org.exoplatform.kernel.version>
-      <org.exoplatform.core.version>2.3.7-GA</org.exoplatform.core.version>
-      <org.exoplatform.ws.version>2.1.7-GA</org.exoplatform.ws.version>
-      <org.exoplatform.jcr.version>1.12.7-GA</org.exoplatform.jcr.version>
-      <org.exoplatform.portal.version>3.2.0-PLF-WEBOS-SNAPSHOT</org.exoplatform.portal.version>
+      <org.exoplatform.kernel.version>2.3.0-Beta03</org.exoplatform.kernel.version>
+      <org.exoplatform.core.version>2.4.0-Beta03</org.exoplatform.core.version>
+      <org.exoplatform.ws.version>2.2.0-Beta03</org.exoplatform.ws.version>
+      <org.exoplatform.jcr.version>1.14.0-Beta03</org.exoplatform.jcr.version>
+      <org.exoplatform.portal.version>3.2.0-PLF-Beta2</org.exoplatform.portal.version>
       <org.exoplatform.exopackage.version>1.1.0-Beta05</org.exoplatform.exopackage.version>
       <org.jibx.version>1.2.1</org.jibx.version>
-      <org.shindig.version>1.0-r790473-Patch04</org.shindig.version>
+      <org.shindig.version>1.0-r790473-Patch05</org.shindig.version>
       <nl.captcha.simplecaptcha.version>1.1.1-GA-Patch01</nl.captcha.simplecaptcha.version>
       <org.gatein.common.version>2.0.3-GA</org.gatein.common.version>
       <org.gatein.wci.version>2.0.2-GA</org.gatein.wci.version>
@@ -332,11 +332,6 @@
          <dependency>
             <groupId>org.exoplatform.kernel</groupId>
             <artifactId>exo.kernel.component.common</artifactId>
-            <version>${org.exoplatform.kernel.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.exoplatform.kernel</groupId>
-            <artifactId>exo.kernel.component.remote</artifactId>
             <version>${org.exoplatform.kernel.version}</version>
          </dependency>
          <dependency>
