@@ -55,7 +55,7 @@ import javax.portlet.EventRequest;
       @EventConfig(listeners = UIUserToolbarDesktopPortlet.UserPageNodeDeletedActionListener.class)})
 public class UIUserToolbarDesktopPortlet extends UIPortletApplication
 {
-   public static String DEFAULT_TAB_NAME = "Tab_0";
+   public static String DEFAULT_TAB_NAME = "Tab_Default";
    
    public UIUserToolbarDesktopPortlet() throws Exception
    {
@@ -184,8 +184,7 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
 
             PageNode pageNode = new PageNode();
             pageNode.setName(_nodeName);
-            pageNode.setLabel(prContext.getApplicationResourceBundle().getString("UIUserToolBarDashboard.page.ClickAndType"));
-            pageNode.setResolvedLabel(prContext.getApplicationResourceBundle());
+            pageNode.setLabel(_nodeName);
             pageNode.setUri(_nodeName);
             pageNode.setPageReference(page.getPageId());
 
