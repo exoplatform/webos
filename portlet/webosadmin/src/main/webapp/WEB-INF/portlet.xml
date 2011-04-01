@@ -52,7 +52,7 @@
       </security-role-ref>
 
       <supported-processing-event>
-         <name>UserPageNodeDeleted</name>
+         <name>NavigationChange</name>
       </supported-processing-event>
    </portlet>
 
@@ -104,6 +104,6 @@
       </portlet-info>
   </portlet>
    <event-definition>
-      <name>UserPageNodeDeleted</name>
+      <name>NavigationChange</name>
    </event-definition>
 </portlet-app>

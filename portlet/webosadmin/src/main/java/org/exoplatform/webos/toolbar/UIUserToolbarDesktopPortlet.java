@@ -52,7 +52,7 @@ import javax.portlet.EventRequest;
 @ComponentConfig(lifecycle = UIApplicationLifecycle.class, template = "app:/groovy/webui/component/UIUserToolBarDesktopPortlet.gtmpl",
    events = {@EventConfig(name = "AddDefaultDashboard", listeners = UIUserToolbarDesktopPortlet.AddDashboardActionListener.class),
       @EventConfig(listeners = UIUserToolbarDesktopPortlet.CreateWebOSActionListener.class),
-      @EventConfig(listeners = UIUserToolbarDesktopPortlet.UserPageNodeDeletedActionListener.class)})
+      @EventConfig(listeners = UIUserToolbarDesktopPortlet.NavigationChangeActionListener.class)})
 public class UIUserToolbarDesktopPortlet extends UIPortletApplication
 {
    public static String DEFAULT_TAB_NAME = "Tab_Default";
@@ -119,9 +119,9 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
       return null;
    }
 
-   static public class UserPageNodeDeletedActionListener extends EventListener<UIUserToolbarDesktopPortlet>
+   static public class NavigationChangeActionListener extends EventListener<UIUserToolbarDesktopPortlet>
    {
-      private Log log = ExoLogger.getExoLogger(UserPageNodeDeletedActionListener.class);
+      private Log log = ExoLogger.getExoLogger(NavigationChangeActionListener.class);
 
       @Override
       public void execute(Event<UIUserToolbarDesktopPortlet> event) throws Exception
