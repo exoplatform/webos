@@ -32,7 +32,7 @@
   <scm>
     <connection>scm:git:git://github.com/exoportal/webos.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/exoportal/webos.git</developerConnection>
-    <url>https://github.com/exoportal/exogtn</url>
+    <url>https://github.com/exoportal/webos</url>
   </scm>
   <ciManagement>
     <system>hudson</system>
