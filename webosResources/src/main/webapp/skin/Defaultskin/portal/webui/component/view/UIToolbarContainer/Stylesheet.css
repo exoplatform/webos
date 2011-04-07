@@ -2,3 +2,7 @@
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
 }	
+
+.UserToolBarDesktopPortletTDContainer  {
+	!float: none; /* orientation=rt */
+}

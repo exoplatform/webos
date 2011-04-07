@@ -9,8 +9,3 @@ div.UIWebOSWorkingWorkspace {
 	background:none repeat scroll 0 0 #B5B6B6;
 	width:auto;
 }
-
-.UIToolbarContainer {
-	position: relative;
-	z-index: 1000;
-}
