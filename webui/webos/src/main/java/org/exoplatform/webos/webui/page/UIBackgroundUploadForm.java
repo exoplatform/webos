@@ -18,9 +18,10 @@
  */
 package org.exoplatform.webos.webui.page;
 
+import org.exoplatform.portal.pom.data.PortalKey;
+import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
-import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.upload.UploadResource;
 import org.exoplatform.upload.UploadService;
 import org.exoplatform.web.application.ApplicationMessage;
@@ -57,7 +58,7 @@ public class UIBackgroundUploadForm extends UIForm
    {
       DesktopBackgroundService backgroundService = getApplicationComponent(DesktopBackgroundService.class);
       int sizeLimit = backgroundService.getSizeLimit();
-      Class[] paramTypes = new Class[]{String.class, String.class, int.class, boolean.class};
+      Class<?>[] paramTypes = new Class[]{String.class, String.class, int.class, boolean.class};
       Object[] paramValues = new Object[]{MULTI_IMAGE, null, sizeLimit, true};
       addUIFormInput(makeMultiValueInputSet(MULTI_IMAGE, UIFormUploadInput.class, paramTypes, paramValues));
 
@@ -152,10 +153,10 @@ public class UIBackgroundUploadForm extends UIForm
       private boolean saveToDB(UIFormUploadInput uploadInput) throws Exception
       {
          UploadResource uploadResource =uploadInput.getUploadResource();
-         String userName = ConversationState.getCurrent().getIdentity().getUserId();
          DesktopBackgroundService backgroundService = uploadInput.getApplicationComponent(DesktopBackgroundService.class);
 
-         backgroundService.uploadBackgroundImage(userName, uploadResource.getFileName(),
+         UIPortal uiPortal = Util.getUIPortal();
+         backgroundService.uploadBackgroundImage(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()), uploadResource.getFileName(),
             uploadResource.getMimeType(), "UTF-8", uploadInput.getUploadDataAsStream());
          return true;
       }

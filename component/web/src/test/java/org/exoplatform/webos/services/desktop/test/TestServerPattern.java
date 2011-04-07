@@ -34,8 +34,9 @@ public class TestServerPattern extends TestCase
    {
       Matcher matcher = ResourceServer.PATTERN.matcher("/webos/user/a/b.gif");
       assertTrue(matcher.matches());
-      assertEquals("a", matcher.group(1));
-      assertEquals("b.gif", matcher.group(2));
+      assertEquals("user", matcher.group(1));
+      assertEquals("a", matcher.group(2));
+      assertEquals("b.gif", matcher.group(3));
    }
 
    public void testNoMatch()

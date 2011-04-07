@@ -22,11 +22,12 @@ import org.exoplatform.commons.utils.LazyPageList;
 import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.commons.utils.ListAccessImpl;
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.pom.data.PortalKey;
+import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
-import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
@@ -38,6 +39,7 @@ import org.exoplatform.webui.core.UIRepeater;
 import org.exoplatform.webui.core.UIVirtualList;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -99,8 +101,9 @@ public class UIBackgroundSelector extends UIContainer
       imageList.dataBind(new LazyPageList<DesktopBackground>(imgAccess, PAGE_SIZE));
                                                   
       DesktopBackgroundService service = getApplicationComponent(DesktopBackgroundService.class);
-      String userId = ConversationState.getCurrent().getIdentity().getUserId();
-      DesktopBackground previewBackground = service.getUserDesktopBackground(userId, getPreviewImage()); 
+
+      UIPortal uiPortal = Util.getUIPortal();
+      DesktopBackground previewBackground = service.getDesktopBackground(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()), getPreviewImage()); 
       if (previewBackground == null)
       {
          setPreviewImage(null);
@@ -226,9 +229,9 @@ public class UIBackgroundSelector extends UIContainer
          selector.setPreviewImage(context.getRequestParameter(OBJECTID));
 
          DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
-         String userId = ConversationState.getCurrent().getIdentity().getUserId();
-
-         DesktopBackground previewBackground = backgroundService.getUserDesktopBackground(userId, selector.getPreviewImage());
+         
+         UIPortal uiPortal = Util.getUIPortal();
+         DesktopBackground previewBackground = backgroundService.getDesktopBackground(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()), selector.getPreviewImage());
          if (previewBackground == null)
          {
             log.warn("Can't found image :" + selector.getPreviewImage());
@@ -252,12 +255,12 @@ public class UIBackgroundSelector extends UIContainer
          UIBackgroundSelector selector = event.getSource();
          String selectedItem = context.getRequestParameter(OBJECTID);
 
-         String userId = ConversationState.getCurrent().getIdentity().getUserId();
          DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
 
+         UIPortal uiPortal = Util.getUIPortal();
          try
          {
-            backgroundService.removeBackgroundImage(userId, selectedItem);
+            backgroundService.removeBackgroundImage(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()), selectedItem);
          }
          catch (IllegalStateException e)
          {
@@ -277,7 +280,8 @@ public class UIBackgroundSelector extends UIContainer
    {
       DesktopBackgroundService backgroundService = getApplicationComponent(DesktopBackgroundService.class);
 
-      List<DesktopBackground> backgrounds = backgroundService.getUserDesktopBackgrounds(context.getRemoteUser());
+      UIPortal uiPortal = Util.getUIPortal();
+      List<DesktopBackground> backgrounds = backgroundService.findDesktopBackgrounds(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()));
       Collections.sort(backgrounds, new Comparator<DesktopBackground>() {
          @Override
          public int compare(DesktopBackground o1, DesktopBackground o2)

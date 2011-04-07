@@ -18,11 +18,14 @@
  */
 package org.exoplatform.webos.services.desktop;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.exoplatform.portal.pom.data.PortalKey;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author <a href="mailto:hoang281283@gmail.com">Minh Hoang TO</a>
@@ -37,7 +40,7 @@ public interface DesktopBackgroundService
     * @throws org.exoplatform.webos.services.desktop.exception.ImageQuantityException by default user can have 10 images
     * @throws org.exoplatform.webos.services.desktop.exception.ImageSizeException by default image's size limit is 2mb  
     */
-   public boolean uploadBackgroundImage(String userName, String backgroundImageName, String mimeType, String encoding, InputStream binaryStream) throws Exception;
+   public boolean uploadBackgroundImage(PortalKey siteKey, String backgroundImageName, String mimeType, String encoding, InputStream binaryStream) throws Exception;
 
    /**
     * Remove user background image, If it is current background, user background will be reset
@@ -45,18 +48,18 @@ public interface DesktopBackgroundService
     * @param backgroundImageName - the name of the image file
     * @throws IllegalStateException if image doesn't exists
     */
-   public boolean removeBackgroundImage(String userName, String backgroundImageName) throws Exception;
+   public boolean removeBackgroundImage(PortalKey siteKey, String backgroundImageName) throws Exception;
    
    public DesktopBackground getCurrentDesktopBackground(String pageID) throws Exception;
    
-   public List<DesktopBackground> getUserDesktopBackgrounds(String userName) throws Exception;
+   public List<DesktopBackground> findDesktopBackgrounds(PortalKey siteKey) throws Exception;
 
    /**
     * if image doen't exists or imageName is null, return null
     * @param userName - user that will use this desktop background image
     * @param imageName - the name of the image file
     */
-   public DesktopBackground getUserDesktopBackground(String userName, String imageName) throws Exception;
+   public DesktopBackground getDesktopBackground(PortalKey siteKey, String imageName) throws Exception;
 
    /**
     * Set current user background image
@@ -69,6 +72,6 @@ public interface DesktopBackgroundService
 
    public int getSizeLimit();
 
-   public void renderImage(HttpServletRequest req, HttpServletResponse resp, String userName, String imageName) throws IOException;
+   public void renderImage(HttpServletRequest req, HttpServletResponse resp, PortalKey siteKey, String imageName) throws IOException;
 
 }

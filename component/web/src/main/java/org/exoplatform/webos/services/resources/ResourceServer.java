@@ -20,6 +20,7 @@ package org.exoplatform.webos.services.resources;
 
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.component.RequestLifeCycle;
+import org.exoplatform.portal.pom.data.PortalKey;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 
 import javax.servlet.FilterChain;
@@ -52,7 +53,7 @@ public class ResourceServer implements org.exoplatform.web.filter.Filter
    // site type (for now "user")
    // site name
    // image name
-   public static final Pattern PATTERN = Pattern.compile("/webos/user/([^/]+)/([^/]+)$");
+   public static final Pattern PATTERN = Pattern.compile("/webos/([^/]+)/([^/]+)/([^/]+)$");
 
    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException
    {
@@ -74,8 +75,9 @@ public class ResourceServer implements org.exoplatform.web.filter.Filter
          if (matcher.matches())
          {
 
-            String name = matcher.group(1);
-            String image = matcher.group(2);
+            String siteType = matcher.group(1);
+            String siteName = matcher.group(2).replace("_", "/");
+            String image = matcher.group(3);
 
             //
             PortalContainer container = PortalContainer.getInstance();
@@ -87,7 +89,7 @@ public class ResourceServer implements org.exoplatform.web.filter.Filter
             RequestLifeCycle.begin(container);
             try
             {
-               service.renderImage(hreq, hresp, name, image);
+               service.renderImage(hreq, hresp, new PortalKey(siteType, siteName), image);
             }
             finally
             {
