@@ -5,4 +5,5 @@
 
 .UserToolBarDesktopPortletTDContainer  {
 	!float: none; /* orientation=rt */
+	position: relative; /* orientation=lt */
 }
