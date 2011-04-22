@@ -24,6 +24,12 @@ import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.services.listener.Event;
 import org.exoplatform.services.listener.Listener;
 
+/**
+ *
+ * The DockbarInjectionListener is designed as a plugin of Kernel's ListenerService component. It handles the
+ * event PAGE_CREATED, which is fired as a Page object is created via DataStorage component.
+ *
+ */
 public class DockbarInjectionListener extends Listener<DataStorage, Page>
 {
    public static final String DESKTOP_ID = "Desktop";

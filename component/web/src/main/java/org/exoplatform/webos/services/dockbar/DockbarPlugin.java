@@ -33,6 +33,10 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Plugin of DockbarService, which enables external configuration of applications appearing on dockbar
+ *
+ */
 public class DockbarPlugin extends BaseComponentPlugin
 {
    public static final String CONFIG = "dockbarConfigLocation";
