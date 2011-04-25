@@ -90,15 +90,9 @@
   </dependencies>
    
    <build>
-     <testResources>
+    <testResources>
       <testResource>
-        <directory>src/test/java</directory>
-        <includes>
-          <include>**/*.properties</include>
-          <include>**/*.xml</include>
-          <include>**/*.jstmpl</include>
-          <include>**/*.jpg</include>
-        </includes>
+        <directory>src/test/resources</directory>
       </testResource>
     </testResources>
     <plugins>
@@ -120,6 +114,19 @@
           </execution>
         </executions>
       </plugin>
-    </plugins>
+	<plugin>
+		<artifactId>maven-resources-plugin</artifactId>
+		<executions>
+			<execution>
+				<goals>
+					<goal>testResources</goal>
+				</goals>
+				<configuration>
+					<includeEmptyDirs>true</includeEmptyDirs>
+				</configuration>
+			</execution>
+		</executions>
+	</plugin>
+      </plugins>
   </build>   
 </project>

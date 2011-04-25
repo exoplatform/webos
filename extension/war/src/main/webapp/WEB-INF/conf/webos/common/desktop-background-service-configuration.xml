@@ -35,6 +35,14 @@
         <description>Maximum size of the image that user can upload</description>
         <value>2</value>
       </value-param> 
+	  <value-param>
+        <name>default.image.path</name>
+        <description>
+        	Path to folder that contains all image folders for all sites.
+        	By default, It is in webosResources 
+        </description>
+        <value>/backgrounds</value>
+      </value-param> 
     </init-params>
   </component>
   

@@ -80,6 +80,9 @@
 								<value>
 									<string>webosResources</string>
 								</value>
+								<value>
+									<string>extendWebOS</string>
+								</value>
 							</collection>
 						</field>
 					</object>

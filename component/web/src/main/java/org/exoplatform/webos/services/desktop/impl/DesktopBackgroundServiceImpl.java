@@ -59,6 +59,9 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
 
    private DataStorage dataStorage;
 
+   //Path to folder that contains all image folders for all sites. By default, it is "/backgrounds"
+   private String defaultImagePath;
+   
    // 0 means unlimited
    private int quantityLimit;
 
@@ -83,6 +86,11 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
          if (sizeParam != null)
          {
             sizeLimit = Integer.parseInt(sizeParam.getValue());
+         }
+         ValueParam pathParam = params.getValueParam("default.image.path");
+         if (pathParam != null)
+         {
+            defaultImagePath = pathParam.getValue();
          }
       }
    }
@@ -127,7 +135,7 @@ public class DesktopBackgroundServiceImpl implements DesktopBackgroundService
          if (folder == null && create) {
             folder = space.createFolder();
             space.setBackgroundImageFolder(folder);
-            space.uploadDefaultBackgroundImage();
+            space.uploadDefaultBackgroundImage(defaultImagePath);
          }
       }
       return space;
