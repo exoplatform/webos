@@ -44,7 +44,7 @@
       <org.exoplatform.ws.version>2.2.0-Beta03</org.exoplatform.ws.version>
       <org.exoplatform.jcr.version>1.14.0-Beta03</org.exoplatform.jcr.version>
       <org.exoplatform.portal.version>3.2.0-PLF-Beta2</org.exoplatform.portal.version>
-      <org.exoplatform.exopackage.version>1.1.0-Beta05</org.exoplatform.exopackage.version>
+      <org.exoplatform.exopackage.version>1.1.1</org.exoplatform.exopackage.version>
       <org.jibx.version>1.2.1</org.jibx.version>
       <org.shindig.version>1.0-r790473-Patch05</org.shindig.version>
       <nl.captcha.simplecaptcha.version>1.1.1-GA-Patch01</nl.captcha.simplecaptcha.version>
@@ -77,6 +77,9 @@
       <jcr.version>1.0</jcr.version>
       <org.jaxb2.version>0.1</org.jaxb2.version>
       <stax.version>1.0</stax.version>
+      <org.jsecurity.version>0.9.0</org.jsecurity.version>
+      <org.hsqldb.version>2.0.0</org.hsqldb.version>
+      
 
       <!-- ************** -->
       <!-- Build settings -->
@@ -605,7 +608,7 @@
          <dependency>
             <groupId>net.oauth</groupId>
             <artifactId>core</artifactId>
-            <version>20080328</version>
+            <version>20080621</version>
          </dependency>
          <dependency>
             <groupId>caja</groupId>
