@@ -20,6 +20,7 @@
 package org.exoplatform.webos.services.desktop.test;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
@@ -88,14 +89,18 @@ public class TestDesktopBackgroundService extends AbstractWebOSTest
       assertEquals(8, bgs.size());     
       bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.USER_TYPE, "demo"));
       assertEquals(1, bgs.size());     
-      
-      bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "platform/test/normalized"));
-      assertEquals(0, bgs.size());
+            
       bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "platform/test/legacy"));
       assertEquals(1, bgs.size());
       bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "platform/administrators"));
       assertEquals(8, bgs.size());
+      //TestCase : no default images for specific site
+      //We need empty directory here, but GIT can handle empty dir, workaround:
+      createEmptyDir("backgrounds/group/platform/test/normalized");
+      bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "platform/test/normalized"));
+      assertEquals(0, bgs.size());
       
+      createEmptyDir("backgrounds/portal/test");
       bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.PORTAL_TYPE, "test"));
       assertEquals(0, bgs.size());
       bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.PORTAL_TYPE, "classic"));
@@ -274,5 +279,11 @@ public class TestDesktopBackgroundService extends AbstractWebOSTest
       page.setOwnerType(PortalConfig.USER_TYPE);
       page.setOwnerId(userSiteKey.getId());
       dataStorage.create(page);
+   }
+   
+   private void createEmptyDir(String path)
+   {
+      File dir = new File("target/test-classes/" + path);
+      dir.mkdirs();
    }
 }
