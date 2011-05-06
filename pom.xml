@@ -39,13 +39,13 @@
     <url>http://builder.exoplatform.org/hudson/job/webos-GateInIntegrated-ci/</url>
   </ciManagement>
   <properties>
-      <org.exoplatform.kernel.version>2.3.0-Beta03</org.exoplatform.kernel.version>
-      <org.exoplatform.core.version>2.4.0-Beta03</org.exoplatform.core.version>
-      <org.exoplatform.ws.version>2.2.0-Beta03</org.exoplatform.ws.version>
-      <org.exoplatform.jcr.version>1.14.0-Beta03</org.exoplatform.jcr.version>
-      <org.exoplatform.portal.version>3.2.0-PLF-Beta2</org.exoplatform.portal.version>
+      <org.exoplatform.kernel.version>2.3.0-CR1</org.exoplatform.kernel.version>
+      <org.exoplatform.core.version>2.4.0-CR1</org.exoplatform.core.version>
+      <org.exoplatform.ws.version>2.2.0-CR1</org.exoplatform.ws.version>
+      <org.exoplatform.jcr.version>1.14.0-CR1</org.exoplatform.jcr.version>
+      <org.exoplatform.portal.version>3.2.0-PLF-SNAPSHOT</org.exoplatform.portal.version>
       <org.exoplatform.exopackage.version>1.1.1</org.exoplatform.exopackage.version>
-      <org.jibx.version>1.2.1</org.jibx.version>
+      <org.jibx.version>1.2.2</org.jibx.version>
       <org.shindig.version>1.0-r790473-Patch05</org.shindig.version>
       <nl.captcha.simplecaptcha.version>1.1.1-GA-Patch01</nl.captcha.simplecaptcha.version>
       <org.gatein.common.version>2.0.3-GA</org.gatein.common.version>
@@ -54,10 +54,10 @@
       <org.picketlink.idm>1.1.7.GA</org.picketlink.idm>
       <org.gatein.wsrp.version>2.0.0-GA</org.gatein.wsrp.version>
       <org.gatein.mop.version>1.1.0-Beta01</org.gatein.mop.version>
-      <org.slf4j.version>1.5.6</org.slf4j.version>
-      <commons-pool.version>1.2</commons-pool.version>
+      <org.slf4j.version>1.5.8</org.slf4j.version>
+      <commons-pool.version>1.5.5</commons-pool.version>
       <rhino.version>1.6R5</rhino.version>
-      <org.codehaus.groovy.version>1.6.5</org.codehaus.groovy.version>
+      <org.codehaus.groovy.version>1.7.6</org.codehaus.groovy.version>
       <javax.servlet.version>2.5</javax.servlet.version>
       <version.chromattic>1.1.0-beta2</version.chromattic>
       <version.reflext>1.1.0-beta12</version.reflext>
@@ -69,17 +69,37 @@
       <cglib.version>2.2</cglib.version>
       <com.sun.xml.bind.version>2.1.7</com.sun.xml.bind.version>
       <commons-digester.version>1.8.1</commons-digester.version>
-      <commons-dbcp.version>1.2.1</commons-dbcp.version>
+      <commons-dbcp.version>1.4</commons-dbcp.version>
       <commons-httpclient.version>3.1</commons-httpclient.version>
       <exo.tool.webunit.version>1.0.0</exo.tool.webunit.version>
       <html-parser.version>1.6</html-parser.version>
-      <javassist.version>3.4.GA</javassist.version>
+      <javassist.version>3.14.0-GA</javassist.version>
       <jcr.version>1.0</jcr.version>
-      <org.jaxb2.version>0.1</org.jaxb2.version>
+      <org.jaxb2.version>0.7.4</org.jaxb2.version>
       <stax.version>1.0</stax.version>
       <org.jsecurity.version>0.9.0</org.jsecurity.version>
       <org.hsqldb.version>2.0.0</org.hsqldb.version>
+      <commons-io.version>1.3.2</commons-io.version>
+      <javax.inject.version>1</javax.inject.version>
       
+      <!-- JCR dependencies version -->
+      <com.sun.xml.stream.version>1.0.1</com.sun.xml.stream.version>
+      <commons-lang.version>2.6</commons-lang.version>
+      <commons-logging.version>1.1.1</commons-logging.version>
+      <commons-beanutils.version>1.8.3</commons-beanutils.version>
+      <commons-collections.version>3.2.1</commons-collections.version>
+      <javax.transaction.version>1.1</javax.transaction.version>
+      <org.apache.lucene.version>2.9.4</org.apache.lucene.version>
+      <org.jgroups.version>2.11.1.Final</org.jgroups.version>
+      <xpp3.version>1.1.4c</xpp3.version>
+      
+      <!-- CORE dependencies version -->
+      <org.apache.pdfbox.version>1.4.0</org.apache.pdfbox.version>
+      <org.apache.poi.version>3.6</org.apache.poi.version>
+      
+      <!-- KERNEL -->
+      <javax.mail.version>1.4.4</javax.mail.version>
+      <org.quartz-scheduler.version>1.8.4</org.quartz-scheduler.version>
 
       <!-- ************** -->
       <!-- Build settings -->
@@ -240,6 +260,11 @@
       <dependencies>
          <!--Common libraries-->
          <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>${javax.inject.version}</version>
+         </dependency>
+         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${org.slf4j.version}</version>
@@ -252,12 +277,12 @@
          <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.8.0</version>
+            <version>${commons-beanutils.version}</version>
          </dependency>
          <dependency>
             <groupId>commons-chain</groupId>
             <artifactId>commons-chain</artifactId>
-            <version>1.0</version>
+            <version>1.2</version>
          </dependency>
          <dependency>
             <groupId>commons-codec</groupId>
@@ -272,7 +297,7 @@
          <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.0.4</version>
+            <version>${commons-logging.version}</version>
          </dependency>
          <dependency>
             <groupId>commons-collections</groupId>
@@ -282,7 +307,7 @@
          <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.2.2</version>
+            <version>${commons-dbcp.version}</version>
             <exclusions>
                <exclusion>
                   <groupId>xerces</groupId>
@@ -303,17 +328,17 @@
          <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.0</version>
+            <version>${commons-io.version}</version>
          </dependency>
          <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>2.4</version>
+            <version>${commons-lang.version}</version>
          </dependency>
          <dependency>
             <groupId>commons-pool</groupId>
             <artifactId>commons-pool</artifactId>
-            <version>1.5.4</version>
+            <version>${commons-pool.version}</version>
          </dependency>
 
          <!-- JCR stack -->
@@ -563,12 +588,12 @@
          <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <version>1.6.5</version>
+            <version>${org.codehaus.groovy.version}</version>
          </dependency>
          <dependency>
-            <groupId>hsqldb</groupId>
+            <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>1.8.0.7</version>
+            <version>${org.hsqldb.version}</version>
          </dependency>
          <dependency>
             <groupId>com.ibm.icu</groupId>

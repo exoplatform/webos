@@ -218,7 +218,7 @@
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>javassist</groupId>
+      <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
       <version>${javassist.version}</version>
       <type>jar</type>
