@@ -270,6 +270,17 @@
       <version>${org.hsqldb.version}</version>
       <type>jar</type>
     </dependency>
+    
+    <!-- Missing packaging dependencies -->
+    <dependency><groupId>bouncycastle</groupId><artifactId>bcmail-jdk14</artifactId><version>136</version></dependency>
+    <dependency><groupId>bouncycastle</groupId><artifactId>bcprov-jdk14</artifactId><version>136</version></dependency>
+    <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-api</artifactId><version>1.5.6</version></dependency>
+    <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jdk14</artifactId><version>1.5.6</version></dependency>
+    <dependency><groupId>commons-pool</groupId><artifactId>commons-pool</artifactId><version>1.2</version></dependency>
+    <dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId><version>1.0.4</version></dependency>
+    <dependency><groupId>commons-dbcp</groupId><artifactId>commons-dbcp</artifactId><version>1.2.1</version></dependency>
+
+    
   </dependencies>
   <build>
     <plugins>
