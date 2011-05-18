@@ -74,11 +74,6 @@
   </component>
 
   <component>
-    <key>org.exoplatform.services.jcr.ext.hierarchy.NodeHierarchyCreator</key>
-    <type>org.exoplatform.services.jcr.ext.hierarchy.impl.NodeHierarchyCreatorImpl</type>
-  </component>
-
-  <component>
     <key>org.exoplatform.portal.config.UserACL</key>
     <type>org.exoplatform.portal.config.UserACL</type>
     <init-params>
