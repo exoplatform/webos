@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface DesktopBackgroundService
 {
-
    /**
     * Upload an image to user's folder in jcr, using name provided in parameter backgroundImageName. If there is already
     * an image having such name in JCR folder, a suffix is inserted to avoid naming conflict.
@@ -98,8 +97,20 @@ public interface DesktopBackgroundService
     */
    public void setSelectedBackgroundImage(String pageID, String imageName) throws Exception;
 
+   /**
+    * return size limit of an image uploaded
+    */
    public int getSizeLimit();
 
+   /**
+    * Render the desktop background with an image stored in a site
+    * 
+    * @param req
+    * @param resp
+    * @param siteKey site contains the image which want to set as desktop background
+    * @param imageName
+    * @throws IOException
+    */
    public void renderImage(HttpServletRequest req, HttpServletResponse resp, PortalKey siteKey, String imageName) throws IOException;
 
 }

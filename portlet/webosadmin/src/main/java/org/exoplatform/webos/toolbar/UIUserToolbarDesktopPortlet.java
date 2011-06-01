@@ -130,6 +130,9 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
       }
    }
 
+   /**
+    * Create user dashboard pagenode or redirect to the first node already created which isn't webos node
+    */
    static public class AddDashboardActionListener extends EventListener<UIUserToolbarDesktopPortlet>
    {
 
@@ -202,6 +205,9 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
       }
    }
 
+   /**
+    * Create user page navigation, page and node for Desktop if they haven't been created already. 
+    */
    static public class CreateWebOSActionListener extends EventListener<UIUserToolbarDesktopPortlet>
    {
       @Override
@@ -215,11 +221,12 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
             DataStorage storage = event.getSource().getApplicationComponent(DataStorage.class);
 
             Page page = createPage(userName, storage);
-            updateNavigation(userName, page.getPageId(), storage);
+            PageNavigation pageNavigation = createNavigation(userName, page.getPageId(), storage);
+            updateUI(pageNavigation);
          }
       }
 
-      private void updateNavigation(String userName, String pageId, DataStorage storage) throws Exception
+      private PageNavigation createNavigation(String userName, String pageId, DataStorage storage) throws Exception
       {
          PageNavigation pageNavigation = storage.getPageNavigation(PortalConfig.USER_TYPE, userName);
          PageNode pageNode = null;
@@ -246,7 +253,8 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
             pageNavigation.addNode(pageNode);
             storage.save(pageNavigation);
          }
-         updateUI(pageNavigation);
+         
+         return pageNavigation;
       }
 
       private void updateUI(PageNavigation pageNavigation) throws Exception

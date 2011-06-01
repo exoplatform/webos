@@ -24,15 +24,10 @@ import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.model.ModelObject;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.webui.application.UIApplication;
-import org.exoplatform.portal.webui.application.UIGadget;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageActionListener.DeleteGadgetActionListener;
-import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.page.UIPageLifecycle;
-import org.exoplatform.portal.webui.portal.PageNodeEvent;
-import org.exoplatform.portal.webui.portal.UIPortal;
-import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.ShowLoginFormActionListener;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
@@ -53,23 +48,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.portlet.WindowState;
-
 /**
  * May 19, 2006
  */
 
 @ComponentConfigs({
-@ComponentConfig(lifecycle = UIPageLifecycle.class, template = "system:/groovy/portal/webui/page/UIDesktopPage.gtmpl", events = {
-   @EventConfig(listeners = ShowLoginFormActionListener.class),
-   @EventConfig(listeners = DeleteGadgetActionListener.class),
-   @EventConfig(name = "RemoveChild", listeners = UIDesktopPage.RemovePortletActionListener.class),
-   @EventConfig(listeners = UIDesktopPage.SaveGadgetPropertiesActionListener.class),
-   @EventConfig(listeners = UIDesktopPage.SaveWindowPropertiesActionListener.class),
-   @EventConfig(listeners = UIDesktopPage.ShowAddNewApplicationActionListener.class),
-   @EventConfig(listeners = UIDesktopPage.ChangePageActionListener.class),
-   @EventConfig(listeners = UIDesktopPage.ShowPortletActionListener.class),
-   @EventConfig(name = "EditCurrentPage", listeners = UIDesktopPage.EditCurrentPageActionListener.class)}),
+   @ComponentConfig(lifecycle = UIPageLifecycle.class, template = "system:/groovy/portal/webui/page/UIDesktopPage.gtmpl", events = {
+      @EventConfig(listeners = DeleteGadgetActionListener.class),
+      @EventConfig(name = "RemoveChild", listeners = UIDesktopPage.RemovePortletActionListener.class),
+      @EventConfig(listeners = UIDesktopPage.SaveWindowPropertiesActionListener.class),
+      @EventConfig(listeners = UIDesktopPage.ShowAddNewApplicationActionListener.class),
+      @EventConfig(listeners = UIDesktopPage.ShowPortletActionListener.class),
+      @EventConfig(name = "EditCurrentPage", listeners = UIDesktopPage.EditCurrentPageActionListener.class)}),
+      
    @ComponentConfig(id = "UIDesktopContextMenu", type = UIRightClickPopupMenu.class, template = "system:/groovy/portal/webui/page/UIDesktopContextMenu.gtmpl", events = {
       @EventConfig(listeners = UIDesktopPage.ShowAddNewApplicationActionListener.class),
       @EventConfig(listeners = UIDesktopPage.RefreshPageActionListener.class),
@@ -109,43 +100,15 @@ public final class UIDesktopPage extends UIPage
       return true;
    }
 
-   static public class SaveGadgetPropertiesActionListener extends EventListener<UIPage>
-   {
-      public void execute(Event<UIPage> event) throws Exception
-      {
-         UIPage uiPage = event.getSource();
-         String objectId = event.getRequestContext().getRequestParameter(UIComponent.OBJECTID);
-         List<UIGadget> uiGadgets = new ArrayList<UIGadget>();
-         uiPage.findComponentOfType(uiGadgets, UIGadget.class);
-         UIGadget uiGadget = null;
-         for (UIGadget ele : uiGadgets)
-         {
-            if (ele.getId().equals(objectId))
-            {
-               uiGadget = ele;
-               break;
-            }
-         }
-         if (uiGadget == null)
-            return;
-         String posX = event.getRequestContext().getRequestParameter("posX");
-         String posY = event.getRequestContext().getRequestParameter("posY");
-         String zIndex = event.getRequestContext().getRequestParameter(UIApplication.zIndex);
-
-         uiGadget.getProperties().put(UIApplication.locationX, posX);
-         uiGadget.getProperties().put(UIApplication.locationY, posY);
-         uiGadget.getProperties().put(UIApplication.zIndex, zIndex);
-
-         if (!uiPage.isModifiable())
-            return;
-         Page page = (Page)PortalDataMapper.buildModelObject(uiPage);
-         if (page.getChildren() == null)
-            page.setChildren(new ArrayList<ModelObject>());
-         DataStorage dataService = uiPage.getApplicationComponent(DataStorage.class);
-         dataService.save(page);
-      }
-   }
-
+   /**
+    * Invoked whenever the portlet window display in the desktop page is changed as following reasons:
+    * <p><ul>
+    * <li>Change the window position by drag and drop
+    * <li>Resize width, height of the portlet window
+    * <li>Change state of the portlet window between NORMALIZE, MINIMIZE and MAXIMIZE
+    * <li>The portlet windows is activated or inactivate
+    *
+    */
    static public class SaveWindowPropertiesActionListener extends EventListener<UIPage>
    {
       public void execute(Event<UIPage> event) throws Exception
@@ -183,7 +146,6 @@ public final class UIDesktopPage extends UIPage
          String appStatus = event.getRequestContext().getRequestParameter(UIApplication.appStatus);
          if (appStatus != null)
             uiApp.getProperties().put(UIApplication.appStatus, appStatus);
-
       }
    }
 
@@ -207,6 +169,10 @@ public final class UIDesktopPage extends UIPage
       protected abstract void doAction(Event<UIComponent> event, UIPage uiPage) throws Exception;
    }
 
+   /**
+    * Show the 'Add application' form
+    * <p>Invoked if user click 'Add applications' icon on dockbar or select 'Add application' item in right click menu context 
+    */
    static public class ShowAddNewApplicationActionListener extends BaseDesktopActionListener
    {
       protected void doAction(Event<UIComponent> event, UIPage uiPage) throws Exception
@@ -225,27 +191,9 @@ public final class UIDesktopPage extends UIPage
       }
    }
 
-   static public class ChangePageActionListener extends EventListener<UIPage>
-   {
-      public void execute(Event<UIPage> event) throws Exception
-      {
-         String uri = event.getRequestContext().getRequestParameter(OBJECTID);
-         UIPortal uiPortal = Util.getUIPortal();
-         UIPageBody uiPageBody = uiPortal.findFirstComponentOfType(UIPageBody.class);
-         if (uiPageBody != null)
-         {
-            if (uiPageBody.getMaximizedUIComponent() != null)
-            {
-               UIPortlet currentPortlet = (UIPortlet)uiPageBody.getMaximizedUIComponent();
-               currentPortlet.setCurrentWindowState(WindowState.NORMAL);
-               uiPageBody.setMaximizedUIComponent(null);
-            }
-         }
-         PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal, PageNodeEvent.CHANGE_PAGE_NODE, uri);
-         uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
-      }
-   }
-
+   /**
+    * Show the selected portlet by click on portlet icon in the dockbar
+    */
    static public class ShowPortletActionListener extends EventListener<UIPage>
    {
       public void execute(Event<UIPage> event) throws Exception

@@ -1,5 +1,5 @@
 <%
-	import org.exoplatform.web.application.JavascriptManager;
+  import org.exoplatform.web.application.JavascriptManager;
   import org.exoplatform.webos.webui.page.UIDesktopPage;
 
   def rcontext = _ctx.getRequestContext() ;
