@@ -23,11 +23,18 @@ import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Page;
-import org.exoplatform.portal.config.model.PageNavigation;
-import org.exoplatform.portal.config.model.PageNode;
+import org.exoplatform.portal.mop.SiteKey;
+import org.exoplatform.portal.mop.Visibility;
+import org.exoplatform.portal.mop.navigation.NavigationServiceException;
+import org.exoplatform.portal.mop.navigation.Scope;
+import org.exoplatform.portal.mop.user.UserNavigation;
+import org.exoplatform.portal.mop.user.UserNode;
+import org.exoplatform.portal.mop.user.UserNodeFilterConfig;
+import org.exoplatform.portal.mop.user.UserPortal;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.web.application.ApplicationMessage;
@@ -40,8 +47,12 @@ import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
+
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @ComponentConfig(template = "app:/groovy/webui/component/dashboard/UIWebOSTabPaneDashboard.gtmpl", events = {
@@ -50,61 +61,122 @@ import java.util.List;
    @EventConfig(name = "RenameTabLabel", listeners = UIWebOSTabPaneDashboard.RenameTabLabelActionListener.class)})
 public class UIWebOSTabPaneDashboard extends UIContainer
 {
-
    private static Log logger = ExoLogger.getExoLogger(UIWebOSTabPaneDashboard.class);
 
    private UserPortalConfigService configService;
 
    private DataStorage dataService;
 
-   private PageNavigation pageNavigation;
-
    private UIPortal uiPortal;
+   
+   private UserNode cachedParent;
 
    final public static String PAGE_TEMPLATE = "dashboard";
+
+   final private UserNodeFilterConfig filterConfig;
+   
+   static final private Scope TAB_PANE_DASHBOARD_SCOPE = Scope.CHILDREN;
 
    public UIWebOSTabPaneDashboard() throws Exception
    {
       configService = getApplicationComponent(UserPortalConfigService.class);
       dataService = getApplicationComponent(DataStorage.class);
       uiPortal = Util.getUIPortal();
-      initPageNavigation();
+
+      UserNodeFilterConfig.Builder scopeBuilder = UserNodeFilterConfig.builder();
+      scopeBuilder.withAuthorizationCheck().withVisibility(Visibility.DISPLAYED, Visibility.TEMPORAL);
+      scopeBuilder.withTemporalCheck();
+      filterConfig = scopeBuilder.build();
    }
 
-   private void initPageNavigation() throws Exception
-   {
-      //String remoteUser = Util.getPortalRequestContext().getRemoteUser();
-      //pageNavigation = getPageNavigation(PortalConfig.USER_TYPE + "::" + remoteUser);
-      //TODO: Check this part carefully
-      this.pageNavigation = uiPortal.getSelectedNavigation();
-   }
-
-   public int getCurrentNumberOfTabs() throws Exception
+   private int getCurrentNumberOfTabs() throws Exception
    {
       return getSameSiblingsNode().size();
    }
 
-   public List<PageNode> getSameSiblingsNode() throws Exception
+   public UserNode getParentTab() throws Exception
    {
-      List<PageNode> siblings = getPageNavigation().getNodes();
-      List<PageNode> selectedPath = Util.getUIPortal().getSelectedPath();
-      if (selectedPath != null && selectedPath.size() > 1)
-      {
-         PageNode currentParent = selectedPath.get(selectedPath.size() - 2);
-         siblings = currentParent.getChildren();
+      UserPortal userPortal = getUserPortal();
+      UserNode selectedNode =  uiPortal.getSelectedUserNode();
+      UserNode currParent = selectedNode.getParent();
+      
+      UserNode parent = this.cachedParent;    
+      if (parent == null || (currParent != null && !currParent.getId().equals(parent.getId())))
+      {         
+         if ("".equals(currParent.getURI()))
+         {
+            this.cachedParent = userPortal.getNode(currParent.getNavigation(), TAB_PANE_DASHBOARD_SCOPE, filterConfig, null);
+         }
+         else
+         {
+            this.cachedParent = userPortal.resolvePath(currParent.getNavigation(), filterConfig, currParent.getURI());            
+         }
+         parent = this.cachedParent;
       }
-      return filterWebOSNode(siblings);
-//      return siblings;
+            
+      if (parent != null)
+      {
+         try
+         {            
+            userPortal.updateNode(parent, TAB_PANE_DASHBOARD_SCOPE, null);
+         }
+         catch (NavigationServiceException e)
+         {
+            parent = null;
+         }
+      }      
+      this.cachedParent = parent;      
+      return parent;
    }
 
-   private List<PageNode> filterWebOSNode(List<PageNode> pageNodes) throws Exception
+   public Collection<UserNode> getSameSiblingsNode() throws Exception
+   {                                                                 
+      UserNode parentTab =  getParentTab();
+
+      if (parentTab == null)
+      {
+         return Collections.emptyList();
+      }
+      return filterWebOSNode(parentTab.getChildren());
+   }
+   
+   /**
+    * Return the current node uri, if it's been deleted, return first sibling node uri
+    * if there is no node remain, return default path 
+    * @throws Exception
+    */
+   public String getFirstAvailableURI() throws Exception
+   {           
+      UserNode parentTab = getParentTab();      
+      if (parentTab != null)
+      {
+         UserNode currNode = Util.getUIPortal().getSelectedUserNode();
+         if (parentTab.getChildren().size() == 0 && parentTab.getURI() != null)
+         {
+            return parentTab.getURI();
+         } 
+         
+         if (parentTab.getChild(currNode.getName()) != null)
+         {
+            return currNode.getURI();
+         } 
+         else 
+         {
+            return parentTab.getChild(0).getURI(); 
+         }
+      }   
+
+      return getUserPortal().getDefaultPath(null).getURI();
+   }
+
+   private Collection<UserNode> filterWebOSNode(Collection<UserNode> pageNodes) throws Exception
    {
       if (pageNodes == null || pageNodes.size() == 0)
       {
          return pageNodes;
       }
-      List<PageNode> tempNodes = new ArrayList<PageNode>(pageNodes);
-      PageNode node;
+      List<UserNode> tempNodes = new ArrayList<UserNode>(pageNodes);
+      UserNode node;
       for (int i = 0; i < tempNodes.size(); i++)
       {
          node = tempNodes.get(i);
@@ -116,13 +188,13 @@ public class UIWebOSTabPaneDashboard extends UIContainer
       return tempNodes;
    }
 
-   private boolean isWebOSNode(PageNode pageNode) throws Exception
+   private boolean isWebOSNode(UserNode pageNode) throws Exception
    {
       if (pageNode == null)
       {
          return false;
       }
-      String pageRef = pageNode.getPageReference();
+      String pageRef = pageNode.getPageRef();
       if (pageRef == null)
       {
          return false;
@@ -131,75 +203,61 @@ public class UIWebOSTabPaneDashboard extends UIContainer
       Page page = ds.getPage(pageRef);
       return page == null || UIDesktopPage.DESKTOP_FACTORY_ID.equals(page.getFactoryId());
    }
-
-   public PageNavigation getPageNavigation() throws Exception
+   
+   private UserNavigation getCurrentUserNavigation() throws Exception
    {
-      if (pageNavigation == null)
-      {
-         initPageNavigation();
-      }
-      return pageNavigation;
+      UserPortal userPortal = getUserPortal();
+      WebuiRequestContext rcontext = WebuiRequestContext.getCurrentInstance();
+      return userPortal.getNavigation(SiteKey.user(rcontext.getRemoteUser()));
+   }
+
+   private UserPortal getUserPortal()
+   {
+      UIPortalApplication uiApp = Util.getUIPortalApplication();
+      return uiApp.getUserPortalConfig().getUserPortal();
    }
 
    /**
-    * Remove node specified by nodeIndex and returns the node to switch to
-    * @param nodeIndex
-    * @return
+    * Remove node specified by nodeName and returns the node to switch to
+    * @param nodeName - name of the Node that will be remove
+    * @return return the node that should be selected after remove node
     */
-   public PageNode removePageNode(int nodeIndex)
+   private UserNode removePageNode(String nodeName)
    {
       try
-      {
-         List<PageNode> nodes = getSameSiblingsNode();
-         PageNode tobeRemoved = nodes.get(nodeIndex);
-         PageNode selectedNode = uiPortal.getSelectedNode();
-
-         boolean isRemoved = true; // To check 
-         PageNavigation updateNav =
-            dataService.getPageNavigation(pageNavigation.getOwnerType(), pageNavigation.getOwnerId());
-         for (PageNode pageNode : updateNav.getNodes())
+      {         
+         UserNode parentNode = getParentTab();
+         if (parentNode == null || parentNode.getChild(nodeName) == null)
          {
-            if (pageNode.getUri().equals(tobeRemoved.getUri()))
-            {
-               isRemoved = false;
-               break;
-            }
+            return null;
          }
 
-         if (nodes.size() >= 2)
+         UserNode tobeRemoved = parentNode.getChild(nodeName);
+         UserNode prevNode = null;
+
+         if (parentNode.getChildrenCount() >= 2)
          {
-            // Remove node
-            pageNavigation.getNodes().remove(tobeRemoved);
-            //In WebOS we need to clone the nodes and filter the WebOS page. See getSameSiblingsNode method
-            nodes.remove(tobeRemoved);
-            
-            // Choose selected Node
-            if (tobeRemoved.getUri().equals(selectedNode.getUri()))
+            for (UserNode child : parentNode.getChildren())
             {
-               selectedNode = nodes.get(Math.max(0, nodeIndex - 1));
-
-            }
-            else if (!nodes.contains(selectedNode))
-            {
-               selectedNode = nodes.get(0);
-            }
-
-            // Update
-            if (!isRemoved)
-            {
-               String pageRef = tobeRemoved.getPageReference();
-               if (pageRef != null && pageRef.length() > 0)
+               if (child.getName().equals(nodeName))
                {
-                  Page page = configService.getPage(pageRef);
-                  if (page != null)
-                     dataService.remove(page);
-                  UIPortal uiPortal = Util.getUIPortal();
-                  // Remove from cache
-                  uiPortal.setUIPage(pageRef, null);
+                  parentNode.removeChild(nodeName);
+                  break;
                }
-               //uiPortal.setSelectedNode(selectedNode);
-               dataService.save(pageNavigation);
+               prevNode = child;
             }
+
+            String pageRef = tobeRemoved.getPageRef();
+            if (pageRef != null && pageRef.length() > 0)
+            {
+               Page page = configService.getPage(pageRef);
+               if (page != null)
+                  dataService.remove(page);
+               UIPortal uiPortal = Util.getUIPortal();
+               // Remove from cache
+               uiPortal.setUIPage(pageRef, null);
+            }
+            getUserPortal().saveNode(parentNode, null);
          }
          else
          {
@@ -208,6 +266,11 @@ public class UIWebOSTabPaneDashboard extends UIContainer
             return null;
          }
 
+         UserNode selectedNode = uiPortal.getSelectedUserNode();
+         if (nodeName.equals(selectedNode.getName()))
+         {
+            selectedNode = prevNode != null ? prevNode : parentNode.getChildren().iterator().next();
+         }
          return selectedNode;
       }
       catch (Exception ex)
@@ -216,7 +279,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
       }
    }
 
-   public String createNewPageNode(String nodeLabel)
+   private String createNewPageNode(String nodeLabel)
    {
       try
       {
@@ -224,48 +287,35 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          {
             nodeLabel = "Tab_" + getCurrentNumberOfTabs();
          }
-         Page page =
-            configService.createPageTemplate(UIWebOSTabPaneDashboard.PAGE_TEMPLATE, pageNavigation.getOwnerType(),
-               pageNavigation.getOwnerId());
-         page.setTitle(nodeLabel);
 
-         List<PageNode> selectedPath = uiPortal.getSelectedPath();
-         PageNode parentNode = null;
-         if (selectedPath != null && selectedPath.size() > 1)
+         UserNavigation userNav = getCurrentUserNavigation();
+         UserNode parentNode = getParentTab();
+         if (userNav == null || parentNode == null)
          {
-            parentNode = selectedPath.get(selectedPath.size() - 2);
+            return null;
          }
 
-         PageNode pageNode = new PageNode();
-         pageNode.setLabel(nodeLabel);
          String uniqueNodeName = nodeLabel.toLowerCase().replace(' ', '_');
-         if (nameExisted(uniqueNodeName))
+
+         SiteKey siteKey = userNav.getKey();
+         Page page =
+            configService.createPageTemplate(UIWebOSTabPaneDashboard.PAGE_TEMPLATE, siteKey.getTypeName(), siteKey.getName());
+         page.setTitle(nodeLabel);
+         page.setName(uniqueNodeName + page.hashCode());
+         dataService.create(page);
+
+         if (parentNode.getChild(uniqueNodeName) != null)
          {
             uniqueNodeName = uniqueNodeName + "_" + System.currentTimeMillis();
          }
 
-         String fullName = (parentNode != null) ? parentNode.getUri() + "/" + uniqueNodeName : uniqueNodeName;
+         UserNode tabNode = parentNode.addChild(uniqueNodeName);
+         tabNode.setLabel(nodeLabel);
+         tabNode.setPageRef(page.getPageId());
 
-         page.setName(uniqueNodeName + "_" + page.hashCode());
-         pageNode.setName(uniqueNodeName);
-         pageNode.setUri(fullName);
-         pageNode.setPageReference(page.getPageId());
+         getUserPortal().saveNode(parentNode, null);
 
-         if (parentNode == null)
-         {
-            pageNavigation.addNode(pageNode);
-         }
-         else if (parentNode.getChildren() != null)
-         {
-            parentNode.getChildren().add(pageNode);
-         }
-
-         //uiPortal.setSelectedNode(pageNode);
-
-         dataService.create(page);
-         dataService.save(pageNavigation);
-
-         return fullName;
+         return tabNode.getURI();
       }
       catch (Exception ex)
       {
@@ -297,60 +347,58 @@ public class UIWebOSTabPaneDashboard extends UIContainer
       return true;
    }
 
-   private boolean nameExisted(String nodeName)
-   {
-      for (PageNode node : pageNavigation.getNodes())
-      {
-         if (node.getName().equals(nodeName))
-         {
-            return true;
-         }
-      }
-      return false;
-   }
-
-   public String renamePageNode(int nodeIndex, String newNodeLabel)
+   private String renamePageNode(String nodeName, String newNodeLabel)
    {
       try
       {
-         List<PageNode> nodes = getSameSiblingsNode();
-         PageNode renamedNode = nodes.get(nodeIndex);
-         if (renamedNode == null || newNodeLabel.length() == 0)
+         UserNode parentNode = getParentTab();
+         if (parentNode == null || parentNode.getChild(nodeName) == null)
          {
             return null;
          }
-
+         UserNode renamedNode = parentNode.getChild(nodeName);
          renamedNode.setLabel(newNodeLabel);
 
          String newNodeName = newNodeLabel.toLowerCase().replace(' ', '_');
-         if (nameExisted(newNodeName))
+         if (parentNode.getChild(newNodeName) != null)
          {
             newNodeName = newNodeName + "_" + System.currentTimeMillis();
          }
          renamedNode.setName(newNodeName);
 
-         List<PageNode> selectedPath = Util.getUIPortal().getSelectedPath();
-         PageNode parentNode = null;
-         if (selectedPath != null && selectedPath.size() > 1)
-         {
-            parentNode = selectedPath.get(selectedPath.size() - 2);
-         }
-         String newUri = (parentNode != null) ? parentNode.getUri() + "/" + newNodeName : newNodeName;
-
-         renamedNode.setUri(newUri);
-
-         Page page = configService.getPage(renamedNode.getPageReference());
-         page.setTitle(newNodeLabel);
+         Page page = configService.getPage(renamedNode.getPageRef());
          if (page != null)
+         {
+            page.setTitle(newNodeLabel);
             dataService.save(page);
-         
-         dataService.save(pageNavigation);
-         return newUri;
+         }
+
+         getUserPortal().saveNode(parentNode, null);
+         return renamedNode.getURI();
       }
       catch (Exception ex)
       {
          return null;
       }
+   }
+
+   private String encodeURI(String uri) throws UnsupportedEncodingException
+   {
+      if (uri == null || uri.isEmpty())
+      {
+         return "";
+      }
+      String[] path = uri.split("/");
+      StringBuilder uriBuilder = new StringBuilder();
+      for (String name : path)
+      {
+         uriBuilder.append("/").append(URLEncoder.encode(name, "UTF-8"));
+      }
+      if (uriBuilder.indexOf("/") == 0)
+      {
+         uriBuilder.deleteCharAt(0);
+      }
+      return uriBuilder.toString();
    }
 
    static public class DeleteTabActionListener extends EventListener<UIWebOSTabPaneDashboard>
@@ -359,8 +407,9 @@ public class UIWebOSTabPaneDashboard extends UIContainer
       {
          UIWebOSTabPaneDashboard source = event.getSource();
          WebuiRequestContext context = event.getRequestContext();
-         int removedNodeIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));
-         PageNode selectedNode = source.removePageNode(removedNodeIndex);
+         String nodeName = context.getRequestParameter(UIComponent.OBJECTID);
+         String newUri = source.getFirstAvailableURI();
+         UserNode selectedNode = source.removePageNode(nodeName);
 
          //If the node is removed successfully, then redirect to the node specified by tab on the left
          if (selectedNode != null)
@@ -372,11 +421,12 @@ public class UIWebOSTabPaneDashboard extends UIContainer
             {
                uiPageBody.setMaximizedUIComponent(null);
             }
-
-            PortalRequestContext prContext = Util.getPortalRequestContext();
-            prContext.setResponseComplete(true);
-            prContext.getResponse().sendRedirect(prContext.getPortalURI() + URLEncoder.encode(selectedNode.getUri(), "UTF-8"));
+            newUri = selectedNode.getURI();
          }
+
+         PortalRequestContext prContext = Util.getPortalRequestContext();
+         prContext.setResponseComplete(true);
+         prContext.getResponse().sendRedirect(prContext.getPortalURI() + source.encodeURI(newUri));
       }
    }
 
@@ -387,27 +437,24 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          UIWebOSTabPaneDashboard tabPane = event.getSource();
          WebuiRequestContext context = event.getRequestContext();
          String newTabLabel = context.getRequestParameter(UIComponent.OBJECTID);
+         String newUri = tabPane.getFirstAvailableURI();
          if (!tabPane.validateName(newTabLabel))
-         {
-            //TODO nguyenanhkien2a@gmail.com
-            //We should redirect to current node while adding new tab fails
-            PageNode currentNode = tabPane.uiPortal.getSelectedNode();
-            PortalRequestContext prContext = Util.getPortalRequestContext();
-            prContext.getResponse().sendRedirect(prContext.getPortalURI() + URLEncoder.encode(currentNode.getUri(), "UTF-8"));
-            
+         {            
             Object[] args = {newTabLabel};
-            context.getUIApplication().addMessage(new ApplicationMessage("UIWebOSTabPaneDashboard.msg.wrongTabName", args));
-            return;
+            context.getUIApplication().addMessage(new ApplicationMessage("UITabPaneDashboard.msg.wrongTabName", args));
          }
-         String uri = tabPane.createNewPageNode(newTabLabel);
-
-         //If new node is created with success, then redirect to it
-         if (uri != null)
+         else
          {
-            PortalRequestContext prContext = Util.getPortalRequestContext();
-            prContext.setResponseComplete(true);
-            prContext.getResponse().sendRedirect(prContext.getPortalURI() + URLEncoder.encode(uri, "UTF-8"));
+            String uri = tabPane.createNewPageNode(newTabLabel);
+            if (uri != null)
+            {
+               newUri = uri;
+            }
          }
+
+         PortalRequestContext prContext = Util.getPortalRequestContext();
+         prContext.setResponseComplete(true);
+         prContext.getResponse().sendRedirect(prContext.getPortalURI() + tabPane.encodeURI(newUri));
       }
    }
 
@@ -418,29 +465,29 @@ public class UIWebOSTabPaneDashboard extends UIContainer
 
       public void execute(Event<UIWebOSTabPaneDashboard> event) throws Exception
       {
-         UIWebOSTabPaneDashboard tabPane = event.getSource();
+         UIWebOSTabPaneDashboard tabPane = event.getSource();         
          WebuiRequestContext context = event.getRequestContext();
-         int nodeIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));
+         UIApplication rootUI = context.getUIApplication();
+                  
          String newTabLabel = context.getRequestParameter(RENAMED_TAB_LABEL_PARAMETER);
+         String newUri = tabPane.getFirstAvailableURI();
          if (!tabPane.validateName(newTabLabel))
-         {
-            //We should redirect to current node while renaming fails
-            PageNode currentNode = tabPane.uiPortal.getSelectedNode();
-            PortalRequestContext prContext = Util.getPortalRequestContext();
-            prContext.getResponse().sendRedirect(prContext.getPortalURI() + URLEncoder.encode(currentNode.getUri(), "UTF-8"));
-            
+         {            
             Object[] args = {newTabLabel};
-            context.getUIApplication().addMessage(new ApplicationMessage("UIWebOSTabPaneDashboard.msg.wrongTabName", args));
-            return;
+            rootUI.addMessage(new ApplicationMessage("UITabPaneDashboard.msg.wrongTabName", args));
          }
-         String newUri = tabPane.renamePageNode(nodeIndex, newTabLabel);
-
-         //If page node is renamed with success, then redirect to new URL
-         if (newUri != null)
+         else
          {
-            PortalRequestContext prContext = Util.getPortalRequestContext();
-            prContext.getResponse().sendRedirect(prContext.getPortalURI() + URLEncoder.encode(newUri, "UTF-8"));
+            String nodeName = context.getRequestParameter(UIComponent.OBJECTID);
+            String returnUri = tabPane.renamePageNode(nodeName, newTabLabel);            
+            if (returnUri != null)
+            {            
+               newUri = returnUri;               
+            }
          }
+         PortalRequestContext prContext = Util.getPortalRequestContext();
+         prContext.getResponse().sendRedirect(prContext.getPortalURI() + tabPane.encodeURI(newUri));
+         prContext.setResponseComplete(true);
       }
    }
 }

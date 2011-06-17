@@ -57,13 +57,13 @@ eXo.webui.UIWebOSTabbedDashboard = {
 		}
 	},
 
-	showEditLabelInput : function(selectedElement, nodeIndex, currentContent){
+	showEditLabelInput : function(selectedElement, nodeName, currentContent){
 		eXo.webui.UIWebOSTabbedDashboard.backupElement = selectedElement;
 		var prNode = selectedElement.parentNode;
 		
 		var inputElement = document.createElement("input");
 		inputElement.type = "text";
-		inputElement.id = nodeIndex;
+		inputElement.id = nodeName;
 		inputElement.name = currentContent; // To store old value
 		inputElement.value = currentContent;
 		inputElement.style.border = "1px solid #b7b7b7";

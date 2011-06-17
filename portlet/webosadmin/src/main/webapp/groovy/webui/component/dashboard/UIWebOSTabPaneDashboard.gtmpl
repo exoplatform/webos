@@ -1,22 +1,17 @@
 <%
-	import java.util.ArrayList; 
-	import org.exoplatform.portal.config.model.PageNavigation;
-	import org.exoplatform.portal.config.model.PageNode;
-	import org.exoplatform.portal.webui.util.Util;
-	import org.exoplatform.portal.webui.portal.UIPortal;
-	import org.exoplatform.portal.application.PortalRequestContext;
-	import org.exoplatform.web.application.JavascriptManager;
+    import org.exoplatform.portal.application.PortalRequestContext;
+    import org.exoplatform.portal.mop.user.UserNode;
+    import org.exoplatform.portal.webui.util.Util;
+    import org.exoplatform.portal.webui.portal.UIPortal;
+    import org.exoplatform.web.application.JavascriptManager;
 	
-	//PageNavigation pageNavigation = uicomponent.getPageNavigation();
-	//ArrayList<PageNode> nodes = pageNavigation.getNodes();
-	ArrayList<PageNode> nodes = uicomponent.getSameSiblingsNode();
-	def tabNbs = uicomponent.getCurrentNumberOfTabs();
+	def nodes = uicomponent.getSameSiblingsNode();
+	def tabNbs = nodes.size();
 
 	PortalRequestContext pcontext = Util.getPortalRequestContext();	
-	def String portalURI = pcontext.getPortalURI();
+	def portalURI = pcontext.getPortalURI();
 
-	PageNode selectedNode = Util.getUIPortal().getSelectedNode();
-	PageNode node; 
+	def selectedNode = Util.getUIPortal().getSelectedUserNode();
 	
 	JavascriptManager jsManager = pcontext.getJavascriptManager();
 	jsManager.importJavascript("eXo.webui.UIWebOSTabbedDashboard", "/webosadmin/javascript/");
@@ -28,55 +23,54 @@
 			<div class="CtTabDashboard">
 				<div class="UIHorizontalTabs">
 					<div class="TabsContainer ClearFix">
-						<% for(int i = 0;i < tabNbs;i++){ 
-							 		node = nodes.get(i);
-									if (uicomponent.isWebOSNode(node)) continue;
-									def tabLabel = node.getLabel();
-									if ("Tab_Default".equals(node.getName()))
-									{
-										tabLabel = _ctx.appRes("UIUserToolbarDesktopPortlet.page." + node.getLabel());
-									}
-									String param = "" + i;
-									if(node.getUri().equals(selectedNode.getUri())){ 
-		  						%>
-								<div class="UITab GrayTabStyle">
-										<div class="SelectedTab">
-												<div class="LeftTab">
-														<div class="RightTab">
-																<div class="MiddleTab">
-																		<% 
-																			String ondblclick = "eXo.webui.UIWebOSTabbedDashboard.showEditLabelInput(this," + i + ",\"" + tabLabel + "\")";
-																		%>
-																		<span ondblclick='$ondblclick'>$tabLabel</span>
-																		<a  href="<%= uicomponent.url("DeleteTab",param); %>">
-																			<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
-																		</a>	
-																</div>
-														</div>
-												</div>
-										</div>
-								</div>
-							<%}else{ %>
-								<div class="UITab GrayTabStyle">
-									<div class="NormalTab">
-										<div class="LeftTab">
-											<div class="RightTab">
-												<div class="MiddleTab">
-													<a	href="<%= portalURI + node.getUri(); %>"><span>$tabLabel</span></a>
-													<a  href="<%= uicomponent.url("DeleteTab",param); %>">
-														<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
-													</a>	
-												</div>
-											</div>		
-										</div>
-									</div>
-								</div>
-							<%} %>	
+						<% 
+                        for (UserNode node : nodes) {
+                           if (uicomponent.isWebOSNode(node)) continue;
+                           String tabLabel = node.getLabel();
+                           if (org.exoplatform.webos.toolbar.UIUserToolbarDesktopPortlet.DEFAULT_TAB_NAME.equals(node.getName())) {
+                              tabLabel = _ctx.appRes("UIUserToolbarDesktopPortlet.page." + node.getLabel());
+                           }
+                           
+                           String param = node.getName();
+                           if (node.getURI().equals(selectedNode.getURI())) {
+		  				%>
+            			<div class="UITab GrayTabStyle">
+        					<div class="SelectedTab">
+    							<div class="LeftTab">
+    								<div class="RightTab">
+    									<div class="MiddleTab">
+    										<% 
+        										String ondblclick = "eXo.webui.UIWebOSTabbedDashboard.showEditLabelInput(this,\"" + param + "\",\"" + tabLabel + "\")";
+    										%>
+    										<span ondblclick='$ondblclick'>$tabLabel</span>
+    										<a  href="<%= uicomponent.url("DeleteTab",param); %>">
+    											<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
+    										</a>	
+    									</div>
+    								</div>
+    							</div>
+        					</div>
+            			</div>
+						<% } else { %>
+						<div class="UITab GrayTabStyle">
+    						<div class="NormalTab">
+    							<div class="LeftTab">
+    								<div class="RightTab">
+    									<div class="MiddleTab">
+    										<a	href="<%= portalURI + node.getURI(); %>"><span>$tabLabel</span></a>
+    										<a  href="<%= uicomponent.url("DeleteTab",param); %>">
+    											<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
+    										</a>
+    									</div>
+    								</div>
+    							</div>
+    						</div>
+						</div>
 						<% } %>
+					<% } %>
 						<div class="AddDashboard" onclick="eXo.webui.UIWebOSTabbedDashboard.createTabDashboard(this)"><span></span></div>				
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>						

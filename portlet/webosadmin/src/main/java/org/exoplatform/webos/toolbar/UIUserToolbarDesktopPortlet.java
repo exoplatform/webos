@@ -23,10 +23,14 @@ import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
-import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
-import org.exoplatform.portal.webui.page.UIPage;
-import org.exoplatform.portal.webui.portal.UIPortal;
+import org.exoplatform.portal.mop.SiteKey;
+import org.exoplatform.portal.mop.Visibility;
+import org.exoplatform.portal.mop.navigation.Scope;
+import org.exoplatform.portal.mop.user.UserNavigation;
+import org.exoplatform.portal.mop.user.UserNode;
+import org.exoplatform.portal.mop.user.UserNodeFilterConfig;
+import org.exoplatform.portal.mop.user.UserPortal;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.services.log.ExoLogger;
@@ -40,8 +44,10 @@ import org.exoplatform.webui.core.UIPortletApplication;
 import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Collection;
+import java.util.Collections;
+
 import javax.portlet.EventRequest;
 
 /**
@@ -56,40 +62,45 @@ import javax.portlet.EventRequest;
 public class UIUserToolbarDesktopPortlet extends UIPortletApplication
 {
    public static String DEFAULT_TAB_NAME = "Tab_Default";
+   private UserNodeFilterConfig toolbarFilterConfig;
    
    public UIUserToolbarDesktopPortlet() throws Exception
    {
+      UserNodeFilterConfig.Builder builder = UserNodeFilterConfig.builder();
+      builder.withAuthorizationCheck().withVisibility(Visibility.DISPLAYED, Visibility.TEMPORAL).withTemporalCheck();
+      toolbarFilterConfig = builder.build();
    }
 
-   public PageNavigation getCurrentUserNavigation() throws Exception
+   public UserNavigation getCurrentUserNavigation() throws Exception
    {
-      String remoteUser = Util.getPortalRequestContext().getRemoteUser();
-      return getPageNavigation(PortalConfig.USER_TYPE + "::" + remoteUser);
+      WebuiRequestContext rcontext = WebuiRequestContext.getCurrentInstance();
+      return getNavigation(SiteKey.user(rcontext.getRemoteUser()));
    }
 
-   private PageNavigation getPageNavigation(String owner) throws Exception
+   private UserNavigation getNavigation(SiteKey userKey)
    {
-      List<PageNavigation> allNavigations = Util.getUIPortalApplication().getNavigations();
-      for (PageNavigation nav : allNavigations)
-      {
-         if (nav.getOwner().equals(owner))
-            return nav;
-      }
-      return null;
+      UserPortal userPortal = getUserPortal();
+      return userPortal.getNavigation(userKey);
    }
 
-   public PageNode getSelectedPageNode() throws Exception
+   private UserPortal getUserPortal()
    {
-      return Util.getUIPortal().getSelectedNode();
+      UIPortalApplication uiPortalApplication = Util.getUIPortalApplication();
+      return uiPortalApplication.getUserPortalConfig().getUserPortal();
    }
 
-   private boolean isWebOSNode(PageNode pageNode) throws Exception
+   private UserNode getSelectedNode() throws Exception
    {
-      if (pageNode == null)
+      return Util.getUIPortal().getSelectedUserNode();
+   }
+
+   private boolean isWebOSNode(UserNode userNode) throws Exception
+   {
+      if (userNode == null)
       {
          return false;
       }
-      String pageRef = pageNode.getPageReference();
+      String pageRef = userNode.getPageRef();
       if (pageRef == null)
       {
          return false;
@@ -97,6 +108,16 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
       DataStorage ds = getApplicationComponent(DataStorage.class);
       Page page = ds.getPage(pageRef);
       return page == null || UIDesktopPage.DESKTOP_FACTORY_ID.equals(page.getFactoryId());
+   }
+   
+   private boolean hasDashboardNode() throws Exception
+   {
+      Collection<UserNode> nodes = getUserNodes(getCurrentUserNavigation());
+      if (nodes.size() < 1 || (nodes.size() == 1 && isWebOSNode(nodes.iterator().next())))
+      {
+         return false;
+      }
+      return true;
    }
 
    private boolean isWebOSCreated() throws Exception
@@ -107,16 +128,17 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
       return page != null;
    }
 
-   private PageNode getFirstNonWebOSNode(ArrayList<PageNode> nodes) throws Exception
+   private UserNode getFirstNonWebOSNode(Collection<UserNode> nodes) throws Exception
    {
-      for (PageNode node : nodes)
+      for (UserNode node : nodes)
       {
          if (!isWebOSNode(node))
          {
             return node;
          }
       }
-      return null;
+      
+      throw new NullPointerException("There is no dashboard node. The dashboard node existing should be checked before");
    }
 
    static public class NavigationChangeActionListener extends EventListener<UIUserToolbarDesktopPortlet>
@@ -142,35 +164,23 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
 
       public void execute(Event<UIUserToolbarDesktopPortlet> event) throws Exception
       {
-         UIUserToolbarDesktopPortlet toolBarPortlet = event.getSource();
+         UIUserToolbarDesktopPortlet toolbarPortlet = event.getSource();
          String nodeName = event.getRequestContext().getRequestParameter(UIComponent.OBJECTID);
-
-         PageNavigation cachedNavigation = toolBarPortlet.getCurrentUserNavigation();
-
-         // Update navigation for prevent create first node which already existed
-         DataStorage dataStorage = toolBarPortlet.getApplicationComponent(DataStorage.class);
-         PageNavigation userNavigation =
-            dataStorage.getPageNavigation(cachedNavigation.getOwnerType(), cachedNavigation.getOwnerId());
-         cachedNavigation.merge(userNavigation);
-
-         UserPortalConfigService configService = toolBarPortlet.getApplicationComponent(UserPortalConfigService.class);
-         if (configService != null && cachedNavigation.getNodes().size() < 1 ||
-               cachedNavigation.getNodes().size() == 1 && toolBarPortlet.isWebOSNode(cachedNavigation.getNodes().get(0)))
+         
+         Collection<UserNode> nodes = toolbarPortlet.getUserNodes(toolbarPortlet.getCurrentUserNavigation());
+         if (toolbarPortlet.hasDashboardNode())
          {
-            createDashboard(nodeName, cachedNavigation, toolBarPortlet);
+            PortalRequestContext prContext = Util.getPortalRequestContext();
+            prContext.getResponse().sendRedirect(prContext.getPortalURI() + toolbarPortlet.getFirstNonWebOSNode(nodes));
          }
          else
          {
-            PortalRequestContext prContext = Util.getPortalRequestContext();
-            prContext.getResponse().sendRedirect(
-               prContext.getPortalURI() + toolBarPortlet.getFirstNonWebOSNode(cachedNavigation.getNodes()).getName());
+            createDashboard(nodeName, toolbarPortlet);
          }
       }
 
-      private static void createDashboard(String _nodeName, PageNavigation _pageNavigation,
-         UIUserToolbarDesktopPortlet toolbarPortlet)
+      private static void createDashboard(String _nodeName, UIUserToolbarDesktopPortlet toolbarPortlet)
       {
-         UserPortalConfigService _configService = toolbarPortlet.getApplicationComponent(UserPortalConfigService.class);
          try
          {
             PortalRequestContext prContext = Util.getPortalRequestContext();
@@ -179,24 +189,28 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
                logger.debug("Parsed nodeName is null, hence use Tab_0 as default name");
                _nodeName = DEFAULT_TAB_NAME;
             }
-            Page page =
-               _configService.createPageTemplate(PAGE_TEMPLATE, _pageNavigation.getOwnerType(), _pageNavigation
-                  .getOwnerId());
+            UserPortal userPortal = toolbarPortlet.getUserPortal();
+            UserNavigation userNavigation = toolbarPortlet.getCurrentUserNavigation();
+            if (userNavigation == null)
+            {
+               return;
+            }
+
+            SiteKey siteKey = userNavigation.getKey();
+            UserPortalConfigService _configService = toolbarPortlet.getApplicationComponent(UserPortalConfigService.class);
+            Page page = _configService.createPageTemplate(PAGE_TEMPLATE, siteKey.getTypeName(), siteKey.getName());
             page.setTitle(_nodeName);
             page.setName(_nodeName);
 
-            PageNode pageNode = new PageNode();
-            pageNode.setName(_nodeName);
-            pageNode.setLabel(_nodeName);
-            pageNode.setUri(_nodeName);
-            pageNode.setPageReference(page.getPageId());
+            toolbarPortlet.getApplicationComponent(DataStorage.class).create(page);
 
-            _pageNavigation.addNode(pageNode);
-            DataStorage ds = toolbarPortlet.getApplicationComponent(DataStorage.class);
-            ds.create(page);
-            ds.save(_pageNavigation);
-
-            prContext.getResponse().sendRedirect(prContext.getPortalURI() + _nodeName);
+            UserNode rootNode = userPortal.getNode(userNavigation, Scope.CHILDREN, toolbarPortlet.toolbarFilterConfig, null);
+            UserNode dashboardNode = rootNode.addChild(_nodeName);
+            dashboardNode.setLabel(_nodeName);
+            dashboardNode.setPageRef(page.getPageId());
+            
+            userPortal.saveNode(rootNode, null);
+            prContext.getResponse().sendRedirect(prContext.getPortalURI() + dashboardNode.getURI());
          }
          catch (Exception ex)
          {
@@ -214,77 +228,23 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
       public void execute(Event<UIUserToolbarDesktopPortlet> event) throws Exception
       {
          WebuiRequestContext context = event.getRequestContext();
+         UIUserToolbarDesktopPortlet toolbarDesktopPortlet = event.getSource();
          String userName = context.getRemoteUser();
 
          if (userName != null)
          {
-            DataStorage storage = event.getSource().getApplicationComponent(DataStorage.class);
-
-            Page page = createPage(userName, storage);
-            PageNavigation pageNavigation = createNavigation(userName, page.getPageId(), storage);
-            updateUI(pageNavigation);
+            Page page = createPage(userName, toolbarDesktopPortlet);
+            UserNode desktopNode = createNavigation(userName, page.getPageId(), toolbarDesktopPortlet);
+            PortalRequestContext prContext = Util.getPortalRequestContext();
+            prContext.getResponse().sendRedirect(prContext.getPortalURI() + desktopNode.getURI());
+//            updateUI(pageNavigation);
          }
       }
 
-      private PageNavigation createNavigation(String userName, String pageId, DataStorage storage) throws Exception
+      private Page createPage(String userName, UIUserToolbarDesktopPortlet toolbarDesktopPortlet) throws Exception
       {
-         PageNavigation pageNavigation = storage.getPageNavigation(PortalConfig.USER_TYPE, userName);
-         PageNode pageNode = null;
-         if (pageNavigation == null)
-         {
-            pageNavigation = new PageNavigation();
-            pageNavigation.setOwnerType(PortalConfig.USER_TYPE);
-            pageNavigation.setOwnerId(userName);
-            storage.create(pageNavigation);
-         }
-         else
-         {
-            pageNode = pageNavigation.getNode(UIDesktopPage.NODE_NAME);
-         }
-
-         if (pageNode == null)
-         {
-            pageNode = new PageNode();
-            pageNode.setName(UIDesktopPage.NODE_NAME);
-            pageNode.setUri(UIDesktopPage.NODE_NAME);
-            pageNode.setLabel(UIDesktopPage.NODE_LABEL);
-            pageNode.setPageReference(pageId);
-
-            pageNavigation.addNode(pageNode);
-            storage.save(pageNavigation);
-         }
-         
-         return pageNavigation;
-      }
-
-      private void updateUI(PageNavigation pageNavigation) throws Exception
-      {
-         UIPortalApplication uiApp = Util.getUIPortalApplication();
-         List<PageNavigation> all_navigations = uiApp.getNavigations();
-
-         for (PageNavigation nav : all_navigations)
-         {
-            if (nav.getOwnerType().equals(PortalConfig.USER_TYPE) &&
-               nav.getNode(UIDesktopPage.NODE_NAME) == null)
-            {
-               nav.addNode(pageNavigation.getNode(UIDesktopPage.NODE_NAME));
-               break;
-            }
-         }
-         
-         UIPortal uiPortal = Util.getUIPortal();
-         if (uiPortal != null && uiPortal.findFirstComponentOfType(UIDesktopPage.class) == null)
-         {
-            uiPortal.refreshUIPage();
-         }
-
-         PortalRequestContext prContext = Util.getPortalRequestContext();
-         prContext.getResponse().sendRedirect(prContext.getPortalURI() + UIDesktopPage.NODE_NAME);
-      }
-
-      private Page createPage(String userName, DataStorage storage) throws Exception
-      {
-         Page page = storage.getPage(PortalConfig.USER_TYPE + "::" + userName + "::" + UIDesktopPage.PAGE_ID);
+         DataStorage service = toolbarDesktopPortlet.getApplicationComponent(DataStorage.class);
+         Page page = service.getPage(PortalConfig.USER_TYPE + "::" + userName + "::" + UIDesktopPage.PAGE_ID);
          if (page == null)
          {
             page = new Page();
@@ -294,10 +254,45 @@ public class UIUserToolbarDesktopPortlet extends UIPortletApplication
             page.setShowMaxWindow(true);
             page.setOwnerType(PortalConfig.USER_TYPE);
             page.setOwnerId(userName);
-            storage.create(page);
+            service.create(page);
          }
          return page;
       }
+
+      private UserNode createNavigation(String userName, String pageId, UIUserToolbarDesktopPortlet toolbarDesktopPortlet) throws Exception
+      {
+         UserPortal userPortal = toolbarDesktopPortlet.getUserPortal();
+         UserNode rootNode = userPortal.getNode(toolbarDesktopPortlet.getCurrentUserNavigation(), Scope.CHILDREN,
+               toolbarDesktopPortlet.toolbarFilterConfig, null);
+         
+         UserNode desktopNode = rootNode.getChild(UIDesktopPage.NODE_NAME);
+         if (desktopNode == null)
+         {
+            desktopNode = rootNode.addChild(UIDesktopPage.NODE_NAME);
+            desktopNode.setLabel(UIDesktopPage.NODE_LABEL);
+            desktopNode.setPageRef(pageId);
+            userPortal.saveNode(rootNode, null);
+         }
+         
+         return desktopNode;
+      }
    }
 
+   public Collection<UserNode> getUserNodes(UserNavigation nav)
+   {
+      UserPortal userPortall = getUserPortal();
+      if (nav != null)
+      {
+         try
+         {
+            UserNode rootNode = userPortall.getNode(nav, Scope.CHILDREN, toolbarFilterConfig, null);
+            return rootNode.getChildren();
+         }
+         catch (Exception exp)
+         {
+            log.warn(nav.getKey().getName() + " has been deleted");
+         }
+      }
+      return Collections.emptyList();
+   }
 }

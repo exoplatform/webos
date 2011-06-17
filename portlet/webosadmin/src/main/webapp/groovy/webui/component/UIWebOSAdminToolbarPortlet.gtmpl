@@ -1,12 +1,11 @@
 <%	
-	import org.exoplatform.web.application.JavascriptManager;
-	import org.exoplatform.portal.config.model.PageNavigation;
-	import org.exoplatform.webui.application.portlet.PortletRequestContext;	
-	import org.exoplatform.portal.webui.util.Util;
-	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
-	import org.exoplatform.portal.webui.page.UIPage;
+    import org.exoplatform.web.application.JavascriptManager;
+    import org.exoplatform.portal.webui.util.Util;
+    import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+    import org.exoplatform.portal.webui.page.UIPage;
+    import org.exoplatform.portal.mop.user.UserNavigation;
 	
-	def rcontext = (PortletRequestContext)_ctx.getRequestContext();
+	def rcontext = _ctx.getRequestContext();
 	 
 	JavascriptManager jsmanager = rcontext.getJavascriptManager();
 	jsmanager.importJavascript('eXo.portal.UIPortalNavigation');
@@ -22,9 +21,9 @@
 	boolean userCouldEditPage = uicomponent.hasEditPermissionOnPage();
 	boolean userCouldEditPortal = uicomponent.hasEditPermissionOnPortal();
 
-	PageNavigation selectedNav = uicomponent.getSelectedNavigation();
+	UserNavigation selectedNav = uicomponent.getSelectedNavigation();
 	if (selectedNav != null) {
-			editorLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action." + selectedNav.getOwnerType() + ".Editor");
+			editorLabel = _ctx.appRes("UIWebOSAdminToolbarPortlet.action." + selectedNav.getKey().getTypeName() + ".Editor");
 	}
 	String accountSetting = "javascript:if(document.getElementById('UIMaskWorkspace')) ajaxGet(eXo.env.server.createPortalURL('UIPortal', 'AccountSettings', true));"
 %>
@@ -56,8 +55,8 @@
 						
 						<% if(userCouldEditPortal){ %>
 							<div class="MenuItem">
-									<a href="javascript:ajaxGet(eXo.env.server.createPortalURL('UIWorkingWorkspace', 'EditInline', true))" title="" class="ItemIcon EditSiteIcon">$editSiteLayout</a>
-								</div>
+							    <a href="javascript:ajaxGet(eXo.env.server.createPortalURL('UIWorkingWorkspace', 'EditInline', true))" title="" class="ItemIcon EditSiteIcon">$editSiteLayout</a>
+							</div>
 						<% } %>
 					</div>
 				</div>
