@@ -21,6 +21,8 @@
 -->
 
 <dockbar>
+<!-- Uncomment this block to add apps to dockbar of DesktopPage -->
+<!-- 
    <portlet-application>
       <portlet>
         <application-ref>web</application-ref>
@@ -38,4 +40,5 @@
       <title>Application Registry</title>
       <access-permissions>manager:/platform/administrators</access-permissions>
     </portlet-application>
+-->    
 </dockbar>
