@@ -135,9 +135,7 @@
 									<% } %>
 
 									<img id="PortletsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/ShowPortletsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowPortletDesktop")%></span>
-									
-									<img id="GadgetsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/HideWidgetsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowWidgetDesktop")%></span>
-									
+																		
 									<img class="Separator" alt="" src="/webosResources/skin/Defaultskin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png" />
 
 									<img class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/AddPortlet.png" alt="" title="" id="UIAddApplicationIcon"

@@ -37,9 +37,7 @@ UIDockbar.prototype.init = function() {
   window.setTimeout(function() {uiDockbar.style.visibility = "visible"}, 50);
   
   var portletsViewer = document.getElementById("PortletsViewer") ;
-  var gadgetsViewer = document.getElementById("GadgetsViewer") ;
   portletsViewer.onclick = this.viewPortlets ;
-  gadgetsViewer.onclick = this.viewGadgets ;
 } ;
 
 UIDockbar.prototype.waitOnLoad = function(images) {
@@ -96,18 +94,14 @@ UIDockbar.prototype.viewPortlets = function() {
   var children = eXo.core.DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIWindow") ; 
 	var srcMonitoringImage = "/eXoResources/skin/sharedImages/Icon80x80/Hide"+this.id+".png" ;
   var srcPortletsViewerImage = "/eXoResources/skin/sharedImages/Icon80x80/Show"+this.id+".png" ;
-	eXo.desktop.UIDockbar.showDesktop = false ;
 	for(var i = 0; i < children.length; i++) {
-	    if(eXo.core.DOMUtil.hasDescendantClass(children[i], "UIGadgetPortlet"))
-	       continue;
-		if (children[i].style.display == "block" ) {
-			children[i].style.display = "none" ;
-			children[i].isShowed = true ;
-			eXo.desktop.UIDockbar.showDesktop = false ;
-		} else {
+		if(eXo.desktop.UIDockbar.showDesktop) {
 			if (children[i].isShowed)	{
 				children[i].style.display = "block" ;
-				eXo.desktop.UIDockbar.showDesktop = true ;
+			}
+		} else {
+			if (children[i].style.display == "block" ) {
+				children[i].style.display = "none" ;
 			}
 		}
 	}
@@ -118,26 +112,14 @@ UIDockbar.prototype.viewPortlets = function() {
 		} else {
 			this.src = srcMonitoringImage ;
 		}
+		eXo.desktop.UIDockbar.showDesktop = false;
 	} else {
 		if (eXo.core.Browser.isIE6()) {
 			this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + srcPortletsViewerImage + "', sizingMethod='scale')" ;
 		} else {
 			this.src = srcPortletsViewerImage ;
 		}
-	}
-} ;
-
-
-UIDockbar.prototype.viewGadgets = function() {
-	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
-  var children = eXo.core.DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIGadgetPortlet") ; 
-	for(var i = 0; i < children.length; i++) {
-	    var gadgetWindow = eXo.core.DOMUtil.findAncestorByClass(children[i], "UIWindow");
-		if (gadgetWindow.style.display != "none" ) {
-			gadgetWindow.style.display = "none" ;
-		} else {
-			gadgetWindow.style.display = "block" ;
-		}
+		eXo.desktop.UIDockbar.showDesktop = true;
 	}
 } ;
 
@@ -264,11 +246,6 @@ UIDockbar.prototype.resizeDockBar = function() {
 
 UIDockbar.prototype.resetDesktopShowedStatus = function(uiPageDesktop, uiDockBar) {
   var uiPageDesktopChildren = eXo.core.DOMUtil.getChildrenByTagName(uiPageDesktop, "div") ;
-  for(var i = 0; i < uiPageDesktopChildren.length; i++) {
-    if(uiPageDesktopChildren[i].isShowed == true && uiPageDesktopChildren[i].style.display == "none") {
-      uiPageDesktopChildren[i].isShowed = false ;
-    }
-  }
   if(this.showDesktop) {
     var portletsViewer = eXo.core.DOMUtil.findDescendantById(uiDockBar, "PortletsViewer") ;
     var blankImage = portletsViewer.src ;

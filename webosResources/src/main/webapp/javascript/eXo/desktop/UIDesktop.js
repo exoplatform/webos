@@ -110,8 +110,8 @@ UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement, mode) {
   if(mode == "QUIT") {
   	if(this.object.style.display == "block") {
 	    eXo.animation.ImplodeExplode.implode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
-	    this.object.isShowed = false ;
   	}
+  	this.object.isShowed = false ;
     eXo.desktop.UIWindow.saveWindowProperties(this.object, "QUIT");
   	if(dockIcon) DOMUtil.removeClass(dockIcon, "ShowIcon") ;
   	return ;
@@ -119,7 +119,6 @@ UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement, mode) {
   if(this.object.style.display == "block") {
     eXo.animation.ImplodeExplode.implode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
     eXo.desktop.UIWindow.saveWindowProperties(this.object, "HIDE");
-    this.object.isShowed = false ;
     if(dockIcon) DOMUtil.addClass(dockIcon, "ShowIcon") ;
   } else {
 	  if(DOMUtil.getChildrenByTagName(portletFrag, "div").length < 1) {
@@ -163,7 +162,13 @@ UIDesktop.prototype.backupWindowProperties = function(uiWindow) {
   uiWindow.style.visibility = "visible" ;
   if(uiWindow.style.display == "") uiWindow.style.display = "none" ;
   
-  uiWindow.isShowed = false ;
+  var portletId = uiWindow.id.replace(/^UIWindow-/, "");
+  var dockIcon = document.getElementById("DockItem"+portletId);
+  if(dockIcon) {
+  	if(eXo.core.DOMUtil.hasClass(dockIcon, "ShowIcon"))
+  		uiWindow.isShowed = true;
+  }
+  
   uiWindow.isFirstTime = false ;
 } ;
 

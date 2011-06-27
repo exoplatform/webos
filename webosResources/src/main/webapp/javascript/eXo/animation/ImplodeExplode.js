@@ -83,7 +83,6 @@ ImplodeExplode.prototype.implode = function(uiWindow, clickedElement, containerI
 		if(this.object.style.display == "block") {
 			this.object.style.display = "none" ;
 		}
-		this.object.isShowed = false ;
 	
 		eXo.animation.ImplodeExplode.doImplode(containerId) ;
 	} 
