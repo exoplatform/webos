@@ -55,8 +55,7 @@ import org.exoplatform.webui.event.EventListener;
 /** Created by The eXo Platform SARL Author : Anh Nguyen ntuananh.vn@gmail.com Oct 18, 2007 */
 @ComponentConfig(template = "system:/groovy/portal/webui/application/UIAddNewApplication.gtmpl", events = {
    @EventConfig(listeners = UIMaskWorkspace.CloseActionListener.class),
-   @EventConfig(listeners = UIAddNewApplication.AddApplicationActionListener.class),
-   @EventConfig(listeners = UIAddNewApplication.AddToStartupActionListener.class)})
+   @EventConfig(listeners = UIAddNewApplication.AddApplicationActionListener.class)})
 public class UIAddNewApplication extends UIContainer
 {
 
@@ -285,17 +284,6 @@ public class UIAddNewApplication extends UIContainer
          if (event.getSource().isInPage())
          {
             addApplicationToPage(event, false);
-         }
-      }
-   }
-
-   static public class AddToStartupActionListener extends EventListener<UIAddNewApplication>
-   {
-      public void execute(Event<UIAddNewApplication> event) throws Exception
-      {
-         if (event.getSource().isInPage())
-         {
-            addApplicationToPage(event, true);
          }
       }
    }
