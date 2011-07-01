@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.exoplatform.webos</groupId>
+      <artifactId>exo.webos.packaging</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
+   </parent>
+   <artifactId>exo.webos.packaging.ear</artifactId>
+   <packaging>ear</packaging>
+   <name>eXo WebOS EAR packaging</name>
+   <description>eXo WebOS Extension EAR</description>
+   <dependencies>
+      <dependency>
+         <groupId>org.exoplatform.webos</groupId>
+         <artifactId>exo.webos.component.web</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.exoplatform.webos</groupId>
+         <artifactId>exo.webos.extension.config</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.exoplatform.webos</groupId>
+         <artifactId>exo.webos.webui.webos</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.exoplatform.webos</groupId>
+         <artifactId>exo.webos.portlet.webosadmin</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>org.exoplatform.webos</groupId>
+         <artifactId>exo.webos.extension.war</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+      <dependency>
+         <groupId>org.exoplatform.webos</groupId>
+         <artifactId>exo.webos.web.webosResources</artifactId>
+         <version>${project.version}</version>
+         <type>war</type>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <finalName>gatein-webos-${project.version}</finalName>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-ear-plugin</artifactId>
+            <configuration>
+               <displayName>webos-extension</displayName>
+               <defaultLibBundleDir>lib</defaultLibBundleDir>
+               <modules>
+                  <jarModule>
+                     <groupId>org.exoplatform.webos</groupId>
+                     <artifactId>exo.webos.component.web</artifactId>
+                     <includeInApplicationXml>true</includeInApplicationXml>
+                  </jarModule>
+                  <jarModule>
+                     <groupId>org.exoplatform.webos</groupId>
+                     <artifactId>exo.webos.extension.config</artifactId>
+                     <includeInApplicationXml>true</includeInApplicationXml>
+                  </jarModule>
+                  <jarModule>
+                     <groupId>org.exoplatform.webos</groupId>
+                     <artifactId>exo.webos.webui.webos</artifactId>
+                     <includeInApplicationXml>true</includeInApplicationXml>
+                  </jarModule>
+                  <webModule>
+                     <groupId>org.exoplatform.webos</groupId>
+                     <artifactId>exo.webos.portlet.webosadmin</artifactId>
+                     <contextRoot>webosadmin</contextRoot>
+                     <bundleFileName>webosadmin.war</bundleFileName>
+                  </webModule>
+                  <webModule>
+                     <groupId>org.exoplatform.webos</groupId>
+                     <artifactId>exo.webos.extension.war</artifactId>
+                     <contextRoot>webos-ext</contextRoot>
+                     <bundleFileName>webos-ext.war</bundleFileName>
+                  </webModule>
+                  <webModule>
+                     <groupId>org.exoplatform.webos</groupId>
+                     <artifactId>exo.webos.web.webosResources</artifactId>
+                     <contextRoot>webosResources</contextRoot>
+                     <bundleFileName>webosResources.war</bundleFileName>
+                  </webModule>
+               </modules>
+            </configuration>
+         </plugin>
+         <!-- ########################################### -->
+         <!-- HORRIBLE AND DIRTY STEP TO CLEANUP EAR LIBS -->
+         <!-- ########################################### -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>cleanup-deps</id>
+                  <phase>verify</phase>
+                  <configuration>
+                     <tasks>
+                        <unjar
+                           src="${project.build.directory}/${project.build.finalName}.ear"
+                           dest="${project.build.directory}/${project.build.finalName}" />
+                        <delete verbose="true">
+                           <fileset
+                              dir="${project.build.directory}/${project.build.finalName}/lib/">
+                              <exclude name="exo.webos.*.jar" />
+                           </fileset>
+                        </delete>
+                        <ear
+                           destfile="${project.build.directory}/${project.build.finalName}.ear"
+                           basedir="${project.build.directory}/${project.build.finalName}"
+                           appxml="${project.build.directory}/application.xml" />
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
+</project>

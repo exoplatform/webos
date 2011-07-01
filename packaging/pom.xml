@@ -46,5 +46,11 @@
             <module>tomcat</module>
          </modules>
       </profile>
+      <profile>
+         <id>pkg-jbossear</id>
+         <modules>
+            <module>ear</module>
+         </modules>
+      </profile>
    </profiles>
 </project>
