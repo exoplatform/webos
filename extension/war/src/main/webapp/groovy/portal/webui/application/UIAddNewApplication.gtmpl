@@ -128,21 +128,7 @@
 	</div>
 	
 	<div class="UIAction">
-		<table class="ActionContainer">
-			<tr>
-				<td>
-					<div class="ActionButton LightBlueStyle" onclick="<%= uicomponent.event("Close") %>" >
-					<div class="ButtonLeft">
-						<div class="ButtonRight">
-							<div class="ButtonMiddle">
-								<a href="javascript:void(0);"><%=_ctx.appRes("UIAddNewApplication.label.Close")%></a>
-							</div>
-						</div>
-					</div>
-					</div>
-				</td>
-			</tr>
-		</table>
+		<a class="ActionButton LightBlueStyle" href="javascript:void(0);" onclick="<%= uicomponent.event("Close") %>"><%=_ctx.appRes("UIAddNewApplication.label.Close")%></a>
 	</div>
 	
 </div>

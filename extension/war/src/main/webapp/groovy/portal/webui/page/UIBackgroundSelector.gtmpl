@@ -37,31 +37,13 @@
 							<%uicomponent.renderChildren()%>						
 						</div>
 						
-		 				<div class="UIAction"> 
-							<table class="ActionContainer">
-								<tr>
-									<td>
-											<div onclick="<%=uicomponent.event("Upload");%>" class="ActionButton LightBlueStyle">
-											<div class="ButtonLeft">
-												<div class="ButtonRight">
-													<div class="ButtonMiddle">
-														<a href="#"><%=_ctx.appRes("UIBackgroundSelector.action.upload")%></a>
-													</div>
-												</div>
-											</div>
-											</div>
-											<div onclick="<%=uicomponent.event("Close");%>" class="ActionButton LightBlueStyle">
-											<div class="ButtonLeft">
-												<div class="ButtonRight">
-													<div class="ButtonMiddle">
-														<a href="javascript:void(0);"><%=_ctx.appRes("UIBackgroundSelector.action.close")%></a>
-													</div>
-												</div>
-											</div>
-											</div>
-									</td>
-								</tr>
-					 		</table>
+		 				<div class="UIAction">
+							<span onclick="<%=uicomponent.event("Upload");%>" class="ActionButton LightBlueStyle">
+								<a href="#"><%=_ctx.appRes("UIBackgroundSelector.action.upload")%></a>
+							</span>
+							<span onclick="<%=uicomponent.event("Close");%>" class="ActionButton LightBlueStyle">
+								<a href="javascript:void(0);"><%=_ctx.appRes("UIBackgroundSelector.action.close")%></a>
+							</span>
 						</div>
 	
 					</div>
