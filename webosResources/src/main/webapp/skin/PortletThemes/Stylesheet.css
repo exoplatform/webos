@@ -177,12 +177,103 @@
 	background: url('background/Resize17x19.png') no-repeat;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBarCenter .CloseIcon{
-	background: url('background/CloseIcon.gif') no-repeat;
-
+.UIPageDesktop .DefaultTheme {
+	background: #fff;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-moz-box-shadow: 0px 4px 5px 3px #bcbcbc;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBarCenter .OverCloseIcon{
-	background: url('background/CloseIconHover.gif') no-repeat;
+.UIPageDesktop .DefaultTheme .WindowBar {
+	background: url('background/DefaultTheme.png') repeat-x left -27px;
+    height: 26px;
+    padding: 7px 3px 0px 8px;
+	-moz-border-radius: 7px 7px 0px 0px;
+	-webkit-border-radius: 7px 7px 0px 0px;
+}
 
+.UIPageDesktop .DefaultTheme .WindowBar .WindowPortletInfo {
+    background: none;
+	padding: 0px;
+	line-height: 18px;
+	cursor: move;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .PortletName {
+	color: #515151;
+}
+
+.UIPageDesktop .DefaultTheme .MiddleDecorator {
+	background: none;
+	padding: 1px;
+}
+
+.UIPageDesktop .DefaultTheme .BottomDecorator {
+	background: url('background/DefaultTheme.png') repeat-x left top;
+	padding: 8px 3px 0px 3px;
+    height: 17px;
+	-moz-border-radius: 0px 0px 7px 7px;
+	-webkit-border-radius: 0px 0px 7px 7px;
+}
+
+.UIPageDesktop .DefaultTheme .BottomDecorator .ResizeArea {
+    background: url("background/ResizeArea.png") no-repeat left top;
+    cursor: nw-resize;
+    float: right; /* orientation=lt */
+    float: left; /* orientation=rt */
+    height: 12px;
+    width: 12px;
+}
+
+.UIPageDesktop .DefaultTheme .BottomDecorator .Information {
+    display: none;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .ControlIcon {
+    background: url("background/DefaultTheme.png") no-repeat left top;
+    cursor: pointer;
+    float: right; /* orientation=lt */
+    float: left; /* orientation=rt */
+    height: 18px;
+    width: 22px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .CloseIcon {
+	background-position: center -143px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .OverCloseIcon {
+	background-position: center -243px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .MaximizedIcon {
+	background-position: center -83px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .OverMaximizedIcon {
+	background-position: center -183px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .MinimizedIcon {
+    background-position: center -103px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .OverMinimizedIcon {
+    background-position: center -203px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .ArrowDownIcon {
+    background-position: center -123px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .OverArrowDownIcon {
+    background-position: center -223px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .RestoreIcon {
+    background-position: center -63px;
+}
+
+.UIPageDesktop .DefaultTheme .WindowBar .OverRestoreIcon {
+    background-position: center -163px;
 }

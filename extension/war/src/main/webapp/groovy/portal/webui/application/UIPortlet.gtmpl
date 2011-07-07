@@ -90,10 +90,7 @@
 				String theme = uicomponent.getSuitedTheme(null);
 		%>
 						<div class="UIWindow $theme UIDragObject UIResizeObject" id="UIWindow-${portletId}"	${cssStyle} >
-							<div class="WindowBarLeft">
-								<div class="WindowBarRight">
-									<div class="WindowBarCenter">
-										<div class="FixHeight ClearFix">
+							<div class="WindowBar ClearFix">
 												<%
 													
 													String restoreDown = _ctx.appRes("UIPortlet.tooltip.MaximizeRestore");
@@ -197,40 +194,26 @@
 													if(portletIcon == null) portletIcon = "PortletIcon";
 												%>
 												<div class="$portletIcon WindowPortletIcon NovaPortletIcon WindowPortletInfo"><div class="PortletName"><%=hasPermission ? title : _ctx.appRes("UIPortlet.label.protectedContent")%></div></div>
-											 
-										</div>
-									</div>
-								</div>
 							</div>
 							<%/*End Window Portlet Bar*/ %>
 							
-							<div class="MiddleDecoratorLeft">
-								<div class="MiddleDecoratorRight">
-									<div class="MiddleDecoratorCenter">
-										<div id="<%=portalMode == UIPortalApplication.NORMAL_MODE ? portletId : "EditMode-"+ portletId%>" style="width: 100%">
-											<div class="PORTLET-FRAGMENT UIResizableBlock UIApplication" style="width: 100%; height: $windowHeight;">
-												<% 
-													if(windowState != WindowState.MINIMIZED) {
-														if(hasPermission) println portletContent;
-														else println "<div class='ProtectedContent'>"+_ctx.appRes("UIPortlet.label.protectedContent")+"</div>";
-													}
-												%>
-											</div>		
-										</div>
-									</div>
+							<div class="MiddleDecorator">
+								<div id="<%=portalMode == UIPortalApplication.NORMAL_MODE ? portletId : "EditMode-"+ portletId%>" style="width: 100%">
+									<div class="PORTLET-FRAGMENT UIResizableBlock UIApplication" style="width: 100%; height: $windowHeight;">
+										<% 
+											if(windowState != WindowState.MINIMIZED) {
+												if(hasPermission) println portletContent;
+												else println "<div class='ProtectedContent'>"+_ctx.appRes("UIPortlet.label.protectedContent")+"</div>";
+											}
+										%>
+									</div>		
 								</div>
 							</div>
 							
 							<%//Begin Bottom Decorator %>
-							<div class="BottomDecoratorLeft">
-								<div class="BottomDecoratorRight">
-									<div class="BottomDecoratorCenter">
-										<div class="FixHeight ClearFix">
-											<div class="ResizeArea" title="<%=_ctx.appRes("UIPortlet.tooltip.ResizeWindow");%>"><span></span></div>
-											<div class="Information"><%=_ctx.appRes("UIPortlet.lable.information");%></div>
-										</div>
-									</div>
-								</div>
+							<div class="BottomDecorator ClearFix">
+								<div class="ResizeArea" title="<%=_ctx.appRes("UIPortlet.tooltip.ResizeWindow");%>"><span></span></div>
+								<div class="Information"><%=_ctx.appRes("UIPortlet.lable.information");%></div>
 							</div>
 						</div>
 		<%//End Bottom Decorator %>
