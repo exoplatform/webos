@@ -9,55 +9,37 @@
 	jsmanager.importJavascript('eXo.webui.UIRightClickPopupMenu');
 	jsmanager.addJavascript("eXo.webui.UIRightClickPopupMenu.init('" + uicomponent.getId() + "');");
 %>
-<div class="UIRightClickPopupMenu" id="$uicomponent.id" onmousedown="event.cancelBubble = true;">
+<div class="UIRightClickPopupMenu UIDesktopContextMenu" id="$uicomponent.id" onmousedown="event.cancelBubble = true;">
 	<div class="UIContextMenuContainer" >
-		<div class="TopLeftRightClickPopupMenu">
-			<div class="TopRightRightClickPopupMenu">
-				<div class="TopCenterRightClickPopupMenu"><span></span></div>
+		<div class="MenuItem">
+				<a exo:attr="ShowAddNewApplication" href="<%=uicomponent.event('ShowAddNewApplication',"_objectid_");%>"
+					 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
+					<%=_ctx.appRes(uicomponent.getId() + ".event.ShowAddNewApplication") %>
+				</a>
 			</div>
-		</div>
-		<div class="MiddleLeftRightClickPopupMenu">
-			<div class="MiddleRightRightClickPopupMenu">
-				<div class="UIRightPopupMenuContainer">
-					<div class="MenuItem">
-							<a exo:attr="ShowAddNewApplication" href="<%=uicomponent.event('ShowAddNewApplication',"_objectid_");%>"
-								 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
-								<%=_ctx.appRes(uicomponent.getId() + ".event.ShowAddNewApplication") %>
-							</a>
-					 	</div>
-					  <div class="MenuItem">
-							<a href="javascript: eXo.desktop.UIDesktop.closeAll()" class="ItemIcon CloneNode16x16Icon"
-								 onclick="eXo.webui.UIRightClickPopupMenu.hideContextMenu('$uicomponent.id')">
-								<%=_ctx.appRes(uicomponent.getId() + ".event.CloseAll") %>
-							</a>
-					 	</div>
-					 	<div class="MenuItem">
-							<a exo:attr="RefreshPage" href="<%=uicomponent.event('RefreshPage',"_objectid_");%>"
-								 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
-								<%=_ctx.appRes(uicomponent.getId() + ".event.RefreshPage") %>
-							</a>
-					 	</div>
-					 	<div class="MenuItem">
-							<a exo:attr="EditCurrentPage" href="<%=uicomponent.event('EditCurrentPage',"_objectid_");%>"
-								 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
-								<%=_ctx.appRes(uicomponent.getId() + ".event.EditCurrentPage") %>
-							</a>
-					 	</div>
-					  <div class="MenuItem">
-							<a exo:attr="ChangeBackground" href="<%=uicomponent.event('ChangeBackground',"_objectid_");%>"
-								 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
-								<%=_ctx.appRes(uicomponent.getId() + ".event.ChangeBackground") %>
-							</a>
-					 	</div>
-				</div>
+		  <div class="MenuItem">
+				<a href="javascript: eXo.desktop.UIDesktop.closeAll()" class="ItemIcon CloneNode16x16Icon"
+					 onclick="eXo.webui.UIRightClickPopupMenu.hideContextMenu('$uicomponent.id')">
+					<%=_ctx.appRes(uicomponent.getId() + ".event.CloseAll") %>
+				</a>
 			</div>
-		</div>
-		<div class="BottomLeftRightClickPopupMenu">
-			<div class="BottomRightRightClickPopupMenu">
-				<div class="BottomCenterRightClickPopupMenu">
-					<div class="ClickCenterBottom"><span></span></div>
-				</div>
+			<div class="MenuItem">
+				<a exo:attr="RefreshPage" href="<%=uicomponent.event('RefreshPage',"_objectid_");%>"
+					 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
+					<%=_ctx.appRes(uicomponent.getId() + ".event.RefreshPage") %>
+				</a>
 			</div>
-		</div>
+			<div class="MenuItem">
+				<a exo:attr="EditCurrentPage" href="<%=uicomponent.event('EditCurrentPage',"_objectid_");%>"
+					 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
+					<%=_ctx.appRes(uicomponent.getId() + ".event.EditCurrentPage") %>
+				</a>
+			</div>
+			<div class="MenuItem Last">
+				<a exo:attr="ChangeBackground" href="<%=uicomponent.event('ChangeBackground',"_objectid_");%>"
+					 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
+					<%=_ctx.appRes(uicomponent.getId() + ".event.ChangeBackground") %>
+				</a>
+			</div>
 	</div>
 </div>

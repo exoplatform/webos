@@ -72,32 +72,17 @@
 
 			<div class="UIRightClickPopupMenu" id="DockbarContextMenu" onmousedown="event.cancelBubble = true;">
 				<div class="UIContextMenuContainer" >
-					<div class="TopLeftRightClickPopupMenu">
-						<div class="TopRightRightClickPopupMenu">
-							<div class="TopCenterRightClickPopupMenu"><span></span></div>
+					<div class="UIRightPopupMenuContainer" >
+						<div class="MenuItem"> 	
+							<a	href="javascript:eXo.desktop.UIDesktop.removeApp('<%=uicomponent.url("RemoveChild", "_objectid_")%>')" onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" 
+							 class="ItemIcon CloseDockBarIcon"><%=_ctx.appRes("UIPageDesktop.action.Close")%></a>
 						</div>
-					</div>
-					<div class="MiddleLeftRightClickPopupMenu">
-						<div class="MiddleRightRightClickPopupMenu">
-							<div class="UIRightPopupMenuContainer">
-							 	<div class="MenuItem"> 	
-									<a	href="javascript:eXo.desktop.UIDesktop.removeApp('<%=uicomponent.url("RemoveChild", "_objectid_")%>')" onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" 
-									 class="ItemIcon CloseDockBarIcon"><%=_ctx.appRes("UIPageDesktop.action.Close")%></a>
-							 	</div>
-							 	<div class="MenuItem">
-							 		<a class="ItemIcon QuitDockBarIcon" href="javascript:eXo.desktop.UIDesktop.removeWindowContent('_objectid_')" onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" ><%=_ctx.appRes("UIPageDesktop.action.Quit")%></a>
-							 	</div>
-								<div class="RightClickCustomItem"><%=_ctx.appRes("UIPageDesktop.action.action.Open")%></div>
-							</div>
+						<div class="MenuItem Last">
+							<a class="ItemIcon QuitDockBarIcon" href="javascript:eXo.desktop.UIDesktop.removeWindowContent('_objectid_')" onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" ><%=_ctx.appRes("UIPageDesktop.action.Quit")%></a>
 						</div>
+						<div class="RightClickCustomItem"><%=_ctx.appRes("UIPageDesktop.action.action.Open")%></div>
 					</div>
-					<div class="BottomLeftRightClickPopupMenu">
-						<div class="BottomRightRightClickPopupMenu">
-							<div class="BottomCenterRightClickPopupMenu">
-								<div class="ClickCenterBottom"><span></span></div>
-							</div>
-						</div>
-					</div>
+					<div class="ClickCenterBottom"><span></span></div>
 				</div>
 			</div>
 

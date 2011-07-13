@@ -90,35 +90,83 @@
 	width: auto;
 }
 
+/* UIRightClickPopupMenu  */
 .UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer {
-	background:#ededed none repeat scroll 0% 50%;
+	background: #fff;
 	margin:0px;
-	padding: 0px;
-	border: 1px solid #bbbbbb;
+	padding: 5px;
+	border: 1px solid #e0e0e0;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-o-box-border-radius: 5px;
 	border-radius: 5px;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .ClickCenterBottom {
-	background: url('background/PageDesktop.png') no-repeat left top; /* orientation=lt */
-	background: url('background/PageDesktop-rt.png') no-repeat right top; /* orientation=rt */
-	width: 13px;  height: 12px;
-	margin: -1px 0px 0px 35px; /* orientation=lt */
-	margin: -1px 35px 0px 0px; /* orientation=rt */
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer {
-	border: none;
-	background: none;
+	-moz-box-shadow: 0px 0px 5px #c5c5c5;
 	_width: 230px;
 }
 
+.UIDockBar .UIRightClickPopupMenu .ClickCenterBottom {
+	background: url('background/PageDesktop.png') no-repeat left top; /* orientation=lt */
+	background: url('background/PageDesktop-rt.png') no-repeat right top; /* orientation=rt */
+	width: 16px;  height: 8px;
+	margin: -1px 0px 0px 30px; /* orientation=lt */
+	margin: -1px 30px 0px 0px; /* orientation=rt */
+}
+
 .UIDockBar .UIContextMenuContainer {
+	background: none;
+	border: none;
 	position: absolute; 
 	left: -40px; 
 	top: -10px;
+}
+
+.UIDockBar .UIRightClickPopupMenu .MenuItem  {
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.UIDockBar .UIRightClickPopupMenu .Last  {
+	border-bottom: none;
+}
+
+.UIDockBar .UIRightClickPopupMenu .MenuItem .ItemIcon {
+	background: none;
+	padding: 5px;
+	color: #616161;
+}
+
+.UIDockBar .UIRightClickPopupMenu .MenuItem .ItemIcon:hover {
+	background: #f5f5f5;
+}
+
+/* UIDesktopContextMenu  */
+.UIDesktopContextMenu .UIContextMenuContainer {
+	background: #fff;
+	margin:0px;
+	padding: 5px;
+	border: 1px solid #e0e0e0;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-box-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0px 0px 5px #c5c5c5;
+}
+
+.UIDesktopContextMenu .MenuItem  {
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.UIDesktopContextMenu .Last  {
+	border-bottom: none;
+}
+
+.UIDesktopContextMenu .MenuItem .ItemIcon {
+	background: none;
+	padding: 5px 0px 5px 5px;
+	color: #616161;
+}
+
+.UIDesktopContextMenu .MenuItem .ItemIcon:hover {
+	background: #f5f5f5;
 }
 
 /*--------------------------------------------------  UIExoStartMenu  ----------------------------------*/
@@ -455,39 +503,6 @@
 .UIExoStart .StartMenuDecorator .StartMenuBC {
 	height: 3px;
 	background: url('background/Exostart.gif') repeat-x center -42px;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem a{
-	color: #3b3557;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem a:hover{
-	color: #ffa500;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem{
-	cursor: pointer;
-	display: block;
-	margin: 0 5px;
-	padding: 0px 5px 5px 5px;
-	white-space: nowrap;
-	width: auto;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem a.CloseDockBarIcon{
-	background: url('background/LineBottom.png') repeat-x left bottom;
-	line-height: 30px;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem .QuitDockBarIcon{
-	margin-bottom: 3px;
-}
-
-.UIDockBar .UIRightClickPopupMenu .UIRightPopupMenuContainer .MenuItem .ItemIcon{
-	background:none;
-	line-height: 16px;
-	padding: 0px;
-	white-space: nowrap;
 }
 
 .UIBackgroundImageList .UITabContentContainer {
