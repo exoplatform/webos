@@ -34,14 +34,16 @@ import org.exoplatform.component.test.ContainerScope;
  * Dec 16, 2010
  */
 @ConfiguredBy({
+   @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.test.jcr-configuration.xml"),
+   @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.identity-configuration.xml"),
+   @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "org/exoplatform/services/organization/TestOrganization-configuration.xml"),
+   @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-portal-configuration.xml"),
    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-dockbar-service-configuration.xml"),
-	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-desktop-service-configuration.xml"),
-	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-portal-configuration.xml"),
-	@ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.test.jcr-configuration.xml"),
-  @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.test.organization-configuration.xml")	
+   @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/webos-desktop-service-configuration.xml")
 })
-public abstract class AbstractWebOSTest extends AbstractKernelTest{
 
+public abstract class AbstractWebOSTest extends AbstractKernelTest
+{
 	public AbstractWebOSTest() {
 		super();
 	}

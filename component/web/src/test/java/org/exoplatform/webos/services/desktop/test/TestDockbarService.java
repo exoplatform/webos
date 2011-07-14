@@ -20,19 +20,15 @@ package org.exoplatform.webos.services.desktop.test;
 
 import org.exoplatform.commons.chromattic.ChromatticManager;
 import org.exoplatform.container.PortalContainer;
-import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.Page;
-import org.exoplatform.portal.config.model.PersistentApplicationState;
 import org.exoplatform.services.security.ConversationState;
 import org.exoplatform.services.security.Identity;
 import org.exoplatform.services.security.MembershipEntry;
 import org.exoplatform.webos.services.dockbar.DockbarService;
-import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 public class TestDockbarService extends AbstractWebOSTest
 {
