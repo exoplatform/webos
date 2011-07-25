@@ -216,6 +216,7 @@ public class UIAddNewApplication extends UIContainer
 
       uiPortlet.setState(new PortletState(appState, appType));
       uiPortlet.setPortletInPortal(false);
+      uiPortlet.putSuitedTheme(uiPortalApp.getSkin(), "WebosTheme");
 
       if (atStartup) {
       	uiPortlet.getProperties().setProperty("appStatus", "HIDE");

@@ -1,4 +1,4 @@
-.UIPageDesktop .DefaultTheme .ResizeArea {
+.UIPageDesktop .WebosTheme .ResizeArea {
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
 	width: 18px; height: 18px;
@@ -177,46 +177,46 @@
 	background: url('background/Resize17x19.png') no-repeat;
 }
 
-.UIPageDesktop .DefaultTheme {
+.UIPageDesktop .WebosTheme {
 	background: #fff;
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 	-moz-box-shadow: 0px 4px 5px 3px #bcbcbc;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar {
-	background: url('background/DefaultTheme.png') repeat-x left -27px;
+.UIPageDesktop .WebosTheme .WindowBarCenter {
+	background: url('background/WebosTheme.png') repeat-x left -27px;
     height: 26px;
     padding: 7px 3px 0px 8px;
 	-moz-border-radius: 7px 7px 0px 0px;
 	-webkit-border-radius: 7px 7px 0px 0px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .WindowPortletInfo {
+.UIPageDesktop .WebosTheme .WindowBarCenter .WindowPortletInfo {
     background: none;
 	padding: 0px;
 	line-height: 18px;
 	cursor: move;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .PortletName {
+.UIPageDesktop .WebosTheme .WindowBarCenter .PortletName {
 	color: #515151;
 }
 
-.UIPageDesktop .DefaultTheme .MiddleDecorator {
+.UIPageDesktop .WebosTheme .MiddleDecoratorCenter {
 	background: none;
 	padding: 1px;
 }
 
-.UIPageDesktop .DefaultTheme .BottomDecorator {
-	background: url('background/DefaultTheme.png') repeat-x left top;
+.UIPageDesktop .WebosTheme .BottomDecoratorCenter {
+	background: url('background/WebosTheme.png') repeat-x left top;
 	padding: 8px 3px 0px 3px;
     height: 17px;
 	-moz-border-radius: 0px 0px 7px 7px;
 	-webkit-border-radius: 0px 0px 7px 7px;
 }
 
-.UIPageDesktop .DefaultTheme .BottomDecorator .ResizeArea {
+.UIPageDesktop .WebosTheme .BottomDecoratorCenter .ResizeArea {
     background: url("background/ResizeArea.png") no-repeat left top;
     cursor: nw-resize;
     float: right; /* orientation=lt */
@@ -225,12 +225,12 @@
     width: 12px;
 }
 
-.UIPageDesktop .DefaultTheme .BottomDecorator .Information {
+.UIPageDesktop .WebosTheme .BottomDecoratorCenter .Information {
     display: none;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .ControlIcon {
-    background: url("background/DefaultTheme.png") no-repeat left top;
+.UIPageDesktop .WebosTheme .WindowBarCenter .ControlIcon {
+    background: url("background/WebosTheme.png") no-repeat left top;
     cursor: pointer;
     float: right; /* orientation=lt */
     float: left; /* orientation=rt */
@@ -238,42 +238,42 @@
     width: 22px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .CloseIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .CloseIcon {
 	background-position: center -143px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .OverCloseIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .OverCloseIcon {
 	background-position: center -243px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .MaximizedIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .MaximizedIcon {
 	background-position: center -83px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .OverMaximizedIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .OverMaximizedIcon {
 	background-position: center -183px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .MinimizedIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .MinimizedIcon {
     background-position: center -103px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .OverMinimizedIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .OverMinimizedIcon {
     background-position: center -203px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .ArrowDownIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .ArrowDownIcon {
     background-position: center -123px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .OverArrowDownIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .OverArrowDownIcon {
     background-position: center -223px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .RestoreIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .RestoreIcon {
     background-position: center -63px;
 }
 
-.UIPageDesktop .DefaultTheme .WindowBar .OverRestoreIcon {
+.UIPageDesktop .WebosTheme .WindowBarCenter .OverRestoreIcon {
     background-position: center -163px;
 }

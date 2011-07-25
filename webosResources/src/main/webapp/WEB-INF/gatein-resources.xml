@@ -36,6 +36,14 @@
 		<skin-name>SimpleSkin</skin-name>
 		<css-path>/skin/Defaultskin/Stylesheet.css</css-path>
 	</portal-skin>
+
+   <!-- WebosStyle window style -->
+   <window-style>
+      <style-name>WebosStyle</style-name>
+      <style-theme>
+         <theme-name>WebosTheme</theme-name>
+      </style-theme>
+   </window-style>
     
 	<javascript>
 		<param>
