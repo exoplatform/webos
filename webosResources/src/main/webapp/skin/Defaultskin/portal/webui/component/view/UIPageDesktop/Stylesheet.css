@@ -113,7 +113,7 @@
 }
 
 .UIDockBar .UIContextMenuContainer {
-	background: none;
+	background: url('images/bg.png') no-repeat;
 	border: none;
 	position: absolute; 
 	left: -40px; 
