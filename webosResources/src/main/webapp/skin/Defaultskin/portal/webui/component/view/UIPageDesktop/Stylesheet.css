@@ -532,6 +532,20 @@
 	background: url('icons/16x16/PreviewIcon.png');
 }
 
+.UIBackgroundImageList .SetDefault {
+	text-align: right;
+	padding: 0px 20px;
+}
+
+.UIBackgroundImageList .SetDefault a {
+	color: #058EE6;
+	text-decoration: underline;
+}
+
+.UIBackgroundImageList .SetDefault a:hover {
+	text-decoration: none;
+}
+
 .UIBackgroundUploadForm .UIFormUploadInput {
 	width: 320px;
 }

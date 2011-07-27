@@ -203,8 +203,12 @@ public class UIBackgroundSelector extends UIContainer
          {
             UIDesktopPage uiDesktopPage = Util.getUIPortalApplication().findFirstComponentOfType(UIDesktopPage.class);
             backgroundService.setSelectedBackgroundImage(uiDesktopPage.getPageId(), selectedItem);
-            UIMaskWorkspace maskWorkspace = selector.getAncestorOfType(UIMaskWorkspace.class);
-            maskWorkspace.createEvent("Close", Event.Phase.DECODE, context).broadcast();
+            //null means restoring default background, in this case we will not close the selector
+            if (selectedItem != null)
+            {
+               UIMaskWorkspace maskWorkspace = selector.getAncestorOfType(UIMaskWorkspace.class);
+               maskWorkspace.createEvent("Close", Event.Phase.DECODE, context).broadcast();               
+            }
          }
          catch (IllegalStateException e)
          {

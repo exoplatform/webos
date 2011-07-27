@@ -31,6 +31,9 @@
 				<div class="WorkingArea">	
 					<div class="HorizontalLayout">
 						<div class="UITabContentContainer">
+							<div class="SetDefault" onclick="<%=uicomponent.event("Choose");%>">
+								<a href="#"><%= _ctx.appRes("UIBackgroundSelector.action.SetDefault") %></a>
+							</div>
 							<%uicomponent.renderChildren()%>						
 						</div>
 						
