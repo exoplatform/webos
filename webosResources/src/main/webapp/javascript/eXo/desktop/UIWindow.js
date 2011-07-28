@@ -77,7 +77,10 @@ UIWindow.prototype.toForcus = function() {
 
 UIWindow.prototype.mousedownOnPopup = function(evt) {
 	var isMaxZIndex = eXo.desktop.UIDesktop.isMaxZIndex(this) ;
-	if(!isMaxZIndex)	eXo.desktop.UIDesktop.resetZIndex(this) ;
+	if(!isMaxZIndex) {
+		eXo.desktop.UIDesktop.resetZIndex(this) ;
+		eXo.desktop.UIWindow.saveWindowProperties(this) ;
+	}
 } ;
 
 UIWindow.prototype.maximizeWindowEvt = function(evt) {
@@ -179,6 +182,10 @@ UIWindow.prototype.resizeWindowEvt = function(evt) {
 } ;
 
 UIWindow.prototype.endResizeWindowEvt = function(evt) {
+	if (!evt) evt = window.event;
+	if (evt.stopPropagation) evt.stopPropagation();
+	evt.cancelBubble = true;	
+	
 	var uiWindow = eXo.desktop.UIWindow.portletWindow ;
 	for(var name in uiWindow.resizeCallback.properties) {
  		var method = uiWindow.resizeCallback.get(name) ;
@@ -208,6 +215,9 @@ UIWindow.prototype.backupObjectProperties = function(windowPortlet, resizableCom
 } ;
 
 UIWindow.prototype.initDND = function(e) {
+	if (!e) e = window.event;
+	if (e.stopPropagation) e.stopPropagation();
+	e.cancelBubble = true;	
 	
 	var DOMUtil = eXo.core.DOMUtil ;
 	var DragDrop = eXo.core.DragDrop ;
@@ -218,8 +228,8 @@ UIWindow.prototype.initDND = function(e) {
 	//fix zIndex for refesh
 	var dragObjects = DOMUtil.findDescendantsByClass(uiPageDeskTop, "div", "UIDragObject") ;
 	if (dragObjects.length > 0) {
-      var isMaxZIndex = eXo.desktop.UIDesktop.isMaxZIndex(this) ;
-	   if(!isMaxZIndex)	eXo.desktop.UIDesktop.resetZIndex(this) ;
+		var isMaxZIndex = eXo.desktop.UIDesktop.isMaxZIndex(dragBlock) ;
+		if(!isMaxZIndex)	eXo.desktop.UIDesktop.resetZIndex(dragBlock) ;
 	}
 
 	
@@ -307,9 +317,12 @@ UIWindow.prototype.saveWindowProperties = function(object, appStatus) {
 	  ] ;
 	} else {
 		params = [
-	  	{name : "objectId", value : object.id.replace(/^UIWindow-/, "")},
-		  {name : "appStatus", value : appStatus}
-	  ] ;
+		  	{name : "objectId", value : object.id.replace(/^UIWindow-/, "")},
+			{name : "appStatus", value : appStatus}
+	    ] ;
+		if (appStatus == "SHOW") {
+			params.push({name : "zIndex", value : object.style.zIndex});
+		}
 	}
 
 	ajaxAsyncGetRequest(eXo.env.server.createPortalURL(containerBlockId, "SaveWindowProperties", true, params), true) ;
