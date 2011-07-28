@@ -139,7 +139,6 @@ ImplodeExplode.prototype.doExplode = function(containerId ) {
 				if(eXo.core.I18n.isLT()) win.style.left = X0 + "px" ;
 				else win.style.right = X0 + "px" ;
 				win.style.width = (!win.maximized) ? W0 + "px" : win.style.width ;
-				win.style.height = H0 + "px" ;
 				win.style.display = "block" ;
 				if(win.maximized) {
 					var pageDesktop = eXo.core.DOMUtil.findAncestorByClass(win, "UIPageDesktop");
