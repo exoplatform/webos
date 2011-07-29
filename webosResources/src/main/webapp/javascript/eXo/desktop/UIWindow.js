@@ -263,42 +263,45 @@ UIWindow.prototype.initDND = function(e) {
 	  DragDrop.dragCallback = function(dndEvent) {
 	    var dragObject = dndEvent.dragObject ;
 	    var dragObjectY = eXo.core.Browser.findPosY(dragObject) ;
+	    
 	    var browserHeight = eXo.core.Browser.getBrowserHeight() ;
 	    var browserWidth = eXo.core.Browser.getBrowserWidth() ;
-	    var mouseX = eXo.core.Browser.findMouseXInPage(dndEvent.backupMouseEvent) ;
-	    	    
-	    if(dragObjectY < 0) {
-	      dragObject.style.top = "0px" ;
-	      document.onmousemove = DragDrop.onDrop ; /*Fix Bug On IE6*/
-	    }
 	    
+	    var mouseX = eXo.core.Browser.findMouseXInPage(dndEvent.backupMouseEvent) ;
+	    var mouseY = eXo.core.Browser.findMouseYInPage(dndEvent.backupMouseEvent);
+
+	    var uiPageDesktop = document.getElementById("UIPageDesktop");
+       var uiPageDesktopX = eXo.core.Browser.findPosX(uiPageDesktop);
+       var uiPageDesktopY = eXo.core.Browser.findPosY(uiPageDesktop);
+       // Fix Bug On IE7, It's always double the value returned
+       if (eXo.core.Browser.isIE7()) {
+         uiPageDesktopX = uiPageDesktopX / 2;
+       }
+       
+       if (dragObjectY < uiPageDesktopY) {
+         dragObject.style.top = "0px";
+         if (mouseY < 1)
+           document.onmousemove = DragDrop.onDrop;
+       }
+
 	    if(dragObjectY > (browserHeight - 25)) {
 			//WEBOS-362 dragObjectY is not the same with dragObject.style.top
 	      dragObject.style.top = (browserHeight - 25 - dragObjectY + parseInt(dragObject.style.top)) + "px" ;
 	      document.onmousemove = DragDrop.onDrop ; /*Fix Bug On IE6*/
 	    }
 	    
-		  var uiPageDesktop = document.getElementById("UIPageDesktop") ;
-		  var uiPageDesktopX = eXo.core.Browser.findPosX(uiPageDesktop) ;
-		  
-		  /*Fix Bug On IE7, It's always double the value returned*/
-		  if(eXo.core.Browser.isIE7()) {
-		  	uiPageDesktopX = uiPageDesktopX / 2 ;
-		  }
-		  
 	    if((mouseX < uiPageDesktopX) || (mouseX > browserWidth)) {
 	      document.onmousemove = DragDrop.onDrop ;
 	    }
-	    
-	  } ;
+	  };
 	
 	  DragDrop.dropCallback = function(dndEvent) {
 	  	var dragObject = dndEvent.dragObject ;
-	  	
-		  //TODO Lambkin: Save properties of window
+
+	  	  //TODO Lambkin: Save properties of window
 		  eXo.desktop.UIWindow.saveWindowProperties(dragBlock) ;
 	  	for (var i = 0; i < hiddenElements.length; i++) {
-	  		hiddenElements[i].style.overflow = "auto" ;
+	  	  hiddenElements[i].style.overflow = "auto" ;
 	  	}
 	  } ;
 	  DragDrop.init(null, clickBlock, dragBlock, e) ;
