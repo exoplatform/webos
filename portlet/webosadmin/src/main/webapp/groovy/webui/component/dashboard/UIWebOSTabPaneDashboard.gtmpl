@@ -26,9 +26,9 @@
 						<% 
                         for (UserNode node : nodes) {
                            if (uicomponent.isWebOSNode(node)) continue;
-                           String tabLabel = node.getLabel();
+                           String tabLabel = node.getEncodedResolvedLabel();
                            if (org.exoplatform.webos.toolbar.UIUserToolbarDesktopPortlet.DEFAULT_TAB_NAME.equals(node.getName())) {
-                              tabLabel = _ctx.appRes("UIUserToolbarDesktopPortlet.page." + node.getLabel());
+                              tabLabel = _ctx.appRes("UIUserToolbarDesktopPortlet.page." + tabLabel);
                            }
                            
                            String param = node.getName();
