@@ -39,12 +39,12 @@
     <url>http://builder.exoplatform.org/hudson/job/webos-GateInIntegrated-ci/</url>
   </ciManagement>
   <properties>
-      <org.exoplatform.kernel.version>2.3.0-CR3</org.exoplatform.kernel.version>
-      <org.exoplatform.core.version>2.4.0-CR3</org.exoplatform.core.version>
-      <org.exoplatform.ws.version>2.2.0-CR3</org.exoplatform.ws.version>
-      <org.exoplatform.jcr.version>1.14.0-CR3</org.exoplatform.jcr.version>
+      <org.exoplatform.kernel.version>2.3.0-CR4-CP01</org.exoplatform.kernel.version>
+      <org.exoplatform.core.version>2.4.0-CR4</org.exoplatform.core.version>
+      <org.exoplatform.ws.version>2.2.0-CR4</org.exoplatform.ws.version>
+      <org.exoplatform.jcr.version>1.14.0-CR4-CP01</org.exoplatform.jcr.version>
       <org.exoplatform.portal.version>3.2.0-PLF-SNAPSHOT</org.exoplatform.portal.version>
-      <org.exoplatform.exopackage.version>1.1.1</org.exoplatform.exopackage.version>
+      <org.exoplatform.exopackage.version>1.1.4</org.exoplatform.exopackage.version>
       <org.jibx.version>1.2.2</org.jibx.version>
       <org.shindig.version>1.0-r790473-Patch05</org.shindig.version>
       <nl.captcha.simplecaptcha.version>1.1.1-GA-Patch01</nl.captcha.simplecaptcha.version>
@@ -90,7 +90,7 @@
       <commons-collections.version>3.2.1</commons-collections.version>
       <javax.transaction.version>1.1</javax.transaction.version>
       <org.apache.lucene.version>2.9.4</org.apache.lucene.version>
-      <org.jgroups.version>2.11.1.Final</org.jgroups.version>
+      <org.jgroups.version>2.6.20.Final</org.jgroups.version>
       <xpp3.version>1.1.4c</xpp3.version>
       
       <!-- CORE dependencies version -->

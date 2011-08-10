@@ -103,11 +103,6 @@
          <version>2.1</version>
       </dependency>
       <dependency>
-         <groupId>com.sun.xml.stream</groupId>
-         <artifactId>sjsxp</artifactId>
-         <version>${com.sun.xml.stream.version}</version>
-      </dependency>
-      <dependency>
          <groupId>joda-time</groupId>
          <artifactId>joda-time</artifactId>
          <version>1.6</version>
@@ -235,31 +230,6 @@
          <groupId>org.jsecurity</groupId>
          <artifactId>jsecurity</artifactId>
          <version>0.9.0</version>
-      </dependency>
-      <dependency>
-         <groupId>xdoclet</groupId>
-         <artifactId>xdoclet</artifactId>
-         <version>1.2.3</version>
-      </dependency>
-      <dependency>
-         <groupId>xdoclet</groupId>
-         <artifactId>xdoclet-hibernate-module</artifactId>
-         <version>1.2.3</version>
-      </dependency>
-      <dependency>
-         <groupId>xdoclet</groupId>
-         <artifactId>xdoclet-xdoclet-module</artifactId>
-         <version>1.2.3</version>
-      </dependency>
-      <dependency>
-         <groupId>xdoclet</groupId>
-         <artifactId>xjavadoc</artifactId>
-         <version>1.2.3</version>
-      </dependency>
-      <dependency>
-         <groupId>com.experlog</groupId>
-         <artifactId>xapool</artifactId>
-         <version>1.5.0</version>
       </dependency>
       <dependency>
          <groupId>rhino</groupId>
@@ -408,7 +378,7 @@
       <dependency>
          <groupId>log4j</groupId>
          <artifactId>log4j</artifactId>
-         <version>1.2.16</version>
+         <version>1.2.14</version>
       </dependency>
 
 
@@ -481,7 +451,7 @@
       <dependency>
          <groupId>org.jboss.cache</groupId>
          <artifactId>jbosscache-core</artifactId>
-         <version>3.2.6.GA</version>
+         <version>3.2.7.GA</version>
       </dependency>
       <dependency>
          <groupId>jboss.jbossts</groupId>
@@ -612,6 +582,11 @@
          <version>1.0.0</version>
       </dependency>
 
+      <dependency>
+         <groupId>eu.medsea.mimeutil</groupId>
+         <artifactId>mime-util</artifactId>
+         <version>2.1.3</version>
+      </dependency>
 
       <!-- Reflext -->
       <dependency>
