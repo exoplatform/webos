@@ -1,0 +1,4 @@
+.UIToolbarContainer .UIUserToolBarDesktopPortlet .UIHorizontalTabs .UITab {
+	float: left; /* orientation=lt */
+	float: right; /* orientation=rt */
+}	

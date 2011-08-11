@@ -1,5 +1,6 @@
 @import url(portal/webui/component/view/UIPageDesktop/Stylesheet.css);
 @import url(portal/webui/component/view/UIAddApplication/Stylesheet.css);
+@import url(portal/webui/component/view/UIToolbarContainer/Stylesheet.css);
 @import url(/webosResources/skin/portal/webui/component/UIIFramePortlet/DefaultStylesheet.css);
 @import url(webui/component/UIPopup/UIWindow/Stylesheet.css);
 @import url(/webosResources/skin/PortletThemes/Stylesheet.css);
