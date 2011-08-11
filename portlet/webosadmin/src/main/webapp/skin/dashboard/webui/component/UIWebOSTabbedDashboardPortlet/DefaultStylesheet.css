@@ -18,128 +18,83 @@
  */
 
 .UIWebOSTabPaneDashboard {
-	padding: 0 9px;
+	margin: 0 9px;
+	padding: 1px 5px 4px 5px;
+	background: #ffcf01;
+	-moz-border-radius: 5px 5px 0px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;
 }
 
-.UIWebOSTabPaneDashboard .LtTabDashboard {
-	background: #ffcf01 url('background/NavUser.gif') no-repeat left top;
-	padding-left: 3px;
-	_height: 32px;
+.UIWebOSTabPaneDashboard .GrayTabStyle {
+	margin: 4px 3px 0 0;
 }
 
-.UIWebOSTabPaneDashboard .RtTabDashboard {
-	background: #ffcf01 url('background/NavUser.gif') no-repeat right top;
-	padding-right: 3px;
-	_height: 32px;
+.UIWebOSTabPaneDashboard .UITab {
+    float: left;
 }
 
-.UIWebOSTabPaneDashboard .CtTabDashboard {
-	background: #ffcf01 url('background/NavUser.gif') repeat-x center -32px;
-	padding: 0px 6px; 
-	_height: 32px;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs {
-	padding: 1px 0px 4px 0px;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .TabsContainer {
-	height: auto;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle {
-	margin: 3px 2px 0 0;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .NormalTab .MiddleTab,
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .HighlightNavigationTab .MiddleTab,
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .MiddleTab {
-	padding: 0px 5px;
-	_padding: 4px 5px;
+.UIWebOSTabPaneDashboard .GrayTabStyle .NormalTab,
+.UIWebOSTabPaneDashboard .GrayTabStyle .HighlightNavigationTab,
+.UIWebOSTabPaneDashboard .GrayTabStyle .SelectedTab {
+	padding: 0px 9px;
+	_padding: 3px 9px;
 	white-space:nowrap;
 	font-weight: normal;
-	line-height: 24px;
+	line-height: 22px;
 }
 
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .UITab .CloseIcon {
-	background: url('background/IconClose.gif') no-repeat center;
+.UIWebOSTabPaneDashboard .UITab .CloseIcon {
+	background: url('background/IconClose.gif') no-repeat center 1px;
 	width: 16px; height: 16px;
 	cursor: pointer;
 }
 
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .AddDashboard {
+.UIWebOSTabPaneDashboard .AddDashboard {
 	background: url('background/AddDashboard.gif') no-repeat bottom;
 	width: 34px; height: 24px;
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
-	cursor: pointer;
-	margin-top: 3px;
+	display: block;
+	margin-top: 4px;
 }
 
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .NormalTab .LeftTab {
-	background: url(background/TabDashboard.gif) no-repeat left -48px;
+.UIWebOSTabPaneDashboard .GrayTabStyle .NormalTab {
+	background: #e6e6e6;
+	border: 1px solid #fefcf3;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .NormalTab .RightTab {
-	background: url(background/TabDashboard.gif) no-repeat right -48px;
+.UIWebOSTabPaneDashboard .GrayTabStyle .HighlightNavigationTab {
+	background: #e6e6e6;
+	border: 1px solid #fefcf3;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .NormalTab .MiddleTab {
-	background: url(background/TabDashboard.gif) repeat-x left -72px;
+.UIWebOSTabPaneDashboard .GrayTabStyle .SelectedTab {
+	background: #fff;
+	border: 1px solid #fff;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .HighlightNavigationTab .LeftTab {
-	background: url(background/TabDashboard.gif) no-repeat left -48px;
-	padding-left: 4px;
+.UIWebOSTabPaneDashboard .GrayTabStyle .EditnewTab {
+	background: #fff;
+	border: 1px solid #fff;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .HighlightNavigationTab .RightTab {
-	background: url(background/TabDashboard.gif) no-repeat right -48px;
-	padding-right: 4px;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .HighlightNavigationTab .MiddleTab {
-	background: url(background/TabDashboard.gif) repeat-x left -72px;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .LeftTab {
-	background: url(background/TabDashboard.gif) no-repeat left top;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .RightTab {
-	background: url(background/TabDashboard.gif) no-repeat right top;
-	padding-right: 4px;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .MiddleTab {
-	background: url(background/TabDashboard.gif) repeat-x left -24px;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .EditnewTab .LeftTab {
-	background: url(background/TabDashboard.gif) no-repeat left top;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .EditnewTab .RightTab {
-	background: url(background/TabDashboard.gif) no-repeat right top;
-	padding-right: 4px;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .EditnewTab .MiddleTab {
-	background: url(background/TabDashboard.gif) repeat-x left -24px;
-	line-height: 22px;
-	vertical-align: middle;
-	padding-top: 0;
-}
-
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .EditTab {
+.UIWebOSTabPaneDashboard .GrayTabStyle .SelectedTab .EditTab {
 	_padding: 2px 5px;
 }
 
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle .MiddleTab span {
+.UIWebOSTabPaneDashboard .GrayTabStyle .MiddleTab span {
 	margin-top: 1px;
 }
 
-.UIWebOSTabPaneDashboard .UIHorizontalTabs .GrayTabStyle input {
+.UIWebOSTabPaneDashboard .GrayTabStyle input {
 	font-size: 11px;
 	background: white;
 	padding: 0 !important;
