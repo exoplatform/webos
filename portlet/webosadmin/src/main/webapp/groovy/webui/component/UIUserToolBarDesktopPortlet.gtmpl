@@ -23,16 +23,14 @@
 	   String clazz = "";
 
 	   print """
-			<div style="display:none" class="MenuItemContainer">
-				<div class="SubBlock">
+			<ul style="display:none" class="MenuItemContainer">
 		""";
 					int idx = 0;
 					for(UserNode node : nodes) {
 						renderPageNode(node, idx++ % 2 == 0);
 					}
        print """
-				</div>
-			</div>
+			</ul>
 		""" ;
 	}
 
@@ -72,33 +70,28 @@
 		}
         
 		print """
-			<div class="MenuItem $tabStyleNavigation" $getNodeURL>
-				<div class="$clazz">
+			<li class="MenuItem $clazz $tabStyleNavigation" $getNodeURL>
 		""";
-						if(node.pageRef != null) {
-								print """<a class="ItemIcon $icon" href="$href" $title>$label</a>""";
-						} else {
-								print """<a class="ItemIcon $icon" href="#" $title>$label</a>""";
-						}
-		print """
-				</div>
-		""" ;
+				if(node.pageRef != null) {
+						print """<a class="ItemIcon $icon" href="$href" $title>$label</a>""";
+				} else {
+						print """<a class="ItemIcon $icon" href="#" $title>$label</a>""";
+				}
+
 		if(hasChild) {
 			print """
-				<div class="MenuItemContainer">
-					<div class="SubBlock">
+				<ul class="MenuItemContainer">
 			""" ;
 				for(int j = 0; j < node.getChildren().size(); j++) {
 					renderPageNode(node.getChildren().get(j), j%2 == 0);
 				}
 			print """
-					</div>
-				</div>
+				</ul>
 			""" ;
 
 		}
 		print """
-			</div>
+			</li>
 		""" ;
 	}
 %>
@@ -120,22 +113,12 @@
        desktopLink = uicomponent.url("CreateWebOS");
     }
 %>
-	<div class="UIUserToolBarDesktopPortlet" id="$uicomponent.id">
-		<div class="UIHorizontalTabs">
-			<div class="TabsContainer">
-				<div class="UITab NormalToolbarTab">
-					<div class="">
-					   <a class="DashboardIcon TBIcon" href="<%= dashboardLink %>">Dashboard</a>
-					</div>
-					<% renderDashboards(userNodes); %>
-				</div>
-			</div>
-			<div class="TabsContainer">
-				 <div class="UITab NormalToolbarTab">
-					<div>
-					   <a class="DashboardIcon TBIcon" href="<%= desktopLink %>">Desktop</a>
-					</div>
-				 </div>
-		  </div>
-		</div>
-	</div>
+<ul class="UIUserToolBarDesktopPortlet UIHorizontalTabs ClearFix" id="$uicomponent.id">
+    <li class="UITab NormalToolbarTab">
+        <a class="DashboardIcon TBIcon" href="<%= dashboardLink %>">Dashboard</a>
+        <% renderDashboards(userNodes); %>
+    </li>
+    <li class="UITab NormalToolbarTab">
+        <a class="DashboardIcon TBIcon" href="<%= desktopLink %>">Desktop</a>
+    </li>
+</ul>

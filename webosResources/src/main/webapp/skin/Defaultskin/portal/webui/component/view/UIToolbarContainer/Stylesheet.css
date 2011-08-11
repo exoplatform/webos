@@ -1,9 +1,21 @@
-.UIToolbarContainer .UIUserToolBarDesktopPortlet .UIHorizontalTabs .UITab {
+ 
+.UIToolbarContainer ul {
+    padding: 0px;
+	margin: 0px;
+	list-style: none;
+}
+
+.UIToolbarContainer .UIUserToolBarDesktopPortlet .UITab {
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
-}	
+}
 
-.UserToolBarDesktopPortletTDContainer  {
+.UIToolbarContainer .UserToolBarDesktopPortletTDContainer  {
 	!float: none; /* orientation=rt */
 	position: relative; /* orientation=lt */
+}
+
+.UIToolbarContainer .UIWebOSAdminToolbarPortlet .UITab {
+    float: left; /* orientation=lt */
+	float: right; /* orientation=rt */
 }
