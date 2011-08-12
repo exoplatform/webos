@@ -666,6 +666,12 @@
          <artifactId>picketlink-idm-ldap</artifactId>
       </dependency>
 
+      <!-- StaxNav -->
+      <dependency>
+         <groupId>org.staxnav</groupId>
+         <artifactId>staxnav.core</artifactId>
+      </dependency>
+
       <!-- Gatein common -->
       <dependency>
          <groupId>org.gatein.common</groupId>

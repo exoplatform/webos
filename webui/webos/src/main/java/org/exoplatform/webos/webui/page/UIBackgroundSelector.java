@@ -103,7 +103,7 @@ public class UIBackgroundSelector extends UIContainer
       DesktopBackgroundService service = getApplicationComponent(DesktopBackgroundService.class);
 
       UIPortal uiPortal = Util.getUIPortal();
-      DesktopBackground previewBackground = service.getDesktopBackground(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()), getPreviewImage()); 
+      DesktopBackground previewBackground = service.getDesktopBackground(new PortalKey(uiPortal.getSiteType().getName(), uiPortal.getSiteKey().getName()), getPreviewImage());
       if (previewBackground == null)
       {
          setPreviewImage(null);
@@ -235,7 +235,7 @@ public class UIBackgroundSelector extends UIContainer
          DesktopBackgroundService backgroundService = selector.getApplicationComponent(DesktopBackgroundService.class);
          
          UIPortal uiPortal = Util.getUIPortal();
-         DesktopBackground previewBackground = backgroundService.getDesktopBackground(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()), selector.getPreviewImage());
+         DesktopBackground previewBackground = backgroundService.getDesktopBackground(new PortalKey(uiPortal.getSiteType().getName(), uiPortal.getSiteKey().getName()), selector.getPreviewImage());
          if (previewBackground == null)
          {
             log.warn("Can't found image :" + selector.getPreviewImage());
@@ -264,7 +264,7 @@ public class UIBackgroundSelector extends UIContainer
          UIPortal uiPortal = Util.getUIPortal();
          try
          {
-            backgroundService.removeBackgroundImage(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()), selectedItem);
+            backgroundService.removeBackgroundImage(new PortalKey(uiPortal.getSiteType().getName(), uiPortal.getSiteKey().getName()), selectedItem);
          }
          catch (IllegalStateException e)
          {
@@ -285,7 +285,7 @@ public class UIBackgroundSelector extends UIContainer
       DesktopBackgroundService backgroundService = getApplicationComponent(DesktopBackgroundService.class);
 
       UIPortal uiPortal = Util.getUIPortal();
-      List<DesktopBackground> backgrounds = backgroundService.findDesktopBackgrounds(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()));
+      List<DesktopBackground> backgrounds = backgroundService.findDesktopBackgrounds(new PortalKey(uiPortal.getSiteType().getName(), uiPortal.getSiteKey().getName()));
       Collections.sort(backgrounds, new Comparator<DesktopBackground>() {
          @Override
          public int compare(DesktopBackground o1, DesktopBackground o2)

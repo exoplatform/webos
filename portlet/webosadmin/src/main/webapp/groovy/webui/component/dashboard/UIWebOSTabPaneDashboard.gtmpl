@@ -2,14 +2,14 @@
     import org.exoplatform.portal.application.PortalRequestContext;
     import org.exoplatform.portal.mop.user.UserNode;
     import org.exoplatform.portal.webui.util.Util;
-    import org.exoplatform.portal.webui.portal.UIPortal;
     import org.exoplatform.web.application.JavascriptManager;
+    import org.exoplatform.web.url.PortalURL;
 	
 	def nodes = uicomponent.getSameSiblingsNode();
 	def tabNbs = nodes.size();
 
 	PortalRequestContext pcontext = Util.getPortalRequestContext();	
-	def portalURI = pcontext.getPortalURI();
+    PortalURL nodeURL = nodeurl();
 
 	def selectedNode = Util.getUIPortal().getSelectedUserNode();
 	
@@ -19,14 +19,15 @@
 
 <div id="$uicomponent.id" class="UIWebOSTabPaneDashboard ClearFix">
 <%  for (UserNode node : nodes) {
-       if (uicomponent.isWebOSNode(node)) continue;
-       String tabLabel = node.getEncodedResolvedLabel();
-       if (org.exoplatform.webos.toolbar.UIUserToolbarDesktopPortlet.DEFAULT_TAB_NAME.equals(node.getName())) {
-          tabLabel = _ctx.appRes("UIUserToolbarDesktopPortlet.page." + tabLabel);
-       }
-       
-       String param = node.getName();
-       if (node.getURI().equals(selectedNode.getURI())) {
+        if (uicomponent.isWebOSNode(node)) continue;
+        nodeURL.setNode(node);
+        String tabLabel = node.getLabel();
+        if (org.exoplatform.webos.toolbar.UIUserToolbarDesktopPortlet.DEFAULT_TAB_NAME.equals(node.getName())) {
+          tabLabel = _ctx.appRes("UIUserToolbarDesktopPortlet.page." + node.getLabel());
+        }
+        
+        String param = node.getName();
+        if (node.getURI().equals(selectedNode.getURI())) {
 	%>
 	<div class="UITab GrayTabStyle">
 		<div class="SelectedTab">
@@ -42,7 +43,7 @@
 	<% } else { %>
 	<div class="UITab GrayTabStyle">
 		<div class="NormalTab">
-    		<a	href="<%= portalURI + node.getURI(); %>"><span>$tabLabel</span></a>
+    		<a  href="<%= nodeURL.toString(); %>"><span>$tabLabel</span></a>
     		<a  href="<%= uicomponent.url("DeleteTab",param); %>">
     			<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
     		</a>

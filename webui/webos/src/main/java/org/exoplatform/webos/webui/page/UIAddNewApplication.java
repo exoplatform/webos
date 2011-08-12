@@ -189,7 +189,7 @@ public class UIAddNewApplication extends UIContainer
    private static void addApplicationToPage(Event<UIAddNewApplication> event, boolean atStartup) throws Exception
    {
       UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
-      UIPortal uiPortal = uiPortalApp.getShowedUIPortal();
+      UIPortal uiPortal = uiPortalApp.getCurrentSite();
       PortalRequestContext pcontext = Util.getPortalRequestContext();
 
       UIDesktopPage uiDesktopPage = uiPortal.findFirstComponentOfType(UIDesktopPage.class);

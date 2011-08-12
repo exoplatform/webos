@@ -156,7 +156,7 @@ public class UIBackgroundUploadForm extends UIForm
          DesktopBackgroundService backgroundService = uploadInput.getApplicationComponent(DesktopBackgroundService.class);
 
          UIPortal uiPortal = Util.getUIPortal();
-         backgroundService.uploadBackgroundImage(new PortalKey(uiPortal.getOwnerType(), uiPortal.getOwner()), uploadResource.getFileName(),
+         backgroundService.uploadBackgroundImage(new PortalKey(uiPortal.getSiteType().getName(), uiPortal.getSiteKey().getName()), uploadResource.getFileName(),
             uploadResource.getMimeType(), "UTF-8", uploadInput.getUploadDataAsStream());
          return true;
       }

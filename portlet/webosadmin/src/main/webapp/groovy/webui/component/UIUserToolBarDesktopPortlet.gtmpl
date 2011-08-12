@@ -1,12 +1,10 @@
 <%
-    import org.exoplatform.portal.mop.user.UserNavigation;
-    import org.exoplatform.portal.mop.user.UserNode;
-    import org.exoplatform.portal.mop.Visibility;
+	import org.exoplatform.portal.mop.user.UserNode;
+    import org.exoplatform.portal.mop.SiteType;
 	import org.exoplatform.portal.webui.util.Util ;
 	import org.exoplatform.web.application.JavascriptManager;
-	import org.exoplatform.webos.webui.page.UIDesktopPage;
-	import org.exoplatform.webui.organization.OrganizationUtils;
-    
+    import org.exoplatform.web.url.navigation.NavigationResource;
+	import org.exoplatform.web.url.PortalURL;
 	import java.util.Collection;
     
 	import javax.portlet.MimeResponse;
@@ -19,22 +17,21 @@
 	jsmanager.addCustomizedOnLoadScript('eXo.portal.UIAdminToolbar.onLoad("' + uicomponent.id + '");');
 
 	def portalURI = Util.getPortalRequestContext().getPortalURI();
-	void renderDashboards(Collection nodes){
+	void renderDashboards(PortalURL nodeURL, Collection nodes) {
 	   String clazz = "";
 
 	   print """
 			<ul style="display:none" class="MenuItemContainer">
 		""";
-					int idx = 0;
 					for(UserNode node : nodes) {
-						renderPageNode(node, idx++ % 2 == 0);
+						renderPageNode(nodeURL, node);
 					}
        print """
 			</ul>
 		""" ;
 	}
 
-	void renderPageNode(UserNode node, boolean flag) {
+	void renderPageNode(PortalURL nodeURL, UserNode node) {
         if (uicomponent.isWebOSNode(node)) return;
 
         UserNode selectedNode = uicomponent.getSelectedNode();
@@ -46,13 +43,13 @@
 		boolean hasChild = (node.getChildren() != null && node.getChildren().size() > 0);
 		String clazz = "";
 		if(hasChild) clazz = "ArrowIcon";
-		String	href = Util.getPortalRequestContext().getPortalURI() + node.getURI();
+		String href = nodeURL.setNode(node);
 		String icon = node.getIcon();
 		if(icon == null) icon = "DefaultPageIcon";
 		def resolvedLabel = node.getEncodedResolvedLabel();
 		if ("Tab_Default".equals(node.getName()))
 		{
-				resolvedLabel = _ctx.appRes("UIUserToolbarDesktopPortlet.page." + resolvedLabel);
+		    resolvedLabel = _ctx.appRes("UIUserToolbarDesktopPortlet.page." + resolvedLabel);
 		}
 	
 		boolean toolong = (resolvedLabel.length() > 60);
@@ -82,8 +79,8 @@
 			print """
 				<ul class="MenuItemContainer">
 			""" ;
-				for(int j = 0; j < node.getChildren().size(); j++) {
-					renderPageNode(node.getChildren().get(j), j%2 == 0);
+				for(UserNode child : node.getChildren()) {
+					renderPageNode(nodeURL, child);
 				}
 			print """
 				</ul>
@@ -98,25 +95,25 @@
 
 <%
 	def userNodes = uicomponent.getUserNodes(uicomponent.getCurrentUserNavigation());
-	String defaultDashboardPage = org.exoplatform.webos.toolbar.UIUserToolbarDesktopPortlet.DEFAULT_TAB_NAME;
     String dashboardLink;
-    String desktopLink;
-    if (uicomponent.hasDashboardNode()) {
-       dashboardLink = portalURI + defaultDashboardPage;
-    } else {
-       dashboardLink = uicomponent.url("AddDefaultDashboard", defaultDashboardPage);
+    PortalURL dashboardUrl = nodeurl();
+    UserNode dashboardNode = uicomponent.findDashboardNode();
+    if (dashboardNode != null)
+    {
+       dashboardLink = dashboardUrl.setNode(dashboardNode).toString();
+    }
+    else
+    {
+       dashboardUrl.setResource(new NavigationResource(SiteType.USER, rcontext.getRemoteUser(), null));
+       dashboardLink = dashboardUrl.toString();
     }
     
-    if (uicomponent.isWebOSCreated()) {
-       desktopLink = portalURI + UIDesktopPage.NODE_NAME;
-    } else {
-       desktopLink = uicomponent.url("CreateWebOS");
-    }
+    String desktopLink = nodeurl().setResource(new NavigationResource(SiteType.USER, rcontext.getRemoteUser(), "classicWebosPage")).toString();
 %>
 <ul class="UIUserToolBarDesktopPortlet UIHorizontalTabs ClearFix" id="$uicomponent.id">
     <li class="UITab NormalToolbarTab">
         <a class="DashboardIcon TBIcon" href="<%= dashboardLink %>">Dashboard</a>
-        <% renderDashboards(userNodes); %>
+        <% renderDashboards(dashboardUrl, userNodes); %>
     </li>
     <li class="UITab NormalToolbarTab">
         <a class="DashboardIcon TBIcon" href="<%= desktopLink %>">Desktop</a>

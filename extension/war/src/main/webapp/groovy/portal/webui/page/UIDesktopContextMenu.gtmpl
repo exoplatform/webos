@@ -12,7 +12,7 @@
 <div class="UIRightClickPopupMenu UIDesktopContextMenu" id="$uicomponent.id" onmousedown="event.cancelBubble = true;">
 	<div class="UIContextMenuContainer" >
 		<div class="MenuItem">
-				<a exo:attr="ShowAddNewApplication" href="<%=uicomponent.event('ShowAddNewApplication',"_objectid_");%>"
+				<a exo:attr="ShowAddNewApplication" href="<%=uicomponent.event('ShowAddNewApplication');%>"
 					 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
 					<%=_ctx.appRes(uicomponent.getId() + ".event.ShowAddNewApplication") %>
 				</a>
@@ -24,19 +24,19 @@
 				</a>
 			</div>
 			<div class="MenuItem">
-				<a exo:attr="RefreshPage" href="<%=uicomponent.event('RefreshPage',"_objectid_");%>"
+				<a exo:attr="RefreshPage" href="<%=uicomponent.event('RefreshPage');%>"
 					 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
 					<%=_ctx.appRes(uicomponent.getId() + ".event.RefreshPage") %>
 				</a>
 			</div>
 			<div class="MenuItem">
-				<a exo:attr="EditCurrentPage" href="<%=uicomponent.event('EditCurrentPage',"_objectid_");%>"
+				<a exo:attr="EditCurrentPage" href="<%=uicomponent.event('EditCurrentPage');%>"
 					 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
 					<%=_ctx.appRes(uicomponent.getId() + ".event.EditCurrentPage") %>
 				</a>
 			</div>
 			<div class="MenuItem Last">
-				<a exo:attr="ChangeBackground" href="<%=uicomponent.event('ChangeBackground',"_objectid_");%>"
+				<a exo:attr="ChangeBackground" href="<%=uicomponent.event('ChangeBackground');%>"
 					 onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloneNode16x16Icon" >
 					<%=_ctx.appRes(uicomponent.getId() + ".event.ChangeBackground") %>
 				</a>

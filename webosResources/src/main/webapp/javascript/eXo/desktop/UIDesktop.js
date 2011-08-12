@@ -186,8 +186,15 @@ UIDesktop.prototype.removeWindow = function (idWindow) {
 	if(uiWindow) eXo.core.DOMUtil.removeElement(uiWindow);
 };
 
-UIDesktop.prototype.removeWindowContent = function (idWindow) {
-	var uiWindow = document.getElementById("UIWindow-" + idWindow) ;
+UIDesktop.prototype.removeWindowContent = function (evt, elemt) {
+   var idWindow = evt;
+   if (elemt) {
+      var contextMenu = eXo.core.DOMUtil.findAncestorByClass(elemt, "UIRightClickPopupMenu") ;
+      eXo.core.MouseEventManager.docMouseDownEvt(evt) ;
+      idWindow = contextMenu.objId;
+   }
+   
+	var uiWindow = document.getElementById("UIWindow-" + idWindow);
 	if(uiWindow) {
 		var portletFrag = eXo.core.DOMUtil.findFirstDescendantByClass(uiWindow, "div", "PORTLET-FRAGMENT") ;
 		for(var i = 0; i < portletFrag.childNodes.length; i++) {
@@ -195,7 +202,7 @@ UIDesktop.prototype.removeWindowContent = function (idWindow) {
 		}
 		portletFrag.innerHTML = "<span></span>" ;
 		eXo.desktop.UIDesktop.showHideWindow(uiWindow, document.getElementById("DockItem"+idWindow), "QUIT") ;
-	}
+	}	
 };
 
 UIDesktop.prototype.setDesktopBackground = function (imageURL) {

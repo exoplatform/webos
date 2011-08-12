@@ -84,7 +84,7 @@ public class UIWebOSAdminToolbarPortlet extends UIPortletApplication
       UIPortalApplication portalApp = Util.getUIPortalApplication();
       UIPortal currentUIPortal = portalApp.<UIWorkingWorkspace>findComponentById(UIPortalApplication.UI_WORKING_WS_ID).findFirstComponentOfType(UIPortal.class);
       UserACL userACL = portalApp.getApplicationComponent(UserACL.class);
-      return userACL.hasEditPermissionOnPortal(currentUIPortal.getOwnerType(), currentUIPortal.getOwner(), currentUIPortal.getEditPermission());
+      return userACL.hasEditPermissionOnPortal(currentUIPortal.getSiteType().getName(), currentUIPortal.getSiteKey().getName(), currentUIPortal.getEditPermission());
    }
 
    private boolean hasEditPermissionOnPage() throws Exception
