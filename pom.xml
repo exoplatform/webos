@@ -35,8 +35,8 @@
     <url>https://github.com/exoportal/webos</url>
   </scm>
   <ciManagement>
-    <system>hudson</system>
-    <url>http://builder.exoplatform.org/hudson/job/webos-GateInIntegrated-ci/</url>
+    <system>jenkins</system>
+    <url>https://ci.exoplatform.org/job/webos-master-ci/</url>
   </ciManagement>
   <properties>
       <org.exoplatform.kernel.version>2.3.0-CR4-CP01</org.exoplatform.kernel.version>
