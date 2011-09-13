@@ -93,9 +93,8 @@
       <type>war</type>
     </dependency>
     <dependency>
-      <groupId>net.oauth</groupId>
-      <artifactId>core</artifactId>
-      <type>jar</type>
+      <groupId>net.oauth.core</groupId>
+      <artifactId>oauth</artifactId>
     </dependency>
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
@@ -156,12 +155,6 @@
       <artifactId>exo.portal.web.portal</artifactId>
       <version>${org.exoplatform.portal.version}</version>
       <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>antlr</groupId>
-      <artifactId>antlr</artifactId>
-      <version>${antlr.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>commons-dbcp</groupId>
@@ -272,12 +265,9 @@
     </dependency>
     
     <!-- Missing packaging dependencies -->
-    <dependency><groupId>bouncycastle</groupId><artifactId>bcmail-jdk14</artifactId><version>136</version></dependency>
-    <dependency><groupId>bouncycastle</groupId><artifactId>bcprov-jdk14</artifactId><version>136</version></dependency>
-    <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jdk14</artifactId><version>1.5.8</version><type>jar</type></dependency><!-- 1.5.8-->
     <dependency><groupId>c3p0</groupId><artifactId>c3p0</artifactId><version>0.9.1.2</version></dependency>
     <dependency><groupId>javax.resource</groupId><artifactId>connector-api</artifactId><version>1.5</version></dependency>
-
+    <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jdk14</artifactId><version>1.5.8</version><type>jar</type></dependency><!-- 1.5.8-->
     
   </dependencies>
   <build>
