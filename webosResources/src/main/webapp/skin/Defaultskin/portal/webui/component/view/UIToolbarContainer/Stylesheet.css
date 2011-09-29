@@ -7,15 +7,10 @@
 
 .UIToolbarContainer .UIUserToolBarDesktopPortlet .UITab {
 	float: left; /* orientation=lt */
-	float: right; /* orientation=rt */
-}
-
-.UIToolbarContainer .UserToolBarDesktopPortletTDContainer  {
-	!float: none; /* orientation=rt */
-	position: relative; /* orientation=lt */
+	display: inline-block;
 }
 
 .UIToolbarContainer .UIWebOSAdminToolbarPortlet .UITab {
     float: left; /* orientation=lt */
-	float: right; /* orientation=rt */
+	display: inline-block;
 }
