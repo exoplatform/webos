@@ -76,7 +76,7 @@
       <javassist.version>3.14.0-GA</javassist.version>
       <jcr.version>1.0</jcr.version>
       <org.jaxb2.version>0.7.4</org.jaxb2.version>
-      <org.staxnav.version>0.9.4</org.staxnav.version>
+      <org.staxnav.version>0.9.6</org.staxnav.version>
       <org.jsecurity.version>0.9.0</org.jsecurity.version>
       <org.hsqldb.version>2.0.0</org.hsqldb.version>
       <commons-io.version>1.4</commons-io.version>
