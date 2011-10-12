@@ -39,6 +39,7 @@
     <url>https://ci.exoplatform.org/job/webos-master-ci/</url>
   </ciManagement>
   <properties>
+      <gatein.dep.version>1.1.0-Beta06</gatein.dep.version>
       <org.exoplatform.kernel.version>2.3.1-GA</org.exoplatform.kernel.version>
       <org.exoplatform.core.version>2.4.1-GA</org.exoplatform.core.version>
       <org.exoplatform.ws.version>2.2.1-GA</org.exoplatform.ws.version>
@@ -48,11 +49,10 @@
       <org.jibx.version>1.2.2</org.jibx.version>
       <org.shindig.version>2.0.2-Beta03</org.shindig.version>
       <nl.captcha.simplecaptcha.version>1.1.1-GA-Patch01</nl.captcha.simplecaptcha.version>
-      <org.gatein.common.version>2.0.3-GA</org.gatein.common.version>
-      <org.gatein.wci.version>2.0.2-GA</org.gatein.wci.version>
-      <org.gatein.pc.version>2.2.0-GA</org.gatein.pc.version>
+      <org.gatein.common.version>2.0.4-Beta03</org.gatein.common.version>
+      <org.gatein.wci.version>2.1.0-Beta06</org.gatein.wci.version>
+      <org.gatein.pc.version>2.3.0-Beta06</org.gatein.pc.version>
       <org.picketlink.idm>1.3.0.Alpha04</org.picketlink.idm>
-      <org.gatein.wsrp.version>2.0.0-GA</org.gatein.wsrp.version>
       <org.gatein.mop.version>1.1.0-Beta07</org.gatein.mop.version>
       <org.slf4j.version>1.5.8</org.slf4j.version>
       <commons-pool.version>1.5.5</commons-pool.version>
@@ -263,6 +263,13 @@
 
    <dependencyManagement>
       <dependencies>
+         <dependency>
+            <groupId>org.gatein</groupId>
+            <artifactId>gatein-dep</artifactId>
+            <version>${gatein.dep.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
          <!--Common libraries-->
          <dependency>
             <groupId>javax.inject</groupId>
@@ -705,7 +712,7 @@
          </dependency>
          <dependency>
             <groupId>org.gatein.wci</groupId>
-            <artifactId>wci-tomcat</artifactId>
+            <artifactId>wci-tomcat6</artifactId>
             <version>${org.gatein.wci.version}</version>
          </dependency>
          <dependency>
@@ -735,11 +742,6 @@
             <artifactId>pc-federation</artifactId>
             <version>${org.gatein.pc.version}</version>
          </dependency>
-         <dependency>
-            <groupId>org.gatein.pc</groupId>
-            <artifactId>pc-mc</artifactId>
-            <version>${org.gatein.pc.version}</version>
-          </dependency>
          <dependency>
             <groupId>org.gatein.pc</groupId>
             <artifactId>pc-bridge</artifactId>
@@ -948,11 +950,6 @@
           <artifactId>exo.portal.component.identity</artifactId>
           <version>${org.exoplatform.portal.version}</version>
           <type>test-jar</type>
-        </dependency>
-        <dependency>
-          <groupId>org.exoplatform.portal</groupId>
-          <artifactId>gatein.portal.component.wsrp</artifactId>
-          <version>${org.exoplatform.portal.version}</version>
         </dependency>
         <dependency>
           <groupId>org.exoplatform.portal</groupId>

@@ -182,9 +182,7 @@
     </dependency>
     <dependency>
       <groupId>org.gatein.wci</groupId>
-      <artifactId>wci-tomcat</artifactId>
-      <version>${org.gatein.wci.version}</version>
-      <type>jar</type>
+      <artifactId>wci-tomcat6</artifactId>
     </dependency>
     <dependency>
       <groupId>jcr</groupId>
@@ -268,7 +266,6 @@
     <dependency><groupId>c3p0</groupId><artifactId>c3p0</artifactId><version>0.9.1.2</version></dependency>
     <dependency><groupId>javax.resource</groupId><artifactId>connector-api</artifactId><version>1.5</version></dependency>
     <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jdk14</artifactId><version>1.5.8</version><type>jar</type></dependency><!-- 1.5.8-->
-    <dependency><groupId>org.gatein.wci</groupId><artifactId>wci-tomcat6</artifactId><version>2.1.0-Beta06</version><type>jar</type></dependency>
     
   </dependencies>
   <build>
