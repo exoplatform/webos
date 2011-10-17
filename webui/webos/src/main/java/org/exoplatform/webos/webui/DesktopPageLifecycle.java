@@ -52,7 +52,7 @@ public class DesktopPageLifecycle implements ApplicationLifecycle<PortalRequestC
    public void onStartRequest(Application app, PortalRequestContext context) throws Exception
    {
       String userName = context.getRemoteUser();
-      if(userName != null && SiteType.USER == context.getSiteType() && NODE_NAME.equals(context.getNodePath()))
+      if(userName != null && SiteType.USER == context.getSiteType() && userName.equals(context.getSiteName()) &&NODE_NAME.equals(context.getNodePath()))
       {
          //We are sure that the user 's site exists as the UserSiteLifecycle is invoked before DesktopPageLifecycle
          UserPortalConfig pconfig = context.getUserPortalConfig();
