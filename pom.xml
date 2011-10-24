@@ -40,10 +40,10 @@
   </ciManagement>
   <properties>
       <gatein.dep.version>1.1.0-Beta06</gatein.dep.version>
-      <org.exoplatform.kernel.version>2.3.1-GA</org.exoplatform.kernel.version>
-      <org.exoplatform.core.version>2.4.1-GA</org.exoplatform.core.version>
-      <org.exoplatform.ws.version>2.2.1-GA</org.exoplatform.ws.version>
-      <org.exoplatform.jcr.version>1.14.1-GA</org.exoplatform.jcr.version>
+      <org.exoplatform.kernel.version>2.3.2-GA</org.exoplatform.kernel.version>
+      <org.exoplatform.core.version>2.4.2-GA</org.exoplatform.core.version>
+      <org.exoplatform.ws.version>2.2.2-GA</org.exoplatform.ws.version>
+      <org.exoplatform.jcr.version>1.14.2-GA</org.exoplatform.jcr.version>
       <org.exoplatform.portal.version>3.2.0-PLF-SNAPSHOT</org.exoplatform.portal.version>
       <org.exoplatform.exopackage.version>1.1.4</org.exoplatform.exopackage.version>
       <org.jibx.version>1.2.2</org.jibx.version>
