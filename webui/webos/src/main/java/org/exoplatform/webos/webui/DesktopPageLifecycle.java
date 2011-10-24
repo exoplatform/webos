@@ -24,6 +24,7 @@ import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfig;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.mop.SiteType;
+import org.exoplatform.portal.mop.Visibility;
 import org.exoplatform.portal.mop.navigation.Scope;
 import org.exoplatform.portal.mop.user.UserNode;
 import org.exoplatform.portal.mop.user.UserNodeFilterConfig;
@@ -80,6 +81,7 @@ public class DesktopPageLifecycle implements ApplicationLifecycle<PortalRequestC
             UserNode desktopNode = rootNode.addChild(NODE_NAME);
             desktopNode.setLabel(NODE_LABEL);
             desktopNode.setPageRef(page.getPageId());
+            desktopNode.setVisibility(Visibility.SYSTEM);
 
             userPortal.saveNode(rootNode, null);
          }
