@@ -125,7 +125,7 @@ public class UIBackgroundUploadForm extends UIForm
                catch (ImageQuantityException e)
                {
                   ApplicationMessage msg = new ApplicationMessage("UIBackgroundUploadForm.msg.image.quantity.exceed",
-                     new String[] {String.valueOf(e.getQuantity())}, ApplicationMessage.ERROR);
+                     new String[] {String.valueOf(e.getQuantity())}, ApplicationMessage.WARNING);
                   Util.getUIPortalApplication().addMessage(msg);
                   event.getRequestContext().addUIComponentToUpdateByAjax(uploadForm);
                   return;
@@ -142,7 +142,7 @@ public class UIBackgroundUploadForm extends UIForm
 //               new String[] {invalidFiles.toString()}, ApplicationMessage.WARNING);
 //            msg.setArgsLocalized(false);
             ApplicationMessage msg = new ApplicationMessage("UIBackgroundUploadForm.msg.invalid.image",
-               null, ApplicationMessage.ERROR);
+               null, ApplicationMessage.WARNING);
             Util.getUIPortalApplication().addMessage(msg);
             event.getRequestContext().addUIComponentToUpdateByAjax(uploadForm);
             return;                        
