@@ -29,6 +29,14 @@
   <artifactId>exo.webos.server.tomcat.patch</artifactId>
   <packaging>jar</packaging>
   <name>GateIn WebOS Server Tomcat Patch</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.server.tomcat.patch</artifactId>
+      <version>${org.exoplatform.portal.version}</version>
+      <type>jar</type>
+    </dependency>
+  </dependencies>
   <build>
     <resources>
       <resource>
@@ -38,5 +46,31 @@
         </includes>
       </resource>
     </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-dependencies</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.exoplatform.portal</groupId>
+                  <artifactId>exo.portal.server.tomcat.patch</artifactId>
+                  <version>${org.exoplatform.portal.version}</version>
+                  <type>jar</type>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 </project>

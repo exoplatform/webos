@@ -1016,7 +1016,31 @@
                </execution>
             </executions>
          </plugin>
-
+         
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>unpack-dependencies</id>
+                  <phase>prepare-package</phase>
+                  <goals>
+                     <goal>unpack</goal>
+                  </goals>
+                  <configuration>
+                     <artifactItems>
+                        <artifactItem>
+                           <groupId>org.exoplatform.webos</groupId>
+                           <artifactId>exo.webos.server.tomcat.patch</artifactId>
+                           <type>jar</type>
+                        </artifactItem>
+                     </artifactItems>
+                     <outputDirectory>${project.build.directory}/tomcat</outputDirectory>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
@@ -1050,11 +1074,6 @@
                         <ant antfile="${project.build.directory}/copy-dependencies.xml" inheritRefs="true">
                            <target name="copy-dependencies" />
                         </ant>
-
-                        <!-- Copy configuration -->
-                        <copy todir="${project.build.directory}/tomcat">
-                           <fileset dir="${project.basedir}/src/main/resources/tomcat" />
-                        </copy>
 
                         <!-- File permissions -->
                         <chmod perm="0644" type="file" dir="${project.build.directory}/tomcat" excludes="**/*.sh" />
