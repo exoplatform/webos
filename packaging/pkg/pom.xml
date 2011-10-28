@@ -51,215 +51,153 @@
       <type>js</type>
     </dependency>
     <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.component.management</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.webui.dashboard</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.gadgets-server</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.portlet.web</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.web.eXoResources</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.starter.war</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.portlet.dashboard</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.portlet.exoadmin</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.web.rest</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.eXoGadgets</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.web.portal</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
       <groupId>org.exoplatform.webos</groupId>
       <artifactId>webos.packaging.module</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <type>js</type>
     </dependency>
     <dependency>
       <groupId>org.exoplatform.webos</groupId>
       <artifactId>webos.packaging.product</artifactId>
-      <version>2.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <type>js</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.jcr</groupId>
+      <artifactId>exo.jcr.component.ftp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.jcr</groupId>
+      <artifactId>exo.jcr.framework.command</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.jcr</groupId>
+      <artifactId>exo.jcr.component.webdav</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.jcr</groupId>
+      <artifactId>exo.jcr.framework.web</artifactId>
     </dependency>
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
-      <version>${cglib.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>commons-pool</groupId>
       <artifactId>commons-pool</artifactId>
-      <version>${commons-pool.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.gadgets-server</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.component.management</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.portlet.web</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>war</type>
     </dependency>
     <dependency>
       <groupId>net.oauth.core</groupId>
       <artifactId>oauth</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.webui.dashboard</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.web.eXoResources</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.server.tomcat.plugin</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.starter.war</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.portlet.dashboard</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.portlet.exoadmin</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.web.rest</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.eXoGadgets</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.web.portal</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
       <groupId>commons-dbcp</groupId>
       <artifactId>commons-dbcp</artifactId>
-      <version>${commons-dbcp.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>rhino</groupId>
       <artifactId>js</artifactId>
-      <version>${rhino.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.jcr</groupId>
-      <artifactId>exo.jcr.component.ftp</artifactId>
-      <version>${org.exoplatform.jcr.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm</artifactId>
-      <version>${asm.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.gatein.wci</groupId>
       <artifactId>wci-tomcat6</artifactId>
     </dependency>
     <dependency>
-      <groupId>jcr</groupId>
-      <artifactId>jcr</artifactId>
-      <version>${jcr.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.jcr</groupId>
-      <artifactId>exo.jcr.framework.command</artifactId>
-      <version>${org.exoplatform.jcr.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
       <groupId>org.gatein.pc</groupId>
       <artifactId>pc-controller</artifactId>
-      <version>${org.gatein.pc.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.exoplatform.tool</groupId>
       <artifactId>exo.tool.webunit</artifactId>
       <version>${exo.tool.webunit.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
-      <version>${javassist.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.gatein.shindig</groupId>
-      <artifactId>shindig-social-api</artifactId>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>html-parser</groupId>
       <artifactId>html-parser</artifactId>
       <version>${html-parser.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.gatein.wci</groupId>
       <artifactId>wci-exo</artifactId>
-      <version>${org.gatein.wci.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.jcr</groupId>
-      <artifactId>exo.jcr.component.webdav</artifactId>
-      <version>${org.exoplatform.jcr.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.jsecurity</groupId>
       <artifactId>jsecurity</artifactId>
-      <version>${org.jsecurity.version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.jcr</groupId>
-      <artifactId>exo.jcr.framework.web</artifactId>
-      <version>${org.exoplatform.jcr.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.exoplatform.ws</groupId>
       <artifactId>exo.ws.frameworks.servlet</artifactId>
-      <version>${org.exoplatform.ws.version}</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>${org.hsqldb.version}</version>
-      <type>jar</type>
     </dependency>
     
     <!-- Missing packaging dependencies -->
     <dependency><groupId>c3p0</groupId><artifactId>c3p0</artifactId><version>0.9.1.2</version></dependency>
     <dependency><groupId>javax.resource</groupId><artifactId>connector-api</artifactId><version>1.5</version></dependency>
-    <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jdk14</artifactId><version>1.5.8</version><type>jar</type></dependency><!-- 1.5.8-->
+    <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jdk14</artifactId></dependency>
     
   </dependencies>
   <build>
@@ -296,14 +234,6 @@
               </artifactItems>
             </configuration>
           </execution>
-          <!--
-                        <artifactItem>
-                           <groupId>org.exoplatform.delivery</groupId>
-                           <artifactId>exopackage-conf</artifactId>
-                           <type>zip</type>
-                           <outputDirectory>target/exopackage-conf</outputDirectory>
-                        </artifactItem>
-                        -->
           <execution>
             <id>copy-dependencies</id>
             <phase>compile</phase>
@@ -376,7 +306,6 @@
                     <argument>-Dexo.base.dir=${exo.projects.directory.base}</argument>
                     <argument>-Dexo.conf.dir=${basedir}/target/exopackage-conf</argument>
                     <argument>-Dexo.working.dir=${basedir}/target</argument>
-                    <!--argument>-Dexo.src.dir=NONE</argument-->
                     <argument>-Dexo.dep.dir=${exo.projects.directory.dependencies}</argument>
                     <!-- to get the server ref install -->
                     <argument>-Dexo.m2.repos=file:${settings.localRepository}</argument>
@@ -481,7 +410,6 @@
                     <argument>-Dexo.base.dir=${exo.projects.directory.base}</argument>
                     <argument>-Dexo.conf.dir=${basedir}/target/exopackage-conf</argument>
                     <argument>-Dexo.working.dir=${basedir}/target</argument>
-                    <!--argument>-Dexo.src.dir=NONE</argument-->
                     <argument>-Dexo.dep.dir=${exo.projects.directory.dependencies}</argument>
                     <!-- to get the server ref install -->
                     <argument>-Dexo.m2.repos=file:${settings.localRepository},http://maven2.exoplatform.org/rest/maven2,http://repository.jboss.org/maven2</argument>

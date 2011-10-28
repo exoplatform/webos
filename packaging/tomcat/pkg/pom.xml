@@ -125,7 +125,7 @@
       <dependency>
          <groupId>html-parser</groupId>
          <artifactId>html-parser</artifactId>
-         <version>1.6</version>
+         <version>${html-parser.version}</version>
       </dependency>
       <dependency>
          <groupId>com.ibm.icu</groupId>
@@ -143,7 +143,6 @@
       <dependency>
          <groupId>asm</groupId>
          <artifactId>asm</artifactId>
-         <version>3.1</version>
       </dependency>
       <dependency>
          <groupId>antlr</groupId>
@@ -176,7 +175,6 @@
       <dependency>
          <groupId>cglib</groupId>
          <artifactId>cglib</artifactId>
-         <version>2.2</version>
       </dependency>
       <dependency>
          <groupId>oswego-concurrent</groupId>
@@ -232,12 +230,10 @@
       <dependency>
          <groupId>org.jsecurity</groupId>
          <artifactId>jsecurity</artifactId>
-         <version>0.9.0</version>
       </dependency>
       <dependency>
          <groupId>rhino</groupId>
          <artifactId>js</artifactId>
-         <version>1.6R5</version>
       </dependency>
       <dependency>
          <groupId>c3p0</groupId>
@@ -494,7 +490,6 @@
       <dependency>
          <groupId>org.javassist</groupId>
          <artifactId>javassist</artifactId>
-         <version>${javassist.version}</version>
       </dependency>
       <dependency>
          <groupId>org.jgroups</groupId>
@@ -607,7 +602,7 @@
       <dependency>
          <groupId>org.exoplatform.tool</groupId>
          <artifactId>exo.tool.webunit</artifactId>
-         <version>1.0.0</version>
+         <version>${exo.tool.webunit.version}</version>
       </dependency>
 
       <dependency>
