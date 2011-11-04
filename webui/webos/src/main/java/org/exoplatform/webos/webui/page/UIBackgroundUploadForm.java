@@ -87,12 +87,30 @@ public class UIBackgroundUploadForm extends UIForm
 
    private void backToImageList(WebuiRequestContext requestContext)
    {
+      cleanUploadedFile();
+      
       UIMaskWorkspace maskWorkspace = getAncestorOfType(UIMaskWorkspace.class);
-
       maskWorkspace.setUIComponent(getReferrer());
       requestContext.addUIComponentToUpdateByAjax(maskWorkspace);
    }
 
+   private void cleanUploadedFile()
+   {
+      UIFormMultiValueInputSet multiInput = this.findComponentById(UIBackgroundUploadForm.MULTI_IMAGE);
+      if (multiInput != null)
+      {
+         for (UIComponent child : multiInput.getChildren())
+         {
+            if (child instanceof UIFormUploadInput)
+            {
+               UIFormUploadInput uploadInput = (UIFormUploadInput)child;
+               UploadService uploadService = uploadInput.getApplicationComponent(UploadService.class);
+               uploadService.removeUploadResource(uploadInput.getUploadId());
+            }
+         }
+      }
+   }
+   
    static public class SaveActionListener extends EventListener<UIBackgroundUploadForm>
    {
       @Override
@@ -129,8 +147,7 @@ public class UIBackgroundUploadForm extends UIForm
                   Util.getUIPortalApplication().addMessage(msg);
                   event.getRequestContext().addUIComponentToUpdateByAjax(uploadForm);
                   return;
-               }
-               cleanUploadedFile(uploadInput);               
+               }                             
             }
          }
 
@@ -159,12 +176,6 @@ public class UIBackgroundUploadForm extends UIForm
          backgroundService.uploadBackgroundImage(new PortalKey(uiPortal.getSiteType().getName(), uiPortal.getSiteKey().getName()), uploadResource.getFileName(),
             uploadResource.getMimeType(), "UTF-8", uploadInput.getUploadDataAsStream());
          return true;
-      }
-
-      private void cleanUploadedFile(UIFormUploadInput uploadInput)
-      {
-         UploadService uploadService = uploadInput.getApplicationComponent(UploadService.class);
-         uploadService.removeUploadResource(uploadInput.getUploadId());         
       }
    }
 

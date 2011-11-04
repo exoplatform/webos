@@ -157,11 +157,8 @@ public class UIBackgroundSelector extends UIContainer
       public void execute(Event<UIBackgroundSelector> event) throws Exception
       {
          UIBackgroundSelector selector = event.getSource();         
-         if (selector.getUploadForm() == null)
-         {
-            UIBackgroundUploadForm uploadForm = selector.createUIComponent(UIBackgroundUploadForm.class, null, null);
-            selector.setUploadForm(uploadForm);
-         }
+         UIBackgroundUploadForm uploadForm = selector.createUIComponent(UIBackgroundUploadForm.class, null, null);
+         selector.setUploadForm(uploadForm);
 
          UIMaskWorkspace maskWorkspace = selector.getAncestorOfType(UIMaskWorkspace.class);
          maskWorkspace.setUIComponent(selector.getUploadForm());
