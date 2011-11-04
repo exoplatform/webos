@@ -120,13 +120,14 @@ public class UIBackgroundUploadForm extends UIForm
          UIFormMultiValueInputSet multiInput = uploadForm.findComponentById(UIBackgroundUploadForm.MULTI_IMAGE);
 
          UIFormUploadInput uploadInput;
+         boolean isSaved = false;
          StringBuilder invalidFiles = new StringBuilder();
          for (UIComponent child : multiInput.getChildren())
          {
             if (child instanceof UIFormUploadInput)
             {
-               uploadInput =(UIFormUploadInput)child;
-               UploadResource uploadResource =uploadInput.getUploadResource();
+               uploadInput = (UIFormUploadInput)child;
+               UploadResource uploadResource = uploadInput.getUploadResource();
                if (uploadResource == null)
                {
                   continue;
@@ -138,7 +139,7 @@ public class UIBackgroundUploadForm extends UIForm
                }
                try
                {
-                  saveToDB(uploadInput);
+                  isSaved = saveToDB(uploadInput);
                }
                catch (ImageQuantityException e)
                {
@@ -153,16 +154,20 @@ public class UIBackgroundUploadForm extends UIForm
 
          if (invalidFiles.length() > 0)
          {
-//            Temporary not show the file name, need to backport GTNPORTAL-1240 first
-//            invalidFiles.delete(invalidFiles.lastIndexOf(", "), invalidFiles.length());
-//            ApplicationMessage msg = new ApplicationMessage("UIBackgroundUploadForm.msg.invalid.image",
-//               new String[] {invalidFiles.toString()}, ApplicationMessage.WARNING);
-//            msg.setArgsLocalized(false);
             ApplicationMessage msg = new ApplicationMessage("UIBackgroundUploadForm.msg.invalid.image",
                null, ApplicationMessage.WARNING);
             Util.getUIPortalApplication().addMessage(msg);
             event.getRequestContext().addUIComponentToUpdateByAjax(uploadForm);
             return;                        
+         }
+         
+         if (!isSaved)
+         {
+            ApplicationMessage msg = new ApplicationMessage("UIBackgroundUploadForm.msg.invalid.saving",
+               null, ApplicationMessage.WARNING);
+            Util.getUIPortalApplication().addMessage(msg);
+            event.getRequestContext().addUIComponentToUpdateByAjax(uploadForm);
+            return;
          }
          uploadForm.backToImageList(event.getRequestContext());
       }
