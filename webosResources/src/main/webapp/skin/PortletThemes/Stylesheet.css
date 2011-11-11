@@ -1,4 +1,4 @@
-.UIPageDesktop .WebosTheme .ResizeArea {
+.WebosTheme .ResizeArea {
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
 	width: 18px; height: 18px;
@@ -7,184 +7,14 @@
 	background: url('background/ResizeArea18x18-rt.gif') no-repeat right top; /* orientation=rt */
 }
 
-.UIPageDesktop .MacTheme .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 15px;
-	cursor: nw-resize;
-	background: url('background/ResizeArea17x15.png') no-repeat right top; /* orientation=lt */
-	background: url('background/ResizeArea17x15-rt.png') no-repeat left top; /* orientation=rt */
-}
-
-.UIPageDesktop .MacGray .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 15px;
-	cursor: nw-resize;
-	background: url('background/ResizeArea17x15.png') no-repeat;
-}
-
-.UIPageDesktop .MacBlack .ResizeArea {
-	float: left; /* orientation=rt */
-	float: right; /* orientation=lt */
-	width: 17px; height: 15px;
-	cursor: nw-resize;
-	background: url('background/ResizeArea17x15.png') no-repeat;
-}
-
-.UIPageDesktop .MacGreenSteel .ResizeArea {
-	float: left; /* orientation=rt */
-	float: right; /* orientation=lt */
-	width: 17px; height: 15px;
-	cursor: nw-resize;
-	background: url('background/ResizeArea17x15.png') no-repeat;
-}
-
-.UIPageDesktop .VistaTheme .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 9px; height: 12px;
-	cursor: nw-resize;
-	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/ResizeBG.gif') no-repeat bottom right; /* orientation=lt */
-	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/ResizeBG-rt.gif') no-repeat bottom left; /* orientation=rt */
-}
-
-.UIPageDesktop .VistaBlue .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 9px; height: 12px;
-	cursor: nw-resize;
-	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/ResizeBG.gif') no-repeat bottom right;
-}
-
-.UIPageDesktop .RoundConerBlue .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .RoundConerViolet .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .RoundConerOrange .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .RoundConerPink .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .RoundConerGreen .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .ShadowBlue .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .ShadowViolet .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .ShadowOrange .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .ShadowPink .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .ShadowGreen .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .SimpleBlue .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .SimpleViolet .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .SimpleOrange .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .SimplePink .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .SimpleGreen .ResizeArea {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */
-	width: 17px; height: 19px;
-	cursor: nw-resize;
-	background: url('background/Resize17x19.png') no-repeat;
-}
-
-.UIPageDesktop .WebosTheme {
+.WebosTheme {
 	background: #fff;
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 	-moz-box-shadow: 0px 4px 5px 3px #bcbcbc;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter {
+.WebosTheme .WindowBarCenter {
 	background: url('background/WebosTheme.png') repeat-x left -27px;
     height: 26px;
     padding: 7px 3px 0px 8px;
@@ -192,23 +22,23 @@
 	-webkit-border-radius: 7px 7px 0px 0px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .WindowPortletInfo {
+.WebosTheme .WindowBarCenter .WindowPortletInfo {
     background: none;
 	padding: 0px;
 	line-height: 18px;
 	cursor: move;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .PortletName {
+.WebosTheme .WindowBarCenter .PortletName {
 	color: #515151;
 }
 
-.UIPageDesktop .WebosTheme .MiddleDecoratorCenter {
+.WebosTheme .MiddleDecoratorCenter {
 	background: none;
 	padding: 1px;
 }
 
-.UIPageDesktop .WebosTheme .BottomDecoratorCenter {
+.WebosTheme .BottomDecoratorCenter {
 	background: url('background/WebosTheme.png') repeat-x left top;
 	padding: 8px 3px 0px 3px;
     height: 17px;
@@ -216,7 +46,7 @@
 	-webkit-border-radius: 0px 0px 7px 7px;
 }
 
-.UIPageDesktop .WebosTheme .BottomDecoratorCenter .ResizeArea {
+.WebosTheme .BottomDecoratorCenter .ResizeArea {
     background: url("background/ResizeArea.png") no-repeat left top;
     cursor: nw-resize;
     float: right; /* orientation=lt */
@@ -225,11 +55,11 @@
     width: 12px;
 }
 
-.UIPageDesktop .WebosTheme .BottomDecoratorCenter .Information {
+.WebosTheme .BottomDecoratorCenter .Information {
     display: none;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .ControlIcon {
+.WebosTheme .WindowBarCenter .ControlIcon {
     background: url("background/WebosTheme.png") no-repeat left top;
     cursor: pointer;
     float: right; /* orientation=lt */
@@ -238,42 +68,50 @@
     width: 22px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .CloseIcon {
+.WebosTheme .WindowBarCenter .CloseIcon {
 	background-position: center -143px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .OverCloseIcon {
+.WebosTheme .WindowBarCenter .OverCloseIcon {
 	background-position: center -243px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .MaximizedIcon {
+.WebosTheme .WindowBarCenter .MaximizedIcon {
 	background-position: center -83px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .OverMaximizedIcon {
+.WebosTheme .WindowBarCenter .OverMaximizedIcon {
 	background-position: center -183px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .MinimizedIcon {
+.WebosTheme .WindowBarCenter .MinimizedIcon {
     background-position: center -103px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .OverMinimizedIcon {
+.WebosTheme .WindowBarCenter .OverMinimizedIcon {
     background-position: center -203px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .ArrowDownIcon {
+.WebosTheme .WindowBarCenter .ArrowDownIcon {
     background-position: center -123px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .OverArrowDownIcon {
+.WebosTheme .WindowBarCenter .OverArrowDownIcon {
     background-position: center -223px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .RestoreIcon {
+.WebosTheme .WindowBarCenter .NormalIcon {
     background-position: center -63px;
 }
 
-.UIPageDesktop .WebosTheme .WindowBarCenter .OverRestoreIcon {
+.WebosTheme .WindowBarCenter .OverNormalIcon {
+    background-position: center -163px;
+}
+
+.WebosTheme .WindowBarCenter .RestoreIcon {
+    background-position: center -63px;
+}
+
+.WebosTheme .WindowBarCenter .OverRestoreIcon {
     background-position: center -163px;
 }
