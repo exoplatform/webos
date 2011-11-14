@@ -59,8 +59,8 @@
       <rhino.version>1.6R5</rhino.version>
       <org.codehaus.groovy.version>1.7.6</org.codehaus.groovy.version>
       <javax.servlet.version>2.5</javax.servlet.version>
-      <version.chromattic>1.1.0</version.chromattic>
-      <version.reflext>1.1.0-beta12</version.reflext>
+      <version.chromattic>1.1.1</version.chromattic>
+      <version.reflext>1.1.0</version.reflext>
       <jcip.version>1.0</jcip.version>
 
       <!-- EXOGTN-106 : forced at packaging level -->
