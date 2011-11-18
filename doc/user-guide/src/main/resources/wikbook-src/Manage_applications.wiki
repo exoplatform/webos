@@ -1,0 +1,109 @@
+To go into the Desktop application, simply click !images/Desktop_icon.png! on the administration bar. You will be directed to the Desktop user interface as below:
+
+!images/WebOS-screen.png|align="center"!
+
+||Described areas||Description||
+|!images/no1.png!|The administration bar which provides quick access to managing tasks.|
+|!images/no2.png!|The WebOS desktop.|
+|!images/no3.png!|The Dockbar which provides easy access to applications via icons.|
+|!images/no4.png!|The application icons which are used as shortcuts to gadgets, applications or pages.|
+
+This section covers the following topics:
+
+* [Add an application to the Dockbar|#WebOS_userguide.Manage_applications.Add_application]
+* [Open an application|#WebOS_userguide.Manage_applications.Open_application]
+* [Quit an application|#WebOS_userguide.Manage_applications.Quit_application]
+* [Change the Desktop title and background|#WebOS_userguide.Manage_applications.Change_title/background]
+
+h1. Add an application {anchor:id="WebOS_userguide.Manage_applications.Add_application}
+In Desktop, you can add an application as follows:
+
+*1.* Open the *Add Application* form via one of two ways:
+* The first way: Hover your cursor over the Dock bar and click the *Add Application* icon.
+
+!images/Add_Application_from_Dockbar.png|align="center"!
+
+* The second way: Right-click any area inside the Desktop background and select *Add Application* from the drop-down menu.
+
+!images/Drop-down-menu-desktop-page.png|align="center"!
+
+The *Add Application* form appears as below:
+
+!images/Add_application_form.png|align="center"!
+
+*2.* Select a category on the left pane. The applications of this category will be shown on the right pane.
+
+*3.* Click !images/Add_application_button.png! corresponding to your desired application. Your selected application is then automatically added to the Dockbar.
+
+h1. Open an application {anchor:id="WebOS_userguide.Manage_applications.Open_application}
+* To open an application, hover your cursor over the Dockbar and click this application icon. The hovered icon will display the application name, allowing you to recognize your desired application easily.
+
+!images/Open_Application.png|align="center"!
+
+The application window will be shown on the Desktop. When an application is running, !images/Running_application_icon.png! will appear right under its icon on the Dock bar to indicate that application is running.
+
+!images/Opened_application.png|align="center"!
+
+* To minimize the running application window, click !images/minimize_icon.png! on the info bar of the application or !images/Show_hide_application_icon.png! on the Dock bar. !images/Running_application_icon.png! is remained, stating that the application is still running.
+* To show the running application window, click !images/Show_hide_application_icon.png! or the application icon on the Dock bar.
+* To maximize the opened application window, click !images/maximize_button.png! on the info bar of the application to view its full size. !images/maximize_button.png! will be changed into !images/Restore_icon.png!. Click !images/Restore_icon.png! if you would like to restore to the original size of the application.
+* To reset a changed application, right-click any area outside the application window and select *Refresh*.
+
+h1. Quit an application {anchor:id="WebOS_userguide.Manage_applications.Quit_application}
+To exit a running application, do one of these following ways:
+
+*The first way:* Click !images/quit_icon.png! at the right top of the application window.
+
+*The second way:* Right-click the application icon on the Dock bar and select *Quit*.
+
+!images/Quit_dockbar.png|align="center"!
+
+*The third way:* This way allows you to close all running applications. Right-click any empty area on the desktop page and select *Close All* from the drop-down menu.
+
+!images/Close_all.png|align="center"!
+
+You will notice that the !images/Running_application_icon.png! disappears after the running application has been closed.
+
+h1. Change the Desktop title and background {anchor:id="WebOS_userguide.Manage_applications.Change_title/background}
+
+First, right-click any area on the Desktop background.
+
+* *To change the title:*
+
+*1.* Select *Page Title* from the drop-down menu.
+
+*2.* Enter your desired new name into the *Page title* field, and click *Save* to accept your change.
+
+* *To change the background*:
+
+*1.* Select *Change Background* from the drop-down menu.
+
+All available images for the WebOS background are displayed in the *Choose Background Image* form.
+
+!images/Background_form.png|align="center"!
+
+*2.* Click !images/Preview_background_icon.png! to preview your background.
+
+*3.* Click !images/select_background_icon.png! to select and apply the relevant background. 
+
+To get the default background again, click the *Get Default* link at the right corner of this form.
+
+Also, from this form, you can do the following actions:
+
+* *To delete any background*:
+
+Click !images/delete_icon.png! corresponding to the background you would like to delete.
+
+* *To upload an image from your local device*:
+
+*1.* Click the *Upload* button at the bottom of the *Choose Background Image* form.
+
+*2.* Select your desired image by clicking *Browse...* on the *Upload Images* form.
+
+!images/Upload_form.png|align="center"!
+
+*3.* Click !images/Add_icon.png! to load your selected image. At this step, simply click !images/Add_icon.png! to add more images, or !images/delete_icon.png! to delete the uploaded image.
+
+!images/Add_more_delete.png|align="center"!
+
+*4.* Click *Save* to accept your upload, or *Back* to go back to the previous step.

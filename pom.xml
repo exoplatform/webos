@@ -256,7 +256,8 @@
     <module>component</module>
     <module>extension</module>
     <module>server</module>
-     <module>portlet</module>
+    <module>portlet</module>
+    <module>doc</module>
     <module>packaging</module>
   </modules>
 
