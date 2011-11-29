@@ -1,4 +1,4 @@
-To go into the Desktop application, simply click !images/Desktop_icon.png! on the administration bar. You will be directed to the Desktop user interface as below:
+To go into the Desktop application, simply click *Desktop* on the *Administration* bar. You will be directed to the Desktop user interface as below:
 
 !images/WebOS-screen.png|align="center"!
 
@@ -7,6 +7,7 @@ To go into the Desktop application, simply click !images/Desktop_icon.png! on th
 |!images/no2.png!|The WebOS desktop.|
 |!images/no3.png!|The Dockbar which provides easy access to applications via icons.|
 |!images/no4.png!|The application icons which are used as shortcuts to gadgets, applications or pages.|
+|!images/no5.png!|The application.|
 
 This section covers the following topics:
 
