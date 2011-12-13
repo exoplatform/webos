@@ -114,7 +114,7 @@ All available images for the Desktop background are displayed in the *Choose Bac
 </citetitle>
 {docbook}
 
-Click !images/delete_icon.png! corresponding to the background you want to delete.
+Click !images/Delete_icon.png! corresponding to the background you want to delete.
 
 {docbook}
 <citetitle>
@@ -128,7 +128,7 @@ Click !images/delete_icon.png! corresponding to the background you want to delet
 
 !images/Upload_form.png|align="center"!
 
-*3.* Click !images/Add_icon.png! to load your selected image. At this step, simply click !images/Add_icon.png! to add more images, or !images/delete_icon.png! to delete the uploaded image.
+*3.* Click !images/Add_icon.png! to load your selected image. At this step, simply click !images/Add_icon.png! to add more images, or !images/Delete_icon.png! to delete the uploaded image.
 
 !images/Add_more_delete.png|align="center"!
 
