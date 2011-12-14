@@ -49,7 +49,7 @@ The application window will be shown on the Desktop. When an application is runn
 
 !images/Opened_application.png|align="center"!
 
-* To minimize the running application window, click !images/minimize_icon.png! on the info bar of the application or !images/Show_hide_application_icon.png! on the Dockbar. !images/Running_application_icon.png! is remained, stating that the application is still running.
+* To minimize the running application window, click !images/Window_minimize_icon.png! on the info bar of the application or !images/Show_hide_application_icon.png! on the Dockbar. !images/Running_application_icon.png! is remained, stating that the application is still running.
 * To show the running application window, click !images/Show_hide_application_icon.png! or the application icon on the Dockbar.
 * To maximize the opened application window, click !images/maximize_button.png! on the info bar of the application to view its full size. !images/maximize_button.png! will be changed into !images/Restore_icon.png!. Click !images/Restore_icon.png! if you want to restore to the original size of the application.
 * To reset a changed application, right-click any area outside the application window and select *Refresh.*
@@ -122,14 +122,14 @@ Click !images/Delete_icon.png! corresponding to the background you want to delet
 </citetitle>
 {docbook}
 
-*1.* Click the *Upload* button at the bottom of the *Choose Background Image* form.
+*1.* Click the *Upload* button at the bottom of the *Choose Background Image* form. The *Upload Images* form will appear.
 
-*2.* Select your desired image by clicking *Browse...* in the *Upload Images* form.
+*2.* Clicking *Browse...* to locate the image you want to set as background image and upload it.
 
 !images/Upload_form.png|align="center"!
 
-*3.* Click !images/Add_icon.png! to load your selected image. At this step, simply click !images/Add_icon.png! to add more images, or !images/Delete_icon.png! to delete the uploaded image.
+After the image is uploaded, you can click !images/Add_icon.png! to add more another image, or !images/Delete_icon_blue.png! to delete the uploaded image.
 
 !images/Add_more_delete.png|align="center"!
 
-*4.* Click *Save* to accept your upload, or *Back* to go back to the previous step.
+*3.* Click *Save* to accept your upload or *Back* to go back to the previous step.
