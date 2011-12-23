@@ -4,7 +4,7 @@ To go into the *Desktop* application, simply click *Desktop* on the *Administrat
 
 ||Number||Meaning||
 |!images/no1.png|scalefit="1" width="4mm"!|The administration bar which allows you to access and manage tasks quickly.|
-|!images/no2.pngs|scalefit="1" width="4mm"!|The background of Desktop.|
+|!images/no2.png|scalefit="1" width="4mm"!|The background of Desktop.|
 |!images/no3.png|scalefit="1" width="4mm"!|The Dockbar which provides easy access to applications via icons.|
 |!images/no4.png|scalefit="1" width="4mm"!|The application icons which are used as shortcuts to gadgets, applications or pages.|
 |!images/no5.png|scalefit="1" width="4mm"!|The application.|
