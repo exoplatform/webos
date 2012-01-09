@@ -38,7 +38,7 @@ The *Add Application* form will appear.
 
 *2.* Select a category on the left pane. The applications of this category will be shown on the right pane.
 
-*3.* Click !images/Add_application_button.png|scalefit="1" width="6mm"! corresponding to your desired application. Your selected application is then automatically added to the Dockbar.
+*3.* Click !images/Add_application_button.png|scalefit="1" width="4mm"! corresponding to your desired application. Your selected application is then automatically added to the Dockbar.
 
 h1. Open an application {anchor:id="WebOS_userguide.Manage_applications.Open_application"}
 * To open an application, hover your cursor over the Dockbar and click your desired application icon. The hovered icon will display the application name, allowing you to recognize your desired application easily.
@@ -124,12 +124,12 @@ Click !images/Delete_icon.png|scalefit="1" width="4mm"! corresponding to the bac
 
 *1.* Click the *Upload* button at the bottom of the *Choose Background Image* form. The *Upload Images* form will appear.
 
-*2.* Clicking *Browse...* to locate the image you want to set as background image and upload it.
-
 !images/Upload_form.png|align="center" width="100mm" fo:scalefit="1" html:scalefit="0"!
+
+*2.* Click *Browse...* to locate the image you want to set as background image and upload it.
 
 After the image is uploaded, you can click !images/Add_icon.png|scalefit="1" width="4mm"! to add more another image, or !images/Delete_icon_blue.png|scalefit="1" width="4mm"! to delete the uploaded image.
 
 !images/Add_more_delete.png|align="center" width="100mm" fo:scalefit="1" html:scalefit="0"!
 
-*3.* Click *Save* to accept your upload or *Back* to go back to the previous step.
+*3.* Click *Save* to accept your upload, or *Back* to go back to the previous step.
