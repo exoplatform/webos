@@ -45,29 +45,27 @@
       </style-theme>
    </window-style>
     
-	<javascript>
-		<param>
-			<js-module>eXo.animation.ImplodeExplode</js-module>
-			<js-path>/javascript/eXo/animation/ImplodeExplode.js</js-path>
-		</param>
-	</javascript>
-	<javascript>
-		<param>
-			<js-module>eXo.desktop.UIWindow</js-module>
-			<js-path>/javascript/eXo/desktop/UIWindow.js</js-path>
-		</param>
-	</javascript>
-	<javascript>
-		<param>
-			<js-module>eXo.desktop.UIDesktop</js-module>
-			<js-path>/javascript/eXo/desktop/UIDesktop.js</js-path>
-		</param>
-	</javascript>
-	<javascript>
-		<param>
-			<js-module>eXo.desktop.UIDockbar</js-module>
-			<js-path>/javascript/eXo/desktop/UIDockbar.js</js-path>
-		</param>
-	</javascript>
+  <scripts>
+    <name>webos</name>
+    <module>
+      <name>eXo.animation.ImplodeExplode</name>
+      <path>/javascript/eXo/animation/ImplodeExplode.js</path>
+    </module>
+    <module>
+      <name>eXo.desktop.UIDesktop</name>
+      <path>/javascript/eXo/desktop/UIDesktop.js</path>
+    </module>
+    <module>
+      <name>eXo.desktop.UIWindow</name>
+      <path>/javascript/eXo/desktop/UIWindow.js</path>
+    </module>
+    <module>
+      <name>eXo.desktop.UIDockbar</name>
+      <path>/javascript/eXo/desktop/UIDockbar.js</path>
+    </module>
+    <depends>
+      <scripts>webui</scripts>
+    </depends>
+  </scripts>
 	
 </gatein-resources>

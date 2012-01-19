@@ -31,6 +31,34 @@
 		<skin-name>Default</skin-name>
 		<css-path>/skin/dashboard/webui/component/UIWebOSTabbedDashboardPortlet/DefaultStylesheet.css</css-path>
 	</portlet-skin>
+
+  <portlet>
+    <name>UserToolbarDesktopPortlet</name>
+    <scripts>
+      <mode>on-load</mode>
+      <depends>
+        <scripts>navigation</scripts>
+      </depends>
+    </scripts>
+  </portlet>
+
+  <portlet>
+    <name>WebOSAdminToolbarPortlet</name>
+    <scripts>
+      <mode>on-load</mode>
+      <depends>
+        <scripts>navigation</scripts>
+      </depends>
+    </scripts>
+  </portlet>
+
+  <portlet>
+    <name>WebOSTabbedDashboardPortlet</name>
+    <module>
+      <name>eXo.webui.UIWebOSTabbedDashboard</name>
+      <path>/javascript/eXo/webui/UIWebOSTabbedDashboard.js</path>
+    </module>
+  </portlet>
 			
 </gatein-resources>
 
