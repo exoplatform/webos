@@ -224,4 +224,5 @@ UIDesktop.prototype.setDesktopBackground = function (imageURL) {
 	pageDesktop.style.background = imageURL;
 };
 
+eXo.desktop = {};
 eXo.desktop.UIDesktop = new UIDesktop() ;

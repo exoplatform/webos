@@ -155,4 +155,5 @@ ImplodeExplode.prototype.doExplode = function(containerId ) {
 			
 } ;
 
+eXo.animation = {};
 eXo.animation.ImplodeExplode = new ImplodeExplode() ;

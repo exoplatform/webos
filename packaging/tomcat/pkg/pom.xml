@@ -373,6 +373,11 @@
          <groupId>com.google.inject.extensions</groupId>
          <artifactId>guice-multibindings</artifactId>
       </dependency>
+      <dependency>
+         <groupId>com.google.javascript</groupId>
+         <artifactId>closure-compiler</artifactId>
+         <version>r1592</version>
+      </dependency>
 
       <!-- Logging -->
       <dependency>

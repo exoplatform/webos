@@ -2,12 +2,6 @@
   import org.exoplatform.web.application.JavascriptManager;
   import org.exoplatform.webos.webui.page.UIDesktopPage;
 
-  def rcontext = _ctx.getRequestContext() ;
-  JavascriptManager jsmanager = rcontext.getJavascriptManager();
-  
-  jsmanager.importJavascript('eXo.portal.UIWorkspace');
-  jsmanager.addOnLoadJavascript('eXo.portal.UIWorkingWorkspace.onResize') ;
-  jsmanager.addOnResizeJavascript('eXo.portal.UIWorkingWorkspace.onResize') ;
   def wsCSS = "UIWorkingWorkspace";
   if (uicomponent.findFirstComponentOfType(UIDesktopPage.class) != null)
   {

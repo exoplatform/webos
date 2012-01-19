@@ -231,7 +231,7 @@ public final class UIDesktopPage extends UIPage
       {
          backgroundURL = "'" + desktopBackground.getImageURL() + "'";
       }
-      JavascriptManager jsManager =WebuiRequestContext.getCurrentInstance().getJavascriptManager();
+      JavascriptManager jsManager = ((WebuiRequestContext)WebuiRequestContext.getCurrentInstance()).getJavascriptManager();
       jsManager.addOnLoadJavascript("eXo.desktop.UIDesktop.setDesktopBackground(" + backgroundURL + ")");
    }
 

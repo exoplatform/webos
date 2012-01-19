@@ -8,11 +8,8 @@ function UIDockbar() {
 	this.itemStyleClass = "MenuItem" ;
   this.itemOverStyleClass = "MenuItemOver" ;
   this.containerStyleClass = "MenuItemContainer" ;
-  
-  //TODO: tan.pham: Require by JS. will remove when webos using Gatein 3.0.1 with perfect javascriptService
-  eXo.core.Loader.register('eXo.webui.UIPopupMenu', '/eXoResources/javascript/eXo/webui/UIPopupMenu.js');
-  eXo.core.Loader.init("eXo.webui.UIPopupMenu");
-  this.superClass = eXo.webui.UIPopupMenu ;
+
+  this.superClass = eXo.webui.UIPopupMenu;
 };
 
 UIDockbar.prototype.init = function() {
