@@ -17,13 +17,19 @@ UIWindow.prototype.init = function(popup, isShow, posX, posY) {
 
 	var windowPortletInfo = DOMUtil.findFirstDescendantByClass(popup, "div", "WindowPortletInfo") ;
 	this.superClass.setPosition(popup, posX, posY, eXo.core.I18n.isRT()) ;
-	try {
-		windowPortletInfo.onmousedown = this.initDND ;
-	} catch(err) {
-		alert("Error In DND: " + err) ;
-	}
+  try
+  {
+    if (!popup.maximized)
+    {
+      this.initDND(windowPortletInfo, popup);
+    }
+  }
+  catch(err)
+  {
+    alert("Error In DND: " + err);
+  }
 
-	var minimizedIcon = DOMUtil.findFirstDescendantByClass(popup, "div", "MinimizedIcon") ;
+  var minimizedIcon = DOMUtil.findFirstDescendantByClass(popup, "div", "MinimizedIcon") ;
 	minimizedIcon.onmouseup = this.minimizeWindowEvt ; 
 	var maximizedIcon = DOMUtil.findFirstDescendantByClass(popup, "div", "MaximizedIcon") ;
 	maximizedIcon.onmouseup = this.maximizeWindowEvt ;
@@ -217,93 +223,85 @@ UIWindow.prototype.backupObjectProperties = function(windowPortlet, resizableCom
 	UIWindow.originalHeight = windowPortlet.offsetHeight ;
 } ;
 
-UIWindow.prototype.initDND = function(e) {
-	if (!e) e = window.event;
-	if (e.stopPropagation) e.stopPropagation();
-	e.cancelBubble = true;	
-	
-	var DOMUtil = eXo.core.DOMUtil ;
-	var DragDrop = eXo.core.DragDrop ;
-	var clickBlock = this ;
-	var dragBlock = DOMUtil.findAncestorByClass(this, "UIDragObject") ;
-	var uiPageDeskTop = document.getElementById("UIPageDesktop") ;
-	var maxIndex = eXo.desktop.UIWindow.maxIndex ;
-	//fix zIndex for refesh
-	var dragObjects = DOMUtil.findDescendantsByClass(uiPageDeskTop, "div", "UIDragObject") ;
-	if (dragObjects.length > 0) {
-		var isMaxZIndex = eXo.desktop.UIDesktop.isMaxZIndex(dragBlock) ;
-		if(!isMaxZIndex)	eXo.desktop.UIDesktop.resetZIndex(dragBlock) ;
-	}
+UIWindow.prototype.initDND = function(windowBar, window)
+{
+  eXo.core.DragDrop2.init(windowBar, window);
 
-	
-	// Can drag n drop only when the window is NOT maximized
-  if(!dragBlock.maximized) {
-	  
-		var uiApplication = DOMUtil.findFirstDescendantByClass(dragBlock, "div", "UIApplication") ;
-		var hiddenElements = new Array() ;
-		
-		DragDrop.initCallback = function(dndEvent) {
-	  	// A workaround to make the window go under the workspace panel during drag
-	  	if (eXo.core.Browser.getBrowserType() == "mozilla" && DOMUtil.getStyle(uiApplication, "overflow") == "auto") {
-	  		hiddenElements.push(uiApplication) ;
-	  		uiApplication.style.overflow = "hidden" ;
-	  	}
-	  	uiAppDescendants = DOMUtil.findDescendantsByTagName(uiApplication, "div") ;
-	  	for (var i = 0; i < uiAppDescendants.length; i++) {
-	  		if (DOMUtil.getStyle(uiAppDescendants[i], "overflow") == "auto") {
-	  			hiddenElements.push(uiAppDescendants[i]) ;
-	  			uiAppDescendants[i].style.overflow = "hidden" ;
-	  		}
-	  	}
-	  } ;
-	
-	  DragDrop.dragCallback = function(dndEvent) {
-	    var dragObject = dndEvent.dragObject ;
-	    var dragObjectY = eXo.core.Browser.findPosY(dragObject) ;
-	    
-	    var browserHeight = eXo.core.Browser.getBrowserHeight() ;
-	    var browserWidth = eXo.core.Browser.getBrowserWidth() ;
-	    
-	    var mouseX = eXo.core.Browser.findMouseXInPage(dndEvent.backupMouseEvent) ;
-	    var mouseY = eXo.core.Browser.findMouseYInPage(dndEvent.backupMouseEvent);
+  if(!eXo.desktop.UIDesktop.isMaxZIndex(window))
+  {
+    eXo.desktop.UIDesktop.resetZIndex(window);
+  }
+  var DOMUtil = eXo.core.DOMUtil;
+  var uiApplication = DOMUtil.findFirstDescendantByClass(window, "div", "UIApplication") ;
+  var hiddenElements = new Array() ;
 
-	    var uiPageDesktop = document.getElementById("UIPageDesktop");
-       var uiPageDesktopX = eXo.core.Browser.findPosX(uiPageDesktop);
-       var uiPageDesktopY = eXo.core.Browser.findPosY(uiPageDesktop);
-       // Fix Bug On IE7, It's always double the value returned
-       if (eXo.core.Browser.isIE7()) {
-         uiPageDesktopX = uiPageDesktopX / 2;
-       }
-       
-       if (dragObjectY < uiPageDesktopY) {
-         dragObject.style.top = "0px";
-         if (mouseY < 1)
-           document.onmousemove = DragDrop.onDrop;
-       }
+  window.onDragStart = function(x, y, last_x, last_y, e)
+  {
+    // A workaround to make the window go under the workspace panel during drag
+    if (eXo.core.Browser.getBrowserType() == "mozilla" && DOMUtil.getStyle(uiApplication, "overflow") == "auto")
+    {
+      hiddenElements.push(uiApplication);
+      uiApplication.style.overflow = "hidden";
+    }
+    var uiAppDescendants = DOMUtil.findDescendantsByTagName(uiApplication, "div");
+    for (var i = 0; i < uiAppDescendants.length; i++)
+    {
+      if (DOMUtil.getStyle(uiAppDescendants[i], "overflow") == "auto")
+      {
+        hiddenElements.push(uiAppDescendants[i]);
+        uiAppDescendants[i].style.overflow = "hidden";
+      }
+    }
+  };
 
-	    if(dragObjectY > (browserHeight - 25)) {
-			//WEBOS-362 dragObjectY is not the same with dragObject.style.top
-	      dragObject.style.top = (browserHeight - 25 - dragObjectY + parseInt(dragObject.style.top)) + "px" ;
-	      document.onmousemove = DragDrop.onDrop ; /*Fix Bug On IE6*/
-	    }
-	    
-	    if((mouseX < uiPageDesktopX) || (mouseX > browserWidth)) {
-	      document.onmousemove = DragDrop.onDrop ;
-	    }
-	  };
-	
-	  DragDrop.dropCallback = function(dndEvent) {
-	  	var dragObject = dndEvent.dragObject ;
+  window.onDrag = function(nx, ny, ex, ey, e)
+  {
+    //TODO: Investigate why dragObjectY does not equal ny
+    var dragObjectY = eXo.core.Browser.findPosY(window) ;
+    var browserHeight = eXo.core.Browser.getBrowserHeight() ;
+    var browserWidth = eXo.core.Browser.getBrowserWidth() ;
 
-	  	  //TODO Lambkin: Save properties of window
-		  eXo.desktop.UIWindow.saveWindowProperties(dragBlock) ;
-	  	for (var i = 0; i < hiddenElements.length; i++) {
-	  	  hiddenElements[i].style.overflow = "auto" ;
-	  	}
-	  } ;
-	  DragDrop.init(null, clickBlock, dragBlock, e) ;
-	}
-} ;
+    var uiPageDesktop = document.getElementById("UIPageDesktop");
+    var uiPageDesktopX = eXo.core.Browser.findPosX(uiPageDesktop);
+    var uiPageDesktopY = eXo.core.Browser.findPosY(uiPageDesktop);
+    // Fix Bug On IE7, It's always double the value returned
+    if (eXo.core.Browser.isIE7())
+    {
+      uiPageDesktopX = uiPageDesktopX / 2;
+    }
+
+    if (dragObjectY < uiPageDesktopY)
+    {
+      window.style.top = "0px";
+      if (ey < 1)
+      {
+        document.onmousemove = DragDrop2.end;
+      }
+    }
+
+    if(dragObjectY > (browserHeight - 25)) {
+    //WEBOS-362 dragObjectY is not the same with dragObject.style.top
+      window.style.top = (browserHeight - 25 - dragObjectY + parseInt(window.style.top)) + "px" ;
+      document.onmousemove = DragDrop2.end ; /*Fix Bug On IE6*/
+    }
+
+    if((ex < uiPageDesktopX) || (ex > browserWidth)) {
+      document.onmousemove = DragDrop2.end ;
+    }
+  };
+
+  window.onDragEnd = function(x, y, clientX, clientY)
+  {
+    eXo.desktop.UIWindow.saveWindowProperties(window) ;
+    for (var i = 0; i < hiddenElements.length; i++) {
+      hiddenElements[i].style.overflow = "auto" ;
+    }
+  };
+
+  window.onCancel = function(e)
+  {
+  };
+};
 
 UIWindow.prototype.saveWindowProperties = function(object, appStatus) {
 	var DOMUtil = eXo.core.DOMUtil ;
