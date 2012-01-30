@@ -72,7 +72,7 @@
 	background-position: center -143px;
 }
 
-.WebosTheme .WindowBarCenter .OverCloseIcon {
+.WebosTheme .WindowBarCenter .CloseIcon:hover {
 	background-position: center -243px;
 }
 
@@ -80,7 +80,7 @@
 	background-position: center -83px;
 }
 
-.WebosTheme .WindowBarCenter .OverMaximizedIcon {
+.WebosTheme .WindowBarCenter .MaximizedIcon:hover {
 	background-position: center -183px;
 }
 
@@ -88,7 +88,7 @@
     background-position: center -103px;
 }
 
-.WebosTheme .WindowBarCenter .OverMinimizedIcon {
+.WebosTheme .WindowBarCenter .MinimizedIcon:hover {
     background-position: center -203px;
 }
 
@@ -96,7 +96,7 @@
     background-position: center -123px;
 }
 
-.WebosTheme .WindowBarCenter .OverArrowDownIcon {
+.WebosTheme .WindowBarCenter .ArrowDownIcon:hover {
     background-position: center -223px;
 }
 
@@ -104,7 +104,7 @@
     background-position: center -63px;
 }
 
-.WebosTheme .WindowBarCenter .OverNormalIcon {
+.WebosTheme .WindowBarCenter .NormalIcon:hover {
     background-position: center -163px;
 }
 
@@ -112,6 +112,6 @@
     background-position: center -63px;
 }
 
-.WebosTheme .WindowBarCenter .OverRestoreIcon {
+.WebosTheme .WindowBarCenter .RestoreIcon:hover {
     background-position: center -163px;
 }

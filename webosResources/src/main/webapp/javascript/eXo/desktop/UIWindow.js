@@ -3,9 +3,6 @@ function UIWindow() {
 }
 
 UIWindow.prototype.init = function(popup, isShow, posX, posY) {
-	//TODO: tan.pham: Require by JS. will remove when webos using Gatein 3.0.1 with perfect javascriptService
-	eXo.core.Loader.register('eXo.webui.UIPopup', '/eXoResources/javascript/eXo/webui/UIPopup.js');
-  eXo.core.Loader.init("eXo.webui.UIPopup");
 	this.superClass = eXo.webui.UIPopup ;
 	if(typeof(popup) == "string") popup = document.getElementById(popup) ;
 	if(popup == null) return ;
