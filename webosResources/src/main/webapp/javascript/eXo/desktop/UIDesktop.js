@@ -190,7 +190,8 @@ UIDesktop.prototype.removeWindowContent = function (evt, elemt) {
    var idWindow = evt;
    if (elemt) {
       var contextMenu = eXo.core.DOMUtil.findAncestorByClass(elemt, "UIRightClickPopupMenu") ;
-      eXo.core.MouseEventManager.docMouseDownEvt(evt) ;
+      if(!evt) evt = window.event ;
+      evt.cancelBubble = true ;
       idWindow = contextMenu.objId;
    }
    
