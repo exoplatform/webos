@@ -95,21 +95,19 @@
 										  String renderMaxi = (windowState != WindowState.MAXIMIZED)? _ctx.appRes("UIPortlet.tooltip.Maximize") : _ctx.appRes("UIPortlet.tooltip.MaximizeRestore");
 										  String renderMini = (windowState != WindowState.MINIMIZED)? _ctx.appRes("UIPortlet.tooltip.Minimize") : _ctx.appRes("UIPortlet.tooltip.MinimizeRestore");
 
-											if(isDesktop)
-											{
+											if(isDesktop) {
 											  String closeTooltip = _ctx.appRes("UIPortlet.tooltip.Close");
 										%>
-												<div class="ControlIcon CloseIcon" title="$closeTooltip" onclick="eXo.desktop.UIDesktop.removeWindowContent('$uicomponent.id')">
-												</div>
+												<div class="ControlIcon CloseIcon" title="$closeTooltip" onclick="eXo.desktop.UIDesktop.removeWindowContent('$uicomponent.id')"></div>
+                                                <div class="ControlIcon MaximizedIcon" title="$renderMaxi"></div>
+                                                <div class="ControlIcon MinimizedIcon" title="$renderMini"></div>
 										<%
 											}
-
-										  if(uicomponent.getShowWindowState())
-											{
+											else if (uicomponent.getShowWindowState()) {
 										%>
-												<div class="ControlIcon ${maximizedMode}Icon" title="$renderMaxi"	onclick="$maximizedAction"></div>
-												<div class="ControlIcon ${minimizedMode}Icon" title="$renderMini"	onclick="$minimizedAction"></div>
-										<%}
+												<div class="ControlIcon ${maximizedMode}Icon" title="$renderMaxi" onclick="$maximizedAction"></div>
+												<div class="ControlIcon ${minimizedMode}Icon" title="$renderMini" onclick="$minimizedAction"></div>
+										<%  }
 										
 										List supportModes = uicomponent.getSupportModes();
 											if(uicomponent.getShowPortletMode() && supportModes.size() > 0) {
