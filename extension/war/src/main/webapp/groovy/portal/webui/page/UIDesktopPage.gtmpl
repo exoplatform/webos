@@ -70,25 +70,25 @@
 				<%//String containerMouseOver = "eXo.desktop.UIDockbar.containerMouseOver();";%>
 				<div class="UIDockBar" id="UIDockBar" onmouseover="eXo.desktop.UIDockbar.startDockBarEvt(event);" style="visibility: hidden">
 
-			<div class="UIRightClickPopupMenu" id="DockbarContextMenu" onmousedown="event.cancelBubble = true;">
-				<div class="UIContextMenuContainer" >
-					<div class="UIRightPopupMenuContainer" >
-						<div class="MenuItem"> 	
-							<a href="javascript:eXo.desktop.UIDesktop.removeApp('<%=uicomponent.url("RemoveChild")%>')" 
-								onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloseDockBarIcon">
-								<%=_ctx.appRes("UIPageDesktop.action.Close")%>
-							</a>
-						</div>
-						<div class="MenuItem Last">
-							<a class="ItemIcon QuitDockBarIcon" onclick="eXo.desktop.UIDesktop.removeWindowContent(event, this)">
-								<%=_ctx.appRes("UIPageDesktop.action.Quit")%>
-							</a>
-						</div>
-						<div class="RightClickCustomItem"><%=_ctx.appRes("UIPageDesktop.action.action.Open")%></div>
-					</div>
-					<div class="ClickCenterBottom"><span></span></div>
-				</div>
-			</div>
+        			<div class="UIRightClickPopupMenu" id="DockbarContextMenu" onmousedown="event.cancelBubble = true;">
+        				<div class="UIContextMenuContainer" >
+        					<div class="UIRightPopupMenuContainer" >
+        						<div class="MenuItem"> 	
+        							<a href="javascript:eXo.desktop.UIDesktop.removeApp('<%=uicomponent.url("RemoveChild")%>')" 
+        								onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloseDockBarIcon">
+        								<%=_ctx.appRes("UIPageDesktop.action.Close")%>
+        							</a>
+        						</div>
+        						<div class="MenuItem Last">
+        							<a class="ItemIcon QuitDockBarIcon" onclick="eXo.desktop.UIDesktop.removeWindowContent(event, this)">
+        								<%=_ctx.appRes("UIPageDesktop.action.Quit")%>
+        							</a>
+        						</div>
+        						<div class="RightClickCustomItem"><%=_ctx.appRes("UIPageDesktop.action.action.Open")%></div>
+        					</div>
+        					<div class="ClickCenterBottom"><span></span></div>
+        				</div>
+        			</div>
 
 					<div class="DockbarLeft">
 						<div class="DockbarRight">
