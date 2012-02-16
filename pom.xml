@@ -65,7 +65,6 @@
 
       <!-- EXOGTN-106 : forced at packaging level -->
       <antlr.version>2.7.6rc1</antlr.version>
-      <asm.version>1.5.3</asm.version>
       <cglib.version>2.2</cglib.version>
       <com.sun.xml.bind.version>2.1.7</com.sun.xml.bind.version>
       <commons-digester.version>1.8.1</commons-digester.version>
@@ -659,16 +658,6 @@
             <groupId>net.oauth.core</groupId>
             <artifactId>oauth</artifactId>
             <version>20100527</version>
-         </dependency>
-         <dependency>
-            <groupId>caja</groupId>
-            <artifactId>caja</artifactId>
-            <version>r4251</version>
-         </dependency>
-         <dependency>
-            <groupId>caja</groupId>
-            <artifactId>json_simple</artifactId>
-            <version>r1</version>
          </dependency>
 
          <!--Google-->

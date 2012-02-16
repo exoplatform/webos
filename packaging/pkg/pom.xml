@@ -195,10 +195,31 @@
     </dependency>
     
     <!-- Missing packaging dependencies -->
-    <dependency><groupId>c3p0</groupId><artifactId>c3p0</artifactId><version>0.9.1.2</version></dependency>
-    <dependency><groupId>javax.resource</groupId><artifactId>connector-api</artifactId><version>1.5</version></dependency>
     <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jdk14</artifactId></dependency>
-    
+    <dependency><groupId>c3p0</groupId><artifactId>c3p0</artifactId><version>0.9.1.2</version></dependency>
+    <!-- org.jboss.:jbossxb was defined on gatein-dep -->
+    <dependency><groupId>org.jboss</groupId><artifactId>jbossxb</artifactId></dependency>
+    <!-- javax.resource:connector-api:1.5 was defined on gatein-dep -->
+    <dependency><groupId>javax.resource</groupId><artifactId>connector-api</artifactId></dependency>
+    <!-- caja:json_simple:r1 was defined on gatein-dep -->
+    <dependency><groupId>caja</groupId><artifactId>json_simple</artifactId></dependency>
+    <!-- net.sf.ehcache:ehcache WAS NOT DEFINED on gatein-dep (2.2.0) -->
+    <dependency><groupId>net.sf.ehcache</groupId><artifactId>ehcache</artifactId><version>1.6.0</version><type>jar</type></dependency>
+    <!-- org.jgroups:jgroups WAS NOT DEFINED on gatein-dep (2.11.1.Final) -->
+    <dependency><groupId>org.jgroups</groupId><artifactId>jgroups</artifactId><version>${org.jgroups.version}</version></dependency>
+    <!-- log4j:log4j WAS NOT DEFINED on gatein-dep (1.2.16) -->
+    <dependency><groupId>log4j</groupId><artifactId>log4j</artifactId><version>1.2.14</version></dependency>
+    <!-- jcr:jcr WAS NOT DEFINED on gatein-dep -->
+    <dependency><groupId>jcr</groupId><artifactId>jcr</artifactId><version>${jcr.version}</version></dependency>
+    <!-- de.odysseus.juel:juel-api WAS NOT DEFINED on gatein-dep -->
+    <dependency><groupId>de.odysseus.juel</groupId><artifactId>juel-api</artifactId><version>2.1.2</version><type>jar</type></dependency>
+    <!-- de.odysseus.juel:juel-impl:2.1.2 WAS NOT DEFINED on gatein-dep (2.2.3) -->
+    <dependency><groupId>de.odysseus.juel</groupId><artifactId>juel-impl</artifactId><version>2.1.2</version><type>jar</type></dependency>
+    <!-- asm:asm WAS NOT DEFINED on gatein-dep (1.5.3) -->
+    <dependency><groupId>asm</groupId><artifactId>asm</artifactId><version>3.1</version><type>jar</type></dependency><!-- 3.1-->
+    <!-- org.jboss.cache:jbosscache-core WAS NOT DEFINED on gatein-dep (3.2.6.GA) -->
+    <dependency><groupId>org.jboss.cache</groupId><artifactId>jbosscache-core</artifactId><version>3.2.7.GA</version><type>jar</type></dependency>
+    <!-- End missing packaging dependencies -->
   </dependencies>
   <build>
     <plugins>
