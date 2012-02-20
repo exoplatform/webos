@@ -255,17 +255,14 @@
       <dependency>
          <groupId>org.apache.pdfbox</groupId>
          <artifactId>fontbox</artifactId>
-         <version>${org.apache.pdfbox.version}</version>
       </dependency>
       <dependency>
          <groupId>org.apache.pdfbox</groupId>
          <artifactId>jempbox</artifactId>
-         <version>${org.apache.pdfbox.version}</version>
       </dependency>
       <dependency>
          <groupId>org.apache.pdfbox</groupId>
          <artifactId>pdfbox</artifactId>
-         <version>${org.apache.pdfbox.version}</version>
       </dependency>
       <dependency>
          <groupId>org.apache.lucene</groupId>
