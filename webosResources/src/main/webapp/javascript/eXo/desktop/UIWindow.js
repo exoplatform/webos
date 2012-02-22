@@ -1,36 +1,35 @@
 eXo.desktop.UIWindow = {
    maxIndex : 0,
-   init : function(popup, isShow, posX, posY) {
+   init : function(popup, posX, posY) {
       this.superClass = eXo.webui.UIPopup ;
       if(typeof(popup) == "string") popup = document.getElementById(popup) ;
       if(popup == null) return ;
-      
-      var DOMUtil = eXo.core.DOMUtil ;
-      var uiApplication = DOMUtil.findFirstDescendantByClass(popup, "div", "UIApplication") ;
+
+      var uiWindow = xj(popup);
+      var uiApplication = uiWindow.find('div.PORTLET-FRAGMENT');
       if(!uiApplication) return ;
       
-      if(popup.style.zIndex == "") popup.style.zIndex = ++eXo.webui.UIPopup.zIndex ;
+      if (uiWindow.css("z-index") == "auto") uiWindow.css("z-index", ++eXo.webui.UIPopup.zIndex);
+      uiWindow.bind("mousedown", this.mousedownOnPopup);
       
-      popup.onmousedown = this.mousedownOnPopup ;
-      
-      var windowPortletInfo = DOMUtil.findFirstDescendantByClass(popup, "div", "WindowPortletInfo") ;
+      var windowBar = uiWindow.children("div.WindowBarLeft");
       this.superClass.setPosition(popup, posX, posY, eXo.core.I18n.isRT()) ;
       try {
          if (!popup.maximized) {
-            this.initDND(windowPortletInfo, popup);
+            this.initDND(windowBar, uiWindow);
          }
       }
       catch(err) {
          alert("Error In DND: " + err);
       }
       
-      var minimizedIcon = DOMUtil.findFirstDescendantByClass(popup, "div", "MinimizedIcon") ;
-      minimizedIcon.onmouseup = this.minimizeWindowEvt ; 
-      var maximizedIcon = DOMUtil.findFirstDescendantByClass(popup, "div", "MaximizedIcon") ;
-      maximizedIcon.onmouseup = this.maximizeWindowEvt ;
-      windowPortletInfo.ondblclick = function() {eXo.desktop.UIWindow.maximizeWindowEvt.call(maximizedIcon)};
-      var resizeArea = DOMUtil.findFirstDescendantByClass(popup, "div", "ResizeArea") ;
-      resizeArea.onmousedown = this.startResizeWindowEvt ;
+      var minimizedIcon = windowBar.find("div.MinimizedIcon");
+      minimizedIcon.bind("mouseup", this.minimizeWindowEvt);
+      var maximizedIcon = windowBar.find("div.MaximizedIcon");
+      maximizedIcon.bind("mouseup", this.maximizeWindowEvt);
+      windowBar.bind("dblclick", function() {eXo.desktop.UIWindow.maximizeWindowEvt.call(maximizedIcon)});
+      var resizeArea = uiWindow.children("div.BottomDecoratorLeft").find("div.ResizeArea");
+      resizeArea.bind("mousedown", this.startResizeWindowEvt);
       /*
        * minh.js.exo
        * check maximize portlet in first time;
@@ -45,23 +44,61 @@ eXo.desktop.UIWindow = {
          this.originalHeight = 400;
          maximizedIcon.className = "ControlIcon RestoreIcon";
          maximizedIcon.title = maximizedIcon.getAttribute("modeTitle");
-         setTimeout(eXo.desktop.UIWindow.toForcus, 1000);
+         setTimeout(eXo.desktop.UIWindow.toFocus, 1000);
       }
-      popup.resizeCallback = new eXo.core.HashMap() ;
+      popup.resizeCallback = new eXo.core.HashMap();
+      // TODO REMOVED
+      $(".UIToolbarContainer").append('<div id="debug">DEBUG</div>');
+   },
+
+   initDND : function(windowBar, window) {
+      eXo.core.DragDrop2.init(windowBar[0], window);
+
+      var DOMUtil = eXo.core.DOMUtil;
+      var uiApplication = window.find("div.UIApplication");// DOMUtil.findFirstDescendantByClass(window, "div", "UIApplication") ;
+      var hiddenElements = new Array() ;
+      window.onDrag = function(nx, ny, ex, ey, e) {
+         var dragObjectPosition = window.position();
+         var dragObjectY = dragObjectPosition.top;
+         var browserHeight = eXo.core.Browser.getBrowserHeight() ;
+         var browserWidth = eXo.core.Browser.getBrowserWidth() ;
+         
+         var uiPageDesktopHeight = $("#UIPageDesktop").height();
+         if (dragObjectY < 0) {
+            window.css("top", "0px");
+            if (ey < 1)
+            {
+               this.endDND();
+            }
+         }
+
+         if(dragObjectY > (uiPageDesktopHeight - 33)) {
+            window.css("top", uiPageDesktopHeight - 33);
+            if (ey > browserHeight) {
+               this.endDND();
+            }
+         }
+         
+         if((ex < 0) || (ex > browserWidth)) {
+            this.endDND();
+         }
+         var msg = 'dragObjectY = ' + dragObjectY + ' browserHeight=' + (browserHeight) + " ey = " + ey;
+         $("#debug").text(msg);
+      };
+
+      window.onDragEnd = function(x, y, clientX, clientY) {
+         eXo.desktop.UIWindow.saveWindowProperties(window) ;
+         for (var i = 0; i < hiddenElements.length; i++) {
+            hiddenElements[i].style.overflow = "auto" ;
+         }
+      };
+      
+      window.endDND = function() {
+         xj(document).bind("mousemove", eXo.core.DragDrop2.end);
+      };
    },
    
-   fixHeight : function(portletId) {
-      var portlet = document.getElementById(portletId) ;
-      var delta = portlet.parentNode.offsetHeight - portlet.offsetHeight ;
-      var resizeObj = eXo.core.DOMUtil.findDescendantsByClass(portlet, 'div', 'UIResizableBlock') ;
-      for(var i = 0; i < resizeObj.length; i++) {
-         var nHeight = parseInt(resizeObj[i].offsetHeight) + delta ;
-         if (nHeight < 0 ) nHeight = "0px" ;
-         resizeObj[i].style.height = nHeight + 'px' ;
-      }
-   },
-   
-   toForcus : function() {
+   toFocus : function() {
       //reset zIndex all widget when in case them over to maximize portlet.
       var DOMUtil = eXo.core.DOMUtil ;
       var uiPageDesktop = document.getElementById("UIPageDesktop") ;
@@ -218,87 +255,21 @@ eXo.desktop.UIWindow = {
       UIWindow.originalHeight = windowPortlet.offsetHeight ;
    },
    
-   initDND : function(windowBar, window) {
-      eXo.core.DragDrop2.init(windowBar, window);
-      
-      if(!eXo.desktop.UIDesktop.isMaxZIndex(window)) {
-         eXo.desktop.UIDesktop.resetZIndex(window);
-      }
-      var DOMUtil = eXo.core.DOMUtil;
-      var uiApplication = DOMUtil.findFirstDescendantByClass(window, "div", "UIApplication") ;
-      var hiddenElements = new Array() ;
-      
-      window.onDragStart = function(x, y, last_x, last_y, e) {
-         // A workaround to make the window go under the workspace panel during drag
-         if (eXo.core.Browser.getBrowserType() == "mozilla" && DOMUtil.getStyle(uiApplication, "overflow") == "auto") {
-            hiddenElements.push(uiApplication);
-            uiApplication.style.overflow = "hidden";
-         }
-         var uiAppDescendants = DOMUtil.findDescendantsByTagName(uiApplication, "div");
-         for (var i = 0; i < uiAppDescendants.length; i++) {
-            if (DOMUtil.getStyle(uiAppDescendants[i], "overflow") == "auto") {
-               hiddenElements.push(uiAppDescendants[i]);
-               uiAppDescendants[i].style.overflow = "hidden";
-            }
-         }
-      };
-      
-      window.onDrag = function(nx, ny, ex, ey, e) {
-         //TODO: Investigate why dragObjectY does not equal ny
-         var dragObjectY = eXo.core.Browser.findPosY(window) ;
-         var browserHeight = eXo.core.Browser.getBrowserHeight() ;
-         var browserWidth = eXo.core.Browser.getBrowserWidth() ;
-         
-         var uiPageDesktop = document.getElementById("UIPageDesktop");
-         var uiPageDesktopX = eXo.core.Browser.findPosX(uiPageDesktop);
-         var uiPageDesktopY = eXo.core.Browser.findPosY(uiPageDesktop);
-         // Fix Bug On IE7, It's always double the value returned
-         if (eXo.core.Browser.isIE7()) {
-            uiPageDesktopX = uiPageDesktopX / 2;
-         }
-         
-         if (dragObjectY < uiPageDesktopY) {
-            window.style.top = "0px";
-            if (ey < 1)
-            {
-               document.onmousemove = DragDrop2.end;
-            }
-         }
-         
-         if(dragObjectY > (browserHeight - 25)) {
-            //WEBOS-362 dragObjectY is not the same with dragObject.style.top
-            window.style.top = (browserHeight - 25 - dragObjectY + parseInt(window.style.top)) + "px" ;
-            document.onmousemove = DragDrop2.end ; /*Fix Bug On IE6*/
-         }
-         
-         if((ex < uiPageDesktopX) || (ex > browserWidth)) {
-            document.onmousemove = DragDrop2.end ;
-         }
-      };
-      
-      window.onDragEnd = function(x, y, clientX, clientY) {
-         eXo.desktop.UIWindow.saveWindowProperties(window) ;
-         for (var i = 0; i < hiddenElements.length; i++) {
-            hiddenElements[i].style.overflow = "auto" ;
-         }
-      };
-      
-      window.onCancel = function(e) {};
-   },
+   
    
    saveWindowProperties : function(object, appStatus) {
       var DOMUtil = eXo.core.DOMUtil ;
-      var uiPage = DOMUtil.findAncestorByClass(object, "UIPage") ;
-      containerBlockId = uiPage.id.replace(/^UIPage-/,"") ;
-      var uiResizableBlock = DOMUtil.findFirstDescendantByClass(object, "div", "UIResizableBlock") ;
+      var uiPage = $(".UIPage");
+      containerBlockId = uiPage.attr("id").replace(/^UIPage-/,"");
+      var uiResizableBlock = object.find("div.UIResizableBlock");
       
       var params ;
       if(!appStatus) {
          params = [
-                   {name : "objectId", value : object.id.replace(/^UIWindow-/, "")},
-                   {name : "posX", value : (eXo.core.I18n.isLT() ? parseInt(object.style.left) : parseInt(object.style.right)) },
-                   {name : "posY", value : parseInt(object.style.top)},
-                   {name : "zIndex", value : object.style.zIndex},
+                   {name : "objectId", value : object.attr("id").replace(/^UIWindow-/, "")},
+                   {name : "posX", value : (eXo.core.I18n.isLT() ? parseInt(object.css("left")) : parseInt(object.css("right"))) },
+                   {name : "posY", value : parseInt(object.css("top"))},
+                   {name : "zIndex", value : object.css("zIndex")},
                    {name : "windowWidth", value : object.offsetWidth},
                    {name : "windowHeight", value : uiResizableBlock.offsetHeight}
                    ] ;
