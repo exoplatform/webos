@@ -62,7 +62,7 @@
 						if(posX == null) posX = (String)x;
 						if(posY == null) posY = (String)y;
 						
-						jsmanager.addJavascript("eXo.desktop.UIWindow.init('UIWindow-${popupId}', true, ${posX}, ${posY});");
+						jsmanager.addJavascript("eXo.desktop.UIWindow.init('UIWindow-${popupId}', ${posX}, ${posY});");
 				%>
 				<%	x += 10; y += 20;%>
 				<%}%>
