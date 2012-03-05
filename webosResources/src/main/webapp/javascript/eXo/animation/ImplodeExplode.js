@@ -141,11 +141,12 @@ ImplodeExplode.prototype.doExplode = function(containerId ) {
 				win.style.width = (!win.maximized) ? W0 + "px" : win.style.width ;
 				win.style.display = "block" ;
 				if(win.maximized) {
-					var pageDesktop = eXo.core.DOMUtil.findAncestorByClass(win, "UIPageDesktop");
-					win.style.height = "100%";
-					var resizeBlock = eXo.core.DOMUtil.findFirstDescendantByClass(win, "div", "UIResizableBlock");
-					var topEle = eXo.core.DOMUtil.findFirstChildByClass(win, "div", "WindowBarLeft");
-					var bottomEle = eXo.core.DOMUtil.findFirstChildByClass(win, "div", "BottomDecoratorLeft");
+          var jqObj = xj(win);
+          jqObj.css("height", "100%");
+					var pageDesktop = jqObj.closest(".UIPageDesktop")[0];
+					var resizeBlock = jqObj.find("div.UIResizableBlock")[0];
+					var topEle = jqObj.children("div.WindowBarLeft")[0];
+					var bottomEle = jqObj.children("div.BottomDecoratorLeft")[0];
 					if(resizeBlock) resizeBlock.style.height = win.clientHeight - topEle.offsetHeight - bottomEle.offsetHeight +"px";
 				}
 				container.removeChild(win.animation) ;
