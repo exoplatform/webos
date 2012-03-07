@@ -217,6 +217,7 @@ eXo.desktop.UIDockbar = {
       {
         prev.remove();
       }
+      icon.remove();
       //Remove tooltip
       icon.next("span").remove();
     }
