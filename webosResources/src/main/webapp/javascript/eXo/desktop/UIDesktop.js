@@ -46,12 +46,10 @@ eXo.desktop.UIDesktop = {
 
   fixDesktop : function()
   {
-    var pageDesktop = document.getElementById("UIPageDesktop");
-    var browserHeight = eXo.core.Browser.getBrowserHeight();
-    if (pageDesktop)
-    {
-      pageDesktop.style.height = browserHeight - eXo.core.Browser.findPosY(pageDesktop) + "px";
-    }
+    var desktopPage = xj("#UIPageDesktop");
+    var h = xj(window).height() - desktopPage.offset().top + "px";
+    desktopPage.css("height", h);
+
     window.scroll(0, 0);
     setTimeout("eXo.desktop.UIDockbar.resizeDockBar()", 0);
   },
@@ -188,10 +186,8 @@ eXo.desktop.UIDesktop = {
 
   findPosYInDesktop : function(object)
   {
-    var uiPageDesktop = xj(object).closest(".UIPageDesktop")[0];
-    var posYUIPageDesktop = eXo.core.Browser.findPosY(uiPageDesktop);
-    var posYObject = eXo.core.Browser.findPosY(object);
-    return (posYObject - posYUIPageDesktop);
+    var jqObj = xj(object);
+    return jqObj.offset().top - jqObj.closest(".UIPageDesktop").offset().top;
   },
 
   backupWindowProperties : function(uiWindow)

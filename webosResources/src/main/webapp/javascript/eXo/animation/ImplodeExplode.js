@@ -1,3 +1,4 @@
+//TODO: Refactor this shitty ImplodeExplode.js
 ImplodeExplode = function() {
 } ;
 
@@ -17,8 +18,8 @@ ImplodeExplode.prototype.doInit = function(uiWindow, clickedElement, containerId
 		container.appendChild(this.object.animation) ;	
 		this.object.animation.style.display = "block" ;
 		this.object.animation.style.background = "#ffffff" ;
-		this.object.animation.style.position = "absolute" ;	
-		eXo.core.Browser.setOpacity(this.object.animation, 50) ;
+		this.object.animation.style.position = "absolute" ;
+    xj(this.object.animation).fadeTo("fast", 50);
 		this.object.animation.style.zIndex = this.object.style.zIndex ;
 	}
 } ;
@@ -43,7 +44,7 @@ ImplodeExplode.prototype.doCenterInit = function(uiWindow, clickedElement, conta
 		this.object.animation.style.display = "block" ;
 		this.object.animation.style.background = "white" ;
 		this.object.animation.style.position = "absolute" ;
-		eXo.core.Browser.setOpacity(this.object.animation, 40) ;
+    xj(this.object.animation).fadeTo("fast", 40);
 		this.object.animation.style.zIndex = this.object.style.zIndex ;
 	}
 	uiWindow = this.object;
@@ -143,7 +144,6 @@ ImplodeExplode.prototype.doExplode = function(containerId ) {
 				if(win.maximized) {
           var jqObj = xj(win);
           jqObj.css("height", "100%");
-					var pageDesktop = jqObj.closest(".UIPageDesktop")[0];
 					var resizeBlock = jqObj.find("div.UIResizableBlock")[0];
 					var topEle = jqObj.children("div.WindowBarLeft")[0];
 					var bottomEle = jqObj.children("div.BottomDecoratorLeft")[0];
