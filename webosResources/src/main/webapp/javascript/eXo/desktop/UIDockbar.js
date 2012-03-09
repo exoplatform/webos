@@ -308,9 +308,10 @@ eXo.desktop.UIDockbar = {
       menuItemContainer.style.display = "block";
       menuItemContainer.style.visibility = "";
       var x = this.offsetWidth;
-      var posRight = eXo.core.Browser.getBrowserWidth() - eXo.core.Browser.findPosX(this) - this.offsetWidth;
+      var browserWidth = xj(window).width();
+      var posRight = browserWidth - eXo.core.Browser.findPosX(this) - this.offsetWidth;
       var rootX = (eXo.core.I18n.isLT() ? eXo.core.Browser.findPosX(this) : posRight);
-      if (x + menuItemContainer.offsetWidth + rootX > eXo.core.Browser.getBrowserWidth())
+      if (x + menuItemContainer.offsetWidth + rootX > browserWidth)
       {
         x -= (menuItemContainer.offsetWidth + this.offsetWidth);
       }
@@ -330,13 +331,12 @@ eXo.desktop.UIDockbar = {
       eXo.desktop.UIDockbar.createSlide(this);
       eXo.desktop.UIDockbar.superClass.pushVisibleContainer(this.menuItemContainer.id);
 
-      var y;
-      var browserHeight = eXo.core.Browser.getBrowserHeight();
+      var browserHeight = xj(window).height();
 
-      var parentMenu = xj(this).closest(".MenuItemContainer")[0];
-      var blockMenu = xj(this).closest(".BlockMenu")[0];
-      var objTop = eXo.core.Browser.findPosY(this);
-      y = objTop - eXo.core.Browser.findPosY(parentMenu) - blockMenu.scrollTop;
+      var jqObj = xj(this);
+      var parentMenu = jqObj.closest(".MenuItemContainer");
+      var blockMenu = jqObj.closest(".BlockMenu");
+      var y = jqObj.offset().top - parentMenu.offset().top - blockMenu.scrollTop();
       if (y + menuItemContainer.offsetHeight + 15 > browserHeight)
       {
         y += (this.offsetHeight - menuItemContainer.offsetHeight);
@@ -379,7 +379,7 @@ eXo.desktop.UIDockbar = {
       blockMenu.attr("id", "eXo" + new Date().getTime() + Math.random().toString().substring(2));
     }
 
-    var browserHeight = eXo.core.Browser.getBrowserHeight();
+    var browserHeight = xj(window).height();
     if (menuContainer[0].offsetHeight + 64 > browserHeight)
     {
       var curentHeight = browserHeight - 64;

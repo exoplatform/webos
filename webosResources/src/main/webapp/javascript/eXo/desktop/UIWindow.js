@@ -59,8 +59,8 @@ eXo.desktop.UIWindow = {
       appWindow.onDrag = function(nx, ny, ex, ey, e) {
          var dragObjectPosition = appWindow.position();
          var dragObjectY = dragObjectPosition.top;
-         var browserHeight = eXo.core.Browser.getBrowserHeight() ;
-         var browserWidth = eXo.core.Browser.getBrowserWidth() ;
+         var browserHeight = xj(window).height();
+         var browserWidth = xj(window).width();
          
          var uiPageDesktopHeight = xj("#UIPageDesktop").height();
          if (dragObjectY < 0) {
