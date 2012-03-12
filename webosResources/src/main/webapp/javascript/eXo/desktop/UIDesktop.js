@@ -129,12 +129,14 @@ eXo.desktop.UIDesktop = {
     {
       eXo.desktop.UIDesktop.resetZIndex(jqObj[0]);
     }
+
+    var desktopPage = xj("#UIPageDesktop");
     var numberOfFrame = 10;
     if (mode == "QUIT")
     {
       if (jqObj.css("display") == "block")
       {
-        eXo.animation.ImplodeExplode.implode(jqObj[0], clickedElement, "UIPageDesktop", numberOfFrame, false);
+        eXo.animation.ImplodeExplode.implode(jqObj[0], clickedElement, desktopPage, numberOfFrame);
       }
       jqObj[0].isShowed = false;
       eXo.desktop.UIWindow.saveWindowProperties(jqObj[0], "QUIT");
@@ -145,7 +147,7 @@ eXo.desktop.UIDesktop = {
     }
     else if (jqObj.css("display") == "block")
     {
-      eXo.animation.ImplodeExplode.implode(jqObj[0], clickedElement, "UIPageDesktop", numberOfFrame, false);
+      eXo.animation.ImplodeExplode.implode(jqObj[0], clickedElement, desktopPage, numberOfFrame);
       eXo.desktop.UIWindow.saveWindowProperties(jqObj[0], "HIDE");
       if (dockIcon.length > 0)
       {
@@ -164,7 +166,7 @@ eXo.desktop.UIDesktop = {
       }
 
       eXo.desktop.UIDockbar.resetDesktopShowedStatus(xj("#UIDockBar")[0], xj("#UIPageDesktop")[0]);
-      eXo.animation.ImplodeExplode.explode(jqObj[0], clickedElement, "UIPageDesktop", numberOfFrame, false);
+      eXo.animation.ImplodeExplode.explode(jqObj[0], clickedElement, desktopPage, numberOfFrame);
       eXo.desktop.UIWindow.saveWindowProperties(jqObj[0], "SHOW");
       jqObj[0].isShowed = true;
       if (dockIcon.length > 0)
