@@ -1,132 +1,131 @@
-//TODO: Refactor this shitty ImplodeExplode.js
-ImplodeExplode = function() {
-} ;
+eXo.animation = {};
 
-/*TODO: it has a confusion posX and posY */
-ImplodeExplode.prototype.doInit = function(uiWindow, clickedElement, desktopPage, numberOfFrame) {
-	
-	this.object = uiWindow ;
-	this.object.loop = numberOfFrame ;
-	this.object.iconY = xj(clickedElement).offset().top - desktopPage.offset().top;
-	this.object.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, desktopPage[0], eXo.core.I18n.isRT()) ;
-	this.object.iconW = clickedElement.offsetWidth ;
-	this.object.iconH = clickedElement.offsetHeight ;
+eXo.animation.ImplodeExplode =
+{
 
-	if(this.object.animation == null) {		
-		this.object.animation = document.createElement("div") ;
-    desktopPage.append(this.object.animation);
-		this.object.animation.style.display = "block" ;
-		this.object.animation.style.background = "#ffffff" ;
-		this.object.animation.style.position = "absolute" ;
-    xj(this.object.animation).fadeTo("fast", 50);
-		this.object.animation.style.zIndex = this.object.style.zIndex ;
-	}
-} ;
+  animWindow : null,
 
-/*
- * minh.js.exo
- * fix bug speed click in dockbar.
- * reference -> variable this.busy in method ...doExplode ...doImplode
- */
-ImplodeExplode.prototype.explode = function(uiWindow, clickedElement, desktopPage, numberOfFrame) {
-  if (!this.busy)
+  doInit : function(uiWindow, clickedElement, desktopPage)
   {
-    eXo.animation.ImplodeExplode.doInit(uiWindow, clickedElement, desktopPage, numberOfFrame);
-    this.object.step = numberOfFrame - 1;
-    this.object.isShowed = true;
-    eXo.animation.ImplodeExplode.doExplode(desktopPage);
-  }
-} ;
+    this.animWindow = xj("<div>").css({"display" : "block", "background-color" : "#ffffff", "position" : "absolute", "z-index" : uiWindow.style.zIndex}).fadeTo("fast", 50);
+    desktopPage.append(this.animWindow);
+  },
 
-ImplodeExplode.prototype.implode = function(uiWindow, clickedElement, desktopPage, numberOfFrame) {
-  if (!this.busy)
+  explode : function(uiWindow, clickedElement, desktopPage, numberOfFrame)
   {
-    eXo.animation.ImplodeExplode.doInit(uiWindow, clickedElement, desktopPage, numberOfFrame);
-    this.object.originalY = this.object.offsetTop;
-    if (eXo.core.I18n.isLT())
+    if (!eXo.animation.ImplodeExplode.animWindow)
     {
-      this.object.originalX = this.object.offsetLeft;
+      eXo.animation.ImplodeExplode.doInit(uiWindow, clickedElement, desktopPage);
+
+      var animWindow = eXo.animation.ImplodeExplode.animWindow;
+      animWindow.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, desktopPage[0], eXo.core.I18n.isRT());
+      animWindow.iconY = xj(clickedElement).offset().top - desktopPage.offset().top;
+      animWindow.iconW = clickedElement.offsetWidth
+      animWindow.iconH = clickedElement.offsetHeight;
+      animWindow.originX = uiWindow.originalX;
+      animWindow.originY = uiWindow.originalY;
+      animWindow.originW = uiWindow.originalW;
+      animWindow.originH = uiWindow.originalH;
+
+      eXo.animation.ImplodeExplode.doExplode(numberOfFrame, numberOfFrame - 1, animWindow, xj(uiWindow));
+    }
+  },
+
+  implode : function(uiWindow, clickedElement, desktopPage, numberOfFrame)
+  {
+    if (!eXo.animation.ImplodeExplode.animWindow)
+    {
+      eXo.animation.ImplodeExplode.doInit(uiWindow, clickedElement, desktopPage);
+
+      var animWindow = eXo.animation.ImplodeExplode.animWindow;
+      animWindow.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, desktopPage[0], eXo.core.I18n.isRT());
+      animWindow.iconY = xj(clickedElement).offset().top - desktopPage.offset().top;
+      animWindow.iconW = clickedElement.offsetWidth
+      animWindow.iconH = clickedElement.offsetHeight;
+      animWindow.originY = uiWindow.offsetTop;
+      animWindow.originX = eXo.core.I18n.isLT() ? uiWindow.offsetLeft : eXo.core.Browser.findPosXInContainer(uiWindow, uiWindow.offsetParent, true);
+      animWindow.originW = uiWindow.offsetWidth;
+      animWindow.originH = uiWindow.offsetHeight;
+
+      if (uiWindow.style.display == "block")
+      {
+        uiWindow.style.display = "none";
+      }
+
+      eXo.animation.ImplodeExplode.doImplode(numberOfFrame, 1, animWindow);
+    }
+  },
+
+  doImplode : function(numberOfFrame, index, animWindow)
+  {
+    eXo.animation.ImplodeExplode.adjustAnimWindow(numberOfFrame, index, animWindow);
+
+    var newIndex = index + 1;
+    if (newIndex < numberOfFrame)
+    {
+      setTimeout(function() { eXo.animation.ImplodeExplode.doImplode(numberOfFrame, newIndex, animWindow)}, 0);
     }
     else
     {
-      this.object.originalX = eXo.core.Browser.findPosXInContainer(this.object, this.object.offsetParent, true);
+      animWindow.remove();
+      eXo.animation.ImplodeExplode.animWindow = null;
     }
-    this.object.originalW = this.object.offsetWidth;
-    this.object.originalH = this.object.offsetHeight;
-    this.object.step = 1;
-    if (this.object.style.display == "block")
+  },
+
+  doExplode : function(numberOfFrame, index, animWindow, appWindow)
+  {
+    eXo.animation.ImplodeExplode.adjustAnimWindow(numberOfFrame, index, animWindow);
+
+    var newIndex = index - 1;
+    if (newIndex > 0)
     {
-      this.object.style.display = "none";
+      setTimeout(function() { eXo.animation.ImplodeExplode.doExplode(numberOfFrame, newIndex, animWindow, appWindow)}, 0);
     }
+    else
+    {
+      appWindow.css("top", animWindow.originY);
+      if (eXo.core.I18n.isLT())
+      {
+        appWindow.css("left", animWindow.originX);
+      }
+      else
+      {
+        appWindow.css("right", animWindow.originX);
+      }
+      appWindow.css("width", (!appWindow[0].maximized) ? animWindow.originW : appWindow.css("width"));
+      appWindow.css("display", "block");
+      if (appWindow[0].maximized)
+      {
+        appWindow.css("height", "100%");
+        var resizeBlock = appWindow.find("div.UIResizableBlock")[0];
+        var topEle = appWindow.children("div.WindowBarLeft")[0];
+        var bottomEle = appWindow.children("div.BottomDecoratorLeft")[0];
+        if (resizeBlock)
+        {
+          resizeBlock.style.height = appWindow[0].clientHeight - topEle.offsetHeight - bottomEle.offsetHeight + "px";
+        }
+      }
 
-    eXo.animation.ImplodeExplode.doImplode(desktopPage) ;
-	} 
-} ;
+      animWindow.remove();
+      eXo.animation.ImplodeExplode.animWindow = null;
+    }
+  },
 
-ImplodeExplode.prototype.doImplode = function(desktopPage) {
-	this.busy = true ;
-	var win = this.object ;
-	var Y0 = win.originalY + (win.step*(win.iconY - win.originalY))/win.loop ;
-	var X0 = win.originalX + ((Y0 - win.originalY)*(win.iconX - win.originalX))/(win.iconY - win.originalY) ;
-	var W0 = ((win.originalW - win.iconW)*(win.loop - win.step))/win.loop + win.iconW ;
-	var H0 = ((win.originalH - win.iconH)*(win.loop - win.step))/win.loop + win.iconH ;
+  adjustAnimWindow : function(numberOfFrame, index, animWindow)
+  {
+    var Y = animWindow.originY + index * (animWindow.iconY - animWindow.originY) / numberOfFrame;
+    var X = animWindow.originX + (Y - animWindow.originY) * (animWindow.iconX - animWindow.originX) / (animWindow.iconY - animWindow.originY);
+    var W = (animWindow.originW - animWindow.iconW) * (numberOfFrame - index) / numberOfFrame + animWindow.iconW;
+    var H = (animWindow.originH - animWindow.iconH) * (numberOfFrame - index) / numberOfFrame + animWindow.iconH;
 
-	win.animation.style.top = Y0 + "px" ;
-	if(eXo.core.I18n.isLT()) win.animation.style.left = X0 + "px" ;
-	else win.animation.style.right = X0 + "px" ;
-	win.animation.style.width = W0 + "px" ;
-	win.animation.style.height = H0 + "px" ;
-
-	win.step++ ;
-	if(W0 > win.iconW) {
-    setTimeout(function(){ eXo.animation.ImplodeExplode.doImplode(desktopPage);}, 0);
-	}	else {
-    xj(win.animation).remove();
-		win.animation = null ;
-		this.busy = false ;
-	}
-
-} ;
-
-ImplodeExplode.prototype.doExplode = function(desktopPage) {
-			this.busy = true ;
-			var win = this.object ;
-		
-			var Y0 = win.originalY + (win.step*(win.iconY - win.originalY))/win.loop ;
-			var X0 = win.originalX + ((Y0 - win.originalY)*(win.iconX - win.originalX))/(win.iconY - win.originalY) ;
-			var W0 = ((win.originalW - win.iconW)*(win.loop - win.step))/win.loop + win.iconW ;
-			var H0 = ((win.originalH - win.iconH)*(win.loop - win.step))/win.loop + win.iconH ;
-			
-			win.animation.style.top = Y0 + "px" ;
-			if(eXo.core.I18n.isLT()) win.animation.style.left = X0 + "px" ;
-			else win.animation.style.right = X0 + "px" ;
-			win.animation.style.width = W0 + "px" ;
-			win.animation.style.height = H0 + "px" ;
-			
-			win.step-- ;
-			
-			if(W0 < win.originalW) {
-        setTimeout(function(){ eXo.animation.ImplodeExplode.doExplode(desktopPage);}, 0);
-			} else {
-				win.style.top = Y0 + "px" ;
-				if(eXo.core.I18n.isLT()) win.style.left = X0 + "px" ;
-				else win.style.right = X0 + "px" ;
-				win.style.width = (!win.maximized) ? W0 + "px" : win.style.width ;
-				win.style.display = "block" ;
-				if(win.maximized) {
-          var jqObj = xj(win);
-          jqObj.css("height", "100%");
-					var resizeBlock = jqObj.find("div.UIResizableBlock")[0];
-					var topEle = jqObj.children("div.WindowBarLeft")[0];
-					var bottomEle = jqObj.children("div.BottomDecoratorLeft")[0];
-					if(resizeBlock) resizeBlock.style.height = win.clientHeight - topEle.offsetHeight - bottomEle.offsetHeight +"px";
-				}
-				xj(win.animation).remove();
-				win.animation = null ;
-				this.busy = false ;
-			}
-			
-} ;
-
-eXo.animation = {};
-eXo.animation.ImplodeExplode = new ImplodeExplode() ;
+    animWindow.css({"top" : Y, "width" : W, "height" : H});
+    if (eXo.core.I18n.isLT())
+    {
+      animWindow.css("left", X);
+    }
+    else
+    {
+      animWindow.css("right", X);
+    }
+  }
+}
