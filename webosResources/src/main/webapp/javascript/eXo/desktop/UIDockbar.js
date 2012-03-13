@@ -4,64 +4,53 @@ eXo.desktop.UIDockbar = {
 
   weight : 2.3,
 
-  isFirstTime : true,
+  dockbarIconSize : 40,
+
+  dockbarBackgroundHeight : 47,
 
   showDesktop : false,
-
-  arrayImage : false,
-
-  itemStyleClass : "MenuItem",
-
-  itemOverStyleClass : "MenuItemOver",
-
-  containerStyleClass : "MenuItemContainer",
 
   superClass : eXo.webui.UIPopupMenu,
 
   init : function()
   {
     var dockbar = xj("#UIDockBar");
-    if (dockbar.length == 0)
+
+    dockbar.find("img.Icon").each(function(index)
     {
-      return;
-    }
-    var imgObject = dockbar.find("img.Icon");
-    eXo.desktop.UIDockbar.arrayImage = imgObject.get();
+      var icon = xj(this);
 
-    dockbar[0].defaultIconSize = 40;
-    dockbar[0].originalBGDockbarHeight = 47;
-
-    if (imgObject.length > 0 && imgObject[0].onmousemove == undefined)
-    {
-      this.isFirstTime = true;
-    }
-
-    if (this.isFirstTime == true)
-    {
-      setTimeout("eXo.desktop.UIDockbar.waitOnLoad(eXo.desktop.UIDockbar.arrayImage)", 0);
-      this.isFirstTime = false;
-    }
-
-    dockbar[0].originalDockbarHeight = dockbar[0].offsetHeight;
-    window.setTimeout(function() {dockbar.css("visibility", "visible")}, 50);
-
-    xj("#PortletsViewer")[0].onclick = this.viewPortlets;
-  },
-
-  waitOnLoad : function(images)
-  {
-    for (var i = 0; i < images.length; i++)
-    {
-      images[i].onmousemove = eXo.desktop.UIDockbar.animationEvt;
-      images[i].onmouseover = eXo.desktop.UIDockbar.iconOverEvt;
-      images[i].onmouseout = eXo.desktop.UIDockbar.iconOutEvt;
-
-      if (eXo.core.Browser.isIE6())
+      icon.mouseover(function()
       {
-        images[i].runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + images[i].src + "', sizingMethod='scale')";
-        images[i].src = "/eXoResources/skin/sharedImages/Blank.gif";
+        eXo.webui.UIRightClickPopupMenu.hideContextMenu("DockbarContextMenu");
+        var tooltip = icon.next();
+        var x = eXo.core.Browser.findPosXInContainer(icon[0], dockbar[0]);
+        tooltip.css({"display" : "block", "top" : -tooltip[0].offsetHeight, "left" : x});
+      });
+
+      icon.mouseout(function()
+      {
+        icon.next().css("display", "none");
+      });
+
+      icon.mousemove(function(e)
+      {
+        eXo.desktop.UIDockbar.animateDockbar(e, dockbar, index);
+      });
+    });
+
+    xj("#PortletsViewer").toggle(
+      function()
+      {
+        eXo.desktop.UIDockbar.showApplications(xj(this));
+      },
+      function()
+      {
+        eXo.desktop.UIDockbar.hideApplications(xj(this));
       }
-    }
+    );
+
+    setTimeout(function() {dockbar.css("visibility", "visible")}, 50);
   },
 
   startDockBarEvt : function(evt)
@@ -80,131 +69,81 @@ eXo.desktop.UIDockbar = {
     eXo.desktop.UIDockbar.reset();
   },
 
-  iconOverEvt : function()
-  {
-    var dockbar = xj("#UIDockBar")[0];
-    var objectXInDockbar = eXo.core.Browser.findPosXInContainer(this, dockbar);
-    eXo.webui.UIRightClickPopupMenu.hideContextMenu("DockbarContextMenu");
-
-    var tooltip = xj(this).next();
-    tooltip.css({"display" : "block", "top" : -tooltip[0].offsetHeight + "px", "left" : objectXInDockbar + "px"});
-  },
-
-  iconOutEvt : function()
-  {
-    this.nextSibling.style.display = "none";
-  },
-
-  viewPortlets : function()
+  showApplications : function(icon)
   {
     xj("#UIPageDesktop").find("div.UIWindow").each(function()
     {
       var appWindow = xj(this);
-      if (eXo.desktop.UIDockbar.showDesktop)
+      if(this.isShowed)
       {
-        if (this.isShowed)
-        {
-          appWindow.css("display", "block");
-        }
-      } else if (appWindow.css("display") == "block")
+        appWindow.css("display", "block");
+      }
+    });
+
+    var imageURL = "/eXoResources/skin/sharedImages/Icon80x80/Hide" + icon.attr("id") + ".png";
+    icon.attr("src", imageURL);
+  },
+
+  hideApplications : function(icon)
+  {
+    xj("#UIPageDesktop").find("div.UIWindow").each(function()
+    {
+      var appWindow = xj(this);
+      if(this.isShowed)
       {
         appWindow.css("display", "none");
       }
     });
 
-    var srcMonitoringImage = "/eXoResources/skin/sharedImages/Icon80x80/Hide" + this.id + ".png";
-    var srcPortletsViewerImage = "/eXoResources/skin/sharedImages/Icon80x80/Show" + this.id + ".png";
-
-    if (eXo.desktop.UIDockbar.showDesktop)
-    {
-      if (eXo.core.Browser.isIE6())
-      {
-        this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + srcMonitoringImage + "', sizingMethod='scale')";
-      }
-      else
-      {
-        this.src = srcMonitoringImage;
-      }
-      eXo.desktop.UIDockbar.showDesktop = false;
-    }
-    else
-    {
-      if (eXo.core.Browser.isIE6())
-      {
-        this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + srcPortletsViewerImage + "', sizingMethod='scale')";
-      }
-      else
-      {
-        this.src = srcPortletsViewerImage;
-      }
-      eXo.desktop.UIDockbar.showDesktop = true;
-    }
+    var imageURL = "/eXoResources/skin/sharedImages/Icon80x80/Show" + icon.attr("id") + ".png";
+    icon.attr("src", imageURL);
   },
 
-  animationEvt : function(e)
+  /**
+   * Animate the icons in dockbar as user moves mouse over it.
+   *
+   * @param e
+   * @param dockbar
+   */
+  animateDockbar : function(e, dockbar, targetIndex)
   {
-    var curve = eXo.desktop.UIDockbar.curve;
-    var weight = eXo.desktop.UIDockbar.weight;
+    var C = eXo.desktop.UIDockbar.curve;
+    var W = eXo.desktop.UIDockbar.weight;
+    var iconH = eXo.desktop.UIDockbar.dockbarIconSize;
 
-    var fixBugImageElement = document.getElementById("FixBug");
-    var desktopPage = document.getElementById("UIPageDesktop");
+    var isRT = eXo.core.I18n.isRT();
+    var iconWidth = e.target.offsetWidth;
+    var iconCenterX = eXo.desktop.UIDesktop.findPosXInDesktop(e.target, isRT) + iconWidth / 2;
 
-    var selectedIconX = eXo.desktop.UIDesktop.findPosXInDesktop(this, eXo.core.I18n.isRT());
-    var middleIcon = selectedIconX + (this.offsetWidth / 2);
-    var mouseX = eXo.core.Browser.findMouseRelativeX(desktopPage, e);
-    if (eXo.core.I18n.isRT())
+    dockbar.find("#FixBug").css("height", iconH * W);
+    dockbar.find("#DockbarCenter").css("height", eXo.desktop.UIDockbar.dockbarBackgroundHeight + iconH * (W -1));
+
+    var desktopPage = xj("#UIPageDesktop");
+    //Mouse's horizontal coordinate relative to desktop page
+    var mouseX = isRT ? (desktopPage[0].offsetWidth + desktopPage.offset().left - e.pageX) : (e.pageX - desktopPage.offset().left);
+    var distanceWeight = (iconCenterX - mouseX) / (C * iconWidth);
+
+    dockbar.find("img.Icon").each(function(index)
     {
-      mouseX = desktopPage.offsetWidth - mouseX;
-    }
-
-    var distanceWeight = (middleIcon - mouseX) / (2 * curve * (middleIcon - selectedIconX));
-
-    var selectedIconIndex = eXo.desktop.UIDockbar.findIndex(this);
-    var dockbar = document.getElementById("UIDockBar");
-    var dockbarCenter = document.getElementById("DockbarCenter");
-
-    fixBugImageElement.style.height = dockbar.defaultIconSize + (dockbar.defaultIconSize * (weight - 1)) + "px";
-
-    dockbarCenter.style.height = dockbar.originalBGDockbarHeight + (dockbar.defaultIconSize * (weight - 1)) + "px";
-
-    var defaultIconSize = dockbar.defaultIconSize;
-
-    xj(this).parent().children("img.Icon").each(function(index)
-    {
-      var deltaCurve = Math.abs(selectedIconIndex - index);
-      var size = defaultIconSize;
-      if (deltaCurve < curve)
+      var deltaCurve = Math.abs(targetIndex - index);
+      var size = iconH;
+      if (deltaCurve < C)
       {
-        if (index == selectedIconIndex)
+        if (index == targetIndex)
         {
-          size = Math.round(defaultIconSize + defaultIconSize * (weight - 1) * ((curve - deltaCurve) / curve - Math.abs(distanceWeight)));
+          size = Math.round(iconH + iconH * (W - 1) * ((C - deltaCurve) / C - Math.abs(distanceWeight)));
           distanceWeight = -distanceWeight;
         }
         else
         {
-          size = Math.round(defaultIconSize + defaultIconSize * (weight - 1) * ((curve - deltaCurve) / curve + distanceWeight));
+          size = Math.round(iconH + iconH * (W - 1) * ((C - deltaCurve) / C + distanceWeight));
         }
 
-        xj(this).css({"width" : size + "px", "height" : size + "px"});
+        xj(this).css({"width" : size, "height" : size});
       }
     });
 
     eXo.desktop.UIDockbar.resizeDockBar();
-  },
-
-  findIndex : function(object)
-  {
-    var ret;
-    xj(object).parent().children("img.Icon").each(function(index)
-    {
-      if (object == this)
-      {
-        ret = index;
-        return false;
-      }
-    });
-
-    return ret;
   },
 
   removeDockbarIcon : function(iconId)
@@ -225,11 +164,12 @@ eXo.desktop.UIDockbar = {
 
   reset : function()
   {
-    var dockbar = xj("#UIDockBar")[0];
-    xj("#DockbarCenter").css("height", dockbar.originalBGDockbarHeight + "px");
-    var iconSize = dockbar.defaultIconSize + "px";
+    xj("#DockbarCenter").css("height", eXo.desktop.UIDockbar.dockbarBackgroundHeight);
+
+    var iconSize = eXo.desktop.UIDockbar.dockbarIconSize;
     xj("#IconContainer").children("img.Icon").css({"width" : iconSize, "height" : iconSize});
     xj("#FixBug").css("height", iconSize);
+
     eXo.desktop.UIDockbar.resizeDockBar();
   },
 
@@ -240,10 +180,9 @@ eXo.desktop.UIDockbar = {
     var iconContainer = xj("#IconContainer");
 
     var widthItemControl = 0;
-    var defaultIconSize = dockbar.defaultIconSize ? dockbar.defaultIconSize : 0;
     iconContainer.children("img.Icon").each(function()
     {
-      widthItemControl += Math.max(this.offsetWidth, defaultIconSize) + 5;
+      widthItemControl += Math.max(this.offsetWidth, eXo.desktop.UIDockbar.dockbarIconSize) + 5;
     });
 
     var totalWidthSeparators = 0;
