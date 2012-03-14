@@ -237,21 +237,6 @@ eXo.desktop.UIWindow = {
     eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
   },
 
-  backupObjectProperties : function(windowPortlet, resizableComponents)
-  {
-    var UIWindow = eXo.desktop.UIWindow;
-    for (var i = 0; i < resizableComponents.length; i++)
-    {
-      resizableComponents[i].originalWidth = resizableComponents[i].offsetWidth;
-      resizableComponents[i].originalHeight = resizableComponents[i].offsetHeight;
-    }
-
-    UIWindow.posX = eXo.desktop.UIDesktop.findPosXInDesktop(windowPortlet, eXo.core.I18n.isRT());
-    UIWindow.posY = eXo.desktop.UIDesktop.findPosYInDesktop(windowPortlet);
-    UIWindow.originalWidth = windowPortlet.offsetWidth;
-    UIWindow.originalHeight = windowPortlet.offsetHeight;
-  },
-
   saveWindowProperties : function(object, appStatus)
   {
     var jqObj = xj(object);
