@@ -46,11 +46,21 @@ eXo.desktop.UIWindow = {
       alert("Error In DND: " + err);
     }
 
-    var minimizedIcon = windowBar.find("div.MinimizedIcon");
-    minimizedIcon.bind("mouseup", this.minimizeWindowEvt);
-    var maximizedIcon = windowBar.find("div.MaximizedIcon");
-    maximizedIcon.bind("mouseup", this.maximizeWindowEvt);
-    windowBar.bind("dblclick", function() {eXo.desktop.UIWindow.maximizeWindowEvt.call(maximizedIcon)});
+    windowBar.find("div.MinimizedIcon").mouseup(function()
+    {
+      eXo.desktop.UIWindow.minimizeWindow(uiWindow);
+    });
+
+    var maximIcon = windowBar.find("div.MaximizedIcon");
+    maximIcon.click(function()
+    {
+      eXo.desktop.UIWindow.maximizeWindow(uiWindow, maximIcon);
+    });
+
+    windowBar.dblclick(function()
+    {
+      eXo.desktop.UIWindow.maximizeWindow(uiWindow, maximIcon);
+    });
 
     if (!popup.maximized)
     {
@@ -121,74 +131,72 @@ eXo.desktop.UIWindow = {
     }
   },
 
-  maximizeWindowEvt : function(evt)
+  restoreWindow : function(popupWindow, restoreIcon, originX, originY, originW, originH)
   {
-    var jqObj = xj(this);
-    var portletWindow = jqObj.closest(".UIResizeObject");
-
-    var desktopPage = xj("#UIPageDesktop")[0];
-    var desktopHeight = desktopPage.offsetHeight;
-    var resizableBlocks = portletWindow.find("div.UIResizableBlock");
-    if (portletWindow[0].maximized)
+    if(eXo.core.I18n.isLT())
     {
-      portletWindow[0].maximized = false;
-      portletWindow.css("top", eXo.desktop.UIWindow.posY + "px");
-      if (eXo.core.I18n.isLT())
-      {
-        portletWindow.css("left", eXo.desktop.UIWindow.posX + "px");
-      }
-      else
-      {
-        portletWindow.css("right", eXo.desktop.UIWindow.posX + "px");
-      }
-      portletWindow.css("width", eXo.desktop.UIWindow.originalWidth + "px");
-      portletWindow.css("height", null);
-      resizableBlocks.each(function()
-      {
-        var h = (this.originalHeight ? this.originalHeight : 400 ) + "px";
-        xj(this).css("height", h);
-      });
-      jqObj.attr("class", "ControlIcon MaximizedIcon");
-
+      popupWindow.css("left", originX);
     }
     else
     {
-      eXo.desktop.UIWindow.backupObjectProperties(portletWindow[0], resizableBlocks.get());
-      portletWindow.css("top", "0px");
-      if (eXo.core.I18n.isLT())
-      {
-        portletWindow.css("left", "0px");
-      }
-      else
-      {
-        portletWindow.css("right", "0px");
-      }
-      portletWindow.css("width", "100%");
-      portletWindow.css("height", "auto");
-      var delta = desktopHeight - portletWindow[0].clientHeight;
-      resizableBlocks.each(function()
-      {
-        xj(this).css("height", (parseInt(this.clientHeight) + delta) + "px");
-      });
-
-      portletWindow.css("height", portletWindow[0].clientHeight + "px");
-      portletWindow[0].maximized = true;
-      jqObj.attr("class", "ControlIcon RestoreIcon");
+      popupWindow.css("right", originX);
     }
-    eXo.desktop.UIWindow.saveWindowProperties(portletWindow[0]);
+    popupWindow.css("top", originY).css("width", originW).css("height", null);
+    popupWindow.find("div.UIResizableBlock").css("height", originH);
+    restoreIcon.attr("class", "ControlIcon MaximizedIcon");
+    eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
+    popupWindow[0].maximized = false;
+
+    restoreIcon.unbind("click").click(function()
+    {
+      eXo.desktop.UIWindow.maximizeWindow(popupWindow, restoreIcon);
+    });
+    popupWindow.find("div.WindowBarLeft").unbind("dblclick").dblclick(function()
+    {
+      eXo.desktop.UIWindow.maximizeWindow(popupWindow, restoreIcon);
+    });
   },
 
-  minimizeWindowEvt : function(evt)
+  maximizeWindow : function(popupWindow, maximIcon)
   {
-    var icon = xj(this);
-    var popup = icon.closest(".UIDragObject");
-    popup.parent().children("div").each(function(index)
+    var resizableBlock = popupWindow.find("div.UIResizableBlock");
+    var originX = eXo.desktop.UIDesktop.findPosXInDesktop(popupWindow[0], eXo.core.I18n.isRT());
+    var originY = eXo.desktop.UIDesktop.findPosYInDesktop(popupWindow[0]);
+    var originW = popupWindow.width();
+    var originH = resizableBlock.height();
+    if(eXo.core.I18n.isLT())
     {
-      if(this == popup[0])
-      {
-        eXo.desktop.UIDesktop.showHideWindow(popup[0], xj("#IconContainer").children("img.Icon")[index + 1]);
-      }
+      popupWindow.css("left", 0);
+    }
+    else
+    {
+      popupWindow.css("right", 0);
+    }
+    popupWindow.css("top", 0).css("width", "100%").css("height", "auto");
+    maximIcon.attr("class", "ControlIcon RestoreIcon");
+    var h = resizableBlock[0].clientHeight + xj("#UIPageDesktop")[0].offsetHeight - popupWindow[0].clientHeight;
+    resizableBlock.css("height", h);
+
+    eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
+    popupWindow[0].maximized = true;
+
+    maximIcon.attr("class", "ControlIcon RestoreIcon");
+    maximIcon.unbind("click").click(function()
+    {
+      eXo.desktop.UIWindow.restoreWindow(popupWindow, maximIcon, originX, originY, originW, originH);
     });
+    popupWindow.find("div.WindowBarLeft").unbind("dblclick").dblclick(function()
+    {
+      eXo.desktop.UIWindow.restoreWindow(popupWindow, maximIcon, originX, originY, originW, originH);
+    });
+  },
+
+  minimizeWindow : function(popupWindow)
+  {
+    var id = popupWindow.attr("id").replace(/^UIWindow-/, "");
+    eXo.animation.ImplodeExplode.implode(popupWindow[0], popupWindow[0], xj("#UIPageDesktop"), 10);
+    xj("#DockItem" + id).addClass("ShowIcon");
+    eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0], "HIDE");
   },
 
   startResizeProcess : function(e, portletWindow)
