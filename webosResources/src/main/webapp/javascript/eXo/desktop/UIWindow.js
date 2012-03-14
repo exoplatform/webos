@@ -1,103 +1,107 @@
 eXo.desktop.UIWindow = {
 
-   maxIndex : 0,
+  maxIndex : 0,
 
-   init : function(popup, posX, posY) {
-      this.superClass = eXo.webui.UIPopup ;
-      if(typeof(popup) == "string") popup = document.getElementById(popup) ;
-      if(popup == null) return ;
+  defaultWidth : 800,
 
-      var uiWindow = xj(popup);
-      var uiApplication = uiWindow.find('div.PORTLET-FRAGMENT');
-      if(!uiApplication) return ;
-      
-      if (uiWindow.css("z-index") == "auto") uiWindow.css("z-index", ++eXo.webui.UIPopup.zIndex);
-      uiWindow.bind("mousedown", this.mousedownOnPopup);
-      
-      var windowBar = uiWindow.children("div.WindowBarLeft");
-      this.superClass.setPosition(popup, posX, posY, eXo.core.I18n.isRT()) ;
-      try {
-         if (!popup.maximized) {
-            this.initDND(windowBar, uiWindow);
-         }
-      }
-      catch(err) {
-         alert("Error In DND: " + err);
-      }
-      
-      var minimizedIcon = windowBar.find("div.MinimizedIcon");
-      minimizedIcon.bind("mouseup", this.minimizeWindowEvt);
-      var maximizedIcon = windowBar.find("div.MaximizedIcon");
-      maximizedIcon.bind("mouseup", this.maximizeWindowEvt);
-      windowBar.bind("dblclick", function() {eXo.desktop.UIWindow.maximizeWindowEvt.call(maximizedIcon)});
-      var resizeArea = uiWindow.children("div.BottomDecoratorLeft").find("div.ResizeArea");
-      resizeArea.bind("mousedown", this.startResizeWindowEvt);
-      /*
-       * minh.js.exo
-       * check maximize portlet in first time;
-       * posX == posY == 0;
-       */
-      if (posX == posY && posX == 0) {
-         popup.style.width = "100%";
-         popup.maximized = true;
-         this.posX = 15;
-         this.posY = 15;
-         this.originalWidth = 800;
-         this.originalHeight = 400;
-         maximizedIcon[0].className = "ControlIcon RestoreIcon";
-         maximizedIcon[0].title = maximizedIcon.attr("modeTitle");
-         setTimeout(eXo.desktop.UIWindow.toFocus, 1000);
-      }
-      popup.resizeCallback = new eXo.core.HashMap();
-   },
+  defaultHeight : 400,
 
-   initDND : function(dragBar, appWindow) {
-      eXo.core.DragDrop2.init(dragBar[0], appWindow[0]);
+  superClass : eXo.webui.UIPopup,
 
-      var hiddenElements = new Array() ;
-
-      appWindow.onDrag = function(nx, ny, ex, ey, e) {
-         var dragObjectPosition = appWindow.position();
-         var dragObjectY = dragObjectPosition.top;
-         var browserHeight = xj(window).height();
-         var browserWidth = xj(window).width();
-         
-         var uiPageDesktopHeight = xj("#UIPageDesktop").height();
-         if (dragObjectY < 0) {
-            appWindow.css("top", "0px");
-            if (ey < 1)
-            {
-               this.endDND();
-            }
-         }
-
-         if(dragObjectY > (uiPageDesktopHeight - 33)) {
-            appWindow.css("top", uiPageDesktopHeight - 33);
-            if (ey > browserHeight) {
-               this.endDND();
-            }
-         }
-         
-         if((ex < 0) || (ex > browserWidth)) {
-            this.endDND();
-         }
-      };
-
-      appWindow.onDragEnd = function(x, y, clientX, clientY) {
-         eXo.desktop.UIWindow.saveWindowProperties(appWindow) ;
-         for (var i = 0; i < hiddenElements.length; i++) {
-            hiddenElements[i].style.overflow = "auto" ;
-         }
-      };
-      
-      appWindow.endDND = function() {
-         xj(document).bind("mousemove", eXo.core.DragDrop2.end);
-      };
-   },
-
-  toFocus : function()
+  init : function(popup, posX, posY)
   {
-    xj("#UIPageDesktop").find("div.UIGadget").css("z-index", "1");
+    if (typeof(popup) == "string")
+    {
+      popup = document.getElementById(popup);
+    }
+    if (popup == null)
+    {
+      return;
+    }
+
+    var uiWindow = xj(popup);
+    var uiApplication = uiWindow.find('div.PORTLET-FRAGMENT');
+    if (!uiApplication)
+    {
+      return;
+    }
+
+    if (uiWindow.css("z-index") == "auto")
+    {
+      uiWindow.css("z-index", ++eXo.webui.UIPopup.zIndex);
+    }
+    uiWindow.bind("mousedown", this.mousedownOnPopup);
+
+    var windowBar = uiWindow.children("div.WindowBarLeft");
+    this.superClass.setPosition(popup, posX, posY, eXo.core.I18n.isRT());
+    try
+    {
+      if (!popup.maximized)
+      {
+        this.initDND(windowBar[0], uiWindow[0]);
+      }
+    }
+    catch(err)
+    {
+      alert("Error In DND: " + err);
+    }
+
+    var minimizedIcon = windowBar.find("div.MinimizedIcon");
+    minimizedIcon.bind("mouseup", this.minimizeWindowEvt);
+    var maximizedIcon = windowBar.find("div.MaximizedIcon");
+    maximizedIcon.bind("mouseup", this.maximizeWindowEvt);
+    windowBar.bind("dblclick", function() {eXo.desktop.UIWindow.maximizeWindowEvt.call(maximizedIcon)});
+    var resizeArea = uiWindow.children("div.BottomDecoratorLeft").find("div.ResizeArea");
+    resizeArea.bind("mousedown", this.startResizeWindowEvt);
+
+    popup.resizeCallback = new eXo.core.HashMap();
+  },
+
+  initDND : function(dragBar, appWindow)
+  {
+    eXo.core.DragDrop2.init(dragBar, appWindow);
+
+    appWindow.onDrag = function(nx, ny, ex, ey, e)
+    {
+      var jqObj = xj(appWindow);
+      var dragObjectY = jqObj.position().top;
+      var browserHeight = xj(window).height();
+      var browserWidth = xj(window).width();
+
+      var desktopHeight = xj("#UIPageDesktop").height();
+      if (dragObjectY < 0)
+      {
+        jqObj.css("top", "0px");
+        if (ey < 1)
+        {
+          this.endDND();
+        }
+      }
+
+      if (dragObjectY > (desktopHeight - 33))
+      {
+        jqObj.css("top", desktopHeight - 33);
+        if (ey > browserHeight)
+        {
+          this.endDND();
+        }
+      }
+
+      if ((ex < 0) || (ex > browserWidth))
+      {
+        this.endDND();
+      }
+    };
+
+    appWindow.onDragEnd = function(x, y, clientX, clientY)
+    {
+      eXo.desktop.UIWindow.saveWindowProperties(appWindow);
+    };
+
+    appWindow.endDND = function()
+    {
+      xj(document).bind("mousemove", eXo.core.DragDrop2.end);
+    };
   },
 
   mousedownOnPopup : function(evt)
@@ -294,7 +298,7 @@ eXo.desktop.UIWindow = {
       params = [
         {name : "objectId", value : objID},
         {name : "posX", value : (eXo.core.I18n.isLT() ? parseInt(jqObj.css("left")) : parseInt(jqObj.css("right"))) },
-        {name : "posY", value : parseInt(object.css("top"))},
+        {name : "posY", value : parseInt(jqObj.css("top"))},
         {name : "zIndex", value : jqObj.css("z-index")},
         {name : "windowWidth", value : object.offsetWidth},
         {name : "windowHeight", value : uiResizableBlock[0].offsetHeight}
