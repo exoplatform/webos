@@ -51,8 +51,15 @@ eXo.desktop.UIWindow = {
     var maximizedIcon = windowBar.find("div.MaximizedIcon");
     maximizedIcon.bind("mouseup", this.maximizeWindowEvt);
     windowBar.bind("dblclick", function() {eXo.desktop.UIWindow.maximizeWindowEvt.call(maximizedIcon)});
-    var resizeArea = uiWindow.children("div.BottomDecoratorLeft").find("div.ResizeArea");
-    resizeArea.bind("mousedown", this.startResizeWindowEvt);
+
+    if (!popup.maximized)
+    {
+      var resizeArea = uiWindow.children("div.BottomDecoratorLeft").find("div.ResizeArea");
+      resizeArea.mousedown(function(e)
+      {
+        eXo.desktop.UIWindow.startResizeProcess(e, uiWindow);
+      });
+    }
 
     popup.resizeCallback = new eXo.core.HashMap();
   },
@@ -169,8 +176,6 @@ eXo.desktop.UIWindow = {
       jqObj.attr("class", "ControlIcon RestoreIcon");
     }
     eXo.desktop.UIWindow.saveWindowProperties(portletWindow[0]);
-    // Re initializes the scroll tabs managers on the page
-    //eXo.portal.UIPortalControl.initAllManagers();
   },
 
   minimizeWindowEvt : function(evt)
@@ -186,89 +191,42 @@ eXo.desktop.UIWindow = {
     });
   },
 
-  startResizeWindowEvt : function(evt)
+  startResizeProcess : function(e, portletWindow)
   {
-    var icon = xj(this);
-    var portletWindow = icon.closest(".UIResizeObject");
-    var uiWindow = eXo.desktop.UIWindow;
-    if (portletWindow[0].maximized || uiWindow.portletWindow)
-    {
-      return;
-    }
+    var resizableBlock = portletWindow.find("div.UIResizableBlock");
+    resizableBlock.css("overflow", "hidden");
 
-    if (!evt)
-    {
-      evt = window.event;
-    }
-    var uiPageDesktop = document.getElementById("UIPageDesktop");
-    var uiApplication = portletWindow.find("div.UIApplication").eq(0);
-    if (uiApplication.find(".UIResizableBlock"))
-    {
-      uiApplication.css("overflow", "hidden");
-    }
+    var originX = e.clientX;
+    var originY = e.clientY;
+    var originW = portletWindow[0].offsetWidth;
+    var originH = resizableBlock[0].offsetHeight;
 
-    uiWindow.resizableObject = portletWindow.find("div.UIResizableBlock")[0];
-    uiWindow.initMouseX = evt.clientX;
-    uiWindow.initMouseY = evt.clientY;
-    uiWindow.backupObjectProperties(portletWindow[0], uiWindow.resizableObject);
-    uiWindow.portletWindow = portletWindow[0];
-    uiPageDesktop.onmousemove = uiWindow.resizeWindowEvt;
-    uiPageDesktop.onmouseup = uiWindow.endResizeWindowEvt;
+    var desktopPage = xj("#UIPageDesktop");
+    desktopPage.mousemove(function(event)
+    {
+      eXo.desktop.UIWindow.resizeWindow(event, portletWindow, originX, originY, originW, originH);
+    });
+
+    desktopPage.mouseup(function(event)
+    {
+      desktopPage.unbind("mousemove").unbind("mouseup");
+      eXo.desktop.UIWindow.endResizeProcess(event, portletWindow);
+    });
   },
 
-  resizeWindowEvt : function(evt)
+  resizeWindow : function(e, popupWindow, originX, originY, originW, originH)
   {
-    if (!evt)
-    {
-      evt = window.event;
-    }
-    var uiWindow = eXo.desktop.UIWindow;
-    if (eXo.core.I18n.isLT())
-    {
-      var deltaX = evt.clientX - uiWindow.initMouseX;
-      var deltaY = evt.clientY - uiWindow.initMouseY;
-    }
-    else
-    {
-      var deltaX = uiWindow.initMouseX - evt.clientX;
-      var deltaY = evt.clientY - uiWindow.initMouseY;
-    }
-    uiWindow.portletWindow.style.width = Math.max(200, (uiWindow.originalWidth + deltaX)) + "px";
-    for (var i = 0; i < uiWindow.resizableObject.length; i++)
-    {
-      uiWindow.resizableObject[i].style.height = Math.max(10, (uiWindow.resizableObject[i].originalHeight + deltaY)) + "px";
-    }
+    var deltaX = eXo.core.I18n.isLT() ? (e.clientX - originX) : (originX - e.clientX);
+    var deltaY = e.clientY - originY;
+
+    popupWindow.css("width", Math.max(200, originW + deltaX));
+    popupWindow.find("div.UIResizableBlock").css("height", Math.max(10, originH + deltaY));
   },
 
-  endResizeWindowEvt : function(evt)
+  endResizeProcess : function(e, popupWindow)
   {
-    if (!evt)
-    {
-      evt = window.event;
-    }
-    if (evt.stopPropagation)
-    {
-      evt.stopPropagation();
-    }
-    evt.cancelBubble = true;
-
-    var uiWindow = eXo.desktop.UIWindow.portletWindow;
-    for (var name in uiWindow.resizeCallback.properties)
-    {
-      var method = uiWindow.resizeCallback.get(name);
-      if (typeof(method) == "function")
-      {
-        method(evt);
-      }
-    }
-    eXo.desktop.UIWindow.saveWindowProperties(uiWindow);
-    // Re initializes the scroll tabs managers on the page
-    eXo.portal.UIPortalControl.initAllManagers();
-    eXo.desktop.UIWindow.portletWindow = null;
-    eXo.desktop.UIWindow.resizableObject = null;
-    this.onmousemove = null;
-    this.onmouseup = null;
-
+    e.stopPropagation();
+    eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
   },
 
   backupObjectProperties : function(windowPortlet, resizableComponents)
