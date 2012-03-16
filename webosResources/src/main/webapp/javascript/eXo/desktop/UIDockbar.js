@@ -216,25 +216,5 @@ eXo.desktop.UIDockbar = {
 
     dockbar.style.width = (iconContainer.offsetWidth + dockbar.totalPadding) + "px";
     dockbar.style.left = ((desktopPage.offsetWidth - dockbar.offsetWidth) / 2) + "px";
-  },
-
-  resetDesktopShowedStatus : function(uiPageDesktop, uiDockBar)
-  {
-    if (this.showDesktop)
-    {
-      var portletsViewer = xj(uiDockBar).find("#PortletsViewer")[0];
-      var blankImage = portletsViewer.src;
-      var srcMonitoringImage = "/eXoResources/skin/sharedImages/Icon80x80/HidePortletsViewer.png";
-      if (eXo.core.Browser.isIE6())
-      {
-        portletsViewer.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + srcMonitoringImage + "', sizingMethod='scale')";
-        portletsViewer.src = blankImage;
-      }
-      else
-      {
-        portletsViewer.src = srcMonitoringImage;
-      }
-      this.showDesktop = false;
-    }
   }
 }

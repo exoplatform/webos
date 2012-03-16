@@ -11,11 +11,7 @@ eXo.desktop.UIDesktop = {
       eXo.desktop.UIDockbar.init();
       desktopPage.children("div.UIWindow").each(function()
       {
-        //if (this.isFirstTime)
-        //{
-          eXo.desktop.UIDesktop.backupWindowProperties(this);
-        //}
-
+        eXo.desktop.UIDesktop.backupWindowProperties(this);
       });
 
       desktopPage[0].onmousedown = eXo.desktop.UIDesktop.showContextMenu;
