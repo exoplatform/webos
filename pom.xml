@@ -121,9 +121,9 @@
       <!-- ***************** -->
       <exo.releases.repo.url>http://repository.exoplatform.org/service/local/staging/deploy/maven2/</exo.releases.repo.url>
       <exo.snapshots.repo.url>http://repository.exoplatform.org/content/repositories/exo-snapshots/</exo.snapshots.repo.url>
-      
-     <!-- Plugins updates -->
-     <version.buildnumber.plugin>1.0</version.buildnumber.plugin><!-- required to support git -->
+
+     <!-- buildnumber-maven-plugin -->
+     <version.buildnumber.plugin>1.1</version.buildnumber.plugin>
   </properties>
   <build>
     <resources>
