@@ -19,6 +19,13 @@
 
 package org.exoplatform.dashboard.webui.component;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfigService;
@@ -38,6 +45,7 @@ import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.web.application.ApplicationMessage;
+import org.exoplatform.web.url.navigation.NodeURL;
 import org.exoplatform.webos.webui.page.UIDesktopPage;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
@@ -47,13 +55,6 @@ import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 @ComponentConfig(template = "app:/groovy/webui/component/dashboard/UIWebOSTabPaneDashboard.gtmpl", events = {
    @EventConfig(confirm = "UIWebOSTabPaneDashboard.msg.deleteTab", name = "DeleteTab", listeners = UIWebOSTabPaneDashboard.DeleteTabActionListener.class),
@@ -145,7 +146,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
     * if there is no node remain, return default path 
     * @throws Exception
     */
-   public String getFirstAvailableURI() throws Exception
+   public UserNode getFirstAvailableNode() throws Exception
    {           
       UserNode parentTab = getParentTab();      
       if (parentTab != null)
@@ -153,20 +154,20 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          UserNode currNode = Util.getUIPortal().getSelectedUserNode();
          if (parentTab.getChildren().size() == 0 && parentTab.getURI() != null)
          {
-            return parentTab.getURI();
+            return parentTab;
          } 
          
          if (parentTab.getChild(currNode.getName()) != null)
          {
-            return currNode.getURI();
+            return currNode;
          } 
          else 
          {
-            return parentTab.getChild(0).getURI(); 
+            return parentTab.getChild(0); 
          }
       }   
 
-      return getUserPortal().getDefaultPath(null).getURI();
+      return getUserPortal().getDefaultPath(null);
    }
 
    private Collection<UserNode> filterWebOSNode(Collection<UserNode> pageNodes) throws Exception
@@ -279,7 +280,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
       }
    }
 
-   private String createNewPageNode(String nodeLabel)
+   private UserNode createNewPageNode(String nodeLabel)
    {
       try
       {
@@ -315,7 +316,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
 
          getUserPortal().saveNode(parentNode, null);
 
-         return tabNode.getURI();
+         return tabNode;
       }
       catch (Exception ex)
       {
@@ -347,7 +348,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
       return true;
    }
 
-   private String renamePageNode(String nodeName, String newNodeLabel)
+   private UserNode renamePageNode(String nodeName, String newNodeLabel)
    {
       try
       {
@@ -374,7 +375,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          }
 
          getUserPortal().saveNode(parentNode, null);
-         return renamedNode.getURI();
+         return renamedNode;
       }
       catch (Exception ex)
       {
@@ -408,7 +409,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          UIWebOSTabPaneDashboard source = event.getSource();
          WebuiRequestContext context = event.getRequestContext();
          String nodeName = context.getRequestParameter(UIComponent.OBJECTID);
-         String newUri = source.getFirstAvailableURI();
+         UserNode node = source.getFirstAvailableNode();
          UserNode selectedNode = source.removePageNode(nodeName);
 
          //If the node is removed successfully, then redirect to the node specified by tab on the left
@@ -421,12 +422,13 @@ public class UIWebOSTabPaneDashboard extends UIContainer
             {
                uiPageBody.setMaximizedUIComponent(null);
             }
-            newUri = selectedNode.getURI();
+            node = selectedNode;
          }
 
          PortalRequestContext prContext = Util.getPortalRequestContext();
-         prContext.setResponseComplete(true);
-         prContext.getResponse().sendRedirect(prContext.getPortalURI() + source.encodeURI(newUri));
+         NodeURL nodeURL = prContext.createURL(NodeURL.TYPE).setNode(node);
+
+         prContext.sendRedirect(nodeURL.toString());
       }
    }
 
@@ -437,7 +439,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          UIWebOSTabPaneDashboard tabPane = event.getSource();
          WebuiRequestContext context = event.getRequestContext();
          String newTabLabel = context.getRequestParameter(UIComponent.OBJECTID);
-         String newUri = tabPane.getFirstAvailableURI();
+         UserNode node = tabPane.getFirstAvailableNode();
          if (!tabPane.validateName(newTabLabel))
          {            
             Object[] args = {newTabLabel};
@@ -445,16 +447,17 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          }
          else
          {
-            String uri = tabPane.createNewPageNode(newTabLabel);
-            if (uri != null)
+            UserNode createdNode = tabPane.createNewPageNode(newTabLabel);
+            if (createdNode != null)
             {
-               newUri = uri;
+               node = createdNode;
             }
          }
 
          PortalRequestContext prContext = Util.getPortalRequestContext();
-         prContext.setResponseComplete(true);
-         prContext.getResponse().sendRedirect(prContext.getPortalURI() + tabPane.encodeURI(newUri));
+         NodeURL nodeURL = prContext.createURL(NodeURL.TYPE).setNode(node);
+
+         prContext.sendRedirect(nodeURL.toString());
       }
    }
 
@@ -470,7 +473,7 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          UIApplication rootUI = context.getUIApplication();
                   
          String newTabLabel = context.getRequestParameter(RENAMED_TAB_LABEL_PARAMETER);
-         String newUri = tabPane.getFirstAvailableURI();
+         UserNode node = tabPane.getFirstAvailableNode();
          if (!tabPane.validateName(newTabLabel))
          {            
             Object[] args = {newTabLabel};
@@ -479,15 +482,16 @@ public class UIWebOSTabPaneDashboard extends UIContainer
          else
          {
             String nodeName = context.getRequestParameter(UIComponent.OBJECTID);
-            String returnUri = tabPane.renamePageNode(nodeName, newTabLabel);            
+            UserNode returnUri = tabPane.renamePageNode(nodeName, newTabLabel);            
             if (returnUri != null)
             {            
-               newUri = returnUri;               
+               node = returnUri;               
             }
          }
          PortalRequestContext prContext = Util.getPortalRequestContext();
-         prContext.getResponse().sendRedirect(prContext.getPortalURI() + tabPane.encodeURI(newUri));
-         prContext.setResponseComplete(true);
+         NodeURL nodeURL = prContext.createURL(NodeURL.TYPE).setNode(node);
+
+         prContext.sendRedirect(nodeURL.toString());
       }
    }
 }

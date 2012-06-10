@@ -67,6 +67,7 @@
                 </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+              <excludes>**/gatein/conf/controller.xml</excludes>
             </configuration>
           </execution>
         </executions>
