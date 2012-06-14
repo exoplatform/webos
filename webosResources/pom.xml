@@ -21,10 +21,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.exoplatform.webos</groupId>
-    <artifactId>webos-parent</artifactId>
+    <artifactId>webos</artifactId>
     <version>4.0.0.Alpha1-SNAPSHOT</version>
   </parent>
-  <artifactId>exo.webos.web.webosResources</artifactId>
+  <artifactId>webos-webosResources</artifactId>
   <packaging>war</packaging>
   <name>eXo WebOS Resources</name>
   <build>

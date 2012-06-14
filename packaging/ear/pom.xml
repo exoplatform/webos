@@ -3,45 +3,45 @@
    <modelVersion>4.0.0</modelVersion>
    <parent>
       <groupId>org.exoplatform.webos</groupId>
-      <artifactId>exo.webos.packaging</artifactId>
+      <artifactId>webos-packaging</artifactId>
       <version>4.0.0.Alpha1-SNAPSHOT</version>
    </parent>
-   <artifactId>exo.webos.packaging.ear</artifactId>
+   <artifactId>webos-packaging-ear</artifactId>
    <packaging>ear</packaging>
    <name>eXo WebOS EAR packaging</name>
    <description>eXo WebOS Extension EAR</description>
    <dependencies>
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.component.web</artifactId>
+         <artifactId>webos-component-web</artifactId>
          <version>${project.version}</version>
       </dependency>
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.extension.config</artifactId>
+         <artifactId>webos-extension-config</artifactId>
          <version>${project.version}</version>
       </dependency>
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.webui.webos</artifactId>
+         <artifactId>webos-webui</artifactId>
          <version>${project.version}</version>
       </dependency>
 
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.portlet.webosadmin</artifactId>
+         <artifactId>webos-portlet-webosadmin</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.extension.war</artifactId>
+         <artifactId>webos-extension-war</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.web.webosResources</artifactId>
+         <artifactId>webos-webosResources</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>

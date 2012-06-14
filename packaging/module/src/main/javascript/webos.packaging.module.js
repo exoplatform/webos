@@ -16,26 +16,26 @@ function getModule(params) {
                    
   module.web = {}
   module.web.webosResources = 
-  	new Project("org.exoplatform.webos", "exo.webos.web.webosResources", "war", module.version) ;
+  	new Project("org.exoplatform.webos", "webos-webosResources", "war", module.version) ;
   
   module.web.extension = {};
   module.web.extension.war =
-    new Project("org.exoplatform.webos", "exo.webos.extension.war", "war", module.version).
-    addDependency(new Project("org.exoplatform.webos", "exo.webos.extension.config", "jar", module.version));
+    new Project("org.exoplatform.webos", "webos-extension-war", "war", module.version).
+    addDependency(new Project("org.exoplatform.webos", "webos-extension-config", "jar", module.version));
   module.web.extension.war.deployName = "webos-ext";
 
   module.component = {};
-  module.component.web = new Project("org.exoplatform.webos", "exo.webos.component.web", "jar", module.version);
+  module.component.web = new Project("org.exoplatform.webos", "webos-component-web", "jar", module.version);
 
   module.webui = {};
   module.webui.webos =
-    new Project("org.exoplatform.webos", "exo.webos.webui.webos", "jar", module.version);
+    new Project("org.exoplatform.webos", "webos-webui", "jar", module.version);
   
   module.server = {};
 
 	module.server.tomcat = {}
 	module.server.tomcat.patch =
-	new Project("org.exoplatform.webos", "exo.webos.server.tomcat.patch", "jar", module.version);
-   module.portlet = new Project("org.exoplatform.webos", "exo.webos.portlet.webosadmin", "war", module.version);
+	new Project("org.exoplatform.webos", "webos-server-tomcat-patch", "jar", module.version);
+   module.portlet = new Project("org.exoplatform.webos", "webos-portlet-webosadmin", "war", module.version);
   return module;
 }

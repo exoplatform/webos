@@ -23,10 +23,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.exoplatform.webos</groupId>
-    <artifactId>exo.webos.web.extension</artifactId>
+    <artifactId>webos-extension</artifactId>
     <version>4.0.0.Alpha1-SNAPSHOT</version>
   </parent>
-  <artifactId>exo.webos.extension.war</artifactId>
+  <artifactId>webos-extension-war</artifactId>
   <packaging>war</packaging>
   <name>GateIn WebOS Extension War</name>
   <description>GateIn WebOS Extension War</description>

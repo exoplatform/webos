@@ -4,10 +4,10 @@
 
    <parent>
       <groupId>org.exoplatform.webos</groupId>
-      <artifactId>webos-parent</artifactId>
+      <artifactId>webos-packaging</artifactId>
       <version>4.0.0.Alpha1-SNAPSHOT</version>
    </parent>
-    <artifactId>exo.webos.packaging.tomcat</artifactId>
+    <artifactId>webos-packaging-tomcat</artifactId>
    <packaging>pom</packaging>
    <name>WebOS Tomcat package</name>
 

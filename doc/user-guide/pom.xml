@@ -5,11 +5,10 @@
     
   <parent>
     <groupId>org.exoplatform.webos</groupId>
-    <artifactId>webos-doc</artifactId>
+    <artifactId>webos</artifactId>
     <version>4.0.0.Alpha1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.exoplatform.webos</groupId>
   <artifactId>webos-doc-user-guide</artifactId>
   <packaging>jar</packaging>
 

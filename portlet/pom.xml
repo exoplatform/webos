@@ -25,11 +25,11 @@
 
    <parent>
       <groupId>org.exoplatform.webos</groupId>
-      <artifactId>webos-parent</artifactId>
+      <artifactId>webos</artifactId>
       <version>4.0.0.Alpha1-SNAPSHOT</version>
    </parent>
 
-   <artifactId>exo.webos.portlet</artifactId>
+   <artifactId>webos-portlet</artifactId>
    <packaging>pom</packaging>
 
    <name>WebOS Portlet</name>

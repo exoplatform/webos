@@ -3,10 +3,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.exoplatform.webos</groupId>
-    <artifactId>exo.webos.packaging</artifactId>
+    <artifactId>webos-packaging</artifactId>
     <version>4.0.0.Alpha1-SNAPSHOT</version>
   </parent>
-  <artifactId>exo.webos.packaging.assembly</artifactId>
+  <artifactId>webos-packaging-pkg</artifactId>
   <packaging>pom</packaging>
   <name>eXo WebOS Assemblies</name>
   <properties>

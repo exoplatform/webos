@@ -23,10 +23,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.exoplatform.webos</groupId>
-    <artifactId>exo.webos.server.tomcat</artifactId>
+    <artifactId>webos-server-tomcat</artifactId>
     <version>4.0.0.Alpha1-SNAPSHOT</version>
   </parent>
-  <artifactId>exo.webos.server.tomcat.patch</artifactId>
+  <artifactId>webos-server-tomcat-patch</artifactId>
   <packaging>jar</packaging>
   <name>GateIn WebOS Server Tomcat Patch</name>
   <dependencies>

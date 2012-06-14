@@ -25,11 +25,11 @@
 
    <parent>
       <groupId>org.exoplatform.webos</groupId>
-      <artifactId>exo.webos.portlet</artifactId>
+      <artifactId>webos-portlet</artifactId>
       <version>4.0.0.Alpha1-SNAPSHOT</version>
    </parent>
 
-   <artifactId>exo.webos.portlet.webosadmin</artifactId>
+   <artifactId>webos-portlet-webosadmin</artifactId>
    <packaging>war</packaging>
 
    <name>WebOS Admin Portlet</name>
@@ -47,7 +47,7 @@
       </dependency>
       <dependency>
           <groupId>org.exoplatform.webos</groupId>
-          <artifactId>exo.webos.webui.webos</artifactId>
+          <artifactId>webos-webui</artifactId>
           <scope>provided</scope>
       </dependency>
    </dependencies>

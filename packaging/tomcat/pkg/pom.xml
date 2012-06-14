@@ -4,10 +4,10 @@
 
    <parent>
       <groupId>org.exoplatform.webos</groupId>
-      <artifactId>webos-parent</artifactId>
+      <artifactId>webos-packaging-tomcat</artifactId>
       <version>4.0.0.Alpha1-SNAPSHOT</version>
    </parent>
-    <artifactId>exo.webos.packaging.tomcat.pkg</artifactId>
+    <artifactId>webos-packaging-tomcat-pkg</artifactId>
    <packaging>pom</packaging>
    <name>WebOS for Tomcat packaging</name>
 
@@ -871,15 +871,15 @@
       <!--WebOS-->
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.extension.config</artifactId>
+         <artifactId>webos-extension-config</artifactId>
       </dependency>
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.component.web</artifactId>
+         <artifactId>webos-component-web</artifactId>
       </dependency>
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.webui.webos</artifactId>
+         <artifactId>webos-webui</artifactId>
       </dependency>
 
       <!-- War files -->
@@ -951,25 +951,25 @@
       <dependency>
          <?rename webos-ext.war?>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.extension.war</artifactId>
+         <artifactId>webos-extension-war</artifactId>
          <type>war</type>
       </dependency>
       <dependency>
          <?rename webosadmin.war?>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.portlet.webosadmin</artifactId>
+         <artifactId>webos-portlet-webosadmin</artifactId>
          <type>war</type>
       </dependency>
       <dependency>
          <?rename webosResources.war?>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.web.webosResources</artifactId>
+         <artifactId>webos-webosResources</artifactId>
          <type>war</type>
       </dependency>
       <dependency>
          <?rename integration.war?>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>exo.webos.packaging.tomcat.integration</artifactId>
+         <artifactId>webos-packaging-tomcat-integration</artifactId>
          <type>war</type>
       </dependency>
 
@@ -1023,7 +1023,7 @@
                      <artifactItems>
                         <artifactItem>
                            <groupId>org.exoplatform.webos</groupId>
-                           <artifactId>exo.webos.server.tomcat.patch</artifactId>
+                           <artifactId>webos-server-tomcat-patch</artifactId>
                            <type>jar</type>
                         </artifactItem>
                      </artifactItems>

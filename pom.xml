@@ -25,7 +25,7 @@
     <version>7.1</version>
   </parent>
   <groupId>org.exoplatform.webos</groupId>
-  <artifactId>webos-parent</artifactId>
+  <artifactId>webos</artifactId>
   <version>4.0.0.Alpha1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>eXo WebOS</name>
@@ -251,12 +251,12 @@
   </build>
   <modules>
     <module>webosResources</module>
-    <module>webui/webos</module>
-    <module>component</module>
+    <module>webui</module>
+    <module>component/web</module>
     <module>extension</module>
-    <module>server</module>
+    <module>server/tomcat</module>
     <module>portlet</module>
-    <module>doc</module>
+    <module>doc/user-guide</module>
     <module>packaging</module>
   </modules>
 
@@ -1026,46 +1026,46 @@
          <!-- WebOS dependencies -->
          <dependency>
             <groupId>org.exoplatform.webos</groupId>
-            <artifactId>exo.webos.component.web</artifactId>
+            <artifactId>webos-component-web</artifactId>
             <version>${project.version}</version>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.webos</groupId>
-            <artifactId>exo.webos.extension.config</artifactId>
+            <artifactId>webos-extension-config</artifactId>
             <version>${project.version}</version>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.webos</groupId>
-            <artifactId>exo.webos.webui.webos</artifactId>
+            <artifactId>webos-webui</artifactId>
             <version>${project.version}</version>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.webos</groupId>
-            <artifactId>exo.webos.extension.war</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
-         </dependency>
-         <dependency>
-            <groupId>org.exoplatform.webos</groupId>
-            <artifactId>exo.webos.web.webosResources</artifactId>
+            <artifactId>webos-extension-war</artifactId>
             <version>${project.version}</version>
             <type>war</type>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.webos</groupId>
-            <artifactId>exo.webos.portlet.webosadmin</artifactId>
+            <artifactId>webos-webosResources</artifactId>
             <version>${project.version}</version>
             <type>war</type>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.webos</groupId>
-            <artifactId>exo.webos.packaging.tomcat.integration</artifactId>
+            <artifactId>webos-portlet-webosadmin</artifactId>
             <version>${project.version}</version>
             <type>war</type>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.webos</groupId>
-            <artifactId>exo.webos.server.tomcat.patch</artifactId>
+            <artifactId>webos-packaging-tomcat-integration</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+         </dependency>
+         <dependency>
+            <groupId>org.exoplatform.webos</groupId>
+            <artifactId>webos-server-tomcat-patch</artifactId>
             <version>${project.version}</version>
          </dependency>
       </dependencies>
