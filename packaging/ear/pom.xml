@@ -59,34 +59,34 @@
                <modules>
                   <jarModule>
                      <groupId>org.exoplatform.webos</groupId>
-                     <artifactId>exo.webos.component.web</artifactId>
+                     <artifactId>webos-component-web</artifactId>
                      <includeInApplicationXml>true</includeInApplicationXml>
                   </jarModule>
                   <jarModule>
                      <groupId>org.exoplatform.webos</groupId>
-                     <artifactId>exo.webos.extension.config</artifactId>
+                     <artifactId>webos-extension-config</artifactId>
                      <includeInApplicationXml>true</includeInApplicationXml>
                   </jarModule>
                   <jarModule>
                      <groupId>org.exoplatform.webos</groupId>
-                     <artifactId>exo.webos.webui.webos</artifactId>
+                     <artifactId>webos-webui</artifactId>
                      <includeInApplicationXml>true</includeInApplicationXml>
                   </jarModule>
                   <webModule>
                      <groupId>org.exoplatform.webos</groupId>
-                     <artifactId>exo.webos.portlet.webosadmin</artifactId>
+                     <artifactId>webos-portlet-webosadmin</artifactId>
                      <contextRoot>webosadmin</contextRoot>
                      <bundleFileName>webosadmin.war</bundleFileName>
                   </webModule>
                   <webModule>
                      <groupId>org.exoplatform.webos</groupId>
-                     <artifactId>exo.webos.extension.war</artifactId>
+                     <artifactId>webos-extension-war</artifactId>
                      <contextRoot>webos-ext</contextRoot>
                      <bundleFileName>webos-ext.war</bundleFileName>
                   </webModule>
                   <webModule>
                      <groupId>org.exoplatform.webos</groupId>
-                     <artifactId>exo.webos.web.webosResources</artifactId>
+                     <artifactId>webos-webosResources</artifactId>
                      <contextRoot>webosResources</contextRoot>
                      <bundleFileName>webosResources.war</bundleFileName>
                   </webModule>
