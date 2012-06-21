@@ -24,7 +24,7 @@
     <artifactId>webos-packaging</artifactId>
     <version>4.0.0.Alpha1-SNAPSHOT</version>
   </parent>
-  <artifactId>webos-packaging-product</artifactId>
+  <artifactId>webos.packaging.product</artifactId>
   <packaging>pom</packaging>
   <name>eXo WEBOS Packaging Product</name>
   <properties>
