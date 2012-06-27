@@ -41,14 +41,14 @@ eXo.webui.UIWebOSTabbedDashboard = {
 
   showEditLabelInput : function(target, nodeName, currentLabel)
   {
-    var jqObj = xj(target);
-    var input = xj("<input>").attr({type : "text", id : nodeName, name : currentLabel, value : currentLabel, maxLength : 50});
+    var jqObj = gj(target);
+    var input = gj("<input>").attr({type : "text", id : nodeName, name : currentLabel, value : currentLabel, maxLength : 50});
     input.css("border", "1px solid #b7b7b7").css("width", (target.offsetWidth - 2) + "px");
 
     jqObj = jqObj.replaceWith(input);
     input.blur(function()
     {
-      xj(this).replaceWith(jqObj);
+      gj(this).replaceWith(jqObj);
     });
 
     input.keypress(function(e)
@@ -56,11 +56,11 @@ eXo.webui.UIWebOSTabbedDashboard = {
       var keyNum = e.keyCode ? e.keyCode : e.which;
       if (keyNum == 13)
       {
-        eXo.webui.UIWebOSTabbedDashboard.renameTabLabel(xj(this));
+        eXo.webui.UIWebOSTabbedDashboard.renameTabLabel(gj(this));
       }
       else if (keyNum == 27)
       {
-        xj(this).replaceWith(jqObj);
+        gj(this).replaceWith(jqObj);
       }
     });
 
@@ -93,14 +93,14 @@ eXo.webui.UIWebOSTabbedDashboard = {
 
   showAddTabInput : function(addButton)
   {
-    var jqAddButton = xj(addButton);
+    var jqAddButton = gj(addButton);
     var tabs = jqAddButton.parent().children("div.UITab.GrayTabStyle");
     var newTab;
     tabs.each(function()
     {
-      if (xj(this).children(".SelectedTab").length > 0)
+      if (gj(this).children(".SelectedTab").length > 0)
       {
-        newTab = xj(this).clone();
+        newTab = gj(this).clone();
         return false;
       }
     });
@@ -108,7 +108,7 @@ eXo.webui.UIWebOSTabbedDashboard = {
     newTab.insertBefore(jqAddButton);
 
     var portletID = jqAddButton.closest("div.PORTLET-FRAGMENT").parent().attr("id");
-    var input = xj("<input>").attr({type : "text", id : portletID , maxlength : 50, value : "Tab_" + tabs.length});
+    var input = gj("<input>").attr({type : "text", id : portletID , maxlength : 50, value : "Tab_" + tabs.length});
     input.css({"border" : "1px solid #b7b7b7", "width" : "80px"});
 
     newTab.find("span").eq(0).replaceWith(input);
@@ -116,7 +116,7 @@ eXo.webui.UIWebOSTabbedDashboard = {
 
     input.blur(function()
     {
-      xj(this).closest(".UITab.GrayTabStyle").remove();
+      gj(this).closest(".UITab.GrayTabStyle").remove();
     });
 
     input.keypress(function(e)
@@ -124,11 +124,11 @@ eXo.webui.UIWebOSTabbedDashboard = {
       var keyNum = e.keyCode ? e.keyCode : e.which;
       if (keyNum == 13)
       {
-        eXo.webui.UIWebOSTabbedDashboard.createTab(xj(this));
+        eXo.webui.UIWebOSTabbedDashboard.createTab(gj(this));
       }
       else if (keyNum == 27)
       {
-        xj(this).closest(".UITab.GrayTabStyle").remove();
+        gj(this).closest(".UITab.GrayTabStyle").remove();
       }
     });
 

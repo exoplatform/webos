@@ -19,7 +19,7 @@ eXo.desktop.UIWindow = {
       return;
     }
 
-    var uiWindow = xj(popup);
+    var uiWindow = gj(popup);
     var uiApplication = uiWindow.find('div.PORTLET-FRAGMENT');
     if (!uiApplication)
     {
@@ -76,16 +76,16 @@ eXo.desktop.UIWindow = {
 
   initDND : function(dragBar, appWindow)
   {
-    eXo.core.DragDrop2.init(dragBar, appWindow);
+    eXo.core.DragDrop.init(dragBar, appWindow);
 
     appWindow.onDrag = function(nx, ny, ex, ey, e)
     {
-      var jqObj = xj(appWindow);
+      var jqObj = gj(appWindow);
       var dragObjectY = jqObj.position().top;
-      var browserHeight = xj(window).height();
-      var browserWidth = xj(window).width();
+      var browserHeight = gj(window).height();
+      var browserWidth = gj(window).width();
 
-      var desktopHeight = xj("#UIPageDesktop").height();
+      var desktopHeight = gj("#UIPageDesktop").height();
       if (dragObjectY < 0)
       {
         jqObj.css("top", "0px");
@@ -117,7 +117,7 @@ eXo.desktop.UIWindow = {
 
     appWindow.endDND = function()
     {
-      xj(document).bind("mousemove", eXo.core.DragDrop2.end);
+      gj(document).bind("mousemove", eXo.core.DragDrop.end);
     };
   },
 
@@ -174,7 +174,7 @@ eXo.desktop.UIWindow = {
     }
     popupWindow.css("top", 0).css("width", "100%").css("height", "auto");
     maximIcon.attr("class", "ControlIcon RestoreIcon");
-    var h = resizableBlock[0].clientHeight + xj("#UIPageDesktop")[0].offsetHeight - popupWindow[0].clientHeight;
+    var h = resizableBlock[0].clientHeight + gj("#UIPageDesktop")[0].offsetHeight - popupWindow[0].clientHeight;
     resizableBlock.css("height", h);
 
     eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
@@ -194,8 +194,8 @@ eXo.desktop.UIWindow = {
   minimizeWindow : function(popupWindow)
   {
     var id = popupWindow.attr("id").replace(/^UIWindow-/, "");
-    eXo.animation.ImplodeExplode.implode(popupWindow[0], popupWindow[0], xj("#UIPageDesktop"), 10);
-    xj("#DockItem" + id).addClass("ShowIcon");
+    eXo.animation.ImplodeExplode.implode(popupWindow[0], popupWindow[0], gj("#UIPageDesktop"), 10);
+    gj("#DockItem" + id).addClass("ShowIcon");
     eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0], "HIDE");
   },
 
@@ -209,7 +209,7 @@ eXo.desktop.UIWindow = {
     var originW = portletWindow[0].offsetWidth;
     var originH = resizableBlock[0].offsetHeight;
 
-    var desktopPage = xj("#UIPageDesktop");
+    var desktopPage = gj("#UIPageDesktop");
     desktopPage.mousemove(function(event)
     {
       eXo.desktop.UIWindow.resizeWindow(event, portletWindow, originX, originY, originW, originH);
@@ -239,7 +239,7 @@ eXo.desktop.UIWindow = {
 
   saveWindowProperties : function(object, appStatus)
   {
-    var jqObj = xj(object);
+    var jqObj = gj(object);
     var objID = jqObj.attr("id").replace(/^UIWindow-/, "");
 
     var params;
@@ -267,7 +267,7 @@ eXo.desktop.UIWindow = {
       }
     }
 
-    var blockID = xj(".UIPage").attr("id").replace(/^UIPage-/, "");
+    var blockID = gj(".UIPage").attr("id").replace(/^UIPage-/, "");
     ajaxAsyncGetRequest(eXo.env.server.createPortalURL(blockID, "SaveWindowProperties", true, params), true);
   }
 }

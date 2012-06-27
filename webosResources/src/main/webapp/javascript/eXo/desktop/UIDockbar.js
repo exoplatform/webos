@@ -14,11 +14,11 @@ eXo.desktop.UIDockbar = {
 
   init : function()
   {
-    var dockbar = xj("#UIDockBar");
+    var dockbar = gj("#UIDockBar");
 
     dockbar.find("img.Icon").each(function(index)
     {
-      var icon = xj(this);
+      var icon = gj(this);
 
       icon.mouseover(function()
       {
@@ -39,14 +39,14 @@ eXo.desktop.UIDockbar = {
       });
     });
 
-    xj("#PortletsViewer").toggle(
+    gj("#PortletsViewer").toggle(
       function()
       {
-        eXo.desktop.UIDockbar.showApplications(xj(this));
+        eXo.desktop.UIDockbar.showApplications(gj(this));
       },
       function()
       {
-        eXo.desktop.UIDockbar.hideApplications(xj(this));
+        eXo.desktop.UIDockbar.hideApplications(gj(this));
       }
     );
 
@@ -71,9 +71,9 @@ eXo.desktop.UIDockbar = {
 
   showApplications : function(icon)
   {
-    xj("#UIPageDesktop").find("div.UIWindow").each(function()
+    gj("#UIPageDesktop").find("div.UIWindow").each(function()
     {
-      var appWindow = xj(this);
+      var appWindow = gj(this);
       if(this.isShowed)
       {
         appWindow.css("display", "block");
@@ -86,9 +86,9 @@ eXo.desktop.UIDockbar = {
 
   hideApplications : function(icon)
   {
-    xj("#UIPageDesktop").find("div.UIWindow").each(function()
+    gj("#UIPageDesktop").find("div.UIWindow").each(function()
     {
-      var appWindow = xj(this);
+      var appWindow = gj(this);
       if(this.isShowed)
       {
         appWindow.css("display", "none");
@@ -118,7 +118,7 @@ eXo.desktop.UIDockbar = {
     dockbar.find("#FixBug").css("height", iconH * W);
     dockbar.find("#DockbarCenter").css("height", eXo.desktop.UIDockbar.dockbarBackgroundHeight + iconH * (W -1));
 
-    var desktopPage = xj("#UIPageDesktop");
+    var desktopPage = gj("#UIPageDesktop");
     //Mouse's horizontal coordinate relative to desktop page
     var mouseX = isRT ? (desktopPage[0].offsetWidth + desktopPage.offset().left - e.pageX) : (e.pageX - desktopPage.offset().left);
     var distanceWeight = (iconCenterX - mouseX) / (C * iconWidth);
@@ -139,7 +139,7 @@ eXo.desktop.UIDockbar = {
           size = Math.round(iconH + iconH * (W - 1) * ((C - deltaCurve) / C + distanceWeight));
         }
 
-        xj(this).css({"width" : size, "height" : size});
+        gj(this).css({"width" : size, "height" : size});
       }
     });
 
@@ -148,7 +148,7 @@ eXo.desktop.UIDockbar = {
 
   removeDockbarIcon : function(iconId)
   {
-    var icon = xj("#" + iconId);
+    var icon = gj("#" + iconId);
     if (icon.length > 0)
     {
       var prev = icon.prev();
@@ -164,20 +164,20 @@ eXo.desktop.UIDockbar = {
 
   reset : function()
   {
-    xj("#DockbarCenter").css("height", eXo.desktop.UIDockbar.dockbarBackgroundHeight);
+    gj("#DockbarCenter").css("height", eXo.desktop.UIDockbar.dockbarBackgroundHeight);
 
     var iconSize = eXo.desktop.UIDockbar.dockbarIconSize;
-    xj("#IconContainer").children("img.Icon").css({"width" : iconSize, "height" : iconSize});
-    xj("#FixBug").css("height", iconSize);
+    gj("#IconContainer").children("img.Icon").css({"width" : iconSize, "height" : iconSize});
+    gj("#FixBug").css("height", iconSize);
 
     eXo.desktop.UIDockbar.resizeDockBar();
   },
 
   resizeDockBar : function()
   {
-    var desktopPage = xj("#UIPageDesktop")[0];
-    var dockbar = xj("#UIDockBar")[0];
-    var iconContainer = xj("#IconContainer");
+    var desktopPage = gj("#UIPageDesktop")[0];
+    var dockbar = gj("#UIDockBar")[0];
+    var iconContainer = gj("#IconContainer");
 
     var widthItemControl = 0;
     iconContainer.children("img.Icon").each(function()
@@ -198,7 +198,7 @@ eXo.desktop.UIDockbar = {
       var totalPadding = 0;
       iconContainer.parentsUntil(dockbar.parentNode).each(function()
       {
-        var p = xj(this);
+        var p = gj(this);
         var rp = parseInt(p.css("paddingRight"));
         var lp = parseInt(p.css("paddingLeft"));
         if (!isNaN(rp))

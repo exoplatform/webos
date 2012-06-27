@@ -40,67 +40,32 @@
   </ciManagement>
   <properties>
       <gatein.dep.version>1.1.0-GA</gatein.dep.version>
-      <org.exoplatform.kernel.version>2.3.5-GA</org.exoplatform.kernel.version>
-      <org.exoplatform.core.version>2.4.5-GA</org.exoplatform.core.version>
-      <org.exoplatform.ws.version>2.2.5-GA</org.exoplatform.ws.version>
-      <org.exoplatform.jcr.version>1.14.5-GA</org.exoplatform.jcr.version>
-      <org.exoplatform.portal.version>3.2.2-PLF-SNAPSHOT</org.exoplatform.portal.version>
+      <org.exoplatform.kernel.version>2.3.6-GA</org.exoplatform.kernel.version>
+      <org.exoplatform.core.version>2.4.6-GA</org.exoplatform.core.version>
+      <org.exoplatform.ws.version>2.2.6-GA</org.exoplatform.ws.version>
+      <org.exoplatform.jcr.version>1.14.6-GA</org.exoplatform.jcr.version>
+      <org.exoplatform.portal.version>3.3.0-GA</org.exoplatform.portal.version>
       <org.exoplatform.exopackage.version>1.1.4</org.exoplatform.exopackage.version>
       <org.jibx.version>1.2.2</org.jibx.version>
-      <org.shindig.version>2.0.2</org.shindig.version>
+      <org.shindig.version>2.0.2-CP01</org.shindig.version>
       <nl.captcha.simplecaptcha.version>1.1.1-GA-Patch01</nl.captcha.simplecaptcha.version>
       <org.gatein.common.version>2.0.4-GA</org.gatein.common.version>
-      <org.gatein.wci.version>2.1.0-GA</org.gatein.wci.version>
-      <org.gatein.pc.version>2.3.0-GA</org.gatein.pc.version>
-      <org.picketlink.idm>1.3.0.GA</org.picketlink.idm>
+      <org.gatein.wci.version>2.2.0-Beta01</org.gatein.wci.version>
+      <org.gatein.pc.version>2.3.2-GA</org.gatein.pc.version>
+      <org.picketlink.idm>1.3.1.GA</org.picketlink.idm>
       <org.gatein.mop.version>1.1.1-GA</org.gatein.mop.version>
+      <org.gatein.mgmt.version>1.0.1-GA</org.gatein.mgmt.version>
       <org.slf4j.version>1.5.8</org.slf4j.version>
       <commons-pool.version>1.5.5</commons-pool.version>
       <rhino.version>1.6R5</rhino.version>
       <org.codehaus.groovy.version>1.7.6</org.codehaus.groovy.version>
       <javax.servlet.version>2.5</javax.servlet.version>
-      <version.chromattic>1.1.2</version.chromattic>
+      <version.chromattic>1.1.4</version.chromattic>
       <version.reflext>1.1.0</version.reflext>
-      <jcip.version>1.0</jcip.version>
-      <version.pdfbox>1.6.0</version.pdfbox>
-
-      <!-- EXOGTN-106 : forced at packaging level -->
-      <antlr.version>2.7.6rc1</antlr.version>
-      <cglib.version>2.2</cglib.version>
-      <com.sun.xml.bind.version>2.1.7</com.sun.xml.bind.version>
-      <commons-digester.version>1.8.1</commons-digester.version>
-      <commons-dbcp.version>1.2.2</commons-dbcp.version>
-      <commons-httpclient.version>3.1</commons-httpclient.version>
-      <exo.tool.webunit.version>1.0.0</exo.tool.webunit.version>
-      <html-parser.version>1.6</html-parser.version>
-      <javassist.version>3.14.0-GA</javassist.version>
-      <jcr.version>1.0</jcr.version>
-      <org.jaxb2.version>0.7.4</org.jaxb2.version>
       <org.staxnav.version>0.9.6</org.staxnav.version>
-      <org.jsecurity.version>0.9.0</org.jsecurity.version>
-      <org.hsqldb.version>2.0.0</org.hsqldb.version>
-      <commons-io.version>1.4</commons-io.version>
-      <javax.inject.version>1</javax.inject.version>
-      
-      <!-- JCR dependencies version -->
-      <com.sun.xml.stream.version>1.0.1</com.sun.xml.stream.version>
-      <commons-lang.version>2.6</commons-lang.version>
-      <commons-logging.version>1.1.1</commons-logging.version>
-      <commons-beanutils.version>1.8.3</commons-beanutils.version>
-      <commons-collections.version>3.2.1</commons-collections.version>
-      <javax.transaction.version>1.1</javax.transaction.version>
-      <org.apache.lucene.version>2.9.4</org.apache.lucene.version>
-      <org.jgroups.version>2.6.20.Final</org.jgroups.version>
-      <xpp3.version>1.1.4c</xpp3.version>
-      
-      <!-- CORE dependencies version -->
-      <org.apache.poi.version>3.6</org.apache.poi.version>
-      <org.apache.commons.version>1.0</org.apache.commons.version>
-      <org.apache.geronimo.specs.version>1.0.1</org.apache.geronimo.specs.version>
-      
-      <!-- KERNEL -->
-      <javax.mail.version>1.4.4</javax.mail.version>
-      <org.quartz-scheduler.version>1.8.4</org.quartz-scheduler.version>
+      <jcip.version>1.0</jcip.version>
+      <commons-dbcp.version>1.2.2</commons-dbcp.version>
+      <com.google.javascript.version>r1592</com.google.javascript.version>
 
       <!-- ************** -->
       <!-- Build settings -->
@@ -269,116 +234,14 @@
             <version>${gatein.dep.version}</version>
             <type>pom</type>
             <scope>import</scope>
-         </dependency>
-         <!--Common libraries-->
+         </dependency>         
+
+	 <!-- to move to gatein-dep -->
          <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>${version.pdfbox}</version>
+           <groupId>com.google.javascript</groupId>
+           <artifactId>closure-compiler</artifactId>
+           <version>${com.google.javascript.version}</version>
          </dependency>
-         <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>jempbox</artifactId>
-            <version>${version.pdfbox}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>fontbox</artifactId>
-            <version>${version.pdfbox}</version>
-         </dependency>
-         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>${javax.inject.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${org.slf4j.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <version>${org.slf4j.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>${commons-beanutils.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-chain</groupId>
-            <artifactId>commons-chain</artifactId>
-            <version>1.2</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.4</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.2.1</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>${commons-logging.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>${commons-dbcp.version}</version>
-            <exclusions>
-               <exclusion>
-                  <groupId>xerces</groupId>
-                  <artifactId>xercesImpl</artifactId>
-               </exclusion>
-            </exclusions>
-         </dependency>
-         <dependency>
-            <groupId>commons-digester</groupId>
-            <artifactId>commons-digester</artifactId>
-            <version>1.8.1</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>${commons-lang.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>commons-pool</groupId>
-            <artifactId>commons-pool</artifactId>
-            <version>${commons-pool.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.0.1</version>
-            <type>jar</type>
-         </dependency>
-         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.0.1</version>
-            <type>jar</type>
-        </dependency>  
 
          <!-- JCR stack -->
          <dependency>
@@ -412,13 +275,33 @@
             <version>${org.exoplatform.kernel.version}</version>
          </dependency>
          <dependency>
+            <groupId>org.exoplatform.kernel</groupId>
+            <artifactId>exo.kernel.mc-int</artifactId>
+            <version>${org.exoplatform.kernel.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.exoplatform.kernel</groupId>
+            <artifactId>exo.kernel.mc-kernel-extras</artifactId>
+            <version>${org.exoplatform.kernel.version}</version>
+         </dependency>
+         <dependency>
             <groupId>org.exoplatform.core</groupId>
             <artifactId>exo.core.component.organization.api</artifactId>
             <version>${org.exoplatform.core.version}</version>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.core</groupId>
+            <artifactId>exo.core.component.xml-processing</artifactId>
+            <version>${org.exoplatform.core.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.exoplatform.core</groupId>
             <artifactId>exo.core.component.database</artifactId>
+            <version>${org.exoplatform.core.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.exoplatform.core</groupId>
+            <artifactId>exo.core.component.ldap</artifactId>
             <version>${org.exoplatform.core.version}</version>
          </dependency>
          <dependency>
@@ -442,18 +325,13 @@
             <version>${org.exoplatform.core.version}</version>
          </dependency>
          <dependency>
-            <groupId>org.exoplatform.core</groupId>
-            <artifactId>exo.core.component.ldap</artifactId>
-            <version>${org.exoplatform.core.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.exoplatform.core</groupId>
-            <artifactId>exo.core.component.xml-processing</artifactId>
-            <version>${org.exoplatform.core.version}</version>
+            <groupId>org.exoplatform.jcr</groupId>
+            <artifactId>exo.jcr.component.core</artifactId>
+            <version>${org.exoplatform.jcr.version}</version>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.jcr</groupId>
-            <artifactId>exo.jcr.component.core</artifactId>
+            <artifactId>exo.jcr.framework.command</artifactId>
             <version>${org.exoplatform.jcr.version}</version>
          </dependency>
          <dependency>
@@ -468,17 +346,12 @@
          </dependency>
          <dependency>
             <groupId>org.exoplatform.jcr</groupId>
-            <artifactId>exo.jcr.component.ftp</artifactId>
-            <version>${org.exoplatform.jcr.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.exoplatform.jcr</groupId>
             <artifactId>exo.jcr.framework.web</artifactId>
             <version>${org.exoplatform.jcr.version}</version>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.jcr</groupId>
-            <artifactId>exo.jcr.framework.command</artifactId>
+            <artifactId>exo.jcr.component.ftp</artifactId>
             <version>${org.exoplatform.jcr.version}</version>
          </dependency>
          <dependency>
@@ -488,12 +361,12 @@
          </dependency>
          <dependency>
             <groupId>org.exoplatform.ws</groupId>
-            <artifactId>exo.ws.frameworks.json</artifactId>
+            <artifactId>exo.ws.frameworks.servlet</artifactId>
             <version>${org.exoplatform.ws.version}</version>
          </dependency>
          <dependency>
             <groupId>org.exoplatform.ws</groupId>
-            <artifactId>exo.ws.frameworks.servlet</artifactId>
+            <artifactId>exo.ws.rest.ext</artifactId>
             <version>${org.exoplatform.ws.version}</version>
          </dependency>
          <dependency>
@@ -503,7 +376,7 @@
          </dependency>
          <dependency>
             <groupId>org.exoplatform.ws</groupId>
-            <artifactId>exo.ws.rest.ext</artifactId>
+            <artifactId>exo.ws.frameworks.json</artifactId>
             <version>${org.exoplatform.ws.version}</version>
          </dependency>
 
@@ -534,6 +407,13 @@
             <groupId>org.chromattic</groupId>
             <artifactId>chromattic.apt</artifactId>
             <version>${version.chromattic}</version>
+            <scope>compile</scope>
+            <exclusions>
+              <exclusion>
+                <groupId>org.chromattic</groupId>
+                <artifactId>chromattic.testgenerator</artifactId>
+              </exclusion>
+            </exclusions>
          </dependency>
          <dependency>
             <groupId>org.chromattic</groupId>
@@ -547,44 +427,64 @@
          </dependency>
          <dependency>
             <groupId>org.chromattic</groupId>
-            <artifactId>chromattic.common</artifactId>
-            <version>${version.chromattic}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.chromattic</groupId>
             <artifactId>chromattic.core</artifactId>
             <version>${version.chromattic}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.chromattic</groupId>
-            <artifactId>chromattic.metamodel</artifactId>
-            <version>${version.chromattic}</version>
+            <!-- GTNPORTAL-2095: temporary exclusion for missing dependency -->
+            <exclusions>
+               <exclusion>
+                  <groupId>com.google.code.javaparser</groupId>
+                  <artifactId>javaparser</artifactId>
+               </exclusion>
+            </exclusions>
          </dependency>
          <dependency>
             <groupId>org.chromattic</groupId>
             <artifactId>chromattic.ext</artifactId>
             <version>${version.chromattic}</version>
          </dependency>
+         <dependency>
+            <groupId>org.chromattic</groupId>
+            <artifactId>chromattic.common</artifactId>
+            <version>${version.chromattic}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.chromattic</groupId>
+            <artifactId>chromattic.metamodel</artifactId>
+            <version>${version.chromattic}</version>
+             <exclusions>
+              <exclusion>
+                <groupId>org.chromattic</groupId>
+                <artifactId>chromattic.testgenerator</artifactId>
+              </exclusion>
+            </exclusions>
+         </dependency>
+
+	<!-- Gatein Mgmt -->
+         <dependency>
+            <groupId>org.gatein.management</groupId>
+            <artifactId>gatein-management-api</artifactId>
+            <version>${org.gatein.mgmt.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.gatein.management</groupId>
+            <artifactId>gatein-management-spi</artifactId>
+            <version>${org.gatein.mgmt.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.gatein.management</groupId>
+            <artifactId>gatein-management-core</artifactId>
+            <version>${org.gatein.mgmt.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.gatein.management</groupId>
+            <artifactId>gatein-management-rest</artifactId>
+            <version>${org.gatein.mgmt.version}</version>
+         </dependency>
 
          <!-- Picket link -->
          <dependency>
             <groupId>org.picketlink.idm</groupId>
             <artifactId>picketlink-idm-api</artifactId>
-            <version>${org.picketlink.idm}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.picketlink.idm</groupId>
-            <artifactId>picketlink-idm-spi</artifactId>
-            <version>${org.picketlink.idm}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.picketlink.idm</groupId>
-            <artifactId>picketlink-idm-cache</artifactId>
-            <version>${org.picketlink.idm}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.picketlink.idm</groupId>
-            <artifactId>picketlink-idm-common</artifactId>
             <version>${org.picketlink.idm}</version>
          </dependency>
          <dependency>
@@ -596,105 +496,36 @@
             <groupId>org.picketlink.idm</groupId>
             <artifactId>picketlink-idm-hibernate</artifactId>
             <version>${org.picketlink.idm}</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-log4j12</artifactId>
+               </exclusion>
+               <exclusion>
+                  <groupId>log4j</groupId>
+                  <artifactId>log4j</artifactId>
+               </exclusion>
+            </exclusions>
          </dependency>
          <dependency>
             <groupId>org.picketlink.idm</groupId>
             <artifactId>picketlink-idm-ldap</artifactId>
             <version>${org.picketlink.idm}</version>
          </dependency>
-
-         <!--Provided-->
          <dependency>
-            <groupId>org.jibx</groupId>
-            <artifactId>jibx-run</artifactId>
-            <version>${org.jibx.version}</version>
+            <groupId>org.picketlink.idm</groupId>
+            <artifactId>picketlink-idm-common</artifactId>
+            <version>${org.picketlink.idm}</version>
          </dependency>
          <dependency>
-            <groupId>org.jibx</groupId>
-            <artifactId>jibx-bind</artifactId>
-            <version>${org.jibx.version}</version>
+            <groupId>org.picketlink.idm</groupId>
+            <artifactId>picketlink-idm-cache</artifactId>
+            <version>${org.picketlink.idm}</version>
          </dependency>
          <dependency>
-            <groupId>javax.portlet</groupId>
-            <artifactId>portlet-api</artifactId>
-            <version>2.0</version>
-         </dependency>
-         <dependency>
-            <groupId>picocontainer</groupId>
-            <artifactId>picocontainer</artifactId>
-            <version>1.1</version>
-         </dependency>
-         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>${org.codehaus.groovy.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${org.hsqldb.version}</version>
-         </dependency>
-         <dependency>
-            <groupId>com.ibm.icu</groupId>
-            <artifactId>icu4j</artifactId>
-            <version>3.8</version>
-         </dependency>
-         <dependency>
-            <groupId>net.jcip</groupId>
-            <artifactId>jcip-annotations</artifactId>
-            <version>1.0</version>
-         </dependency>
-         <dependency>
-            <groupId>rhino</groupId>
-            <artifactId>js</artifactId>
-            <version>1.6R5</version>
-         </dependency>
-         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20070829</version>
-         </dependency>
-         <dependency>
-            <groupId>net.sourceforge.nekohtml</groupId>
-            <artifactId>nekohtml</artifactId>
-            <version>1.9.14</version>
-         </dependency>
-         <dependency>
-            <groupId>rome</groupId>
-            <artifactId>rome</artifactId>
-            <version>1.0</version>
-         </dependency>
-         <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.9.1</version>
-         </dependency>
-         <dependency>
-            <groupId>net.oauth.core</groupId>
-            <artifactId>oauth</artifactId>
-            <version>20100527</version>
-         </dependency>
-
-         <!--Google-->
-         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>r09</version>
-         </dependency>
-         <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>2.0</version>
-         </dependency>
-         <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-jmx</artifactId>
-            <version>2.0</version>
-         </dependency>
-         <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-multibindings</artifactId>
-            <version>2.0</version>
+            <groupId>org.picketlink.idm</groupId>
+            <artifactId>picketlink-idm-spi</artifactId>
+            <version>${org.picketlink.idm}</version>
          </dependency>
 
          <!-- Gatein common -->
@@ -763,6 +594,12 @@
             <groupId>org.gatein.mop</groupId>
             <artifactId>mop-core</artifactId>
             <version>${org.gatein.mop.version}</version>
+	    <exclusions>
+              <exclusion>
+                <groupId>org.chromattic</groupId>
+                <artifactId>chromattic.testgenerator</artifactId>
+              </exclusion>
+            </exclusions>
          </dependency>
          <dependency>
             <groupId>org.gatein.mop</groupId>
@@ -860,17 +697,23 @@
         </dependency>
         <dependency>
           <groupId>org.exoplatform.portal</groupId>
+          <artifactId>exo.portal.component.identity</artifactId>
+          <version>${org.exoplatform.portal.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.exoplatform.portal</groupId>
+            <artifactId>exo.portal.component.identity</artifactId>
+            <version>${org.exoplatform.portal.version}</version>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+          <groupId>org.exoplatform.portal</groupId>
           <artifactId>exo.portal.component.resources</artifactId>
           <version>${org.exoplatform.portal.version}</version>
         </dependency>
         <dependency>
           <groupId>org.exoplatform.portal</groupId>
           <artifactId>exo.portal.component.application-registry</artifactId>
-          <version>${org.exoplatform.portal.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.exoplatform.portal</groupId>
-          <artifactId>exo.portal.component.xml-parser</artifactId>
           <version>${org.exoplatform.portal.version}</version>
         </dependency>
         <dependency>
@@ -940,14 +783,14 @@
           <version>${org.exoplatform.portal.version}</version>
           <type>test-jar</type>
         </dependency>
-        <dependency>
+	<dependency>
           <groupId>org.exoplatform.portal</groupId>
-          <artifactId>exo.portal.component.identity</artifactId>
+          <artifactId>exo.portal.component.test.web</artifactId>
           <version>${org.exoplatform.portal.version}</version>
         </dependency>
         <dependency>
           <groupId>org.exoplatform.portal</groupId>
-          <artifactId>exo.portal.component.identity</artifactId>
+          <artifactId>exo.portal.component.test.web</artifactId>
           <version>${org.exoplatform.portal.version}</version>
           <type>test-jar</type>
         </dependency>
@@ -974,6 +817,12 @@
           <version>${org.exoplatform.portal.version}</version>
           <type>war</type>
         </dependency>
+	<dependency>
+            <groupId>org.exoplatform.portal</groupId>
+            <artifactId>exo.portal.gwtGadgets</artifactId>
+            <version>${org.exoplatform.portal.version}</version>
+            <type>war</type>
+         </dependency>
         <dependency>
           <groupId>org.exoplatform.portal</groupId>
           <artifactId>exo.portal.portlet.web</artifactId>
@@ -1062,6 +911,25 @@
             <groupId>org.exoplatform.webos</groupId>
             <artifactId>webos-server-tomcat-patch</artifactId>
             <version>${project.version}</version>
+         </dependency>
+
+	<dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons-dbcp.version}</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>xerces</groupId>
+                  <artifactId>xercesImpl</artifactId>
+               </exclusion>
+            </exclusions>
+         </dependency>
+
+	 <!-- needed for the IBM jdk, should be remove in the future when IBM fixes its jdk (see GTNPORTAL-636) -->
+         <dependency>
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>${jcip.version}</version>
          </dependency>
       </dependencies>
    </dependencyManagement>

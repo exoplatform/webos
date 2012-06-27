@@ -4,7 +4,7 @@ eXo.desktop.UIDesktop = {
 
   init : function()
   {
-    var desktopPage = xj("#UIPageDesktop");
+    var desktopPage = gj("#UIPageDesktop");
     if (desktopPage.length > 0)
     {
       eXo.desktop.UIDesktop.fixDesktop();
@@ -29,9 +29,9 @@ eXo.desktop.UIDesktop = {
 
   closeAll: function()
   {
-    xj("#UIPageDesktop").find("div.UIWindow").each(function()
+    gj("#UIPageDesktop").find("div.UIWindow").each(function()
     {
-      var appWindow = xj(this);
+      var appWindow = gj(this);
       if (appWindow.css("display") == "block")
       {
         eXo.desktop.UIDesktop.removeWindowContent(appWindow.attr("id").replace("UIWindow-", ""));
@@ -42,8 +42,8 @@ eXo.desktop.UIDesktop = {
 
   fixDesktop : function()
   {
-    var desktopPage = xj("#UIPageDesktop");
-    var h = xj(window).height() - desktopPage.offset().top + "px";
+    var desktopPage = gj("#UIPageDesktop");
+    var h = gj(window).height() - desktopPage.offset().top + "px";
     desktopPage.css("height", h);
 
     window.scroll(0, 0);
@@ -52,11 +52,11 @@ eXo.desktop.UIDesktop = {
 
   resetZIndex : function(windowObject)
   {
-    var jqObj = xj(windowObject);
+    var jqObj = gj(windowObject);
     var hasPopup;
     jqObj.parent().find("div.UIPopupWindow").each(function()
     {
-      if (xj(this).css("display") == "block")
+      if (gj(this).css("display") == "block")
       {
         hasPopup = true;
         return false;
@@ -69,9 +69,9 @@ eXo.desktop.UIDesktop = {
     }
 
     var maxZIndex = parseInt(jqObj.css("z-index"));
-    xj("#UIPageDesktop").find("div.UIWindow").each(function()
+    gj("#UIPageDesktop").find("div.UIWindow").each(function()
     {
-      var appWindow = xj(this);
+      var appWindow = gj(this);
       var z = parseInt(appWindow.css("z-index"));
       if (z < 0)
       {
@@ -90,10 +90,10 @@ eXo.desktop.UIDesktop = {
   isMaxZIndex : function(object)
   {
     var ret = true;
-    var z = xj(object).css("z-index");
-    xj("#UIPageDesktop").find("div.UIWindow").each(function()
+    var z = gj(object).css("z-index");
+    gj("#UIPageDesktop").find("div.UIWindow").each(function()
     {
-      var app = xj(this);
+      var app = gj(this);
       if (app[0] != object && app.css("display") == "block" && z <= app.css("z-index"))
       {
         ret = false;
@@ -105,14 +105,14 @@ eXo.desktop.UIDesktop = {
 
   showWindow : function(popupWindow, dockIcon)
   {
-    var desktopPage = xj("#UIPageDesktop");
+    var desktopPage = gj("#UIPageDesktop");
 
     if(!eXo.desktop.UIDesktop.isMaxZIndex(popupWindow))
     {
       eXo.desktop.UIDesktop.resetZIndex(popupWindow);
     }
 
-    if (xj(popupWindow).find("div.PORTLET-FRAGMENT").children("div").length == 0)
+    if (gj(popupWindow).find("div.PORTLET-FRAGMENT").children("div").length == 0)
     {
       var blockID = desktopPage.closest(".UIPage").attr("id").replace(/^UIPage-/, "");
       var params = [
@@ -125,31 +125,31 @@ eXo.desktop.UIDesktop = {
     eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "SHOW");
     popupWindow.isShowed = true;
 
-    xj(dockIcon).addClass("ShowIcon");
+    gj(dockIcon).addClass("ShowIcon");
   },
 
   hideWindow : function(popupWindow, dockIcon)
   {
-    eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, xj("#UIPageDesktop"), 10);
+    eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, gj("#UIPageDesktop"), 10);
     eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "HIDE");
-    xj(dockIcon).addClass("ShowIcon");
+    gj(dockIcon).addClass("ShowIcon");
   },
 
   quitWindow : function(popupWindow, dockIcon)
   {
-    if (xj(popupWindow).css("display") == "block")
+    if (gj(popupWindow).css("display") == "block")
     {
-      eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, xj("#UIPageDesktop"), 10);
+      eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, gj("#UIPageDesktop"), 10);
     }
     eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "QUIT");
     popupWindow.isShowed = false;
 
-    xj(dockIcon).removeClass("ShowIcon");
+    gj(dockIcon).removeClass("ShowIcon");
   },
 
   showHideWindow : function(windowID, dockIcon)
   {
-    var popupWindow = xj("#" + windowID);
+    var popupWindow = gj("#" + windowID);
 
     if (popupWindow.css("display") == "block")
     {
@@ -163,13 +163,13 @@ eXo.desktop.UIDesktop = {
 
   findPosXInDesktop : function(object, isRTL)
   {
-    var uiPageDesktop = xj(object).closest(".UIPageDesktop")[0];
+    var uiPageDesktop = gj(object).closest(".UIPageDesktop")[0];
     return eXo.core.Browser.findPosXInContainer(object, uiPageDesktop, isRTL);
   },
 
   findPosYInDesktop : function(object)
   {
-    var jqObj = xj(object);
+    var jqObj = gj(object);
     return jqObj.offset().top - jqObj.closest(".UIPageDesktop").offset().top;
   },
 
@@ -186,7 +186,7 @@ eXo.desktop.UIDesktop = {
     }
 
     var portletID = uiWindow.id.replace(/^UIWindow-/, "");
-    if (xj("#DockItem" + portletID).hasClass("ShowIcon"))
+    if (gj("#DockItem" + portletID).hasClass("ShowIcon"))
     {
       uiWindow.isShowed = true;
     }
@@ -206,7 +206,7 @@ eXo.desktop.UIDesktop = {
 
   removeWindow : function (idWindow)
   {
-    xj("#" + idWindow).remove();
+    gj("#" + idWindow).remove();
   },
 
   removeWindowContent : function (evt, elemt)
@@ -215,7 +215,7 @@ eXo.desktop.UIDesktop = {
     if (elemt)
     {
       //TODO: Optimize this if branch with a nicer solution
-      var contextMenu = xj(elemt).closest(".UIRightClickPopupMenu")[0];
+      var contextMenu = gj(elemt).closest(".UIRightClickPopupMenu")[0];
       if (!evt)
       {
         evt = window.event;
@@ -224,13 +224,13 @@ eXo.desktop.UIDesktop = {
       idWindow = contextMenu.objId;
     }
 
-    var uiWindow = xj("#UIWindow-" + idWindow).eq(0);
+    var uiWindow = gj("#UIWindow-" + idWindow).eq(0);
     if (uiWindow)
     {
       var portletFrag = uiWindow.find("div.PORTLET-FRAGMENT");
       portletFrag.children().remove();
       portletFrag.html("<span></span>");
-      eXo.desktop.UIDesktop.quitWindow(uiWindow[0], xj("#DockItem" + idWindow)[0]);
+      eXo.desktop.UIDesktop.quitWindow(uiWindow[0], gj("#DockItem" + idWindow)[0]);
     }
   },
 

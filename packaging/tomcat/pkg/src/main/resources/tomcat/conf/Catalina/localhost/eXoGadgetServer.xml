@@ -19,14 +19,4 @@
 
 -->
 
-<webui-configuration>  
-  <annotation-classes>
-  </annotation-classes>  
-   
-  <application>     
-    <ui-component-root>org.exoplatform.webos.toolbar.UIUserToolbarDesktopPortlet</ui-component-root>    
-    <state-manager>org.exoplatform.webui.application.portlet.ParentAppStateManager</state-manager>
-    <application-lifecycle-listeners>           
-    </application-lifecycle-listeners>
-  </application>
-</webui-configuration>
+<Context path="/eXoGadgetServer" docBase="eXoGadgetServer" debug="0" reloadable="true" crossContext="true"/>

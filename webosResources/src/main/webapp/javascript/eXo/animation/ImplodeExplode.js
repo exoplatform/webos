@@ -7,7 +7,7 @@ eXo.animation.ImplodeExplode =
 
   doInit : function(uiWindow, clickedElement, desktopPage)
   {
-    this.animWindow = xj("<div>").css({"display" : "block", "background-color" : "#ffffff", "position" : "absolute", "z-index" : uiWindow.style.zIndex}).fadeTo("fast", 50);
+    this.animWindow = gj("<div>").css({"display" : "block", "background-color" : "#ffffff", "position" : "absolute", "z-index" : uiWindow.style.zIndex}).fadeTo("fast", 50);
     desktopPage.append(this.animWindow);
   },
 
@@ -19,7 +19,7 @@ eXo.animation.ImplodeExplode =
 
       var animWindow = eXo.animation.ImplodeExplode.animWindow;
       animWindow.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, desktopPage[0], eXo.core.I18n.isRT());
-      animWindow.iconY = xj(clickedElement).offset().top - desktopPage.offset().top;
+      animWindow.iconY = gj(clickedElement).offset().top - desktopPage.offset().top;
       animWindow.iconW = clickedElement.offsetWidth
       animWindow.iconH = clickedElement.offsetHeight;
       animWindow.originX = uiWindow.originalX;
@@ -27,7 +27,7 @@ eXo.animation.ImplodeExplode =
       animWindow.originW = uiWindow.originalW;
       animWindow.originH = uiWindow.originalH;
 
-      eXo.animation.ImplodeExplode.doExplode(numberOfFrame, numberOfFrame - 1, animWindow, xj(uiWindow));
+      eXo.animation.ImplodeExplode.doExplode(numberOfFrame, numberOfFrame - 1, animWindow, gj(uiWindow));
     }
   },
 
@@ -39,7 +39,7 @@ eXo.animation.ImplodeExplode =
 
       var animWindow = eXo.animation.ImplodeExplode.animWindow;
       animWindow.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, desktopPage[0], eXo.core.I18n.isRT());
-      animWindow.iconY = xj(clickedElement).offset().top - desktopPage.offset().top;
+      animWindow.iconY = gj(clickedElement).offset().top - desktopPage.offset().top;
       animWindow.iconW = clickedElement.offsetWidth
       animWindow.iconH = clickedElement.offsetHeight;
       animWindow.originY = uiWindow.offsetTop;

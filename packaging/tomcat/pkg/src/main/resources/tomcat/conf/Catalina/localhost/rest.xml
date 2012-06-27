@@ -19,14 +19,14 @@
 
 -->
 
-<webui-configuration>  
-  <annotation-classes>
-  </annotation-classes>  
-   
-  <application>     
-    <ui-component-root>org.exoplatform.webos.toolbar.UIUserToolbarDesktopPortlet</ui-component-root>    
-    <state-manager>org.exoplatform.webui.application.portlet.ParentAppStateManager</state-manager>
-    <application-lifecycle-listeners>           
-    </application-lifecycle-listeners>
-  </application>
-</webui-configuration>
+<Context path="/rest" docBase="rest" reloadable="true" crossContext="false">
+
+  <Logger className='org.apache.catalina.logger.SystemOutLogger'
+            prefix='localhost_portal_log.' suffix='.txt' timestamp='true'/>
+    <Manager className='org.apache.catalina.session.PersistentManager' saveOnRestart='false'/>
+    <Realm className='org.apache.catalina.realm.JAASRealm'
+           appName='gatein-domain'
+           userClassNames="org.exoplatform.services.security.jaas.UserPrincipal"
+           roleClassNames="org.exoplatform.services.security.jaas.RolePrincipal"
+           debug='0' cache='false'/>
+</Context>
