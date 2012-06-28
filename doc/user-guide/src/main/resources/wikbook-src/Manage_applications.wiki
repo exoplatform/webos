@@ -14,7 +14,7 @@ In the Desktop, you can do the following actions:
 * [Add an application to the Dockbar|#WebOS_userguide.Manage_applications.Add_application]
 * [Open an application|#WebOS_userguide.Manage_applications.Open_application]
 * [Quit an application|#WebOS_userguide.Manage_applications.Quit_application]
-* [Change the Desktop title and background|#WebOS_userguide.Manage_applications.Change_title/background]
+* [Change the Desktop title and background|#WebOS_userguide.Manage_applications.Change_title_background]
 
 h1. Add an application {anchor:id="WebOS_userguide.Manage_applications.Add_application"}
 
@@ -74,7 +74,7 @@ This way allows you to close all running applications. Right-click any empty are
 
 The icon !images/Running_application_icon.png|scalefit="1" width="6mm"! will disappear after the running application has been closed.
 
-h1. Change the Desktop title and background {anchor:id="WebOS_userguide.Manage_applications.Change_title/background"}
+h1. Change the Desktop title and background {anchor:id="WebOS_userguide.Manage_applications.Change_title_background"}
 
 First, right-click any area on the Desktop background.
 
