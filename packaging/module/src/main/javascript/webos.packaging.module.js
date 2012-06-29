@@ -17,6 +17,7 @@ function getModule(params) {
   module.web = {}
   module.web.webosResources = 
   	new Project("org.exoplatform.webos", "webos-webosResources", "war", module.version) ;
+  module.web.webosResources.deployName="webosResources";
   
   module.web.extension = {};
   module.web.extension.war =
@@ -37,5 +38,6 @@ function getModule(params) {
 	module.server.tomcat.patch =
 	new Project("org.exoplatform.webos", "webos-server-tomcat-patch", "jar", module.version);
    module.portlet = new Project("org.exoplatform.webos", "webos-portlet-webosadmin", "war", module.version);
+   module.portlet.deployName="webosadmin";
   return module;
 }
