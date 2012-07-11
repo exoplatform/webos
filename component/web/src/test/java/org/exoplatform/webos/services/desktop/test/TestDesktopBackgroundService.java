@@ -90,14 +90,14 @@ public class TestDesktopBackgroundService extends AbstractWebOSTest
       bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.USER_TYPE, "demo"));
       assertEquals(1, bgs.size());     
             
-      bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "platform/test/legacy"));
+      bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "/platform/test/legacy"));
       assertEquals(1, bgs.size());
-      bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "platform/administrators"));
+      bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "/platform/administrators"));
       assertEquals(8, bgs.size());
       //TestCase : no default images for specific site
       //We need empty directory here, but GIT can handle empty dir, workaround:
       createEmptyDir("backgrounds/group/platform/test/normalized");
-      bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "platform/test/normalized"));
+      bgs = desktopBackgroundService.findDesktopBackgrounds(new PortalKey(PortalConfig.GROUP_TYPE, "/platform/test/normalized"));
       assertEquals(0, bgs.size());
       
       createEmptyDir("backgrounds/portal/test");

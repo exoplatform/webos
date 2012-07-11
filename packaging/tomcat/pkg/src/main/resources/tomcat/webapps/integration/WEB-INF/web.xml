@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
 
     Copyright (C) 2009 eXo Platform SAS.
@@ -19,14 +20,13 @@
 
 -->
 
-<webui-configuration>  
-  <annotation-classes>
-  </annotation-classes>  
-   
-  <application>     
-    <ui-component-root>org.exoplatform.webos.toolbar.UIUserToolbarDesktopPortlet</ui-component-root>    
-    <state-manager>org.exoplatform.webui.application.portlet.ParentAppStateManager</state-manager>
-    <application-lifecycle-listeners>           
-    </application-lifecycle-listeners>
-  </application>
-</webui-configuration>
+<!DOCTYPE web-app PUBLIC
+   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+   "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+  <servlet>
+     <servlet-name>ContainerServlet</servlet-name>
+     <servlet-class>org.gatein.wci.tomcat.TC6ContainerServlet</servlet-class>
+     <load-on-startup>1</load-on-startup>
+  </servlet>
+</web-app>

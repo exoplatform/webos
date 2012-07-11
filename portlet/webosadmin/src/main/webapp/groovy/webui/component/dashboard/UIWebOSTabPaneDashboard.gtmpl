@@ -51,5 +51,5 @@
 	</div>
 	<% } %>
 <% } %>
-    <a href="#" class="AddDashboard" onclick="eXo.webui.UIWebOSTabbedDashboard.createTabDashboard(this)"><span></span></a>								
+    <a href="#" class="AddDashboard" onclick="eXo.webui.UIWebOSTabbedDashboard.showAddTabInput(this)"><span></span></a>
 </div>

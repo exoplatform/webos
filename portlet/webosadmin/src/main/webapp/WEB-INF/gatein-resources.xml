@@ -22,8 +22,8 @@
 
 <gatein-resources
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   	xsi:schemaLocation="http://www.gatein.org/xml/ns/gatein_resources_1_2 http://www.gatein.org/xml/ns/gatein_resources_1_2"
-   	xmlns="http://www.gatein.org/xml/ns/gatein_resources_1_2">
+   	xsi:schemaLocation="http://www.gatein.org/xml/ns/gatein_resources_1_2_1 http://www.gatein.org/xml/ns/gatein_resources_1_2_1"
+   	xmlns="http://www.gatein.org/xml/ns/gatein_resources_1_2_1">
 
 	<portlet-skin>
 		<application-name>webosadmin</application-name>
@@ -31,6 +31,34 @@
 		<skin-name>Default</skin-name>
 		<css-path>/skin/dashboard/webui/component/UIWebOSTabbedDashboardPortlet/DefaultStylesheet.css</css-path>
 	</portlet-skin>
+
+  <portlet>
+    <name>UserToolbarDesktopPortlet</name>
+    <module>
+      <depends>
+        <module>navigation</module>
+      </depends>
+    </module>
+  </portlet>
+
+  <portlet>
+    <name>WebOSAdminToolbarPortlet</name>
+    <module>
+      <depends>
+        <module>navigation</module>
+      </depends>
+    </module>
+  </portlet>
+
+  <portlet>
+    <name>WebOSTabbedDashboardPortlet</name>
+    <module>
+	    <script>
+	      <name>eXo.webui.UIWebOSTabbedDashboard</name>
+	      <path>/javascript/eXo/webui/UIWebOSTabbedDashboard.js</path>
+	    </script>
+    </module>
+  </portlet>
 			
 </gatein-resources>
 

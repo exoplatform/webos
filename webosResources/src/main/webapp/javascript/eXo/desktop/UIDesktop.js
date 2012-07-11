@@ -1,227 +1,261 @@
-function UIDesktop() {
-};
+eXo.desktop = {};
 
-UIDesktop.prototype.init = function() {
-	var pageDesktop = document.getElementById("UIPageDesktop") ;
-	if(pageDesktop) {
-		eXo.desktop.UIDesktop.fixDesktop() ;
-		eXo.desktop.UIDockbar.init() ;
-	  var uiWindows = eXo.core.DOMUtil.findChildrenByClass(pageDesktop, "div", "UIWindow") ;
-	  for(var i = 0; i < uiWindows.length; i++) {
-	  	if(uiWindows[i].isFirstTime == false)	continue ;
-			eXo.desktop.UIDesktop.backupWindowProperties(uiWindows[i]);
-	  }
+eXo.desktop.UIDesktop = {
 
-	  pageDesktop.onmousedown = eXo.desktop.UIDesktop.showContextMenu;
-	}
-};
+  init : function()
+  {
+    var desktopPage = gj("#UIPageDesktop");
+    if (desktopPage.length > 0)
+    {
+      eXo.desktop.UIDesktop.fixDesktop();
+      eXo.desktop.UIDockbar.init();
+      desktopPage.children("div.UIWindow").each(function()
+      {
+        eXo.desktop.UIDesktop.backupWindowProperties(this);
+      });
 
-UIDesktop.prototype.showContextMenu = function(evt) {
-	if (!evt) evt = window.event;
-	var targetID = (evt.target || evt.srcElement).id;
+      desktopPage[0].onmousedown = eXo.desktop.UIDesktop.showContextMenu;
+    }
+  },
 
-  if ("UIPageDesktop" !== targetID)
-		return;
-	eXo.webui.UIRightClickPopupMenu.clickRightMouse(evt, this, "UIDesktopContextMenu", "", null, 5);
-};
+  showContextMenu : function(evt) {
+      if (!evt) evt = window.event;
+      var targetID = (evt.target || evt.srcElement).id;
+      
+      if ("UIPageDesktop" !== targetID)
+         return;
+      eXo.webui.UIRightClickPopupMenu.clickRightMouse(evt, this, "UIDesktopContextMenu", "", null, 5);
+   },
 
-UIDesktop.prototype.closeAll= function() {
-	var pageDesktop = document.getElementById("UIPageDesktop") ;
-  var windowList = eXo.core.DOMUtil.findDescendantsByClass(pageDesktop, "DIV", "UIWindow");
-	var blockList = [];
-	for (var i = 0; i < windowList.length; i++) {
-		if (eXo.core.DOMUtil.getStyle(windowList[i], "display") == "block") {
-			eXo.desktop.UIDesktop.removeWindowContent(windowList[i].id.replace("UIWindow-", ""));
-			blockList.push(windowList[i]);
-		}
-	}
-	//ImplodeExplode.js can only run with 1 window each time
-	for (i = 1; i < blockList.length; i++) {
-		if (eXo.core.DOMUtil.getStyle(blockList[i], "display") == "block") {
-			blockList[i].style.display = "none";
-		}
-	}
-};
-
-UIDesktop.prototype.fixDesktop = function() {
-  var pageDesktop = document.getElementById("UIPageDesktop") ;
-  var browserHeight = eXo.core.Browser.getBrowserHeight() ;
-  if(pageDesktop) pageDesktop.style.height = browserHeight - eXo.core.Browser.findPosY(pageDesktop) + "px" ;
-  window.scroll(0,0);
-  setTimeout("eXo.desktop.UIDockbar.resizeDockBar()", 0) ; 
-};
-
-//TODO DungHM
-UIDesktop.prototype.resetZIndex = function(windowObject) {
-   var uiPageDesktop = document.getElementById("UIPageDesktop");
-   var windowsInDesktop = eXo.core.DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIWindow");
-   var maxZIndex = windowObject.style.zIndex ;
- 
-   var uiPopupWindow = eXo.core.DOMUtil.findDescendantsByClass(windowObject.parentNode,'div','UIPopupWindow') ;
-   for (var i = 0; i < uiPopupWindow.length; i ++) {
- 		if (uiPopupWindow[i].style.display == "block") return ;
-   }
-  
-   for(var i = 0; i < windowsInDesktop.length; i++) {
-      if (windowsInDesktop[i].style.zIndex < 0) windowsInDesktop[i].style.zIndex = 1;
-
-      if(parseInt(maxZIndex) < parseInt(windowsInDesktop[i].style.zIndex)) {
-         maxZIndex = windowsInDesktop[i].style.zIndex ;
+  closeAll: function()
+  {
+    gj("#UIPageDesktop").find("div.UIWindow").each(function()
+    {
+      var appWindow = gj(this);
+      if (appWindow.css("display") == "block")
+      {
+        eXo.desktop.UIDesktop.removeWindowContent(appWindow.attr("id").replace("UIWindow-", ""));
+        appWindow.css("display", "none");
       }
-      //TODO: tan.pham: test for fix bug WEBOS-119: 2 portlets may have same zIndex when reload page
-      //	    if(parseInt(windowsInDesktop[i].style.zIndex) >= parseInt(windowObject.style.zIndex)) {
-      //	      windowsInDesktop[i].style.zIndex = parseInt(windowsInDesktop[i].style.zIndex) - 1 ;
-      //
-      //}
-   }
-   eXo.desktop.UIWindow.maxIndex = parseInt(maxZIndex) + 1;
-   windowObject.style.zIndex = eXo.desktop.UIWindow.maxIndex;
-};
+    });
+  },
 
-UIDesktop.prototype.isMaxZIndex = function(object) {
-	var DOMUtil = eXo.core.DOMUtil ;
-	var uiPageDesktop = document.getElementById("UIPageDesktop");
-	var desktopApps = DOMUtil.findDescendantsByClass(uiPageDesktop, "div", "UIWindow") ;
+  fixDesktop : function()
+  {
+    var desktopPage = gj("#UIPageDesktop");
+    var h = gj(window).height() - desktopPage.offset().top + "px";
+    desktopPage.css("height", h);
 
-   var maxZIndex = parseInt(object.style.zIndex) ;
-   for (var i = 0; i < desktopApps.length; i++) {
-      if(desktopApps[i] != object && desktopApps[i].style.display == "block") {
-         if (maxZIndex <= parseInt(desktopApps[i].style.zIndex)) {
-            return false;
-         }
+    window.scroll(0, 0);
+    setTimeout("eXo.desktop.UIDockbar.resizeDockBar()", 0);
+  },
+
+  resetZIndex : function(windowObject)
+  {
+    var jqObj = gj(windowObject);
+    var hasPopup;
+    jqObj.parent().find("div.UIPopupWindow").each(function()
+    {
+      if (gj(this).css("display") == "block")
+      {
+        hasPopup = true;
+        return false;
       }
-   }
+    });
 
-   return true;
-};
+    if (hasPopup)
+    {
+      return;
+    }
 
-UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement, mode) {
-	var DOMUtil = eXo.core.DOMUtil ;
-  if(typeof(uiWindow) == "string") this.object = document.getElementById(uiWindow) ;
-  else this.object = uiWindow ;
-  
-  var portletId = (this.object ? this.object.id : uiWindow).replace(/^UIWindow-/, "") ;
-  var portletFrag = DOMUtil.findFirstDescendantByClass(this.object, "div", "PORTLET-FRAGMENT") ;
-  
-  var dockIcon = document.getElementById("DockItem"+portletId) ;
-  var isMaxZIndex = eXo.desktop.UIDesktop.isMaxZIndex(this.object) ;
-  if(!isMaxZIndex) eXo.desktop.UIDesktop.resetZIndex(this.object) ;
-  var numberOfFrame = 10 ; 
-  if(mode == "QUIT") {
-  	if(this.object.style.display == "block") {
-	    eXo.animation.ImplodeExplode.implode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
-  	}
-  	this.object.isShowed = false ;
-    eXo.desktop.UIWindow.saveWindowProperties(this.object, "QUIT");
-  	if(dockIcon) DOMUtil.removeClass(dockIcon, "ShowIcon") ;
-  	return ;
-  }
-  if(this.object.style.display == "block") {
-    eXo.animation.ImplodeExplode.implode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
-    eXo.desktop.UIWindow.saveWindowProperties(this.object, "HIDE");
-    if(dockIcon) DOMUtil.addClass(dockIcon, "ShowIcon") ;
-  } else {
-	  if(DOMUtil.getChildrenByTagName(portletFrag, "div").length < 1) {
-	  	var uiPage = eXo.core.DOMUtil.findAncestorByClass(this.object, "UIPage") ;
-			containerBlockId = uiPage.id.replace(/^UIPage-/,"") ;
-			var params = [{name : "objectId", value: portletId}] ;
-			ajaxGet(eXo.env.server.createPortalURL(containerBlockId, "ShowPortlet", true, params)) ;
-	  }
-  	
-    var uiDockBar = document.getElementById("UIDockBar") ;
-		var uiPageDesktop	= document.getElementById("UIPageDesktop") ;
-    eXo.desktop.UIDockbar.resetDesktopShowedStatus(uiPageDesktop, uiDockBar) ;
-    eXo.animation.ImplodeExplode.explode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
-    eXo.desktop.UIWindow.saveWindowProperties(this.object, "SHOW");
-		this.object.isShowed = true ;
-		if(dockIcon) DOMUtil.addClass(dockIcon, "ShowIcon") ;  
-  	//TODO MinhJS: fix bug for don't apply style css in IE6 in first time.
-  	if(eXo.core.Browser.isIE6()) {
-  		this.object.style.filter =  "" ;
-  	}
-  }
-};
+    var maxZIndex = parseInt(jqObj.css("z-index"));
+    gj("#UIPageDesktop").find("div.UIWindow").each(function()
+    {
+      var appWindow = gj(this);
+      var z = parseInt(appWindow.css("z-index"));
+      if (z < 0)
+      {
+        appWindow.css("z-index", 1);
+        z = 1;
+      }
+      if (maxZIndex < z)
+      {
+        maxZIndex = z;
+      }
+    });
+    eXo.desktop.UIWindow.maxIndex = maxZIndex + 1;
+    jqObj.css("z-index", eXo.desktop.UIWindow.maxIndex);
+  },
 
-UIDesktop.prototype.findPosXInDesktop = function(object, isRTL) {
-  var uiPageDesktop = eXo.core.DOMUtil.findAncestorByClass(object, "UIPageDesktop") ;
-  return eXo.core.Browser.findPosXInContainer(object, uiPageDesktop, isRTL) ;
-} ;
+  isMaxZIndex : function(object)
+  {
+    var ret = true;
+    var z = gj(object).css("z-index");
+    gj("#UIPageDesktop").find("div.UIWindow").each(function()
+    {
+      var app = gj(this);
+      if (app[0] != object && app.css("display") == "block" && z <= app.css("z-index"))
+      {
+        ret = false;
+        return false;
+      }
+    });
+    return ret;
+  },
 
-UIDesktop.prototype.findPosYInDesktop = function(object) {
-  var uiPageDesktop = eXo.core.DOMUtil.findAncestorByClass(object, "UIPageDesktop") ;
-  var posYUIPageDesktop = eXo.core.Browser.findPosY(uiPageDesktop) ;
-  var posYObject = eXo.core.Browser.findPosY(object) ;
-  return (posYObject - posYUIPageDesktop) ;
-} ;
+  showWindow : function(popupWindow, dockIcon)
+  {
+    var desktopPage = gj("#UIPageDesktop");
 
-UIDesktop.prototype.backupWindowProperties = function(uiWindow) {
-  uiWindow.originalX = eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT()) ;
-  uiWindow.originalY = eXo.desktop.UIDesktop.findPosYInDesktop(uiWindow) ;
-  uiWindow.originalW = uiWindow.offsetWidth ;
-  uiWindow.originalH = uiWindow.offsetHeight ;
-  uiWindow.style.visibility = "visible" ;
-  if(uiWindow.style.display == "") uiWindow.style.display = "none" ;
-  
-  var portletId = uiWindow.id.replace(/^UIWindow-/, "");
-  var dockIcon = document.getElementById("DockItem"+portletId);
-  if(dockIcon) {
-  	if(eXo.core.DOMUtil.hasClass(dockIcon, "ShowIcon"))
-  		uiWindow.isShowed = true;
-  }
-  
-  uiWindow.isFirstTime = false ;
-} ;
+    if(!eXo.desktop.UIDesktop.isMaxZIndex(popupWindow))
+    {
+      eXo.desktop.UIDesktop.resetZIndex(popupWindow);
+    }
 
-UIDesktop.prototype.removeApp = function(uri) {
-	var result = ajaxAsyncGetRequest(uri, false) ;
-	if(result == "OK") {
-		var appId = uri.substr(uri.lastIndexOf("=") + 1) ;
-		eXo.desktop.UIDesktop.removeWindow("UIWindow-" + appId) ;
-		eXo.desktop.UIDockbar.removeDockbarIcon("DockItem" + appId) ;
-	}
-};
+    if (gj(popupWindow).find("div.PORTLET-FRAGMENT").children("div").length == 0)
+    {
+      var blockID = desktopPage.closest(".UIPage").attr("id").replace(/^UIPage-/, "");
+      var params = [
+        {name : "objectId", value: popupWindow.id.replace(/^UIWindow-/, "")}
+      ];
+      ajaxGet(eXo.env.server.createPortalURL(blockID, "ShowPortlet", true, params));
+    }
 
-UIDesktop.prototype.removeWindow = function (idWindow) {
-	var uiWindow = document.getElementById(idWindow); 
-	if(uiWindow) eXo.core.DOMUtil.removeElement(uiWindow);
-};
+    eXo.animation.ImplodeExplode.explode(popupWindow, dockIcon, desktopPage, 10);
+    eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "SHOW");
+    popupWindow.isShowed = true;
 
-UIDesktop.prototype.removeWindowContent = function (evt, elemt) {
-   var idWindow = evt;
-   if (elemt) {
-      var contextMenu = eXo.core.DOMUtil.findAncestorByClass(elemt, "UIRightClickPopupMenu") ;
-      eXo.core.MouseEventManager.docMouseDownEvt(evt) ;
+    gj(dockIcon).addClass("ShowIcon");
+  },
+
+  hideWindow : function(popupWindow, dockIcon)
+  {
+    eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, gj("#UIPageDesktop"), 10);
+    eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "HIDE");
+    gj(dockIcon).addClass("ShowIcon");
+  },
+
+  quitWindow : function(popupWindow, dockIcon)
+  {
+    if (gj(popupWindow).css("display") == "block")
+    {
+      eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, gj("#UIPageDesktop"), 10);
+    }
+    eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "QUIT");
+    popupWindow.isShowed = false;
+
+    gj(dockIcon).removeClass("ShowIcon");
+  },
+
+  showHideWindow : function(windowID, dockIcon)
+  {
+    var popupWindow = gj("#" + windowID);
+
+    if (popupWindow.css("display") == "block")
+    {
+      eXo.desktop.UIDesktop.hideWindow(popupWindow[0], dockIcon);
+    }
+    else
+    {
+      eXo.desktop.UIDesktop.showWindow(popupWindow[0], dockIcon);
+    }
+  },
+
+  findPosXInDesktop : function(object, isRTL)
+  {
+    var uiPageDesktop = gj(object).closest(".UIPageDesktop")[0];
+    return eXo.core.Browser.findPosXInContainer(object, uiPageDesktop, isRTL);
+  },
+
+  findPosYInDesktop : function(object)
+  {
+    var jqObj = gj(object);
+    return jqObj.offset().top - jqObj.closest(".UIPageDesktop").offset().top;
+  },
+
+  backupWindowProperties : function(uiWindow)
+  {
+    uiWindow.originalX = eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT());
+    uiWindow.originalY = eXo.desktop.UIDesktop.findPosYInDesktop(uiWindow);
+    uiWindow.originalW = uiWindow.offsetWidth;
+    uiWindow.originalH = uiWindow.offsetHeight;
+    uiWindow.style.visibility = "visible";
+    if (uiWindow.style.display == "")
+    {
+      uiWindow.style.display = "none";
+    }
+
+    var portletID = uiWindow.id.replace(/^UIWindow-/, "");
+    if (gj("#DockItem" + portletID).hasClass("ShowIcon"))
+    {
+      uiWindow.isShowed = true;
+    }
+    //uiWindow.isFirstTime = false;
+  },
+
+  removeApp : function(uri)
+  {
+    var result = ajaxAsyncGetRequest(uri, false);
+    if (result == "OK")
+    {
+      var appId = uri.substr(uri.lastIndexOf("=") + 1);
+      eXo.desktop.UIDesktop.removeWindow("UIWindow-" + appId);
+      eXo.desktop.UIDockbar.removeDockbarIcon("DockItem" + appId);
+    }
+  },
+
+  removeWindow : function (idWindow)
+  {
+    gj("#" + idWindow).remove();
+  },
+
+  removeWindowContent : function (evt, elemt)
+  {
+    var idWindow = evt;
+    if (elemt)
+    {
+      //TODO: Optimize this if branch with a nicer solution
+      var contextMenu = gj(elemt).closest(".UIRightClickPopupMenu")[0];
+      if (!evt)
+      {
+        evt = window.event;
+      }
+      evt.cancelBubble = true;
       idWindow = contextMenu.objId;
-   }
-   
-	var uiWindow = document.getElementById("UIWindow-" + idWindow);
-	if(uiWindow) {
-		var portletFrag = eXo.core.DOMUtil.findFirstDescendantByClass(uiWindow, "div", "PORTLET-FRAGMENT") ;
-		for(var i = 0; i < portletFrag.childNodes.length; i++) {
-			portletFrag.removeChild(portletFrag.childNodes[i]) ;
-		}
-		portletFrag.innerHTML = "<span></span>" ;
-		eXo.desktop.UIDesktop.showHideWindow(uiWindow, document.getElementById("DockItem"+idWindow), "QUIT") ;
-	}	
-};
+    }
 
-UIDesktop.prototype.setDesktopBackground = function (imageURL) {
-	var pageDesktop = document.getElementById("UIPageDesktop") ;
-	if (!pageDesktop) return;
+    var uiWindow = gj("#UIWindow-" + idWindow).eq(0);
+    if (uiWindow)
+    {
+      var portletFrag = uiWindow.find("div.PORTLET-FRAGMENT");
+      portletFrag.children().remove();
+      portletFrag.html("<span></span>");
+      eXo.desktop.UIDesktop.quitWindow(uiWindow[0], gj("#DockItem" + idWindow)[0]);
+    }
+  },
 
-	if (imageURL) {
-		imageURL = "url('" + imageURL + "') no-repeat center center";
-	} else if (navigator.userAgent.indexOf("MSIE") >= 0) {
-		pageDesktop.style.backgroundAttachment = "";
-		pageDesktop.style.backgroundImage = "";
-		pageDesktop.style.backgroundRepeat = "";
-		pageDesktop.style.backgroundPositionX = "";
-		pageDesktop.style.backgroundPositionY = "";
-		pageDesktop.style.backgroundColor = "";
-		return;
-	}
+  setDesktopBackground : function (imageURL)
+  {
+    var pageDesktop = document.getElementById("UIPageDesktop");
+    if (!pageDesktop)
+    {
+      return;
+    }
 
-	pageDesktop.style.background = imageURL;
-};
+    if (imageURL)
+    {
+      imageURL = "url('" + imageURL + "') no-repeat center center";
+    } else if (navigator.userAgent.indexOf("MSIE") >= 0)
+    {
+      pageDesktop.style.backgroundAttachment = "";
+      pageDesktop.style.backgroundImage = "";
+      pageDesktop.style.backgroundRepeat = "";
+      pageDesktop.style.backgroundPositionX = "";
+      pageDesktop.style.backgroundPositionY = "";
+      pageDesktop.style.backgroundColor = "";
+      return;
+    }
 
-eXo.desktop.UIDesktop = new UIDesktop() ;
+    pageDesktop.style.background = imageURL;
+  }
+}

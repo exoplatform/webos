@@ -21,8 +21,8 @@
 -->
 <gatein-resources
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.gatein.org/xml/ns/gatein_resources_1_2 http://www.gatein.org/xml/ns/gatein_resources_1_2"
-    xmlns="http://www.gatein.org/xml/ns/gatein_resources_1_2">
+    xsi:schemaLocation="http://www.gatein.org/xml/ns/gatein_resources_1_2_1 http://www.gatein.org/xml/ns/gatein_resources_1_2_1"
+    xmlns="http://www.gatein.org/xml/ns/gatein_resources_1_2_1">
     
 	<portal-skin>
     <skin-name>Default</skin-name>
@@ -45,29 +45,27 @@
       </style-theme>
    </window-style>
     
-	<javascript>
-		<param>
-			<js-module>eXo.animation.ImplodeExplode</js-module>
-			<js-path>/javascript/eXo/animation/ImplodeExplode.js</js-path>
-		</param>
-	</javascript>
-	<javascript>
-		<param>
-			<js-module>eXo.desktop.UIWindow</js-module>
-			<js-path>/javascript/eXo/desktop/UIWindow.js</js-path>
-		</param>
-	</javascript>
-	<javascript>
-		<param>
-			<js-module>eXo.desktop.UIDesktop</js-module>
-			<js-path>/javascript/eXo/desktop/UIDesktop.js</js-path>
-		</param>
-	</javascript>
-	<javascript>
-		<param>
-			<js-module>eXo.desktop.UIDockbar</js-module>
-			<js-path>/javascript/eXo/desktop/UIDockbar.js</js-path>
-		</param>
-	</javascript>
+  <module>
+    <name>webos</name>
+    <script>
+      <name>eXo.animation.ImplodeExplode</name>
+      <path>/javascript/eXo/animation/ImplodeExplode.js</path>
+    </script>
+    <script>
+      <name>eXo.desktop.UIDesktop</name>
+      <path>/javascript/eXo/desktop/UIDesktop.js</path>
+    </script>
+    <script>
+      <name>eXo.desktop.UIWindow</name>
+      <path>/javascript/eXo/desktop/UIWindow.js</path>
+    </script>
+    <script>
+      <name>eXo.desktop.UIDockbar</name>
+      <path>/javascript/eXo/desktop/UIDockbar.js</path>
+    </script>
+    <depends>
+      <module>webui</module>
+    </depends>
+  </module>
 	
 </gatein-resources>

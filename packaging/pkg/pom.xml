@@ -59,6 +59,14 @@
       <artifactId>exo.portal.webui.dashboard</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.gatein.shindig</groupId>
+      <artifactId>shindig-social-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.javascript</groupId>
+      <artifactId>closure-compiler</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.gadgets-server</artifactId>
       <type>war</type>
@@ -159,20 +167,24 @@
       <groupId>org.gatein.pc</groupId>
       <artifactId>pc-controller</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.exoplatform.tool</groupId>
       <artifactId>exo.tool.webunit</artifactId>
       <version>${exo.tool.webunit.version}</version>
     </dependency>
+    -->
     <dependency>
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>html-parser</groupId>
       <artifactId>html-parser</artifactId>
       <version>${html-parser.version}</version>
     </dependency>
+    -->
     <dependency>
       <groupId>org.gatein.wci</groupId>
       <artifactId>wci-exo</artifactId>
@@ -191,6 +203,16 @@
     </dependency>
     
     <!-- Missing packaging dependencies -->
+    <dependency><groupId>org.apache.pdfbox</groupId><artifactId>pdfbox</artifactId><version>${org.apache.pdfbox.version}</version><type>jar</type></dependency><!-- 1.6.0-->
+    <dependency><groupId>org.apache.pdfbox</groupId><artifactId>fontbox</artifactId><version>${org.apache.pdfbox.version}</version><type>jar</type></dependency><!-- 1.6.0-->
+    <dependency><groupId>commons-httpclient</groupId><artifactId>commons-httpclient</artifactId><version>${commons-httpclient.version}</version><type>jar</type></dependency><!-- 3.1-->
+    <dependency><groupId>html-parser</groupId><artifactId>html-parser</artifactId><version>${html-parser.version}</version><type>jar</type></dependency><!-- 1.6-->
+    <dependency><groupId>org.exoplatform.tool</groupId><artifactId>exo.tool.webunit</artifactId><version>${org.exoplatform.tool.version}</version><type>jar</type></dependency><!-- 1.0.0-->
+    <dependency><groupId>org.apache.pdfbox</groupId><artifactId>jempbox</artifactId><version>${org.apache.pdfbox.version}</version><type>jar</type></dependency><!-- 1.6.0-->
+    <dependency><groupId>jcr</groupId><artifactId>jcr</artifactId><version>${jcr.version}</version><type>jar</type></dependency>
+    <dependency><groupId>org.jgroups</groupId><artifactId>jgroups</artifactId><version>${org.jgroups.version}</version></dependency>
+    <dependency><groupId>commons-digester</groupId><artifactId>commons-digester</artifactId><version>${commons-digester.version}</version></dependency>
+    <dependency><groupId>rhino</groupId><artifactId>js</artifactId><version>${rhino.version}</version></dependency>
     <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-jdk14</artifactId></dependency>
     <dependency><groupId>c3p0</groupId><artifactId>c3p0</artifactId><version>0.9.1.2</version></dependency>
     <!-- org.jboss.:jbossxb was defined on gatein-dep -->
@@ -202,11 +224,11 @@
     <!-- net.sf.ehcache:ehcache WAS NOT DEFINED on gatein-dep (2.2.0) -->
     <dependency><groupId>net.sf.ehcache</groupId><artifactId>ehcache</artifactId><version>1.6.0</version><type>jar</type></dependency>
     <!-- org.jgroups:jgroups WAS NOT DEFINED on gatein-dep (2.11.1.Final) -->
-    <dependency><groupId>org.jgroups</groupId><artifactId>jgroups</artifactId><version>${org.jgroups.version}</version></dependency>
+    <!--<dependency><groupId>org.jgroups</groupId><artifactId>jgroups</artifactId><version>${org.jgroups.version}</version></dependency>-->
     <!-- log4j:log4j WAS NOT DEFINED on gatein-dep (1.2.16) -->
     <dependency><groupId>log4j</groupId><artifactId>log4j</artifactId><version>1.2.14</version></dependency>
     <!-- jcr:jcr WAS NOT DEFINED on gatein-dep -->
-    <dependency><groupId>jcr</groupId><artifactId>jcr</artifactId><version>${jcr.version}</version></dependency>
+    <!--<dependency><groupId>jcr</groupId><artifactId>jcr</artifactId><version>${jcr.version}</version></dependency>-->
     <!-- de.odysseus.juel:juel-api WAS NOT DEFINED on gatein-dep -->
     <dependency><groupId>de.odysseus.juel</groupId><artifactId>juel-api</artifactId><version>2.1.2</version><type>jar</type></dependency>
     <!-- de.odysseus.juel:juel-impl:2.1.2 WAS NOT DEFINED on gatein-dep (2.2.3) -->
