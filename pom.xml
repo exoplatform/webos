@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.exoplatform</groupId>
     <artifactId>exo.parent</artifactId>
-    <version>7.1</version>
+    <version>8.1</version>
   </parent>
   <groupId>org.exoplatform.webos</groupId>
   <artifactId>webos</artifactId>
@@ -40,10 +40,10 @@
   </ciManagement>
   <properties>
       <gatein.dep.version>1.1.0-GA</gatein.dep.version>
-      <org.exoplatform.kernel.version>2.3.6-GA</org.exoplatform.kernel.version>
-      <org.exoplatform.core.version>2.4.6-GA</org.exoplatform.core.version>
-      <org.exoplatform.ws.version>2.2.6-GA</org.exoplatform.ws.version>
-      <org.exoplatform.jcr.version>1.14.6-GA</org.exoplatform.jcr.version>
+      <org.exoplatform.kernel.version>2.3.8-GA-SNAPSHOT</org.exoplatform.kernel.version>
+      <org.exoplatform.core.version>2.4.8-GA-SNAPSHOT</org.exoplatform.core.version>
+      <org.exoplatform.ws.version>2.2.8-GA-SNAPSHOT</org.exoplatform.ws.version>
+      <org.exoplatform.jcr.version>1.14.8-GA-SNAPSHOT</org.exoplatform.jcr.version>
       <org.exoplatform.portal.version>3.3.0-GA</org.exoplatform.portal.version>
       <org.exoplatform.exopackage.version>1.1.4</org.exoplatform.exopackage.version>
       <org.jibx.version>1.2.2</org.jibx.version>
@@ -66,7 +66,14 @@
       <jcip.version>1.0</jcip.version>
       <commons-dbcp.version>1.2.2</commons-dbcp.version>
       <com.google.javascript.version>r1592</com.google.javascript.version>
-
+      
+      <org.apache.pdfbox.version>1.6.0</org.apache.pdfbox.version>
+      <commons-httpclient.version>3.1</commons-httpclient.version>
+      <html-parser.version>1.6</html-parser.version>
+      <org.exoplatform.tool.version>1.0.0</org.exoplatform.tool.version>
+      <jcr.version>1.0</jcr.version>
+      <org.jgroups.version>2.6.20.Final</org.jgroups.version>
+      <commons-digester.version>1.8.1</commons-digester.version>
       <!-- ************** -->
       <!-- Build settings -->
       <!-- ************** -->
@@ -641,6 +648,13 @@
            <groupId>org.staxnav</groupId>
            <artifactId>staxnav.core</artifactId>
            <version>${org.staxnav.version}</version>
+         </dependency>
+
+         <!-- Closure JavaScript compression -->
+         <dependency>
+           <groupId>com.google.javascript</groupId>
+           <artifactId>closure-compiler</artifactId>
+           <version>${com.google.javascript.version}</version>
          </dependency>
 
          <!-- GateIn Portal -->

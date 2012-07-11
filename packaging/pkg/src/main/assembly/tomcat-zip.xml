@@ -28,21 +28,19 @@
    <includeBaseDirectory>false</includeBaseDirectory>
    <fileSets>
       <fileSet>
-         <directory>target/tomcat</directory>
          <outputDirectory>${project.build.finalName}</outputDirectory>
-         <useDefaultExcludes>true</useDefaultExcludes>
          <excludes>
             <exclude>**/*.sh</exclude>
          </excludes>
+         <directory>target/tomcat</directory>
       </fileSet>
       <fileSet>
-         <directory>target/tomcat</directory>
          <outputDirectory>${project.build.finalName}</outputDirectory>
-         <useDefaultExcludes>true</useDefaultExcludes>
          <includes>
             <include>**/*.sh</include>
          </includes>
          <fileMode>755</fileMode>
+         <directory>target/tomcat</directory>
       </fileSet>
    </fileSets>
 </assembly>
