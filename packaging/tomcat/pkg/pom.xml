@@ -938,7 +938,7 @@
                         </copy>
 
 			<!-- Copy configuration -->
-		        <copy todir="${project.build.directory}/tomcat">
+		        <copy todir="${project.build.directory}/tomcat" overwrite="true">
 		          <fileset dir="${project.basedir}/src/main/resources/tomcat" />
 		        </copy>
 
