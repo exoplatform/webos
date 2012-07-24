@@ -14,7 +14,7 @@
 	def selectedNode = Util.getUIPortal().getSelectedUserNode();
 	
 	JavascriptManager jsManager = pcontext.getJavascriptManager();
-	jsManager.importJavascript("eXo.webui.UIWebOSTabbedDashboard", "/webosadmin/javascript/");
+   def reqJS = jsmanager.require("/webosadmin/javascript/UIWebOSTabbedDashboard");
 %>
 
 <div id="$uicomponent.id" class="UIWebOSTabPaneDashboard ClearFix">

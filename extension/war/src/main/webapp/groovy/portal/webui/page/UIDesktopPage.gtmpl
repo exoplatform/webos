@@ -7,14 +7,10 @@
 	def remoteUser = rcontext.getRemoteUser();
 	
 	JavascriptManager jsmanager = rcontext.getJavascriptManager();
-	
-	jsmanager.importJavascript('eXo.desktop.UIDesktop');
-	jsmanager.importJavascript('eXo.webui.UIPopupSelectCategory');
-	jsmanager.importJavascript('eXo.desktop.UIWindow');
-	jsmanager.importJavascript('eXo.webui.UIRightClickPopupMenu');
 
 	def desktopID = "UIPage-" + uicomponent.id;
-	jsmanager.addJavascript("eXo.webui.UIRightClickPopupMenu.disableContextMenu('" + desktopID + "') ;");
+   def reqJS = jsmanager.require("SHARED/webui-ext")
+	                     .addScripts("eXo.webui.UIRightClickPopupMenu.disableContextMenu('" + desktopID + "') ;");
 	
 	String currentSelectedBackground = uicomponent.getCurrBackgroundURL();
 	String docBase =	rcontext.getRequestContextPath();
@@ -58,7 +54,7 @@
 						if(posX == null) posX = (String)x;
 						if(posY == null) posY = (String)y;
 						
-						jsmanager.addJavascript("eXo.desktop.UIWindow.init('UIWindow-${popupId}', ${posX}, ${posY});");
+						jsmanager.require("SHARED/webos").addScripts("eXo.desktop.UIWindow.init('UIWindow-${popupId}', ${posX}, ${posY});");
 				%>
 				<%	x += 10; y += 20;%>
 				<%}%>
@@ -137,6 +133,6 @@
 </div>
 
 <%
-	jsmanager.addOnLoadJavascript('eXo.desktop.UIDesktop.init');
-	jsmanager.addOnResizeJavascript('eXo.desktop.UIDesktop.fixDesktop');
+	jsmanager.require("SHARED/webos", "webos").addScripts('webos.UIDesktop.init();');
+	jsmanager.require("SHARED/webos", "webos").addScripts('webos.UIDesktop.fixDesktop();');
 %>

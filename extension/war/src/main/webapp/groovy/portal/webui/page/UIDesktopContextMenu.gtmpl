@@ -4,10 +4,8 @@
 
 	def rcontext = _ctx.getRequestContext();
 	JavascriptManager jsmanager = rcontext.getJavascriptManager();
-
-	jsmanager.importJavascript('eXo.desktop.UIDesktop');
-	jsmanager.importJavascript('eXo.webui.UIRightClickPopupMenu');
-	jsmanager.addJavascript("eXo.webui.UIRightClickPopupMenu.init('" + uicomponent.getId() + "');");
+   def reqJS = jsmanager.require("SHARED/webui-ext")
+	                     .addScripts("eXo.webui.UIRightClickPopupMenu.init('" + uicomponent.getId() + "');");
 %>
 <div class="UIRightClickPopupMenu UIDesktopContextMenu" id="$uicomponent.id" onmousedown="event.cancelBubble = true;">
 	<div class="UIContextMenuContainer" >

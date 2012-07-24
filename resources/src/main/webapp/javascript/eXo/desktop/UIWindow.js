@@ -278,3 +278,4 @@ eXo.desktop.UIWindow = {
     ajaxAsyncGetRequest(eXo.env.server.createPortalURL(blockID, "SaveWindowProperties", true, params), true);
   }
 }
+_module.UIWindow = eXo.desktop.UIWindow;

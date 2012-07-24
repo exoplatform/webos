@@ -66,6 +66,9 @@
     <depends>
       <module>webui</module>
     </depends>
+    <depends>
+      <module>jquery</module>
+    </depends>
   </module>
 	
 </gatein-resources>

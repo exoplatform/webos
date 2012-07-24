@@ -1,13 +1,9 @@
 <%
     import java.util.List;
     import org.exoplatform.webos.services.desktop.DesktopBackground;
+    import org.exoplatform.web.application.JavascriptManager;
     
 	def rcontext = _ctx.getRequestContext(); 
-	rcontext.getJavascriptManager().importJavascript('eXo.webui.UIHorizontalTabs'); 
-	rcontext.getJavascriptManager().importJavascript('eXo.portal.UIPortal'); 
-	
-	String onMouseOver = "eXo.webui.UIItemSelector.onOver(this, true)";
-	String onMouseOut = "eXo.webui.UIItemSelector.onOver(this, false)";
     
     List<DesktopBackground> desktopBackgrounds = uicomponent.getDesktopBackgrounds(rcontext);	
 %>

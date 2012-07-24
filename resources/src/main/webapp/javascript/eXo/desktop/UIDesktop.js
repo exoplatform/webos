@@ -259,3 +259,4 @@ eXo.desktop.UIDesktop = {
     pageDesktop.style.background = imageURL;
   }
 }
+_module.UIDesktop = eXo.desktop.UIDesktop;

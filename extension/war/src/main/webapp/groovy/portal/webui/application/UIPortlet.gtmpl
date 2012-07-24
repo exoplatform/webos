@@ -12,7 +12,7 @@
 	int portalMode = uiPortalApp.getModeState(); 
 	
 	JavascriptManager jsmanager = rcontext.getJavascriptManager();
-	jsmanager.importJavascript('eXo.webui.UIPopupSelectCategory');
+   def reqJS = jsmanager.require("SHARED/base");
 
 	WindowState windowState = uicomponent.getCurrentWindowState();
 	boolean isDesktop = "Window".equals(uicomponent.getPortletStyle());

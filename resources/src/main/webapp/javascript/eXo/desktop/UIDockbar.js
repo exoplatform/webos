@@ -218,3 +218,4 @@ eXo.desktop.UIDockbar = {
     dockbar.style.left = ((desktopPage.offsetWidth - dockbar.offsetWidth) / 2) + "px";
   }
 }
+_module.UIDockbar = eXo.desktop.UIDockbar;
