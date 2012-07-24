@@ -491,6 +491,11 @@
     </dependency>
     -->
 
+    <dependency>
+      <groupId>org.gatein.web</groupId>
+      <artifactId>redirect</artifactId>
+    </dependency>
+
     <!-- Provided -->
     <dependency>
       <groupId>javax.inject</groupId>
