@@ -388,10 +388,16 @@
          </dependency>
 
          <!-- GateIn Redirect -->
-         <dependency>
+	 <dependency>
             <groupId>org.gatein.web</groupId>
             <artifactId>redirect</artifactId>
             <version>${org.exoplatform.portal.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.gatein.portal.portlet</groupId>
+            <artifactId>redirect</artifactId>
+            <version>${org.exoplatform.portal.version}</version>
+            <type>war</type>
          </dependency>
 
          <!-- Reflext -->
