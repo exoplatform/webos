@@ -135,5 +135,5 @@
 
 <%
 	jsmanager.require("SHARED/webos", "webos").addScripts('webos.UIDesktop.init();');
-	jsmanager.require("SHARED/webos", "webos").addScripts('webos.UIDesktop.fixDesktop();');
+	jsmanager.addOnResizeJavascript('webos.UIDesktop.fixDesktop');
 %>

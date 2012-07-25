@@ -100,7 +100,7 @@
 
 											if(isDesktop) {
 											  String closeTooltip = _ctx.appRes("UIPortlet.tooltip.Close");
-                                   def removeWindowContent = jsmanager.require("SHARED/webos", "webos").addScripts("webos.removeWindowContent('$uicomponent.id')");
+                                   def removeWindowContent = jsmanager.require("SHARED/webos", "webos").addScripts("webos.UIDesktop.removeWindowContent('$uicomponent.id');");
 										%>
 												<div class="ControlIcon CloseIcon" title="$closeTooltip" onclick="$removeWindowContent"></div>
                                                 <div class="ControlIcon MaximizedIcon" title="$renderMaxi"></div>
