@@ -14,31 +14,31 @@ var uiDesktop = {
 
       desktopPage[0].onmousedown = _module.UIDesktop.showContextMenu;
       
-      var ctxMenu = gj("UIDesktopContextMenu");
-      ctxMenu.find("MenuItem.first a").on("click", function()
+      var ctxMenu = gj("#UIDesktopContextMenu");
+      ctxMenu.find("MenuItem.first a").on("click", function(event)
       {
-      	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
+      	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
       });
       
       ctxMenu.find("MenuItem.second a").on("click", function()
       {
       	$(this).attr('href').val("javascript: _module.UIDesktop.closeAll();");
-      	eXo.webui.UIRightClickPopupMenu.hideContextMenu('$uicomponent.id');
+      	webuiExt.UIRightClickPopupMenu.hideContextMenu('$uicomponent.id');
       });
       
-      ctxMenu.find("MenuItem.third a").on("click", function()
+      ctxMenu.find("MenuItem.third a").on("click", function(event)
       {
-      	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
+      	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
       });
       
-      ctxMenu.find("MenuItem.four a").on("click", function()
+      ctxMenu.find("MenuItem.four a").on("click", function(event)
       {
-      	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
+      	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
       });
          
-      ctxMenu.find("MenuItem.Last a").on("click", function()
+      ctxMenu.find("MenuItem.Last a").on("click", function(event)
       {
-      	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
+      	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
       });      
     }
   },
@@ -49,7 +49,7 @@ var uiDesktop = {
       
       if ("UIPageDesktop" !== targetID)
          return;
-      eXo.webui.UIRightClickPopupMenu.clickRightMouse(evt, this, "UIDesktopContextMenu", "", null, 5);
+      webuiExt.UIRightClickPopupMenu.clickRightMouse(evt, this, "UIDesktopContextMenu", "", null, 5);
    },
 
   closeAll: function()

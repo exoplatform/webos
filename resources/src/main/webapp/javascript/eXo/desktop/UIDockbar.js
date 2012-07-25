@@ -22,7 +22,7 @@ var uiDockbar = {
 
       icon.mouseover(function()
       {
-        eXo.webui.UIRightClickPopupMenu.hideContextMenu("DockbarContextMenu");
+        webuiExt.UIRightClickPopupMenu.hideContextMenu("DockbarContextMenu");
         var tooltip = icon.next();
         var x = eXo.core.Browser.findPosXInContainer(icon[0], dockbar[0]);
         tooltip.css({"display" : "block", "top" : -tooltip[0].offsetHeight, "left" : x});
@@ -57,12 +57,12 @@ var uiDockbar = {
     	_module.UIDockbar.startDockBarEvt(event);
     });
     
-    dockbar.find("MenuItem a.ItemIcon").on("click", function(event)
+    dockbar.find(".UIRightClickPopupMenu .MenuItem a.CloseDockBarIcon").on("click", function(event)
     {
-    	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
+    	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
     });
     
-    dockbar.find("MenuItem.Last a.ItemIcon").on("click", function(event)
+    dockbar.find(".UIRightClickPopupMenu .MenuItem a.QuitDockBarIcon").on("click", function(event)
     {
     	_module.UIDesktop.removeWindowContent(event, this);
     });
@@ -80,7 +80,7 @@ var uiDockbar = {
   {
     this.onmouseover = null;
     document.oncontextmenu = document.body.oncontextmenu = function() {return true};
-    eXo.webui.UIRightClickPopupMenu.hideContextMenu("DockbarContextMenu");
+    webuiExt.UIRightClickPopupMenu.hideContextMenu("DockbarContextMenu");
     _module.UIDockbar.reset();
   },
 
