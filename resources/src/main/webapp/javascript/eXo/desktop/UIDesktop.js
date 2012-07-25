@@ -1,20 +1,45 @@
-eXo.desktop = {};
-
-eXo.desktop.UIDesktop = {
+var uiDesktop = {
 
   init : function()
   {
     var desktopPage = gj("#UIPageDesktop");
     if (desktopPage.length > 0)
     {
-      eXo.desktop.UIDesktop.fixDesktop();
-      eXo.desktop.UIDockbar.init();
+      _module.UIDesktop.fixDesktop();
+      _module.UIDockbar.init();
       desktopPage.children("div.UIWindow").each(function()
       {
-        eXo.desktop.UIDesktop.backupWindowProperties(this);
+        _module.UIDesktop.backupWindowProperties(this);
       });
 
-      desktopPage[0].onmousedown = eXo.desktop.UIDesktop.showContextMenu;
+      desktopPage[0].onmousedown = _module.UIDesktop.showContextMenu;
+      
+      var ctxMenu = gj("UIDesktopContextMenu");
+      ctxMenu.find("MenuItem.first a").on("click", function()
+      {
+      	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
+      });
+      
+      ctxMenu.find("MenuItem.second a").on("click", function()
+      {
+      	$(this).attr('href').val("javascript: _module.UIDesktop.closeAll();");
+      	eXo.webui.UIRightClickPopupMenu.hideContextMenu('$uicomponent.id');
+      });
+      
+      ctxMenu.find("MenuItem.third a").on("click", function()
+      {
+      	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
+      });
+      
+      ctxMenu.find("MenuItem.four a").on("click", function()
+      {
+      	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
+      });
+         
+      ctxMenu.find("MenuItem.Last a").on("click", function()
+      {
+      	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
+      });      
     }
   },
 
@@ -34,7 +59,7 @@ eXo.desktop.UIDesktop = {
       var appWindow = gj(this);
       if (appWindow.css("display") == "block")
       {
-        eXo.desktop.UIDesktop.removeWindowContent(appWindow.attr("id").replace("UIWindow-", ""));
+        _module.UIDesktop.removeWindowContent(appWindow.attr("id").replace("UIWindow-", ""));
         appWindow.css("display", "none");
       }
     });
@@ -47,7 +72,7 @@ eXo.desktop.UIDesktop = {
     desktopPage.css("height", h);
 
     window.scroll(0, 0);
-    setTimeout("eXo.desktop.UIDockbar.resizeDockBar()", 0);
+    setTimeout("_module.UIDockbar.resizeDockBar()", 0);
   },
 
   resetZIndex : function(windowObject)
@@ -83,8 +108,8 @@ eXo.desktop.UIDesktop = {
         maxZIndex = z;
       }
     });
-    eXo.desktop.UIWindow.maxIndex = maxZIndex + 1;
-    jqObj.css("z-index", eXo.desktop.UIWindow.maxIndex);
+    _module.UIWindow.maxIndex = maxZIndex + 1;
+    jqObj.css("z-index", _module.UIWindow.maxIndex);
   },
 
   isMaxZIndex : function(object)
@@ -107,9 +132,9 @@ eXo.desktop.UIDesktop = {
   {
     var desktopPage = gj("#UIPageDesktop");
 
-    if(!eXo.desktop.UIDesktop.isMaxZIndex(popupWindow))
+    if(!_module.UIDesktop.isMaxZIndex(popupWindow))
     {
-      eXo.desktop.UIDesktop.resetZIndex(popupWindow);
+      _module.UIDesktop.resetZIndex(popupWindow);
     }
 
     if (gj(popupWindow).find("div.PORTLET-FRAGMENT").children("div").length == 0)
@@ -122,7 +147,7 @@ eXo.desktop.UIDesktop = {
     }
 
     eXo.animation.ImplodeExplode.explode(popupWindow, dockIcon, desktopPage, 10);
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "SHOW");
+    _module.UIWindow.saveWindowProperties(popupWindow, "SHOW");
     popupWindow.isShowed = true;
 
     gj(dockIcon).addClass("ShowIcon");
@@ -131,7 +156,7 @@ eXo.desktop.UIDesktop = {
   hideWindow : function(popupWindow, dockIcon)
   {
     eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, gj("#UIPageDesktop"), 10);
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "HIDE");
+    _module.UIWindow.saveWindowProperties(popupWindow, "HIDE");
     gj(dockIcon).addClass("ShowIcon");
   },
 
@@ -141,7 +166,7 @@ eXo.desktop.UIDesktop = {
     {
       eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, gj("#UIPageDesktop"), 10);
     }
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "QUIT");
+    _module.UIWindow.saveWindowProperties(popupWindow, "QUIT");
     popupWindow.isShowed = false;
 
     gj(dockIcon).removeClass("ShowIcon");
@@ -153,11 +178,11 @@ eXo.desktop.UIDesktop = {
 
     if (popupWindow.css("display") == "block")
     {
-      eXo.desktop.UIDesktop.hideWindow(popupWindow[0], dockIcon);
+      _module.UIDesktop.hideWindow(popupWindow[0], dockIcon);
     }
     else
     {
-      eXo.desktop.UIDesktop.showWindow(popupWindow[0], dockIcon);
+      _module.UIDesktop.showWindow(popupWindow[0], dockIcon);
     }
   },
 
@@ -175,8 +200,8 @@ eXo.desktop.UIDesktop = {
 
   backupWindowProperties : function(uiWindow)
   {
-    uiWindow.originalX = eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT());
-    uiWindow.originalY = eXo.desktop.UIDesktop.findPosYInDesktop(uiWindow);
+    uiWindow.originalX = _module.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT());
+    uiWindow.originalY = _module.UIDesktop.findPosYInDesktop(uiWindow);
     uiWindow.originalW = uiWindow.offsetWidth;
     uiWindow.originalH = uiWindow.offsetHeight;
     uiWindow.style.visibility = "visible";
@@ -199,8 +224,8 @@ eXo.desktop.UIDesktop = {
     if (result == "OK")
     {
       var appId = uri.substr(uri.lastIndexOf("=") + 1);
-      eXo.desktop.UIDesktop.removeWindow("UIWindow-" + appId);
-      eXo.desktop.UIDockbar.removeDockbarIcon("DockItem" + appId);
+      _module.UIDesktop.removeWindow("UIWindow-" + appId);
+      _module.UIDockbar.removeDockbarIcon("DockItem" + appId);
     }
   },
 
@@ -230,7 +255,7 @@ eXo.desktop.UIDesktop = {
       var portletFrag = uiWindow.find("div.PORTLET-FRAGMENT");
       portletFrag.children().remove();
       portletFrag.html("<span></span>");
-      eXo.desktop.UIDesktop.quitWindow(uiWindow[0], gj("#DockItem" + idWindow)[0]);
+      _module.UIDesktop.quitWindow(uiWindow[0], gj("#DockItem" + idWindow)[0]);
     }
   },
 
@@ -259,4 +284,4 @@ eXo.desktop.UIDesktop = {
     pageDesktop.style.background = imageURL;
   }
 }
-_module.UIDesktop = eXo.desktop.UIDesktop;
+_module.UIDesktop = uiDesktop;

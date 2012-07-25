@@ -231,8 +231,8 @@ public final class UIDesktopPage extends UIPage
       {
          backgroundURL = "'" + desktopBackground.getImageURL() + "'";
       }
-      JavascriptManager jsManager = ((WebuiRequestContext)WebuiRequestContext.getCurrentInstance()).getJavascriptManager();
-      jsManager.addOnLoadJavascript("eXo.desktop.UIDesktop.setDesktopBackground(" + backgroundURL + ")");
+      JavascriptManager jsmanager = ((WebuiRequestContext)WebuiRequestContext.getCurrentInstance()).getJavascriptManager();
+      jsmanager.require("SHARED/webos", "webos").addScripts("webos.UIDesktop.setDesktopBackground(" + backgroundURL + ")");
    }
 
    public String getCurrBackgroundLabel() throws Exception

@@ -1,4 +1,4 @@
-eXo.desktop.UIWindow = {
+var uiWindow = {
 
   maxIndex : 0,
 
@@ -48,20 +48,20 @@ eXo.desktop.UIWindow = {
 
     windowBar.find("div.MinimizedIcon").mousedown(function()
     {
-      eXo.desktop.UIWindow.minimizeWindow(uiWindow);
+      _module.UIWindow.minimizeWindow(uiWindow);
       return false;
     });
 
     var toggleIcon = windowBar.find("div.MaximizedIcon, div.RestoreIcon");
     toggleIcon.mousedown(function()
     {
-      eXo.desktop.UIWindow.toggleMaximize(uiWindow[0], toggleIcon);
-      return false;
+    	_module.UIWindow.toggleMaximize(uiWindow[0], toggleIcon);
+    	return false;
     });
 
     windowBar.dblclick(function()
     {
-      eXo.desktop.UIWindow.toggleMaximize(uiWindow[0], toggleIcon);
+      _module.UIWindow.toggleMaximize(uiWindow[0], toggleIcon);
       return false;
     });
 
@@ -70,7 +70,7 @@ eXo.desktop.UIWindow = {
       var resizeArea = uiWindow.children("div.BottomDecoratorLeft").find("div.ResizeArea");
       resizeArea.mousedown(function(e)
       {
-        eXo.desktop.UIWindow.startResizeProcess(e, uiWindow);
+        _module.UIWindow.startResizeProcess(e, uiWindow);
       });
     }
 
@@ -120,7 +120,7 @@ eXo.desktop.UIWindow = {
 
     appWindow.onDragEnd = function(x, y, clientX, clientY)
     {
-      eXo.desktop.UIWindow.saveWindowProperties(appWindow);
+      _module.UIWindow.saveWindowProperties(appWindow);
     };
 
     appWindow.endDND = function()
@@ -131,21 +131,21 @@ eXo.desktop.UIWindow = {
 
   mousedownOnPopup : function(evt)
   {
-    var isMaxZIndex = eXo.desktop.UIDesktop.isMaxZIndex(this);
+    var isMaxZIndex = _module.UIDesktop.isMaxZIndex(this);
     if (!isMaxZIndex)
     {
-      eXo.desktop.UIDesktop.resetZIndex(this);
-      eXo.desktop.UIWindow.saveWindowProperties(this);
+      _module.UIDesktop.resetZIndex(this);
+      _module.UIWindow.saveWindowProperties(this);
     }
   },
 
   toggleMaximize : function(uiWindow, icon)
   {
-  	eXo.desktop.UIDesktop.resetZIndex(uiWindow);
+  	_module.UIDesktop.resetZIndex(uiWindow);
   	if (icon.hasClass("MaximizedIcon")) {
-  		eXo.desktop.UIWindow.maximizeWindow(uiWindow, icon);    		
+  		_module.UIWindow.maximizeWindow(uiWindow, icon);    		
   	} else {
-  		eXo.desktop.UIWindow.restoreWindow(uiWindow, icon);
+  		_module.UIWindow.restoreWindow(uiWindow, icon);
   	} 
   },
   
@@ -168,7 +168,7 @@ eXo.desktop.UIWindow = {
     popupWindow.css("top", originY).css("width", originW).css("height", null);
     popupWindow.find("div.UIResizableBlock").css("height", originH);
     restoreIcon.attr("class", "ControlIcon MaximizedIcon");
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
+    _module.UIWindow.saveWindowProperties(popupWindow[0]);
     popupWindow[0].maximized = false;
   },
 
@@ -176,8 +176,8 @@ eXo.desktop.UIWindow = {
   {
     popupWindow = gj(popupWindow);
     var resizableBlock = popupWindow.find("div.UIResizableBlock");
-    popupWindow.data("originX",  eXo.desktop.UIDesktop.findPosXInDesktop(popupWindow[0], eXo.core.I18n.isRT()));
-    popupWindow.data("originY", eXo.desktop.UIDesktop.findPosYInDesktop(popupWindow[0]));
+    popupWindow.data("originX",  _module.UIDesktop.findPosXInDesktop(popupWindow[0], eXo.core.I18n.isRT()));
+    popupWindow.data("originY", _module.UIDesktop.findPosYInDesktop(popupWindow[0]));
     popupWindow.data("originW", popupWindow.width());
     popupWindow.data("originH", resizableBlock.height());    
     
@@ -194,7 +194,7 @@ eXo.desktop.UIWindow = {
     var h = resizableBlock[0].clientHeight + gj("#UIPageDesktop")[0].offsetHeight - popupWindow[0].clientHeight;
     resizableBlock.css("height", h);
 
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
+    _module.UIWindow.saveWindowProperties(popupWindow[0]);
     popupWindow[0].maximized = true;
   },
 
@@ -203,7 +203,7 @@ eXo.desktop.UIWindow = {
     var id = popupWindow.attr("id").replace(/^UIWindow-/, "");
     eXo.animation.ImplodeExplode.implode(popupWindow[0], popupWindow[0], gj("#UIPageDesktop"), 10);
     gj("#DockItem" + id).addClass("ShowIcon");
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0], "HIDE");
+    _module.UIWindow.saveWindowProperties(popupWindow[0], "HIDE");
   },
 
   startResizeProcess : function(e, portletWindow)
@@ -219,13 +219,13 @@ eXo.desktop.UIWindow = {
     var desktopPage = gj("#UIPageDesktop");
     desktopPage.mousemove(function(event)
     {
-      eXo.desktop.UIWindow.resizeWindow(event, portletWindow, originX, originY, originW, originH);
+      _module.UIWindow.resizeWindow(event, portletWindow, originX, originY, originW, originH);
     });
 
     desktopPage.mouseup(function(event)
     {
       desktopPage.unbind("mousemove").unbind("mouseup");
-      eXo.desktop.UIWindow.endResizeProcess(event, portletWindow);
+      _module.UIWindow.endResizeProcess(event, portletWindow);
     });
   },
 
@@ -241,7 +241,7 @@ eXo.desktop.UIWindow = {
   endResizeProcess : function(e, popupWindow)
   {
     e.stopPropagation();
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
+    _module.UIWindow.saveWindowProperties(popupWindow[0]);
   },
 
   saveWindowProperties : function(object, appStatus)
@@ -278,4 +278,4 @@ eXo.desktop.UIWindow = {
     ajaxAsyncGetRequest(eXo.env.server.createPortalURL(blockID, "SaveWindowProperties", true, params), true);
   }
 }
-_module.UIWindow = eXo.desktop.UIWindow;
+_module.UIWindow = uiWindow;
