@@ -52,17 +52,17 @@ var uiDockbar = {
 
     setTimeout(function() {dockbar.css("visibility", "visible")}, 50);
     
-    dockbar.on("mouseover", function()
+    dockbar.on("mouseover", function(event)
     {
     	_module.UIDockbar.startDockBarEvt(event);
     });
     
-    dockbar.find("MenuItem a.ItemIcon").on("click", function()
+    dockbar.find("MenuItem a.ItemIcon").on("click", function(event)
     {
     	return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);
     });
     
-    dockbar.find("MenuItem.Last a.ItemIcon").on("click", function()
+    dockbar.find("MenuItem.Last a.ItemIcon").on("click", function(event)
     {
     	_module.UIDesktop.removeWindowContent(event, this);
     });

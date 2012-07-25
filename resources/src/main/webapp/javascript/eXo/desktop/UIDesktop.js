@@ -72,7 +72,7 @@ var uiDesktop = {
     desktopPage.css("height", h);
 
     window.scroll(0, 0);
-    setTimeout("_module.UIDockbar.resizeDockBar()", 0);
+    setTimeout(function() {_module.UIDockbar.resizeDockBar();}, 0);
   },
 
   resetZIndex : function(windowObject)
