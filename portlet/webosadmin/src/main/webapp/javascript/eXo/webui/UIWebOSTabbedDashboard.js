@@ -17,122 +17,128 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-eXo.webui.UIWebOSTabbedDashboard = {
+function initWebOSTabbedDashboardPortlet(id)
+{
+	var inRequest = false;
+	
+	require(['SHARED/jquery'], function(gj) {
+		
+		var tab = gj("#" + id);
+    tab.find(".AddDashboard").on("click", function() {
+      showAddTabInput(this); 
+    });
 
-  inRequest : false,
-
-  renameTabLabel : function(input)
-  {
-    var newLabel = input.val();
-    if (newLabel && newLabel.length > 0)
+    tab.on("dblclick", ".SelectedTab > span", function() {
+      var span = gj(this);
+      showEditLabelInput(this, span.attr("id"), span.text()); 
+    });
+    
+		function renameTabLabel(input)
+		{
+			var newLabel = input.val();
+			if (newLabel && newLabel.length > 0)
+			{
+				var portletID = input.closest(".PORTLET-FRAGMENT").parent().attr("id");
+				
+				var href = eXo.env.server.portalBaseURL + "?portal:componentId=" + portletID;
+				href += "&portal:type=action";
+				href += "&portal:isSecure=false";
+				href += "&uicomponent=UIWebOSTabPaneDashboard";
+				href += "&op=RenameTabLabel";
+				href += "&objectId=" + input.attr("id");
+				href += "&newTabLabel=" + encodeURIComponent(newLabel);
+				window.location = href;
+			}
+		}
+		
+		function showEditLabelInput(target, nodeName, currentLabel)
+		{
+			var jqObj = gj(target);
+			var input = gj("<input>").attr({type : "text", id : nodeName, name : currentLabel, value : currentLabel, maxLength : 50});
+			input.css("border", "1px solid #b7b7b7").css("width", (target.offsetWidth - 2) + "px");
+			
+			jqObj = jqObj.replaceWith(input);
+			input.blur(function()
+			{
+				gj(this).replaceWith(jqObj);
+			});
+			
+			input.keypress(function(e)
+			{
+				var keyNum = e.keyCode ? e.keyCode : e.which;
+				if (keyNum == 13)
+				{
+					renameTabLabel(gj(this));
+				}
+				else if (keyNum == 27)
+				{
+					gj(this).replaceWith(jqObj);
+				}
+			});
+			
+			input.closest(".UITab").addClass("EditTab");
+			input.focus();
+		}
+		
+		function createTab(input)
+		{
+			if (this.inRequest)
+			{
+				return;
+			}
+			else
+			{
+				var label = input.val();
+				if (label && label.length > 0)
+				{
+					var href = eXo.env.server.portalBaseURL + "?portal:componentId=" + input.attr("id");
+					href += "&portal:type=action";
+					href += "&portal:isSecure=false";
+					href += "&uicomponent=UIWebOSTabPaneDashboard";
+					href += "&op=AddDashboard";
+					href += "&objectId=" + encodeURIComponent(label);
+					this.InRequest = true;
+					window.location = href;
+				}
+			}
+		}
+		
+		function showAddTabInput(addButton)
     {
-      var portletID = input.closest(".PORTLET-FRAGMENT").parent().attr("id");
+      var jqAddButton = gj(addButton);
+      var tabs = jqAddButton.parent().children("div.UITab");
 
-      var href = eXo.env.server.portalBaseURL + "?portal:componentId=" + portletID;
-      href += "&portal:type=action";
-      href += "&portal:isSecure=false";
-      href += "&uicomponent=UIWebOSTabPaneDashboard";
-      href += "&op=RenameTabLabel";
-      href += "&objectId=" + input.attr("id");
-      href += "&newTabLabel=" + encodeURIComponent(newLabel);
-      window.location = href;
+      var newTab = jqAddButton.prevAll("div.SelectedTab").eq(0).clone();
+      newTab.insertBefore(jqAddButton);
+
+      var portletID = jqAddButton.closest("div.PORTLET-FRAGMENT").parent().attr("id");
+
+      var input = gj("<input>").attr({type : "text", id : portletID , maxlength : 50, value : "Tab_" + tabs.length});
+      input.css({"border" : "1px solid #b7b7b7", "width" : "80px"});
+
+      newTab.find("span").eq(0).replaceWith(input);
+      input.next("a").attr("href", "#");
+
+      input.blur(function()
+      {
+        gj(this).closest(".UITab").remove();
+      });
+
+      input.keypress(function(e)
+      {
+        var keyNum = e.keyCode ? e.keyCode : e.which;
+        if (keyNum == 13)
+        {
+          createTab(gj(this));
+        }
+        else if (keyNum == 27)
+        {
+          gj(this).closest(".UITab").remove();
+        }
+      });
+
+      input.closest(".UITab").addClass("EditTab");
+      input.focus();
     }
-  },
-
-  showEditLabelInput : function(target, nodeName, currentLabel)
-  {
-    var jqObj = gj(target);
-    var input = gj("<input>").attr({type : "text", id : nodeName, name : currentLabel, value : currentLabel, maxLength : 50});
-    input.css("border", "1px solid #b7b7b7").css("width", (target.offsetWidth - 2) + "px");
-
-    jqObj = jqObj.replaceWith(input);
-    input.blur(function()
-    {
-      gj(this).replaceWith(jqObj);
-    });
-
-    input.keypress(function(e)
-    {
-      var keyNum = e.keyCode ? e.keyCode : e.which;
-      if (keyNum == 13)
-      {
-        eXo.webui.UIWebOSTabbedDashboard.renameTabLabel(gj(this));
-      }
-      else if (keyNum == 27)
-      {
-        gj(this).replaceWith(jqObj);
-      }
-    });
-
-    input.closest(".MiddleTab").attr("class", "MiddleTab EditTab");
-    input.focus();
-  },
-
-  createTab : function(input)
-  {
-    if (this.inRequest)
-    {
-      return;
-    }
-    else
-    {
-      var label = input.val();
-      if (label && label.length > 0)
-      {
-        var href = eXo.env.server.portalBaseURL + "?portal:componentId=" + input.attr("id");
-        href += "&portal:type=action";
-        href += "&portal:isSecure=false";
-        href += "&uicomponent=UIWebOSTabPaneDashboard";
-        href += "&op=AddDashboard";
-        href += "&objectId=" + encodeURIComponent(label);
-        this.InRequest = true;
-        window.location = href;
-      }
-    }
-  },
-
-  showAddTabInput : function(addButton)
-  {
-    var jqAddButton = gj(addButton);
-    var tabs = jqAddButton.parent().children("div.UITab.GrayTabStyle");
-    var newTab;
-    tabs.each(function()
-    {
-      if (gj(this).children(".SelectedTab").length > 0)
-      {
-        newTab = gj(this).clone();
-        return false;
-      }
-    });
-
-    newTab.insertBefore(jqAddButton);
-
-    var portletID = jqAddButton.closest("div.PORTLET-FRAGMENT").parent().attr("id");
-    var input = gj("<input>").attr({type : "text", id : portletID , maxlength : 50, value : "Tab_" + tabs.length});
-    input.css({"border" : "1px solid #b7b7b7", "width" : "80px"});
-
-    newTab.find("span").eq(0).replaceWith(input);
-    input.next("a").attr("href", "#");
-
-    input.blur(function()
-    {
-      gj(this).closest(".UITab.GrayTabStyle").remove();
-    });
-
-    input.keypress(function(e)
-    {
-      var keyNum = e.keyCode ? e.keyCode : e.which;
-      if (keyNum == 13)
-      {
-        eXo.webui.UIWebOSTabbedDashboard.createTab(gj(this));
-      }
-      else if (keyNum == 27)
-      {
-        gj(this).closest(".UITab.GrayTabStyle").remove();
-      }
-    });
-
-    input.closest(".MiddleTab").attr("class", "MiddleTab EditTab");
-    input.focus();
-  }
+	});
 }
