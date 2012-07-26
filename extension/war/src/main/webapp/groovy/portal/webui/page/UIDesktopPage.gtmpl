@@ -54,11 +54,7 @@
 						if(posX == null) posX = (String)x;
 						if(posY == null) posY = (String)y;
 						
-						jsmanager.require("SHARED/webos", "webos").addScripts("webos.UIWindow.init('UIWindow-${popupId}', ${posX}, ${posY});");
-                  
-                  jsmanager.require("SHARED/jquery", "gj").require("SHARED/webos", "webos")
-                           .addScripts("gj('#UIDockBar .UIRightClickPopupMenu .CloseDockBarIcon').on('click', function() {webos.UIDesktop.removeApp('${uicomponent.url("RemoveChild")}')});");
-            
+						jsmanager.require("SHARED/webos", "webos").addScripts("webos.UIWindow.init('UIWindow-${popupId}', ${posX}, ${posY});");                                                
 				%>
 				<%	x += 10; y += 20;%>
 				<%}%>
@@ -70,7 +66,7 @@
         				<div class="UIContextMenuContainer" >
         					<div class="UIRightPopupMenuContainer" >
         						<div class="MenuItem"> 	
-        							<a class="ItemIcon CloseDockBarIcon">
+        							<a class="ItemIcon CloseDockBarIcon" href="<%=uicomponent.url('RemoveChild')%>">
         								<%=_ctx.appRes("UIPageDesktop.action.Close")%>
         							</a>
         						</div>

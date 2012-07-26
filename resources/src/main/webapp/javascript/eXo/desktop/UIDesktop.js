@@ -15,10 +15,7 @@ var uiDesktop = {
       desktopPage[0].onmousedown = _module.UIDesktop.showContextMenu;
       
       var ctxMenu = gj("#UIDesktopContextMenu");
-      ctxMenu.find("MenuItem.first a").on("click", function(event)
-      {
-      	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
-      });
+      ctxMenu.find("MenuItem.first a").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt);
       
       ctxMenu.find("MenuItem.second a").on("click", function()
       {
@@ -26,20 +23,11 @@ var uiDesktop = {
       	webuiExt.UIRightClickPopupMenu.hideContextMenu('$uicomponent.id');
       });
       
-      ctxMenu.find("MenuItem.third a").on("click", function(event)
-      {
-      	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
-      });
+      ctxMenu.find("MenuItem.third a").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt);
       
-      ctxMenu.find("MenuItem.four a").on("click", function(event)
-      {
-      	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
-      });
+      ctxMenu.find("MenuItem.four a").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt);
          
-      ctxMenu.find("MenuItem.Last a").on("click", function(event)
-      {
-      	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
-      });      
+      ctxMenu.find("MenuItem.Last a").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt);      
     }
   },
 

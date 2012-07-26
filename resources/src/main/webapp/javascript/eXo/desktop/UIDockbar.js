@@ -52,15 +52,11 @@ var uiDockbar = {
 
     setTimeout(function() {dockbar.css("visibility", "visible")}, 50);
     
-    dockbar.on("mouseover", function(event)
-    {
-    	_module.UIDockbar.startDockBarEvt(event);
-    });
+    dockbar.on("mouseover", _module.UIDockbar.startDockBarEvt);
     
-    dockbar.find(".UIRightClickPopupMenu .MenuItem a.CloseDockBarIcon").on("click", function(event)
-    {
-    	return webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt(event);
-    });
+    var closeDockBar = dockbar.find(".UIRightClickPopupMenu .MenuItem a.CloseDockBarIcon"); 
+    closeDockBar.attr("href", "javascript:require('SHARED/webos').UIDesktop.removeApp('" + closeDockBar.attr("href") + "')");
+    closeDockBar.on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt);
     
     dockbar.find(".UIRightClickPopupMenu .MenuItem a.QuitDockBarIcon").on("click", function(event)
     {
@@ -70,10 +66,10 @@ var uiDockbar = {
 
   startDockBarEvt : function(evt)
   {
-    evt.cancelBubble = true;
     document.oncontextmenu = document.body.oncontextmenu = function() {return false};
     var uiPageDesktop = document.getElementById("UIPageDesktop");
     uiPageDesktop.onmouseover = _module.UIDockbar.endDockBarEvt;
+    return false;
   },
 
   endDockBarEvt : function()
