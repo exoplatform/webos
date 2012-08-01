@@ -16,7 +16,7 @@
 				</a>
 			</div>
 		  <div class="MenuItem">
-				<a href="#" class="ItemIcon CloneNode16x16Icon">
+				<a href="#" class="ItemIcon CloneNode16x16Icon CloseAll">
 					<%=_ctx.appRes(uicomponent.getId() + ".event.CloseAll") %>
 				</a>
 			</div>
@@ -32,7 +32,7 @@
 					<%=_ctx.appRes(uicomponent.getId() + ".event.EditCurrentPage") %>
 				</a>
 			</div>
-			<div class="MenuItem Last">
+			<div class="MenuItem">
 				<a exo:attr="ChangeBackground" href="<%=uicomponent.event('ChangeBackground');%>"
 					  class="ItemIcon CloneNode16x16Icon" >
 					<%=_ctx.appRes(uicomponent.getId() + ".event.ChangeBackground") %>

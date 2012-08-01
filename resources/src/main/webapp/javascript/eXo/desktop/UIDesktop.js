@@ -15,11 +15,11 @@ var uiDesktop = {
       desktopPage[0].onmousedown = _module.UIDesktop.showContextMenu;
       
       var ctxMenu = gj("#UIDesktopContextMenu");
-      ctxMenu.find("div.MenuItem a").each(function(index) {
-      	if (index == 1) {
-      		gj(this).attr("href", "javascript:require('SHARED/webos').UIDesktop.closeAll();");
-      	}
-      });
+      ctxMenu.find(".MenuItem a").filter(":not(.CloseAll)").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt)
+      ctxMenu.find(".MenuItem a.CloseAll").on("click", function() {
+		  _module.UIDesktop.closeAll();
+		  webuiExt.UIRightClickPopupMenu.hideContextMenu(ctxMenu.attr("id"));
+	  });
     }
   },
 
