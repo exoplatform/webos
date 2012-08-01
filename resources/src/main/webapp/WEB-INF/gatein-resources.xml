@@ -70,6 +70,7 @@
       <module>webui-ext</module>
     </depends>
     <depends>
+    	<as>gj</as>
       <module>jquery</module>
     </depends>
   </module>

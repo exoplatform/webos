@@ -232,7 +232,7 @@ public final class UIDesktopPage extends UIPage
          backgroundURL = "'" + desktopBackground.getImageURL() + "'";
       }
       JavascriptManager jsmanager = ((WebuiRequestContext)WebuiRequestContext.getCurrentInstance()).getJavascriptManager();
-      jsmanager.require("SHARED/webos", "webos").addScripts("webos.UIDesktop.setDesktopBackground(" + backgroundURL + ")");
+      jsmanager.require("SHARED/webos", "webos").addScripts("webos.UIDesktop.setDesktopBackground(" + backgroundURL + ");");
    }
 
    public String getCurrBackgroundLabel() throws Exception

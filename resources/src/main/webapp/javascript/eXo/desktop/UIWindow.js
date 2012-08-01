@@ -73,8 +73,6 @@ var uiWindow = {
         _module.UIWindow.startResizeProcess(e, uiWindow);
       });
     }
-
-    popup.resizeCallback = new eXo.core.HashMap();
   },
 
   initDND : function(dragBar, appWindow)
