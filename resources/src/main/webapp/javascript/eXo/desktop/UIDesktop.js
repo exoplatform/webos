@@ -15,19 +15,11 @@ var uiDesktop = {
       desktopPage[0].onmousedown = _module.UIDesktop.showContextMenu;
       
       var ctxMenu = gj("#UIDesktopContextMenu");
-      ctxMenu.find("MenuItem.first a").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt);
-      
-      ctxMenu.find("MenuItem.second a").on("click", function()
-      {
-      	$(this).attr('href').val("javascript: _module.UIDesktop.closeAll();");
-      	webuiExt.UIRightClickPopupMenu.hideContextMenu('$uicomponent.id');
+      ctxMenu.find("div.MenuItem a").each(function(index) {
+      	if (index == 1) {
+      		gj(this).attr("href", "javascript:require('SHARED/webos').UIDesktop.closeAll();");
+      	}
       });
-      
-      ctxMenu.find("MenuItem.third a").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt);
-      
-      ctxMenu.find("MenuItem.four a").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt);
-         
-      ctxMenu.find("MenuItem.Last a").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt);      
     }
   },
 
