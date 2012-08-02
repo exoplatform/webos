@@ -68,6 +68,8 @@ public class UIDesktopPageForm extends UIFormTabPane {
     	    //Hide pop up
           UIMaskWorkspace uiMaskWorkspace = uiDesktopPageForm.getAncestorOfType(UIMaskWorkspace.class);
           uiMaskWorkspace.setUIComponent(null);
+          uiMaskWorkspace.setWindowSize(-1, -1);
+          event.getRequestContext().getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIMaskWorkspace.hide('" + uiMaskWorkspace.getId() + "');");
           pcontext.addUIComponentToUpdateByAjax(uiMaskWorkspace);
           
           UIPage uiPage = uiDesktopPageForm.getUIDesktopPage();
