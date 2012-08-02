@@ -222,7 +222,7 @@
     </plugins>
   </build>
   <modules>
-    <module>webosResources</module>
+    <module>resources</module>
     <module>webui</module>
     <module>component/web</module>
     <module>extension</module>
@@ -905,7 +905,7 @@
          </dependency>
          <dependency>
             <groupId>org.exoplatform.webos</groupId>
-            <artifactId>webos-webosResources</artifactId>
+            <artifactId>webos-resources</artifactId>
             <version>${project.version}</version>
             <type>war</type>
          </dependency>

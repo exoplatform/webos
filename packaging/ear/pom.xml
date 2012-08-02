@@ -41,7 +41,7 @@
       </dependency>
       <dependency>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>webos-webosResources</artifactId>
+         <artifactId>webos-resources</artifactId>
          <version>${project.version}</version>
          <type>war</type>
       </dependency>
@@ -86,7 +86,7 @@
                   </webModule>
                   <webModule>
                      <groupId>org.exoplatform.webos</groupId>
-                     <artifactId>webos-webosResources</artifactId>
+                     <artifactId>webos-resources</artifactId>
                      <contextRoot>webosResources</contextRoot>
                      <bundleFileName>webosResources.war</bundleFileName>
                   </webModule>

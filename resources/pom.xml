@@ -24,7 +24,7 @@
     <artifactId>webos</artifactId>
     <version>4.0.0.Alpha1-SNAPSHOT</version>
   </parent>
-  <artifactId>webos-webosResources</artifactId>
+  <artifactId>webos-resources</artifactId>
   <packaging>war</packaging>
   <name>eXo WebOS Resources</name>
   <build>

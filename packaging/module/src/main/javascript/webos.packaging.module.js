@@ -16,7 +16,7 @@ function getModule(params) {
                    
   module.web = {}
   module.web.webosResources = 
-  	new Project("org.exoplatform.webos", "webos-webosResources", "war", module.version) ;
+  	new Project("org.exoplatform.webos", "webos-resources", "war", module.version) ;
   module.web.webosResources.deployName="webosResources";
   
   module.web.extension = {};

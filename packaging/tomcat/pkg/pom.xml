@@ -868,7 +868,7 @@
       <dependency>
          <?rename webosResources.war?>
          <groupId>org.exoplatform.webos</groupId>
-         <artifactId>webos-webosResources</artifactId>
+         <artifactId>webos-resources</artifactId>
          <type>war</type>
       </dependency>
       <dependency>
