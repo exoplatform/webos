@@ -46,15 +46,17 @@ eXo.desktop.UIWindow = {
       alert("Error In DND: " + err);
     }
 
-    windowBar.find("div.MinimizedIcon").mouseup(function()
+    windowBar.find("div.MinimizedIcon").mousedown(function()
     {
       eXo.desktop.UIWindow.minimizeWindow(uiWindow);
+      return false;
     });
 
     var maximIcon = windowBar.find("div.MaximizedIcon");
-    maximIcon.click(function()
+    maximIcon.mousedown(function()
     {
       eXo.desktop.UIWindow.maximizeWindow(uiWindow, maximIcon);
+      return false;
     });
 
     windowBar.dblclick(function()
@@ -147,9 +149,10 @@ eXo.desktop.UIWindow = {
     eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
     popupWindow[0].maximized = false;
 
-    restoreIcon.unbind("click").click(function()
+    restoreIcon.unbind("mousedown").mousedown(function()
     {
       eXo.desktop.UIWindow.maximizeWindow(popupWindow, restoreIcon);
+      return false;
     });
     popupWindow.find("div.WindowBarLeft").unbind("dblclick").dblclick(function()
     {
@@ -181,9 +184,10 @@ eXo.desktop.UIWindow = {
     popupWindow[0].maximized = true;
 
     maximIcon.attr("class", "ControlIcon RestoreIcon");
-    maximIcon.unbind("click").click(function()
+    maximIcon.unbind("mousedown").mousedown(function()
     {
       eXo.desktop.UIWindow.restoreWindow(popupWindow, maximIcon, originX, originY, originW, originH);
+      return false;
     });
     popupWindow.find("div.WindowBarLeft").unbind("dblclick").dblclick(function()
     {
