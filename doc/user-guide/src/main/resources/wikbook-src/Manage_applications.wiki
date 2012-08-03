@@ -1,4 +1,7 @@
-To go into the *Desktop* application, simply click *Desktop* on the *Administration* bar. You will be directed to the Desktop user interface as below:
+{docbook}
+<para>To go into the <emphasis role="bold">Desktop</emphasis> application, simply click <guilabel>Desktop</guilabel>
+on the <emphasis role="bold">Administration</emphasis> bar. You will be directed to the Desktop user interface as below:</para>
+{docbook}
 
 !images/WebOS-screen.png|align="center" width="150mm" fo:scalefit="1" html:scalefit="0"!
 
@@ -18,21 +21,29 @@ In the Desktop, you can do the following actions:
 
 h1. Add an application {anchor:id="WebOS_userguide.Manage_applications.Add_application"}
 
-*1.* Open the *Add Application* form via one of two ways:
+{docbook}
+<para>
+ <emphasis role="bold">1.</emphasis> Open the <guilabel>Add Application</guilabel> form via one of two ways:</para>
+{docbook}
 
 *The first way*
 
-Hover your cursor over the Dockbar and click the *Add Application* icon.
+{docbook}
+<para>Hover your cursor over the Dockbar and click the <guilabel>Add Application</guilabel> icon.</para>
+{docbook}
 
 !images/Add_Application_from_Dockbar.png|align="center" width="100mm" fo:scalefit="1" html:scalefit="0"!
 
 *The second way*
 
-Right-click any area inside the Desktop background and select *Add Application* from the drop-down menu.
-
+{docbook}
+<para>Right-click any area inside the Desktop background and select <guilabel>Add Application</guilabel> from the drop-down menu.</para>
+{docbook}
 !images/Drop-down-menu-desktop-page.png|align="center" width="70mm" fo:scalefit="1" html:scalefit="0"!
 
-The *Add Application* form will appear.
+{docbook}
+<para>The <guilabel>Add Application</guilabel> form will appear.</para>
+{docbook}
 
 !images/Add_application_form.png|align="center" width="100mm" fo:scalefit="1" html:scalefit="0"!
 
@@ -52,7 +63,14 @@ The application window will be shown on the Desktop. When an application is runn
 * To minimize the running application window, click !images/Window_minimize_icon.png|scalefit="1" width="4mm"! on the info bar of the application or !images/Show_hide_application_icon.png|scalefit="1" width="4mm"! on the Dockbar. !images/Running_application_icon.png|scalefit="1" width="4mm"! is remained, stating that the application is still running.
 * To show the running application window, click !images/Show_hide_application_icon.png|scalefit="1" width="4mm"! or the application icon on the Dockbar.
 * To maximize the opened application window, click !images/maximize_button.png|scalefit="1" width="4mm"! on the info bar of the application to view its full size. !images/maximize_button.png|scalefit="1" width="4mm"! will be changed into !images/Restore_icon.png|scalefit="1" width="4mm"!. Click !images/Restore_icon.png|scalefit="1" width="4mm"! if you want to restore to the original size of the application.
-* To reset a changed application, right-click any area outside the application window and select *Refresh.*
+{docbook}
+<itemizedlist>
+<listitem>
+              <para>To reset a changed application, right-click any area outside the application window and select <guilabel>Refresh.</guilabel>
+              </para>
+            </listitem>
+</itemizedlist>
+{docbook}
 
 h1. Quit an application {anchor:id="WebOS_userguide.Manage_applications.Quit_application"}
 
@@ -60,15 +78,18 @@ h1. Quit an application {anchor:id="WebOS_userguide.Manage_applications.Quit_app
 
 Click !images/quit_icon.png|scalefit="1" width="4mm"! at the right top of the application window.
 
-*The second way* 
-
-Right-click the application icon on the Dockbar and select *Quit.*
+*The second way*
+{docbook}
+<para>Right-click the application icon on the Dockbar and select <guilabel>Quit.</guilabel></para>
+{docbook}
 
 !images/Quit_dockbar.png|align="center" width="100mm" fo:scalefit="1" html:scalefit="0"!
 
-*The third way* 
+*The third way*
 
-This way allows you to close all running applications. Right-click any empty area on the desktop page and select *Close All* from the drop-down menu.
+{docbook}
+<para>This way allows you to close all running applications. Right-click any empty area on the desktop page and select <guilabel>Close All</guilabel> from the drop-down menu.</para>
+{docbook}
 
 !images/Close_all.png|align="center" width="70mm" fo:scalefit="1" html:scalefit="0"!
 
@@ -84,9 +105,15 @@ First, right-click any area on the Desktop background.
 </citetitle>
 {docbook}
 
-*1.* Select *Page Title* from the drop-down menu.
+{docbook}
+<para>
+ <emphasis role="bold">1.</emphasis> Select <guilabel>Page Title</guilabel> from the drop-down menu.</para>
+{docbook}
 
-*2.* Enter your desired new name into the *Page title* field, and click *Save* to accept your change.
+{docbook}
+<para>
+  <emphasis role="bold">2.</emphasis> Enter your desired new name into the <guilabel>Page title</guilabel> field, and click <guibutton>Save</guibutton> to accept your change.</para>
+{docbook}
 
 {docbook}
 <citetitle>
@@ -94,17 +121,28 @@ First, right-click any area on the Desktop background.
 </citetitle>
 {docbook}
 
-*1.* Select *Change Background* from the drop-down menu.
+{docbook}
+<para>
+<emphasis role="bold">1.</emphasis> Select <guilabel>Change Background</guilabel> from the drop-down menu.</para>
+{docbook}
 
-All available images for the Desktop background are displayed in the *Choose Background Image* form.
+{docbook}
+<para>All available images for the Desktop background are displayed in the <guilabel>Choose Background Image</guilabel> form.</para>
+{docbook}
 
 !images/Background_form.png|align="center" width="100mm" fo:scalefit="1" html:scalefit="0"!
 
 *2.* Click !images/Preview_background_icon.png|scalefit="1" width="4mm"! to preview your background.
 
-*3.* Click !images/select_background_icon.png|scalefit="1" width="4mm"! to select and apply the relevant background. 
+*3.* Click !images/select_background_icon.png|scalefit="1" width="4mm"! to select and apply the relevant background.
 
-* To get the default background again, click the *Get Default* link at the right corner of this form.
+{docbook}
+<itemizedlist>
+            <listitem>
+              <para>To get the default background again, click the <guilabel>Get Default</guilabel> link at the right corner of this form.</para>
+            </listitem>
+</itemizedlist>
+{docbook}
 
 * Also, from this form, you can do the following actions:
 
@@ -122,14 +160,22 @@ Click !images/Delete_icon.png|scalefit="1" width="4mm"! corresponding to the bac
 </citetitle>
 {docbook}
 
-*1.* Click the *Upload* button at the bottom of the *Choose Background Image* form. The *Upload Images* form will appear.
+{docbook}
+<para>
+<emphasis role="bold">1.</emphasis> Click the <guibutton>Upload</guibutton> button at the bottom of the <guilabel>Choose Background Image</guilabel> form. The <guilabel>Upload Images</guilabel> form will appear.</para>
+{docbook}
 
 !images/Upload_form.png|align="center" width="100mm" fo:scalefit="1" html:scalefit="0"!
-
-*2.* Click *Browse...* to locate the image you want to set as background image and upload it.
+{docbook}
+ <para>
+  <emphasis role="bold">2.</emphasis> Click <guibutton>Browse...</guibutton> to locate the image you want to set as background image and upload it.</para>
+{docbook}
 
 After the image is uploaded, you can click !images/Add_icon.png|scalefit="1" width="4mm"! to add more another image, or !images/Delete_icon_blue.png|scalefit="1" width="4mm"! to delete the uploaded image.
 
 !images/Add_more_delete.png|align="center" width="100mm" fo:scalefit="1" html:scalefit="0"!
 
-*3.* Click *Save* to accept your upload, or *Back* to go back to the previous step.
+{docbook}
+ <para>
+<emphasis role="bold">3.</emphasis> Click <guibutton>Save</guibutton> to accept your upload, or <guibutton>Back</guibutton> to go back to the previous step.</para>
+{docbook}
