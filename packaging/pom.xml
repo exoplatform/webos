@@ -30,14 +30,18 @@
 
    <profiles>
       <profile>
-         <id>default</id>
+         <id>pkg-all</id>
          <activation>
-            <activeByDefault>true</activeByDefault>
+           <property>
+             <name>!webos.dev</name>
+           </property>
          </activation>
          <modules>
             <module>module</module>
             <module>pkg</module>
             <module>product</module>
+            <module>tomcat</module>
+            <module>ear</module>
          </modules>
       </profile>
       <profile>
@@ -52,12 +56,24 @@
       </profile>
       <profile>
          <id>pkg-tomcat</id>
+         <activation>
+           <property>
+             <name>webos.dev</name>
+             <value>tomcat</value>
+           </property>
+         </activation>
          <modules>
             <module>tomcat</module>
          </modules>
       </profile>
       <profile>
          <id>pkg-jbossear</id>
+         <activation>
+           <property>
+             <name>webos.dev</name>
+             <value>jbossear</value>
+           </property>
+         </activation>
          <modules>
             <module>ear</module>
          </modules>

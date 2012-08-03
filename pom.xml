@@ -84,7 +84,7 @@
      <!-- maven-release-plugin -->
      <!-- we don't distribute this version of gatein thus we don't generate
      packages for the release - pkg-tomcat,pkg-jbossas profiles are removed -->
-     <arguments>-DskipTests -Prelease</arguments>
+     <!--<arguments>-DskipTests -Prelease</arguments>-->
      <pushChanges>false</pushChanges>
      <version.release.plugin>2.1</version.release.plugin>
 
