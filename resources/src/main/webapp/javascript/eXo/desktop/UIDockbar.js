@@ -214,7 +214,7 @@ eXo.desktop.UIDockbar = {
       dockbar.totalPadding = totalPadding;
     }
 
-    dockbar.style.width = (iconContainer.offsetWidth + dockbar.totalPadding) + "px";
+    dockbar.style.width = (iconContainer[0].offsetWidth + dockbar.totalPadding) + "px";
     dockbar.style.left = ((desktopPage.offsetWidth - dockbar.offsetWidth) / 2) + "px";
   }
 }
