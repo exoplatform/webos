@@ -90,11 +90,11 @@ eXo.desktop.UIDesktop = {
   isMaxZIndex : function(object)
   {
     var ret = true;
-    var z = gj(object).css("z-index");
+    var z = parseInt(gj(object).css("z-index"));
     gj("#UIPageDesktop").find("div.UIWindow").each(function()
     {
       var app = gj(this);
-      if (app[0] != object && app.css("display") == "block" && z <= app.css("z-index"))
+      if (app[0] != object && app.css("display") == "block" && z <= parseInt(app.css("z-index")))
       {
         ret = false;
         return false;
