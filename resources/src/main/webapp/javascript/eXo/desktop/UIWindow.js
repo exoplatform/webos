@@ -201,7 +201,8 @@ eXo.desktop.UIWindow = {
   minimizeWindow : function(popupWindow)
   {
     var id = popupWindow.attr("id").replace(/^UIWindow-/, "");
-    eXo.animation.ImplodeExplode.implode(popupWindow[0], popupWindow[0], gj("#UIPageDesktop"), 10);
+    var dockItem = gj("#DockItem" + id);
+    eXo.animation.ImplodeExplode.implode(popupWindow[0], dockItem[0], gj("#UIPageDesktop"), 10);
     gj("#DockItem" + id).addClass("ShowIcon");
     eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0], "HIDE");
   },

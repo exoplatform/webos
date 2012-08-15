@@ -175,10 +175,11 @@ eXo.desktop.UIDesktop = {
 
   backupWindowProperties : function(uiWindow)
   {
-    uiWindow.originalX = eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT());
-    uiWindow.originalY = eXo.desktop.UIDesktop.findPosYInDesktop(uiWindow);
-    uiWindow.originalW = uiWindow.offsetWidth;
-    uiWindow.originalH = uiWindow.offsetHeight;
+    var jWin = gj(uiWindow);
+    jWin.data("originalX", eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT()));
+    jWin.data("originalY", eXo.desktop.UIDesktop.findPosYInDesktop(uiWindow));
+    jWin.data("originalW", uiWindow.offsetWidth);
+    jWin.data("originalH", uiWindow.offsetHeight);
     uiWindow.style.visibility = "visible";
     if (uiWindow.style.display == "")
     {
