@@ -79,6 +79,7 @@ public class TestDockbarService extends AbstractWebOSTest
 
       Application appReg = (Application)rootPage.getChildren().get(1);
       assertEquals("Application Registry", appReg.getTitle());
+      assertEquals("SimpleSkin:SimpleWebOSTheme", appReg.getTheme());
 
       //Permission : Everyone
       ConversationState.setCurrent(demoState);
@@ -88,6 +89,7 @@ public class TestDockbarService extends AbstractWebOSTest
 
       Application homePortlet = (Application)demoPage.getChildren().get(0);
       assertEquals("Home Page portlet", homePortlet.getTitle());
+      assertEquals("Default:WebosTheme", homePortlet.getTheme());      
    }
 
    private void createPages() throws Exception

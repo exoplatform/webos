@@ -25,7 +25,7 @@ import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.TransientApplicationState;
-import org.exoplatform.portal.config.serialize.PortletApplication;
+import org.exoplatform.portal.resource.SkinService;
 import org.exoplatform.webos.services.dockbar.DockbarPlugin;
 import org.exoplatform.webos.services.dockbar.DockbarService;
 import java.util.HashMap;
@@ -38,9 +38,9 @@ import java.util.Map;
  */
 public class DockbarServiceImpl implements DockbarService
 {
-
-	private UserACL userACL;
-	private DataStorage dataStorage;
+   public static final String DEFAULT_WIDOW_THEME = SkinService.DEFAULT_SKIN + ":WebosTheme";
+   private UserACL userACL;
+   private DataStorage dataStorage;
    private Map<String, Application> dockbarApps;
    
 	public DockbarServiceImpl(UserACL _userACL, DataStorage dataStorage) throws Exception
@@ -83,6 +83,10 @@ public class DockbarServiceImpl implements DockbarService
       {
          for(Application app :  ((DockbarPlugin)plugin).getApplications())
          {                                                                       
+            if (app.getTheme() == null) 
+            {
+               app.setTheme(DEFAULT_WIDOW_THEME);
+            }
             dockbarApps.put(((TransientApplicationState)app.getState()).getContentId(), app);  
          }
       }
