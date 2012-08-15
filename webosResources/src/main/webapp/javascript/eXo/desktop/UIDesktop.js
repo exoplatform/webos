@@ -224,4 +224,11 @@ UIDesktop.prototype.setDesktopBackground = function (imageURL) {
 	pageDesktop.style.background = imageURL;
 };
 
+UIDesktop.prototype.permanentLink = function (evt, elemt, urlTemplate) {
+   var contextMenu = eXo.core.DOMUtil.findAncestorByClass(elemt, "UIRightClickPopupMenu") ;
+   eXo.core.MouseEventManager.docMouseDownEvt(evt ? evt : window.event) ;
+   idWindow = contextMenu.objId;   
+   window.location = urlTemplate.replace("p_WINDOW_ID_", idWindow);
+};
+
 eXo.desktop.UIDesktop = new UIDesktop() ;

@@ -2,6 +2,7 @@
 	import org.exoplatform.portal.webui.application.UIPortlet;
 	import org.exoplatform.web.application.JavascriptManager;
 	import org.exoplatform.webui.core.UIRightClickPopupMenu;
+	import org.exoplatform.portal.webui.util.Util;
 	
 	def rcontext = _ctx.getRequestContext();
 	def remoteUser = rcontext.getRemoteUser();
@@ -24,7 +25,8 @@
 	String docBase =	rcontext.getRequestContextPath();
 	String comId = uicomponent.getId();
 	boolean modifiable = uicomponent.isModifiable();			
-	
+	def urlTemplate = nodeurl().setNode(Util.getUIPortal().getSelectedUserNode());	
+	urlTemplate.setWindowID("p_WINDOW_ID_");
 %>
 <div class="UIPage" id="$desktopID">
 	<div class="VIEW-PAGE">
@@ -73,6 +75,11 @@
 			<div class="UIRightClickPopupMenu" id="DockbarContextMenu" onmousedown="event.cancelBubble = true;">
 				<div class="UIContextMenuContainer" >
 					<div class="UIRightPopupMenuContainer" >
+					   <div class="MenuItem"> 	
+							<a onclick="eXo.desktop.UIDesktop.permanentLink(event, this, '$urlTemplate')" class="ItemIcon">
+								<%=_ctx.appRes("UIPageDesktop.label.permanentLink")%>
+							</a>
+						</div>
 						<div class="MenuItem"> 	
 							<a href="javascript:eXo.desktop.UIDesktop.removeApp('<%=uicomponent.url("RemoveChild")%>')" 
 								onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloseDockBarIcon">
