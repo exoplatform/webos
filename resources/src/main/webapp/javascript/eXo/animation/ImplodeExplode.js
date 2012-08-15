@@ -8,6 +8,7 @@ eXo.animation.ImplodeExplode =
   doInit : function(uiWindow, clickedElement, desktopPage)
   {
     this.animWindow = gj("<div>").css({"display" : "block", "background-color" : "#ffffff", "position" : "absolute", "z-index" : uiWindow.style.zIndex}).fadeTo("fast", 50);
+    this.animWindow.data("object", gj(uiWindow));
     desktopPage.append(this.animWindow);
   },
 
@@ -20,12 +21,8 @@ eXo.animation.ImplodeExplode =
       var animWindow = eXo.animation.ImplodeExplode.animWindow;
       animWindow.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, desktopPage[0], eXo.core.I18n.isRT());
       animWindow.iconY = gj(clickedElement).offset().top - desktopPage.offset().top;
-      animWindow.iconW = clickedElement.offsetWidth
+      animWindow.iconW = clickedElement.offsetWidth;
       animWindow.iconH = clickedElement.offsetHeight;
-      animWindow.originX = uiWindow.originalX;
-      animWindow.originY = uiWindow.originalY;
-      animWindow.originW = uiWindow.originalW;
-      animWindow.originH = uiWindow.originalH;
 
       eXo.animation.ImplodeExplode.doExplode(numberOfFrame, numberOfFrame - 1, animWindow, gj(uiWindow));
     }
@@ -40,12 +37,13 @@ eXo.animation.ImplodeExplode =
       var animWindow = eXo.animation.ImplodeExplode.animWindow;
       animWindow.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, desktopPage[0], eXo.core.I18n.isRT());
       animWindow.iconY = gj(clickedElement).offset().top - desktopPage.offset().top;
-      animWindow.iconW = clickedElement.offsetWidth
+      animWindow.iconW = clickedElement.offsetWidth;
       animWindow.iconH = clickedElement.offsetHeight;
-      animWindow.originY = uiWindow.offsetTop;
-      animWindow.originX = eXo.core.I18n.isLT() ? uiWindow.offsetLeft : eXo.core.Browser.findPosXInContainer(uiWindow, uiWindow.offsetParent, true);
-      animWindow.originW = uiWindow.offsetWidth;
-      animWindow.originH = uiWindow.offsetHeight;
+      var jWin = gj(uiWindow);
+      jWin.data("originY", uiWindow.offsetTop);
+      jWin.data("originX", eXo.core.I18n.isLT() ? uiWindow.offsetLeft : eXo.core.Browser.findPosXInContainer(uiWindow, uiWindow.offsetParent, true));
+      jWin.data("originW", uiWindow.offsetWidth);
+      jWin.data("originH", uiWindow.offsetHeight);
 
       if (uiWindow.style.display == "block")
       {
@@ -83,16 +81,16 @@ eXo.animation.ImplodeExplode =
     }
     else
     {
-      appWindow.css("top", animWindow.originY);
+      appWindow.css("top", appWindow.data("originY"));
       if (eXo.core.I18n.isLT())
       {
-        appWindow.css("left", animWindow.originX);
+        appWindow.css("left", appWindow.data("originX"));
       }
       else
       {
-        appWindow.css("right", animWindow.originX);
+        appWindow.css("right", appWindow.data("originX"));
       }
-      appWindow.css("width", (!appWindow[0].maximized) ? animWindow.originW : appWindow.css("width"));
+      appWindow.css("width", (!appWindow[0].maximized) ? appWindow.data("originW") : appWindow.css("width"));
       appWindow.css("display", "block");
       if (appWindow[0].maximized)
       {
@@ -113,10 +111,11 @@ eXo.animation.ImplodeExplode =
 
   adjustAnimWindow : function(numberOfFrame, index, animWindow)
   {
-    var Y = animWindow.originY + index * (animWindow.iconY - animWindow.originY) / numberOfFrame;
-    var X = animWindow.originX + (Y - animWindow.originY) * (animWindow.iconX - animWindow.originX) / (animWindow.iconY - animWindow.originY);
-    var W = (animWindow.originW - animWindow.iconW) * (numberOfFrame - index) / numberOfFrame + animWindow.iconW;
-    var H = (animWindow.originH - animWindow.iconH) * (numberOfFrame - index) / numberOfFrame + animWindow.iconH;
+    var jWin = animWindow.data("object");
+    var Y = jWin.data("originY") + index * (animWindow.iconY - jWin.data("originY")) / numberOfFrame;
+    var X = jWin.data("originX") + (Y - jWin.data("originY")) * (animWindow.iconX - jWin.data("originX")) / (animWindow.iconY - jWin.data("originY"));
+    var W = (jWin.data("originW") - animWindow.iconW) * (numberOfFrame - index) / numberOfFrame + animWindow.iconW;
+    var H = (jWin.data("originH") - animWindow.iconH) * (numberOfFrame - index) / numberOfFrame + animWindow.iconH;
 
     animWindow.css({"top" : Y, "width" : W, "height" : H});
     if (eXo.core.I18n.isLT())

@@ -42,6 +42,7 @@
         <application-ref>exoadmin</application-ref>
         <portlet-ref>ApplicationRegistryPortlet</portlet-ref>
       </portlet>
+   	<theme>SimpleSkin:SimpleWebOSTheme</theme>
       <title>Application Registry</title>
       <access-permissions>manager:/platform/administrators</access-permissions>
     </portlet-application>
