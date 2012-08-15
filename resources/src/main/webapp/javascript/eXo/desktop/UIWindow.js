@@ -36,10 +36,7 @@ eXo.desktop.UIWindow = {
     this.superClass.setPosition(popup, posX, posY, eXo.core.I18n.isRT());
     try
     {
-      if (!popup.maximized)
-      {
-        this.initDND(windowBar[0], uiWindow[0]);
-      }
+      this.initDND(windowBar[0], uiWindow[0]);
     }
     catch(err)
     {
@@ -65,14 +62,14 @@ eXo.desktop.UIWindow = {
       return false;
     });
 
-    if (!popup.maximized)
+    var resizeArea = uiWindow.children("div.BottomDecoratorLeft").find("div.ResizeArea");
+    resizeArea.mousedown(function(e)
     {
-      var resizeArea = uiWindow.children("div.BottomDecoratorLeft").find("div.ResizeArea");
-      resizeArea.mousedown(function(e)
-      {
-        eXo.desktop.UIWindow.startResizeProcess(e, uiWindow);
-      });
-    }
+	    if (!popup.maximized)
+	    {
+		    eXo.desktop.UIWindow.startResizeProcess(e, uiWindow);
+	    }
+    });
 
     popup.resizeCallback = new eXo.core.HashMap();
   },
@@ -141,21 +138,25 @@ eXo.desktop.UIWindow = {
 
   toggleMaximize : function(uiWindow, icon)
   {
+  	var windowBar = gj(uiWindow).children(".WindowBarLeft");
+  	
   	eXo.desktop.UIDesktop.resetZIndex(uiWindow);
   	if (icon.hasClass("MaximizedIcon")) {
   		eXo.desktop.UIWindow.maximizeWindow(uiWindow, icon);    		
+  		windowBar.off("mousedown");
   	} else {
   		eXo.desktop.UIWindow.restoreWindow(uiWindow, icon);
+  		eXo.desktop.UIWindow.initDND(windowBar[0], uiWindow);
   	} 
   },
   
   restoreWindow : function(popupWindow, restoreIcon)
   {
     popupWindow = gj(popupWindow);
-    var originX = popupWindow.data("originX");
-    var originY = popupWindow.data("originY");
-    var originW = popupWindow.data("originW");
-    var originH = popupWindow.data("originH");
+    var originX = popupWindow.data("restoreX");
+    var originY = popupWindow.data("restoreY");
+    var originW = popupWindow.data("restoreW");
+    var originH = popupWindow.data("restoreH");
     
     if(eXo.core.I18n.isLT())
     {
@@ -165,7 +166,7 @@ eXo.desktop.UIWindow = {
     {
       popupWindow.css("right", originX);
     }
-    popupWindow.css("top", originY).css("width", originW).css("height", null);
+    popupWindow.css("top", originY).css("width", originW).css("height", "auto");
     popupWindow.find("div.UIResizableBlock").css("height", originH);
     restoreIcon.attr("class", "ControlIcon MaximizedIcon");
     eXo.desktop.UIWindow.saveWindowProperties(popupWindow[0]);
@@ -176,10 +177,10 @@ eXo.desktop.UIWindow = {
   {
     popupWindow = gj(popupWindow);
     var resizableBlock = popupWindow.find("div.UIResizableBlock");
-    popupWindow.data("originX",  eXo.desktop.UIDesktop.findPosXInDesktop(popupWindow[0], eXo.core.I18n.isRT()));
-    popupWindow.data("originY", eXo.desktop.UIDesktop.findPosYInDesktop(popupWindow[0]));
-    popupWindow.data("originW", popupWindow.width());
-    popupWindow.data("originH", resizableBlock.height());    
+    popupWindow.data("restoreX",  eXo.desktop.UIDesktop.findPosXInDesktop(popupWindow[0], eXo.core.I18n.isRT()));
+    popupWindow.data("restoreY", eXo.desktop.UIDesktop.findPosYInDesktop(popupWindow[0]));
+    popupWindow.data("restoreW", popupWindow.width());
+    popupWindow.data("restoreH", resizableBlock.height());    
     
     if(eXo.core.I18n.isLT())
     {
