@@ -119,7 +119,7 @@
 												<div class="ControlIcon MinimizedIcon" title="$renderMini" onmouseover="$onControlOver" onmouseout="$onControlOut"><span></span>
 														<div style="display:none">{"normalTitle":"$miniTooltip","modeTitle":"$restore"}</div>
 												</div>
-												<a class="ControlIcon MinimizedIcon" title="$permanentLink" href="$nodeURL"></a>
+												<a class="ControlIcon PermanentLinkIcon" title="$permanentLink" href="$nodeURL"></a>
 										<%
 											} else if(uicomponent.getShowWindowState()) {											
 												String maximizedAction = "eXo.portal.UIPortalControl.changeWindowState('"+portletId+"', 'maximized');";
