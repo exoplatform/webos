@@ -21,8 +21,7 @@
 	margin: 0 9px;
 	padding: 1px 5px 4px 5px;
 	background: #ffcf01;
-	-moz-border-radius: 5px 5px 0px 0px;
-	-webkit-border-radius: 5px 5px 0px 0px;
+	border-radius: 5px 5px 0px 0px;
 }
 
 .UIWebOSTabPaneDashboard .GrayTabStyle {
@@ -61,29 +60,25 @@
 .UIWebOSTabPaneDashboard .GrayTabStyle .NormalTab {
 	background: #e6e6e6;
 	border: 1px solid #fefcf3;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .UIWebOSTabPaneDashboard .GrayTabStyle .HighlightNavigationTab {
 	background: #e6e6e6;
 	border: 1px solid #fefcf3;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .UIWebOSTabPaneDashboard .GrayTabStyle .SelectedTab {
 	background: #fff;
 	border: 1px solid #fff;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .UIWebOSTabPaneDashboard .GrayTabStyle .EditnewTab {
 	background: #fff;
 	border: 1px solid #fff;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .UIWebOSTabPaneDashboard .GrayTabStyle .SelectedTab .EditTab {
