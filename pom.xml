@@ -40,11 +40,11 @@
   </ciManagement>
   <properties>
       <gatein.dep.version>1.1.0-GA</gatein.dep.version>
-      <org.exoplatform.kernel.version>2.3.9-GA-SNAPSHOT</org.exoplatform.kernel.version>
-      <org.exoplatform.core.version>2.4.9-GA-SNAPSHOT</org.exoplatform.core.version>
-      <org.exoplatform.ws.version>2.2.9-GA-SNAPSHOT</org.exoplatform.ws.version>
-      <org.exoplatform.jcr.version>1.14.9-GA-SNAPSHOT</org.exoplatform.jcr.version>
-      <org.exoplatform.portal.version>3.3.0-GA</org.exoplatform.portal.version>
+      <org.exoplatform.kernel.version>2.3.6-GA</org.exoplatform.kernel.version>
+      <org.exoplatform.core.version>2.4.6-GA</org.exoplatform.core.version>
+      <org.exoplatform.ws.version>2.2.6-GA</org.exoplatform.ws.version>
+      <org.exoplatform.jcr.version>1.14.6-GA</org.exoplatform.jcr.version>
+      <org.exoplatform.portal.version>3.4.0.M01</org.exoplatform.portal.version>
       <org.exoplatform.exopackage.version>1.1.4</org.exoplatform.exopackage.version>
       <org.jibx.version>1.2.2</org.jibx.version>
       <org.shindig.version>2.0.2-CP01</org.shindig.version>
@@ -52,7 +52,7 @@
       <org.gatein.common.version>2.0.4-GA</org.gatein.common.version>
       <org.gatein.wci.version>2.2.0-Beta01</org.gatein.wci.version>
       <org.gatein.pc.version>2.3.2-GA</org.gatein.pc.version>
-      <org.picketlink.idm>1.3.1.GA</org.picketlink.idm>
+      <org.picketlink.idm>1.3.2.CR02</org.picketlink.idm>
       <org.gatein.mop.version>1.1.1-GA</org.gatein.mop.version>
       <org.gatein.mgmt.version>1.0.1-GA</org.gatein.mgmt.version>
       <org.slf4j.version>1.5.8</org.slf4j.version>
@@ -385,6 +385,19 @@
             <groupId>org.exoplatform.ws</groupId>
             <artifactId>exo.ws.frameworks.json</artifactId>
             <version>${org.exoplatform.ws.version}</version>
+         </dependency>
+
+         <!-- GateIn Redirect -->
+	 <dependency>
+            <groupId>org.gatein.web</groupId>
+            <artifactId>redirect</artifactId>
+            <version>${org.exoplatform.portal.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>org.gatein.portal.portlet</groupId>
+            <artifactId>redirect</artifactId>
+            <version>${org.exoplatform.portal.version}</version>
+            <type>war</type>
          </dependency>
 
          <!-- Reflext -->

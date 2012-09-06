@@ -1,23 +1,19 @@
 <%
-    import org.exoplatform.portal.application.PortalRequestContext;
     import org.exoplatform.portal.mop.user.UserNode;
     import org.exoplatform.portal.webui.util.Util;
-    import org.exoplatform.web.application.JavascriptManager;
     import org.exoplatform.web.url.PortalURL;
 	
-	def nodes = uicomponent.getSameSiblingsNode();
-	def tabNbs = nodes.size();
+    def rcontext = _ctx.getRequestContext();
+    rcontext.getJavascriptManager().addJavascript("initWebOSTabbedDashboardPortlet('$uicomponent.id');");
+ 	
+    def nodes = uicomponent.getSameSiblingsNode();
+    def tabNbs = nodes.size();
 
-	PortalRequestContext pcontext = Util.getPortalRequestContext();	
     PortalURL nodeURL = nodeurl();
-
-	def selectedNode = Util.getUIPortal().getSelectedUserNode();
-	
-	JavascriptManager jsManager = pcontext.getJavascriptManager();
-	jsManager.importJavascript("eXo.webui.UIWebOSTabbedDashboard", "/webosadmin/javascript/");
+    def selectedNode = Util.getUIPortal().getSelectedUserNode();	
 %>
 
-<div id="$uicomponent.id" class="UIWebOSTabPaneDashboard ClearFix">
+<div id="$uicomponent.id" class="UITabPaneDashboard UIHorizontalTabs ClearFix">
 <%  for (UserNode node : nodes) {
         if (uicomponent.isWebOSNode(node)) continue;
         nodeURL.setNode(node);
@@ -29,27 +25,16 @@
         String param = node.getName();
         if (node.getURI().equals(selectedNode.getURI())) {
 	%>
-	<div class="UITab GrayTabStyle">
-		<div class="SelectedTab">
-		<% 
-			String ondblclick = "eXo.webui.UIWebOSTabbedDashboard.showEditLabelInput(this,\"" + param + "\",\"" + tabLabel + "\")";
-		%>
-    		<span ondblclick='$ondblclick'>$tabLabel</span>
-    		<a  href="<%= uicomponent.url("DeleteTab",param); %>">
-    			<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
-    		</a>
-		</div>
+	<div class="UITab SelectedTab">
+  		<span id="$param">$tabLabel</span>
+  		<a href="<%= uicomponent.url("DeleteTab",param); %>" class="CloseIcon" title="DEL"></a>
 	</div>
 	<% } else { %>
-	<div class="UITab GrayTabStyle">
-		<div class="NormalTab">
-    		<a  href="<%= nodeURL.toString(); %>"><span>$tabLabel</span></a>
-    		<a  href="<%= uicomponent.url("DeleteTab",param); %>">
-    			<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
-    		</a>
-		</div>
+	<div class="UITab NormalTab">
+	   <a href="<%= nodeURL.toString()%>" class="Tablabel">$tabLabel</a>
+    	<a href="<%= uicomponent.url("DeleteTab",param); %>" class="CloseIcon" title="DEL" ></a>
 	</div>
 	<% } %>
 <% } %>
-    <a href="#" class="AddDashboard" onclick="eXo.webui.UIWebOSTabbedDashboard.showAddTabInput(this)"><span></span></a>
+    <a href="#" class="AddDashboard"><span></span></a>
 </div>

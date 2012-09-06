@@ -52,12 +52,15 @@
 
   <portlet>
     <name>WebOSTabbedDashboardPortlet</name>
-    <module>
+    <scripts>
 	    <script>
 	      <name>eXo.webui.UIWebOSTabbedDashboard</name>
 	      <path>/javascript/eXo/webui/UIWebOSTabbedDashboard.js</path>
 	    </script>
-    </module>
+	    <depends>
+           <scripts>bootstrap</scripts>
+        </depends>
+    </scripts>
   </portlet>
 			
 </gatein-resources>

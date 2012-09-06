@@ -1,20 +1,25 @@
-eXo.desktop = {};
-
-eXo.desktop.UIDesktop = {
+var uiDesktop = {
 
   init : function()
   {
-    var desktopPage = gj("#UIPageDesktop");
+    var desktopPage = $("#UIPageDesktop");
     if (desktopPage.length > 0)
     {
-      eXo.desktop.UIDesktop.fixDesktop();
-      eXo.desktop.UIDockbar.init();
+      _module.UIDesktop.fixDesktop();
+      _module.UIDockbar.init();
       desktopPage.children("div.UIWindow").each(function()
       {
-        eXo.desktop.UIDesktop.backupWindowProperties(this);
+        _module.UIDesktop.backupWindowProperties(this);
       });
 
-      desktopPage[0].onmousedown = eXo.desktop.UIDesktop.showContextMenu;
+      desktopPage[0].onmousedown = _module.UIDesktop.showContextMenu;
+      
+      var ctxMenu = $("#UIDesktopContextMenu");
+      ctxMenu.find(".MenuItem a").filter(":not(.CloseAll)").on("click", webuiExt.UIRightClickPopupMenu.prepareObjectIdEvt)
+      ctxMenu.find(".MenuItem a.CloseAll").on("click", function() {
+		  _module.UIDesktop.closeAll();
+		  webuiExt.UIRightClickPopupMenu.hideContextMenu(ctxMenu.attr("id"));
+	  });
     }
   },
 
@@ -24,17 +29,17 @@ eXo.desktop.UIDesktop = {
       
       if ("UIPageDesktop" !== targetID)
          return;
-      eXo.webui.UIRightClickPopupMenu.clickRightMouse(evt, this, "UIDesktopContextMenu", "", null, 5);
+      webuiExt.UIRightClickPopupMenu.clickRightMouse(evt, this, "UIDesktopContextMenu", "", null, 5);
    },
 
   closeAll: function()
   {
-    gj("#UIPageDesktop").find("div.UIWindow").each(function()
+    $("#UIPageDesktop").find("div.UIWindow").each(function()
     {
-      var appWindow = gj(this);
+      var appWindow = $(this);
       if (appWindow.css("display") == "block")
       {
-        eXo.desktop.UIDesktop.removeWindowContent(appWindow.attr("id").replace("UIWindow-", ""));
+        _module.UIDesktop.removeWindowContent(appWindow.attr("id").replace("UIWindow-", ""));
         appWindow.css("display", "none");
       }
     });
@@ -42,21 +47,21 @@ eXo.desktop.UIDesktop = {
 
   fixDesktop : function()
   {
-    var desktopPage = gj("#UIPageDesktop");
-    var h = gj(window).height() - desktopPage.offset().top + "px";
+    var desktopPage = $("#UIPageDesktop");
+    var h = $(window).height() - desktopPage.offset().top + "px";
     desktopPage.css("height", h);
 
     window.scroll(0, 0);
-    setTimeout("eXo.desktop.UIDockbar.resizeDockBar()", 0);
+    setTimeout(function() {_module.UIDockbar.resizeDockBar();}, 0);
   },
 
   resetZIndex : function(windowObject)
   {
-    var jqObj = gj(windowObject);
+    var jqObj = $(windowObject);
     var hasPopup;
     jqObj.parent().find("div.UIPopupWindow").each(function()
     {
-      if (gj(this).css("display") == "block")
+      if ($(this).css("display") == "block")
       {
         hasPopup = true;
         return false;
@@ -69,9 +74,9 @@ eXo.desktop.UIDesktop = {
     }
 
     var maxZIndex = parseInt(jqObj.css("z-index"));
-    gj("#UIPageDesktop").find("div.UIWindow").each(function()
+    $("#UIPageDesktop").find("div.UIWindow").each(function()
     {
-      var appWindow = gj(this);
+      var appWindow = $(this);
       var z = parseInt(appWindow.css("z-index"));
       if (z < 0)
       {
@@ -83,17 +88,17 @@ eXo.desktop.UIDesktop = {
         maxZIndex = z;
       }
     });
-    eXo.desktop.UIWindow.maxIndex = maxZIndex + 1;
-    jqObj.css("z-index", eXo.desktop.UIWindow.maxIndex);
+    _module.UIWindow.maxIndex = maxZIndex + 1;
+    jqObj.css("z-index", _module.UIWindow.maxIndex);
   },
 
   isMaxZIndex : function(object)
   {
     var ret = true;
-    var z = parseInt(gj(object).css("z-index"));
-    gj("#UIPageDesktop").find("div.UIWindow").each(function()
+    var z = parseInt($(object).css("z-index"));
+    $("#UIPageDesktop").find("div.UIWindow").each(function()
     {
-      var app = gj(this);
+      var app = $(this);
       if (app[0] != object && app.css("display") == "block" && z <= parseInt(app.css("z-index")))
       {
         ret = false;
@@ -105,14 +110,14 @@ eXo.desktop.UIDesktop = {
 
   showWindow : function(popupWindow, dockIcon)
   {
-    var desktopPage = gj("#UIPageDesktop");
+    var desktopPage = $("#UIPageDesktop");
 
-    if(!eXo.desktop.UIDesktop.isMaxZIndex(popupWindow))
+    if(!_module.UIDesktop.isMaxZIndex(popupWindow))
     {
-      eXo.desktop.UIDesktop.resetZIndex(popupWindow);
+      _module.UIDesktop.resetZIndex(popupWindow);
     }
 
-    if (gj(popupWindow).find("div.PORTLET-FRAGMENT").children("div").length == 0)
+    if ($(popupWindow).find("div.PORTLET-FRAGMENT").children("div").length == 0)
     {
       var blockID = desktopPage.closest(".UIPage").attr("id").replace(/^UIPage-/, "");
       var params = [
@@ -122,64 +127,63 @@ eXo.desktop.UIDesktop = {
     }
 
     eXo.animation.ImplodeExplode.explode(popupWindow, dockIcon, desktopPage, 10);
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "SHOW");
+    _module.UIWindow.saveWindowProperties(popupWindow, "SHOW");
     popupWindow.isShowed = true;
 
-    gj(dockIcon).addClass("ShowIcon");
+    $(dockIcon).addClass("ShowIcon");
   },
 
   hideWindow : function(popupWindow, dockIcon)
   {
-    eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, gj("#UIPageDesktop"), 10);
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "HIDE");
-    gj(dockIcon).addClass("ShowIcon");
+    eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, $("#UIPageDesktop"), 10);
+    _module.UIWindow.saveWindowProperties(popupWindow, "HIDE");
+    $(dockIcon).addClass("ShowIcon");
   },
 
   quitWindow : function(popupWindow, dockIcon)
   {
-    if (gj(popupWindow).css("display") == "block")
+    if ($(popupWindow).css("display") == "block")
     {
-      eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, gj("#UIPageDesktop"), 10);
+      eXo.animation.ImplodeExplode.implode(popupWindow, dockIcon, $("#UIPageDesktop"), 10);
     }
-    eXo.desktop.UIWindow.saveWindowProperties(popupWindow, "QUIT");
+    _module.UIWindow.saveWindowProperties(popupWindow, "QUIT");
     popupWindow.isShowed = false;
 
-    gj(dockIcon).removeClass("ShowIcon");
+    $(dockIcon).removeClass("ShowIcon");
   },
 
   showHideWindow : function(windowID, dockIcon)
   {
-    var popupWindow = gj("#" + windowID);
+    var popupWindow = $("#" + windowID);
 
     if (popupWindow.css("display") == "block")
     {
-      eXo.desktop.UIDesktop.hideWindow(popupWindow[0], dockIcon);
+      _module.UIDesktop.hideWindow(popupWindow[0], dockIcon);
     }
     else
     {
-      eXo.desktop.UIDesktop.showWindow(popupWindow[0], dockIcon);
+      _module.UIDesktop.showWindow(popupWindow[0], dockIcon);
     }
   },
 
   findPosXInDesktop : function(object, isRTL)
   {
-    var uiPageDesktop = gj(object).closest(".UIPageDesktop")[0];
+    var uiPageDesktop = $(object).closest(".UIPageDesktop")[0];
     return eXo.core.Browser.findPosXInContainer(object, uiPageDesktop, isRTL);
   },
 
   findPosYInDesktop : function(object)
   {
-    var jqObj = gj(object);
+    var jqObj = $(object);
     return jqObj.offset().top - jqObj.closest(".UIPageDesktop").offset().top;
   },
 
   backupWindowProperties : function(uiWindow)
   {
-    var jWin = gj(uiWindow);
-    jWin.data("originalX", eXo.desktop.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT()));
-    jWin.data("originalY", eXo.desktop.UIDesktop.findPosYInDesktop(uiWindow));
-    jWin.data("originalW", uiWindow.offsetWidth);
-    jWin.data("originalH", uiWindow.offsetHeight);
+    uiWindow.originalX = _module.UIDesktop.findPosXInDesktop(uiWindow, eXo.core.I18n.isRT());
+    uiWindow.originalY = _module.UIDesktop.findPosYInDesktop(uiWindow);
+    uiWindow.originalW = uiWindow.offsetWidth;
+    uiWindow.originalH = uiWindow.offsetHeight;
     uiWindow.style.visibility = "visible";
     if (uiWindow.style.display == "")
     {
@@ -187,7 +191,7 @@ eXo.desktop.UIDesktop = {
     }
 
     var portletID = uiWindow.id.replace(/^UIWindow-/, "");
-    if (gj("#DockItem" + portletID).hasClass("ShowIcon"))
+    if ($("#DockItem" + portletID).hasClass("ShowIcon"))
     {
       uiWindow.isShowed = true;
     }
@@ -200,14 +204,14 @@ eXo.desktop.UIDesktop = {
     if (result == "OK")
     {
       var appId = uri.substr(uri.lastIndexOf("=") + 1);
-      eXo.desktop.UIDesktop.removeWindow("UIWindow-" + appId);
-      eXo.desktop.UIDockbar.removeDockbarIcon("DockItem" + appId);
+      _module.UIDesktop.removeWindow("UIWindow-" + appId);
+      _module.UIDockbar.removeDockbarIcon("DockItem" + appId);
     }
   },
 
   removeWindow : function (idWindow)
   {
-    gj("#" + idWindow).remove();
+    $("#" + idWindow).remove();
   },
 
   removeWindowContent : function (evt, elemt)
@@ -216,7 +220,7 @@ eXo.desktop.UIDesktop = {
     if (elemt)
     {
       //TODO: Optimize this if branch with a nicer solution
-      var contextMenu = gj(elemt).closest(".UIRightClickPopupMenu")[0];
+      var contextMenu = $(elemt).closest(".UIRightClickPopupMenu")[0];
       if (!evt)
       {
         evt = window.event;
@@ -225,13 +229,13 @@ eXo.desktop.UIDesktop = {
       idWindow = contextMenu.objId;
     }
 
-    var uiWindow = gj("#UIWindow-" + idWindow).eq(0);
+    var uiWindow = $("#UIWindow-" + idWindow).eq(0);
     if (uiWindow)
     {
       var portletFrag = uiWindow.find("div.PORTLET-FRAGMENT");
       portletFrag.children().remove();
       portletFrag.html("<span></span>");
-      eXo.desktop.UIDesktop.quitWindow(uiWindow[0], gj("#DockItem" + idWindow)[0]);
+      _module.UIDesktop.quitWindow(uiWindow[0], $("#DockItem" + idWindow)[0]);
     }
   },
 
@@ -260,3 +264,4 @@ eXo.desktop.UIDesktop = {
     pageDesktop.style.background = imageURL;
   }
 }
+_module.UIDesktop = uiDesktop;

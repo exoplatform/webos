@@ -66,6 +66,13 @@
     <depends>
       <module>webui</module>
     </depends>
+    <depends>
+      <module>webui-ext</module>
+    </depends>
+    <depends>
+    	<as>$</as>
+      <module>jquery</module>
+    </depends>
   </module>
 	
 </gatein-resources>

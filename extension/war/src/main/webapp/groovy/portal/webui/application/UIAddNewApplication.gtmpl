@@ -1,6 +1,10 @@
 <%
 		import org.exoplatform.web.application.Parameter;
 		List appCategories = uicomponent.getApplicationCategories();
+		
+		def rcontext = _ctx.getRequestContext(); 
+		rcontext.getJavascriptManager().require("SHARED/webui", "webui")
+				  .addScripts("webui.UIItemSelector.init('#UIAddNewApplication .ItemList > div');");
 %>
 <div class="UIAddApplication" id="UIAddNewApplication">
 	<div class="UIBarStyle">
@@ -33,7 +37,7 @@
 									boolean selected = true;
 									for(category in appCategories){
 									%>
-										<div onmouseout="eXo.webui.UIItemSelector.onOver(this, false);" onmouseover="eXo.webui.UIItemSelector.onOver(this, true);" onclick="eXo.webui.UIItemSelector.onClick(this);" class="<%= selected ? "SelectedItem" : "" %> Item" title="<%=category.getDisplayName()%>">
+										<div class="<%= selected ? "SelectedItem" : "" %> Item" title="<%=category.getDisplayName()%>">
 												<div class="LeftItem">
 														<div class="RightItem"><div id="<%=category.getName()%>" class="ItemTitle"><div class="CenterItemTitle"><%=category.getDisplayName()%></div></div></div>
 												</div>

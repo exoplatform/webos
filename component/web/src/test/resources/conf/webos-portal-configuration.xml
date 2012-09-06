@@ -202,6 +202,9 @@
           <value>org.chromattic.ext.ntdef.NTFolder</value>
           <value>org.chromattic.ext.ntdef.NTResource</value>
           <value>org.exoplatform.portal.mop.importer.Imported</value>
+          <value>org.exoplatform.portal.mop.redirects.Redirectable</value>
+          <value>org.exoplatform.portal.mop.redirects.Redirect</value>
+          <value>org.exoplatform.portal.mop.redirects.Mappings</value>
         </values-param>
         <properties-param>
           <name>options</name>

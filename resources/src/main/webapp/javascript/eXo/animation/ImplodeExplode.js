@@ -7,8 +7,8 @@ eXo.animation.ImplodeExplode =
 
   doInit : function(uiWindow, clickedElement, desktopPage)
   {
-    this.animWindow = gj("<div>").css({"display" : "block", "background-color" : "#ffffff", "position" : "absolute", "z-index" : uiWindow.style.zIndex}).fadeTo("fast", 50);
-    this.animWindow.data("object", gj(uiWindow));
+    this.animWindow = $("<div>").css({"display" : "block", "background-color" : "#ffffff", "position" : "absolute", "z-index" : uiWindow.style.zIndex}).fadeTo("fast", 50);
+    this.animWindow.data("object", $(uiWindow));
     desktopPage.append(this.animWindow);
   },
 
@@ -20,11 +20,11 @@ eXo.animation.ImplodeExplode =
 
       var animWindow = eXo.animation.ImplodeExplode.animWindow;
       animWindow.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, desktopPage[0], eXo.core.I18n.isRT());
-      animWindow.iconY = gj(clickedElement).offset().top - desktopPage.offset().top;
+      animWindow.iconY = $(clickedElement).offset().top - desktopPage.offset().top;
       animWindow.iconW = clickedElement.offsetWidth;
       animWindow.iconH = clickedElement.offsetHeight;
 
-      eXo.animation.ImplodeExplode.doExplode(numberOfFrame, numberOfFrame - 1, animWindow, gj(uiWindow));
+      eXo.animation.ImplodeExplode.doExplode(numberOfFrame, numberOfFrame - 1, animWindow, $(uiWindow));
     }
   },
 
@@ -36,10 +36,10 @@ eXo.animation.ImplodeExplode =
 
       var animWindow = eXo.animation.ImplodeExplode.animWindow;
       animWindow.iconX = eXo.core.Browser.findPosXInContainer(clickedElement, desktopPage[0], eXo.core.I18n.isRT());
-      animWindow.iconY = gj(clickedElement).offset().top - desktopPage.offset().top;
+      animWindow.iconY = $(clickedElement).offset().top - desktopPage.offset().top;
       animWindow.iconW = clickedElement.offsetWidth;
       animWindow.iconH = clickedElement.offsetHeight;
-      var jWin = gj(uiWindow);
+      var jWin = $(uiWindow);
       jWin.data("originY", uiWindow.offsetTop);
       jWin.data("originX", eXo.core.I18n.isLT() ? uiWindow.offsetLeft : eXo.core.Browser.findPosXInContainer(uiWindow, uiWindow.offsetParent, true));
       jWin.data("originW", uiWindow.offsetWidth);

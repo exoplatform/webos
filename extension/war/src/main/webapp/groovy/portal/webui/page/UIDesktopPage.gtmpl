@@ -7,14 +7,10 @@
 	def remoteUser = rcontext.getRemoteUser();
 	
 	JavascriptManager jsmanager = rcontext.getJavascriptManager();
-	
-	jsmanager.importJavascript('eXo.desktop.UIDesktop');
-	jsmanager.importJavascript('eXo.webui.UIPopupSelectCategory');
-	jsmanager.importJavascript('eXo.desktop.UIWindow');
-	jsmanager.importJavascript('eXo.webui.UIRightClickPopupMenu');
 
 	def desktopID = "UIPage-" + uicomponent.id;
-	jsmanager.addJavascript("eXo.webui.UIRightClickPopupMenu.disableContextMenu('" + desktopID + "') ;");
+   def reqJS = jsmanager.require("SHARED/webui-ext", "webuiExt")
+	                     .addScripts("webuiExt.UIRightClickPopupMenu.disableContextMenu('" + desktopID + "') ;");
 	
 	String currentSelectedBackground = uicomponent.getCurrBackgroundURL();
 	String docBase =	rcontext.getRequestContextPath();
@@ -58,25 +54,24 @@
 						if(posX == null) posX = (String)x;
 						if(posY == null) posY = (String)y;
 						
-						jsmanager.addJavascript("eXo.desktop.UIWindow.init('UIWindow-${popupId}', ${posX}, ${posY});");
+						jsmanager.require("SHARED/webos", "webos").addScripts("webos.UIWindow.init('UIWindow-${popupId}', ${posX}, ${posY});");                                                
 				%>
 				<%	x += 10; y += 20;%>
 				<%}%>
 
 				<%//String containerMouseOver = "eXo.desktop.UIDockbar.containerMouseOver();";%>
-				<div class="UIDockBar" id="UIDockBar" onmouseover="eXo.desktop.UIDockbar.startDockBarEvt(event);" style="visibility: hidden">
+				<div class="UIDockBar" id="UIDockBar" style="visibility: hidden">
 
         			<div class="UIRightClickPopupMenu" id="DockbarContextMenu" onmousedown="event.cancelBubble = true;">
         				<div class="UIContextMenuContainer" >
         					<div class="UIRightPopupMenuContainer" >
         						<div class="MenuItem"> 	
-        							<a href="javascript:eXo.desktop.UIDesktop.removeApp('<%=uicomponent.url("RemoveChild")%>')" 
-        								onclick="return eXo.webui.UIRightClickPopupMenu.prepareObjectId(event, this);" class="ItemIcon CloseDockBarIcon">
+        							<a class="ItemIcon CloseDockBarIcon" href="<%=uicomponent.url('RemoveChild')%>">
         								<%=_ctx.appRes("UIPageDesktop.action.Close")%>
         							</a>
         						</div>
         						<div class="MenuItem Last">
-        							<a class="ItemIcon QuitDockBarIcon" onclick="eXo.desktop.UIDesktop.removeWindowContent(event, this)">
+        							<a class="ItemIcon QuitDockBarIcon">
         								<%=_ctx.appRes("UIPageDesktop.action.Quit")%>
         							</a>
         						</div>
@@ -103,14 +98,16 @@
 											String imgLocation = uicomponent.getApplicationIconImageLocation(uiChild);
 											String appStatus = uiChild.getProperties().get("appStatus");
 											boolean isVisible = "SHOW".equals(appStatus) || "HIDE".equals(appStatus);
-											
+                                 reqJS.require("SHARED/jquery", "gj").require("SHARED/webos", "webos")
+                                      .addScripts("gj('#UIDockBar .DockbarLeft #DockItem${uiChild.id}').on('click', function() {webos.UIDesktop.showHideWindow('UIWindow-${uiChild.id}', this);});");
+                                 
 										if(remoteUser != null) {
 									%>
 											<img id="DockItem${uiChild.id}" class="Icon <%=isVisible ? "ShowIcon": ""%>" onmousedown="eXo.webui.UIRightClickPopupMenu.clickRightMouse(event, this, 'DockbarContextMenu', '${uiChild.id}', null, 1)" src="/${imgLocation}.png" alt=""
-													 onerror="this.src='/eXoResources/skin/sharedImages/Icon80x80/DefaultPortlet.png'" onclick="eXo.desktop.UIDesktop.showHideWindow('UIWindow-${uiChild.id}', this);" /><span class="Tooltip" style="display: none"><%=uiChild.getTitle();%></span>
+													 onerror="this.src='/eXoResources/skin/sharedImages/Icon80x80/DefaultPortlet.png'" /><span class="Tooltip" style="display: none"><%=uiChild.getTitle();%></span>
 									<%}else{%>
 											<img id="DockItem${uiChild.id}" class="Icon <%=isVisible ? "ShowIcon": ""%>" src="/${imgLocation}.png" alt=""
-													 onerror="this.src='/eXoResources/skin/sharedImages/Icon80x80/DefaultPortlet.png'" onclick="eXo.desktop.UIDesktop.showHideWindow('UIWindow-${uiChild.id}', this);" /><span class="Tooltip" style="display: none"><%=uiChild.getTitle();%></span>
+													 onerror="this.src='/eXoResources/skin/sharedImages/Icon80x80/DefaultPortlet.png'" /><span class="Tooltip" style="display: none"><%=uiChild.getTitle();%></span>
 									<%}}%>
 			
 			            <%  //always have child : UIRightClickPopupMenu --> need check size > 1 
@@ -137,6 +134,6 @@
 </div>
 
 <%
-	jsmanager.addOnLoadJavascript('eXo.desktop.UIDesktop.init');
-	jsmanager.addOnResizeJavascript('eXo.desktop.UIDesktop.fixDesktop');
+	jsmanager.require("SHARED/webos", "webos").addScripts('webos.UIDesktop.init();');
+	jsmanager.addOnResizeJavascript('webos.UIDesktop.fixDesktop');
 %>
