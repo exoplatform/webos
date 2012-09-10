@@ -32,14 +32,14 @@ h1. Add an application {anchor:id="WebOS_userguide.Manage_applications.Add_appli
 <para>Hover your cursor over the Dockbar and click the <guilabel>Add Application</guilabel> icon.</para>
 {docbook}
 
-!images/Add_Application_from_Dockbar.png|align="center" width="100mm" fo:scalefit="1" html:scalefit="0"!
+!images/Add_Application_from_Dockbar.png|align="center" width="80mm" fo:scalefit="1" html:scalefit="0"!
 
 *The second way*
 
 {docbook}
 <para>Right-click any area inside the Desktop background and select <guilabel>Add Application</guilabel> from the drop-down menu.</para>
 {docbook}
-!images/Drop-down-menu-desktop-page.png|align="center" width="70mm" fo:scalefit="1" html:scalefit="0"!
+!images/Drop-down-menu-desktop-page.png|align="center" width="50mm" fo:scalefit="1" html:scalefit="0"!
 
 {docbook}
 <para>The <guilabel>Add Application</guilabel> form will appear.</para>
