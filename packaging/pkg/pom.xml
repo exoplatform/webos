@@ -59,6 +59,10 @@
       <artifactId>exo.portal.webui.dashboard</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.gatein.web</groupId>
+      <artifactId>redirect</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.gatein.shindig</groupId>
       <artifactId>shindig-social-api</artifactId>
     </dependency>
@@ -109,6 +113,11 @@
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.web.portal</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.gatein.portal.portlet</groupId>
+      <artifactId>redirect</artifactId>
       <type>war</type>
     </dependency>
     <dependency>
