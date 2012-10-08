@@ -115,11 +115,3 @@
 .WebosTheme .WindowBarCenter .OverRestoreIcon {
     background-position: center -163px;
 }
-
-.WebosTheme .WindowBarCenter .PermanentLinkIcon {
-    background-position: center -263px;
-}
-
-.WebosTheme .WindowBarCenter .PermanentLinkIcon:hover {
-    background-position: center -283px;
-}

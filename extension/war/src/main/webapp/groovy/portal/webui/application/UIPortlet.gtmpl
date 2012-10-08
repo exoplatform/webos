@@ -98,7 +98,6 @@
 											String miniTooltip = _ctx.appRes("UIPortlet.tooltip.Minimize");
 											String maxiTooltip = _ctx.appRes("UIPortlet.tooltip.Maximize");
 											String closeTooltip = _ctx.appRes("UIPortlet.tooltip.Close");
-											String permanentLink = _ctx.appRes("UIPortlet.tooltip.permanentLink");
 											String renderMaxi = maxiTooltip;
 											String renderMini = miniTooltip;
 											if(windowState == WindowState.MAXIMIZED) {
@@ -106,11 +105,7 @@
 											} else if(windowState == WindowState.MINIMIZED) {
 												renderMini = restore;
 											}
-											if(isDesktop) {
-											   def nodeURL = nodeurl();
-												nodeURL.setNode(uiPortalApp.getCurrentSite().getSelectedUserNode());
-												nodeURL.setWindowID(portletId);
-										%>
+											if(isDesktop) {%>
 												<div class="ControlIcon CloseIcon" title="$closeTooltip" onclick="eXo.desktop.UIDesktop.removeWindowContent('$uicomponent.id')">
 												</div>
 												<div class="ControlIcon MaximizedIcon" title="$renderMaxi" onmouseover="$onControlOver" onmouseout="$onControlOut"><span></span>
@@ -119,7 +114,6 @@
 												<div class="ControlIcon MinimizedIcon" title="$renderMini" onmouseover="$onControlOver" onmouseout="$onControlOut"><span></span>
 														<div style="display:none">{"normalTitle":"$miniTooltip","modeTitle":"$restore"}</div>
 												</div>
-												<a class="ControlIcon PermanentLinkIcon" title="$permanentLink" href="$nodeURL"></a>
 										<%
 											} else if(uicomponent.getShowWindowState()) {											
 												String maximizedAction = "eXo.portal.UIPortalControl.changeWindowState('"+portletId+"', 'maximized');";

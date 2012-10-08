@@ -23,7 +23,6 @@ import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.model.ModelObject;
 import org.exoplatform.portal.config.model.Page;
-import org.exoplatform.portal.config.model.Properties;
 import org.exoplatform.portal.webui.application.UIApplication;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.page.UIPage;
@@ -34,7 +33,6 @@ import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.web.application.JavascriptManager;
-import org.exoplatform.web.controller.QualifiedName;
 import org.exoplatform.webos.services.desktop.DesktopBackground;
 import org.exoplatform.webos.services.desktop.DesktopBackgroundService;
 import org.exoplatform.webui.application.WebuiRequestContext;
@@ -77,8 +75,7 @@ public final class UIDesktopPage extends UIPage
    public static final String PAGE_TITLE = "WebOS Page";
    public static final String NODE_NAME = "classicWebosPage";
    public static final String NODE_LABEL = "WebOS Page";
-   public static final QualifiedName WINDOW_ID = QualifiedName.create("gtn", "wid");
-      
+   
    private DesktopBackground currBackground;
 
    public UIDesktopPage() throws Exception
@@ -94,40 +91,8 @@ public final class UIDesktopPage extends UIPage
       {
          addChild(UIRightClickPopupMenu.class, "UIDesktopContextMenu", null);
       }
-            
-      //When user specifies a windowId on URL, corresponding window will be shown
-      String selectedWindow = ((PortalRequestContext)context).getControllerContext().getParameter(WINDOW_ID);      
-      if (selectedWindow != null) 
-      {
-         UIPortlet target = findComponentById(selectedWindow);
-         if (target != null) 
-         {
-            int maxIndex = getMaxZIndex();
-            
-            Properties prop = target.getProperties();
-            prop.setProperty("zIndex", String.valueOf(maxIndex));
-            prop.setProperty("appStatus", "SHOW");            
-         }
-      }
       
       super.processRender(context);
-   }
-
-   private int getMaxZIndex()
-   {
-      List<UIPortlet> portlets = new ArrayList<UIPortlet>();
-      findComponentOfType(portlets, UIPortlet.class);
-      
-      int maxIndex = -1;
-      for (UIPortlet portlet : portlets) 
-      {
-         int idx = portlet.getProperties().getIntValue("zIndex");            
-         if (idx > maxIndex) 
-         {
-            maxIndex = idx;
-         }            
-      }
-      return ++maxIndex;
    }
 
    public boolean isShowMaxWindow()
