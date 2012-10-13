@@ -5,7 +5,7 @@
    <parent>
       <groupId>org.exoplatform.webos</groupId>
       <artifactId>webos-packaging</artifactId>
-      <version>4.0.0.Alpha1-SNAPSHOT</version>
+      <version>4.0.0.Alpha1-kill-exobuild-SNAPSHOT</version>
    </parent>
     <artifactId>webos-packaging-tomcat</artifactId>
    <packaging>pom</packaging>

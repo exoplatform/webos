@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.exoplatform.webos</groupId>
     <artifactId>webos</artifactId>
-    <version>4.0.0.Alpha1-SNAPSHOT</version>
+    <version>4.0.0.Alpha1-kill-exobuild-SNAPSHOT</version>
   </parent>
   <artifactId>webos-webui</artifactId>
   <packaging>jar</packaging>
