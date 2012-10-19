@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.exoplatform.webos</groupId>
     <artifactId>webos-parent</artifactId>
-    <version>2.0.6-SNAPSHOT</version>
+    <version>2.0.6-CR01</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <artifactId>exo.webos.webui.webos</artifactId>
