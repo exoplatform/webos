@@ -1,4 +1,0 @@
-h1. Get Started With eXo WebOS {anchor:id="WebOS_userguide.Get_Started_With_eXo_WebOS"}
-{include:document="Get_Started.wiki"}
-h1. Manage eXo WebOS applications {anchor:id="WebOS_userguide.Manage_applications"}
-{include:document="Manage_applications.wiki}

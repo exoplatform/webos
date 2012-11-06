@@ -953,7 +953,6 @@
             </property>
          </activation>
          <modules>
-            <module>doc/user-guide</module>
             <module>server/tomcat</module>
             <module>packaging</module>
          </modules>
