@@ -95,6 +95,28 @@ Click !images/quit_icon.png|scalefit="1" width="4mm"! at the right top of the ap
 
 The icon !images/Running_application_icon.png|scalefit="1" width="6mm"! will disappear after the running application has been closed.
 
+h1. Get the permanent link to an application {anchor:id="WebOS_userguide.Manage_applications.Get_permanent_link"}
+
+Each application added inside Desktop has a permanent link which is very useful for bookmarking. You can use this link to automatically open your bookmarked application after you login to Desktop.
+
+{docbook}
+<citetitle>
+<para><emphasis role="bold">Get the application's permanent link</emphasis></para>
+</citetitle>
+{docbook}
+
+*1.* Add the application that you want to get the permanent link to Desktop. For example: *Content Explorer*.
+
+*2.* Click !images/Get_permanent_link_icon.png|width="4mm" fo:scalefit="1" html:scalefit="0"! on the application's info bar.
+
+!images/Get_permanent_link.png|align="center" width="150mm" fo:scalefit="1" html:scalefit="0"!
+
+*3.* The permanent link of *Content Explorer* will be generated on your web browser's address bar. Now, you can bookmark this link for using later.
+
+!images/Generated_permanent_link.png|align="center" width="150mm" fo:scalefit="1" html:scalefit="0"!
+
+By using this link, each time you login to Desktop, the *Content Explorer* application will be opened automatically.
+
 h1. Change the Desktop title and background {anchor:id="WebOS_userguide.Manage_applications.Change_title_background"}
 
 First, right-click any area on the Desktop background.
