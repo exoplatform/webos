@@ -16,6 +16,7 @@ In the Desktop, you can do the following actions:
 
 * [Add an application to the Dockbar|#WebOS_userguide.Manage_applications.Add_application]
 * [Open an application|#WebOS_userguide.Manage_applications.Open_application]
+* [Get a permanent link|#WebOS_userguide.Manage_applications.Get_permanent_link]
 * [Quit an application|#WebOS_userguide.Manage_applications.Quit_application]
 * [Change the Desktop title and background|#WebOS_userguide.Manage_applications.Change_title_background]
 
@@ -71,6 +72,36 @@ The application window will be shown on the Desktop. When an application is runn
             </listitem>
 </itemizedlist>
 {docbook}
+
+h1. Get a permanent link {anchor:id="WebOS_userguide.Manage_applications.Get_permanent_link"}
+
+Each application added inside Desktop has a permanent link which is very useful for your bookmark.
+
+{docbook}
+<citetitle>
+<para><emphasis role="bold">Get the application's permanent link</emphasis></para>
+</citetitle>
+{docbook}
+
+*1.* Add the application that you want to get the permanent link to Desktop, for example *Content Explorer*.
+
+*2.* Click !images/Get_permanent_link_icon.png|width="4mm" fo:scalefit="1" html:scalefit="0"! on the application's info bar;
+
+!images/Get_permanent_link.png|align="center" width="150mm" fo:scalefit="1" html:scalefit="0"!
+
+Or, right-click the application icon on the Dockbar and select *Permanent link*:
+
+!images/Permanent_link_rightclick.png|align="center" width="80mm" fo:scalefit="1" html:scalefit="0"!
+
+The permanent link of *Content Explorer* will be generated on your web browser's address bar. 
+
+!images/Generated_permanent_link.png|align="center" width="150mm" fo:scalefit="1" html:scalefit="0"!
+
+Now, you can bookmark and use this link later to directly access the application without browsing and selecting it again.
+
+{note}
+You are required to have logged in before being directed to the link's application.
+{note}
 
 h1. Quit an application {anchor:id="WebOS_userguide.Manage_applications.Quit_application"}
 
