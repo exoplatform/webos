@@ -107,9 +107,13 @@ Each application added inside Desktop has a permanent link which is very useful 
 
 *1.* Add the application that you want to get the permanent link to Desktop. For example: *Content Explorer*.
 
-*2.* Click !images/Get_permanent_link_icon.png|width="4mm" fo:scalefit="1" html:scalefit="0"! on the application's info bar.
+*2.* Click !images/Get_permanent_link_icon.png|width="4mm" fo:scalefit="1" html:scalefit="0"! on the application's info bar;
 
 !images/Get_permanent_link.png|align="center" width="150mm" fo:scalefit="1" html:scalefit="0"!
+
+Or right-click the application icon on the Dockbar and select Permanent link:
+
+!images/Permanent_link_rightclick.png|align="center" width="80mm" fo:scalefit="1" html:scalefit="0"!
 
 *3.* The permanent link of *Content Explorer* will be generated on your web browser's address bar. Now, you can bookmark this link for using later.
 
